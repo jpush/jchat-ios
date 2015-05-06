@@ -38,12 +38,13 @@
         didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window makeKeyAndVisible];
+    [self umengTrack];
     [JMessage setupJMessage:launchOptions
                      appKey:@"4f7aef34fb361292c566a1cd"
                     channel:@"test" apsForProduction:NO
                    category:nil];
     [self initTheMainGTablebar];
-
+    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kuserName]) {
         self.tabBarCtl.loginIdentify = kHaveLogin;
         self.window.rootViewController=self.tabBarCtl;
