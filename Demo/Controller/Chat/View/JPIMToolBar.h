@@ -72,7 +72,7 @@
  *  表情button
  */
 @property (weak, nonatomic) IBOutlet UIButton *voiceButton;
-@property (weak, nonatomic) IBOutlet UIButton *faceButton;
+//@property (weak, nonatomic) IBOutlet UIButton *faceButton;
 
 /**
  *  更多功能button

@@ -47,14 +47,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     JPIMLog(@"Action");
-    [self.toolBar.textView addObserver:self
-                            forKeyPath:@"contentSize"
-                               options:NSKeyValueObservingOptionNew
-                               context:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changeMessageState:)
-                                                 name:kMessageChangeState
-                                               object:nil];
     if (self.user) {
         self.targetName = self.user.username;
     }else if (_conversation){
@@ -69,7 +61,6 @@
                  [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                      if (error == nil) {
                          JPIMLog(@"消息清零成功");
-//                         [self setbadge];
                      }else {
                          JPIMLog(@"消息清零失败");
                      }
@@ -146,7 +137,6 @@
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
     [self.view addGestureRecognizer:gesture];
-    [self addNotification];
     NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JPIMMoreView"owner:self options:nil];
     self.moreView = [temXib objectAtIndex:0];
     self.moreView.delegate=self;
@@ -156,16 +146,14 @@
         [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
     }
     [self.view addSubview:self.moreView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGSendMessageResult object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNotifi:) name:KJMSG_ReceiveMessage object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
+    [self addNotification];
 }
 
 - (void)receiveNotificationSkipToChatPageView:(NSNotification *)no {
     NSDictionary *apnsDic = [no object];
     NSString *targetNameStr = [apnsDic[@"aps"] objectForKey:@"alert"];
     NSString *targetName = [[targetNameStr componentsSeparatedByString:@":"] objectAtIndex:0];
-    if ([targetName isEqualToString:_conversation.targetName]) {
+    if ([targetName isEqualToString:_conversation.targetName] || [targetName isEqualToString:_conversation.targetName]) {
         return;
     }
     [JMSGConversationManager getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
@@ -180,10 +168,8 @@
             }];
             [JMSGUserManager getUserInfoWithUsername:targetName completionHandler:^(id resultObject, NSError *error) {
                 self.user = resultObject;
-                [_messageDataArr removeAllObjects];
                 [self getAllMessage];
                 self.title = targetName;
-                [_messageTableView reloadData];
             }];
         }else {
             
@@ -244,6 +230,7 @@
 
 - (void)getAllMessage {
     __block NSMutableArray * arrList;
+    [_messageDataArr removeAllObjects];
     [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
         JPIMMAINTHEAD((^{
         arrList = resultObject;
@@ -310,7 +297,6 @@
         JMSGUser *user = [JMSGUserManager getMyInfo];
         [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
-//                [self setbadge];
             }else {
                 JPIMLog(@"消息未读数清空失败");
             }
@@ -418,8 +404,7 @@
 }
 
 #pragma mark -调用相册
--(void)photoClick
-{    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+-(void)photoClick {    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     NSArray *temp_MediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
@@ -429,8 +414,7 @@
 }
 
 #pragma mark --调用相机
--(void)cameraClick
-{
+-(void)cameraClick {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -464,7 +448,7 @@
     NSString *bigPath = [JPIMFileManager saveImageWithConversationID:_conversation.targetName andData:UIImageJPEGRepresentation(img, 1)];
     NSString *smallImgPath = [JPIMFileManager saveImageWithConversationID:_conversation.targetName andData:UIImageJPEGRepresentation(smallpImg, 1)];
     ChatModel *model =[[ChatModel alloc] init];
-    model.who=YES;
+    model.who = YES;
     model.sendFlag = NO;
     model.conversation = _conversation;
     model.targetName = self.targetName;
@@ -500,6 +484,18 @@
                                              selector:@selector(inputKeyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGSendMessageResult object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNotifi:) name:KJMSG_ReceiveMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeMessageState:)
+                                                 name:kMessageChangeState
+                                               object:nil];
+//    [self.toolBar.textView addObserver:self
+//                            forKeyPath:@"contentSize"
+//                               options:NSKeyValueObservingOptionNew
+//                               context:nil];
 }
 
 -(void)inputKeyboardWillShow:(NSNotification *)notification{
@@ -582,7 +578,8 @@
     [self scrollToEnd];
 }
 
-- (void)addCellToTabel{
+- (void)addCellToTabel {
+    [self.messageTableView reloadInputViews];
     NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0];
     [self.messageTableView beginUpdates];
     [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
@@ -661,7 +658,6 @@
     [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
             JPIMLog(@"清零成功");
-//            [self setbadge];
         }else {
             JPIMLog(@"清零失败");
         }
