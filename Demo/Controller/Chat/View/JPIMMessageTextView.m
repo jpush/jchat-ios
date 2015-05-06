@@ -7,6 +7,7 @@
 //
 
 #import "JPIMMessageTextView.h"
+#import "Common.h"
 
 @implementation JPIMMessageTextView
 #pragma mark - Setters
@@ -67,10 +68,11 @@
 }
 
 - (void)setFont:(UIFont *)font {
-    if (font) {
+    JPIMMAINTHEAD(^{
         [super setFont:font];
         [self setNeedsDisplay];
-    }
+    });
+    
 }
 
 - (void)setTextAlignment:(NSTextAlignment)textAlignment {
