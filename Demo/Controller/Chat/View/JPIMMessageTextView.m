@@ -67,8 +67,10 @@
 }
 
 - (void)setFont:(UIFont *)font {
-    [super setFont:font];
-    [self setNeedsDisplay];
+    if (font) {
+        [super setFont:font];
+        [self setNeedsDisplay];
+    }
 }
 
 - (void)setTextAlignment:(NSTextAlignment)textAlignment {

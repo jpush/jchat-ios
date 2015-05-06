@@ -940,11 +940,11 @@
 		1883253B1A4A6287006C4803 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1849101A1AF9DD4800F299A1 /* PersonInfo */,
-				185979721AB80AD400EBCA1E /* Category */,
 				187421251AA6A4BB00154AF0 /* JPIMTabBarViewController.h */,
 				187421261AA6A4BB00154AF0 /* JPIMTabBarViewController.m */,
 				187421271AA6A4BB00154AF0 /* JPIMTabBarViewController.xib */,
+				1849101A1AF9DD4800F299A1 /* PersonInfo */,
+				185979721AB80AD400EBCA1E /* Category */,
 				18E2B9841A50FABD00E7C1C1 /* Common */,
 				188325441A4A636B006C4803 /* Register */,
 				188325431A4A6356006C4803 /* Contacts */,

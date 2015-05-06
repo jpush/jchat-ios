@@ -162,6 +162,7 @@
     [super viewDidAppear:YES];
     [self getConversationList];
 }
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:YES];
 }
@@ -188,11 +189,9 @@
 NSInteger sortType(id object1,id object2,void *cha) {
     JMSGConversation *model1 = (JMSGConversation *)object1;
     JMSGConversation *model2 = (JMSGConversation *)object2;
-    if([model1.latest_date integerValue] > [model2.latest_date integerValue])
-    {
+    if([model1.latest_date integerValue] > [model2.latest_date integerValue]) {
         return NSOrderedAscending;
-    }else if([model1.latest_date integerValue] < [model2.latest_date integerValue])
-    {
+    }else if([model1.latest_date integerValue] < [model2.latest_date integerValue]) {
         return NSOrderedDescending;
     }
     return NSOrderedSame;
@@ -208,8 +207,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     [self getConversationList];
 }
 
-- (void)addBtn
-{
+- (void)addBtn {
     for (NSInteger i=0; i<2; i++) {
     UIButton *btn =[UIButton buttonWithType:UIButtonTypeCustom];
     if (i==0) {
@@ -294,31 +292,36 @@ NSInteger sortType(id object1,id object2,void *cha) {
     _rightBarButton.selected=NO;
 }
 
-////修改编辑按钮文字
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return @"删除";
-//}
+//修改编辑按钮文字
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
+}
 
-////先设置Cell可移动
-//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return YES;
-//}
+//先设置Cell可移动
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
 
 //进入编辑模式，按下出现的编辑按钮后
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [tableView setEditing:NO animated:YES];
-//}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    JPIMLog(@"Action");
+    JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
+    [conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
+        if (error == nil) {
+            JPIMLog(@"delete message success");
+        }else {
+            JPIMLog(@"delete message error");
+        }
+    }];
+    [_conversationArr removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([_conversationArr count] > 0) {
         return [_conversationArr count];
     }else{
@@ -326,8 +329,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"chatCell";
     JPIMChatTableViewCell *cell = (JPIMChatTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
@@ -347,8 +349,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 #pragma mark - SearchBar Delegate
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)_searchBar
-{
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)_searchBar {
 
 }
 
@@ -357,8 +358,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     return [_conversationArr count];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JPIMSendMessageViewController *sendMessageCtl =[[JPIMSendMessageViewController alloc] init];
     sendMessageCtl.hidesBottomBarWhenPushed=YES;
     sendMessageCtl.conversationType = kSingle;
