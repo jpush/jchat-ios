@@ -1,3 +1,7 @@
+# Normal 
+.DS_Store
+
+
 # Xcode
 #
 build/
@@ -16,6 +20,9 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+
+
+
 
 # CocoaPods
 #
