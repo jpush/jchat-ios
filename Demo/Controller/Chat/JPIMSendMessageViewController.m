@@ -188,6 +188,9 @@
         }else {
             JPIMLog(@"Sent message Response:%@",message);
             JPIMLog(@"Sent message Response error:%@",error);
+            if (error.code == 800013) {
+                JPIMLog(@"用户登出了");
+            }
         }
         ChatModel *model ;
         for (NSInteger i=0; i < [_messageDataArr count]; i++) {
