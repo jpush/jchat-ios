@@ -39,7 +39,6 @@
 
 #pragma mark --时间格式化
 - (NSString *)findendliyTime:(NSString *)dataTime{
-    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     //设置格式 年yyyy 月 MM 日dd 小时hh(HH) 分钟 mm 秒 ss MMM单月 eee周几 eeee星期几 a上午下午
     //与字符串保持一致
@@ -59,7 +58,6 @@
         int minute = time/60;
         NSString * minuteStr = [NSString stringWithFormat:@"%d分钟前",minute];
         return  minuteStr;
-        
     }else {
         //如果年不同输出某年某月某日
         if ([[dataTime substringToIndex:4] isEqualToString:[noewTime substringToIndex:4]]) {
@@ -67,9 +65,7 @@
             NSRange rangeM = NSMakeRange(5, 2);
             //如果月份不同输出某月某日某时
             if ([[dataTime substringWithRange:rangeM]isEqualToString:[noewTime substringWithRange:rangeM]]) {
-                
                 NSRange rangD = NSMakeRange(8, 2);
-                
                 //如果日期不同输出某日某时
                 if ([[dataTime substringWithRange:rangD]isEqualToString:[noewTime substringWithRange:rangD]]) {
                     NSRange rangeSSD = NSMakeRange(11, 5);
@@ -79,18 +75,14 @@
                     NSRange rangSD = NSMakeRange(5, 5);
                     return [dataTime substringWithRange:rangSD];
                 }
-                
             }else{
                 NSRange rangeSM = NSMakeRange(5,5);
                 return [dataTime substringWithRange:rangeSM];
             }
         }else{
-            
             return [dataTime substringToIndex:10];
         }
-        
     }
-    
 }
 
 
