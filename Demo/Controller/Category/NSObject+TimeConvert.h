@@ -16,4 +16,6 @@
 
 -(NSTimeInterval )getCurrentTimeInterval;
 
+- (NSString *)findendliyTime:(NSString *)dataTime;
+
 @end
