@@ -96,7 +96,7 @@
     }
     
     if (conversation.latest_date !=nil && ![conversation.latest_date isEqualToString:@"(null)"]) {
-    self.time.text =[self getTimeDate:[conversation.latest_date longLongValue]];
+    self.time.text = [self getTimeDate:[conversation.latest_date longLongValue]];
     }else {
     self.time.text = @"";
     }
