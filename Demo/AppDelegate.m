@@ -244,8 +244,8 @@ forLocalNotification:(UILocalNotification *)notification
     /**
      *  聊天
      */
-    chatViewController.navigationItem.title = @"聊天";
-    UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:@"聊天"
+    chatViewController.navigationItem.title = @"会话";
+    UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:@"会话"
                                                           image:[normalImageArray objectAtIndex:0]
                                                             tag:10];
     [chatTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_25.png"]

@@ -12,6 +12,7 @@
    __block NSMutableArray *_conversationArr;
     UIButton *_rightBarButton;
     NSInteger _unreadCount;
+    UILabel *titleLabel;
 }
 
 @property (nonatomic,strong)UISearchDisplayController * searchDisplayController ;
@@ -56,6 +57,14 @@
     self.chatTableView.delegate=self;
     self.chatTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.chatTableView.touchDelegate = self;
+    
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.text = @"会话";
+    self.navigationItem.titleView = titleLabel;
     
     _rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_rightBarButton setFrame:CGRectMake(0, 0, 30, 30)];
@@ -140,20 +149,20 @@
 }
 
 - (void)netWorkConnectClose {
-    self.title =@"未连接...";
+    titleLabel.text =@"未连接...";
 }
 
 - (void)netWorkConnectSetup {
-    self.title =@"正在连接...";
+    titleLabel.text =@"正在连接...";
 }
 
 - (void)connectSucceed {
-    self.title =@"连接成功...";
+    titleLabel.text =@"连接成功...";
     [self performSelector:@selector(showName) withObject:nil afterDelay:1];
 }
 
 - (void)showName {
-    self.title=@"会话";
+    titleLabel.text =@"会话";
 }
 
 #pragma mark --收到消息
