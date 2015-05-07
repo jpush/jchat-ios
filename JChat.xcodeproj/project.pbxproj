@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		18324C041AFB861A006E8507 /* ChatTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 18324C031AFB861A006E8507 /* ChatTable.m */; };
-		184910511AF9EBB200F299A1 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5E5BAB1AF7936D00C7D213 /* JMessage.framework */; };
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
@@ -457,7 +456,7 @@
 		187182251AFB80BF00FB3168 /* JPIMRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMRegisterViewController.xib; sourceTree = "<group>"; };
 		187182261AFB80BF00FB3168 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		187182271AFB80BF00FB3168 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		187182291AFB80BF00FB3168 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMessage.framework; sourceTree = "<group>"; };
+		187182291AFB80BF00FB3168 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = JChat/lib/JMessage.framework; sourceTree = "<group>"; };
 		1871822A1AFB80BF00FB3168 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1871822C1AFB80BF00FB3168 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		1871822D1AFB80BF00FB3168 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
@@ -698,16 +697,7 @@
 		18AB9CFD1A43BD5F007B2A04 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		18AB9CFF1A43BD6B007B2A04 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		1FDE42761ACB919C002061D4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		1FDF1B0F1ACA861D0051C5EF /* JMSGMessageManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSGMessageManagerSpec.m; sourceTree = "<group>"; };
-		1FDF1B111ACA862E0051C5EF /* JMSGUserManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSGUserManagerSpec.m; sourceTree = "<group>"; };
-		1FDF1B131ACA864A0051C5EF /* JMSGConversationSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSGConversationSpec.m; sourceTree = "<group>"; };
-		1FDF1B151ACA865F0051C5EF /* JMSGConversationManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSGConversationManagerSpec.m; sourceTree = "<group>"; };
-		1FDF1B171ACA86700051C5EF /* JMSGServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSGServiceSpec.m; sourceTree = "<group>"; };
-		1FE4C8611AC958E800BDB382 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1FE4C8621AC958E800BDB382 /* SimpleStringSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleStringSpec.m; sourceTree = "<group>"; };
 		1FE4C8841AC9796400BDB382 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		AA5E5BAB1AF7936D00C7D213 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = Demo/lib/JMessage.framework; sourceTree = "<group>"; };
-		AAC6E4A61AD672F500313A10 /* Kiwi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kiwi.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -722,7 +712,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				184910511AF9EBB200F299A1 /* JMessage.framework in Frameworks */,
 				18A7757D1A58D49F000565E3 /* CoreAudio.framework in Frameworks */,
 				18A7757B1A58D495000565E3 /* AudioToolbox.framework in Frameworks */,
 				18A775791A58D471000565E3 /* AVFoundation.framework in Frameworks */,
@@ -1006,7 +995,6 @@
 		187182281AFB80BF00FB3168 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				187182291AFB80BF00FB3168 /* JMessage.framework */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -1304,7 +1292,6 @@
 			isa = PBXGroup;
 			children = (
 				1871818F1AFB80BF00FB3168 /* JChat */,
-				1FE4C85F1AC958E800BDB382 /* Lib Tests */,
 				18AB9C8D1A43BCB7007B2A04 /* Products */,
 				18AB9CF41A43BD28007B2A04 /* Frameworks */,
 			);
@@ -1322,7 +1309,7 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA5E5BAB1AF7936D00C7D213 /* JMessage.framework */,
+				187182291AFB80BF00FB3168 /* JMessage.framework */,
 				1FDE42761ACB919C002061D4 /* libsqlite3.0.dylib */,
 				1FE4C8841AC9796400BDB382 /* SenTestingKit.framework */,
 				18A7757C1A58D49F000565E3 /* CoreAudio.framework */,
@@ -1341,37 +1328,6 @@
 				18AB9CF51A43BD40007B2A04 /* libz.dylib */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		1FDF1B1A1ACAD2010051C5EF /* External */ = {
-			isa = PBXGroup;
-			children = (
-				AAC6E4A61AD672F500313A10 /* Kiwi.h */,
-			);
-			name = External;
-			sourceTree = "<group>";
-		};
-		1FE4C85F1AC958E800BDB382 /* Lib Tests */ = {
-			isa = PBXGroup;
-			children = (
-				1FDF1B1A1ACAD2010051C5EF /* External */,
-				1FE4C8621AC958E800BDB382 /* SimpleStringSpec.m */,
-				1FDF1B0F1ACA861D0051C5EF /* JMSGMessageManagerSpec.m */,
-				1FDF1B111ACA862E0051C5EF /* JMSGUserManagerSpec.m */,
-				1FDF1B131ACA864A0051C5EF /* JMSGConversationSpec.m */,
-				1FDF1B151ACA865F0051C5EF /* JMSGConversationManagerSpec.m */,
-				1FDF1B171ACA86700051C5EF /* JMSGServiceSpec.m */,
-				1FE4C8601AC958E800BDB382 /* Supporting Files */,
-			);
-			path = "Lib Tests";
-			sourceTree = "<group>";
-		};
-		1FE4C8601AC958E800BDB382 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				1FE4C8611AC958E800BDB382 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
