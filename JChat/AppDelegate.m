@@ -26,8 +26,8 @@
     [self.window makeKeyAndVisible];
     [self umengTrack];
     [JMessage setupJMessage:launchOptions
-                     appKey:@"4f7aef34fb361292c566a1cd"
-                    channel:@"test" apsForProduction:NO
+                     appKey:JMSSAGE_APPKEY
+                    channel:CHANNEL apsForProduction:NO
                    category:nil];
     [self initTheMainGTablebar];
     
@@ -205,7 +205,7 @@ forLocalNotification:(UILocalNotification *)notification
         fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [JPUSHService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
-    [self sendApnsNotificationSkipPage:userInfo];
+//    [self sendApnsNotificationSkipPage:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -307,8 +307,6 @@ forLocalNotification:(UILocalNotification *)notification
     self.tabBarCtl.viewControllers = [NSArray arrayWithObjects:chatNav,contactsNav,settingNav,nil];
 }
 
-
-
 - (void)umengTrack {
     //    [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
     [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
@@ -331,6 +329,5 @@ forLocalNotification:(UILocalNotification *)notification
 - (void)onlineConfigCallBack:(NSNotification *)note {
     NSLog(@"online config has fininshed and note = %@", note.userInfo);
 }
-
 
 @end
