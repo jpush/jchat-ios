@@ -391,7 +391,6 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 - (void)saveBadge:(NSInteger)badge {
-    [JPUSHService setBadge:badge];
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld",badge] forKey:kBADGE];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
