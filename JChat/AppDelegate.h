@@ -6,11 +6,14 @@
 #define JMSSAGE_APPKEY @"4f7aef34fb361292c566a1cd"
 #define CHANNEL @"test"
 
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic,strong) JPIMTabBarViewController *tabBarCtl;
 
 @property (strong, nonatomic) UIWindow *window;
+
+
 
 @end
 
