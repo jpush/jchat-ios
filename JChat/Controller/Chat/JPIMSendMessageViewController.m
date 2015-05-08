@@ -156,6 +156,9 @@
     if ([targetName isEqualToString:_conversation.targetName] || [targetName isEqualToString:_conversation.targetName]) {
         return;
     }
+  if ([targetName isEqualToString:[JMSGUserManager getMyInfo].username]) {
+    return;
+  }
     [JMSGConversationManager getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
             _conversation = resultObject;
@@ -285,8 +288,8 @@
             model.messageTime = message.timestamp;
             [self compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
             [_messageDataArr addObject:model];
-            [self addCellToTabel];
         }
+            [_messageTableView reloadData];
         if ([_messageDataArr count] != 0) {
             [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }        }));
@@ -582,7 +585,7 @@
 }
 
 - (void)addCellToTabel {
-    [self.messageTableView reloadInputViews];
+//  [_messageTableView reloadData];
     NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0];
     [self.messageTableView beginUpdates];
     [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
