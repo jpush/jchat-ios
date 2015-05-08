@@ -277,6 +277,7 @@
 		6039B89938C2D6525B2CD299 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6BB9BF1F65544C99BED /* UIImageView+WebCache.m */; };
 		6039B9EE9A8283C9A2F5E205 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B31FB65128104C866B97 /* SDImageCache.m */; };
 		6039B9FEC9C8FBFEFE2CF747 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BDC20B7CA380B8C93BA2 /* MBProgressHUD+Add.m */; };
+		6039BA26BAC5EB168B9D4259 /* JCHATCustomFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6B7F476CC918C72C26B /* JCHATCustomFormatter.m */; };
 		6039BAA51999BCADAFD3ACD2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039BA4F3AC1F6D937AEB328 /* CoreLocation.framework */; };
 		6039BB84D6E92E97332E5CD4 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039BD94EEB57689C0D8E40F /* libsqlite3.dylib */; };
 		6039BBEC10AE59FB8E1D4EC8 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B455EDE0E591B1087ACA /* UIButton+WebCache.m */; };
@@ -648,10 +649,12 @@
 		6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
 		6039B59635D76265AE189A08 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = JChat/lib/JMessage.framework; sourceTree = "<group>"; };
 		6039B5CB4EAB97AB0096BBDA /* SDWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageOperation.h; sourceTree = "<group>"; };
+		6039B5CD3A2AEA7D09ABF7ED /* JCHATCustomFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATCustomFormatter.h; sourceTree = "<group>"; };
 		6039B602F90006A69BE6DB54 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = ../../../../../Applications/Xcode.app/Contents/Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = "<group>"; };
 		6039B609C61F92E43FE096BB /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
 		6039B63C75BC675F321AB980 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
 		6039B6503843277EDDD6D961 /* SDWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManager.h; sourceTree = "<group>"; };
+		6039B6B7F476CC918C72C26B /* JCHATCustomFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATCustomFormatter.m; sourceTree = "<group>"; };
 		6039B6BB9BF1F65544C99BED /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		6039B6D1A2C410E351208121 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
 		6039B70A5C572438538152E6 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libz.dylib; sourceTree = "<group>"; };
@@ -1288,6 +1291,8 @@
 				6039BFD78E9C07C5645BE76E /* PreviewPicture */,
 				6039BCC351BDBF0E3134CC6D /* MBProgressHUD */,
 				6039B43A49478616C846695C /* SDWebImage */,
+				6039B6B7F476CC918C72C26B /* JCHATCustomFormatter.m */,
+				6039B5CD3A2AEA7D09ABF7ED /* JCHATCustomFormatter.h */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -1362,7 +1367,7 @@
 		18AB9C841A43BCB7007B2A04 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = JMSG;
+				CLASSPREFIX = JCHAT;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = HXHG;
 				TargetAttributes = {
@@ -1718,6 +1723,7 @@
 				8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */,
 				6039B7CBAC2D4E53092C0575 /* UIImageView+MJWebCache.m in Sources */,
 				6039B89938C2D6525B2CD299 /* UIImageView+WebCache.m in Sources */,
+				6039BA26BAC5EB168B9D4259 /* JCHATCustomFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1868,6 +1874,7 @@
 				PRODUCT_NAME = "极光IM";
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
 			};
 			name = Debug;
@@ -1916,6 +1923,7 @@
 				PRODUCT_NAME = "极光IM";
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
 			};
 			name = Release;
