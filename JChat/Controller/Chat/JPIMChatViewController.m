@@ -231,7 +231,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     }
     [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag=i + 100;
-    [btn setFrame:CGRectMake(10, i*30+30, 80, 30)];
+    [btn setFrame:CGRectMake(10, i*30, 80, 30)];
     [self.addBgView addSubview:btn];
     }
 }
@@ -239,9 +239,9 @@ NSInteger sortType(id object1,id object2,void *cha) {
 -(void)btnClick :(UIButton *)btn {
     [self.addBgView setHidden:YES];
     if (btn.tag == 100) {
-    JPIMSelectFriendsCtl *selectCtl =[[JPIMSelectFriendsCtl alloc] init];
-    UINavigationController *selectNav =[[UINavigationController alloc] initWithRootViewController:selectCtl];
-    [self.navigationController presentViewController:selectNav animated:YES completion:nil];
+//    JPIMSelectFriendsCtl *selectCtl =[[JPIMSelectFriendsCtl alloc] init];
+//    UINavigationController *selectNav =[[UINavigationController alloc] initWithRootViewController:selectCtl];
+//    [self.navigationController presentViewController:selectNav animated:YES completion:nil];
     }else if (btn.tag == 101) {
     UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"添加好友" message:@"输入好友用户名!"
                                                      delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
