@@ -1,3 +1,4 @@
+#import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
 #import <JMessage/JMSGUser.h>
 

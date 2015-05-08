@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 Apple. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 /***************************************声明枚举类型*********************************************/
 /**
  *  更新用户信息类型
