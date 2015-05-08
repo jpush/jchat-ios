@@ -22,7 +22,7 @@
 		1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */; };
 		1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */; };
 		1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834E1AFC91C800AC8280 /* CoreTelephony.framework */; };
-		183983661AFCCCE600AC8280 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
+		183983671AFCDAB800AC8280 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
@@ -699,7 +699,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				183983661AFCCCE600AC8280 /* JMessage.framework in Frameworks */,
+				183983671AFCDAB800AC8280 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
