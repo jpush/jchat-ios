@@ -13,6 +13,7 @@
 #import "JPIMUpdatePasswordCtl.h"
 #import "MBProgressHUD+Add.h"
 #import <JMessage/JMessage.h>
+
 @interface JPIMSettingViewController ()<UIGestureRecognizerDelegate>
 {
     NSArray *titleArr;
