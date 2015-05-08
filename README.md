@@ -2,6 +2,10 @@
 
 JChat is a not-just-demo app for JMessage SDK. 
 
-The website: [JChat App](http://jchat.io)
+[JChat App](http://jchat.io)
+
+[JChat Android](http://https://github.com/jpush/jchat-android)
+
+[JChat Web](https://github.com/jpush/jchat-web)
 
 
