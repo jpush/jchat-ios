@@ -40,8 +40,8 @@
     [self.window makeKeyAndVisible];
     [self umengTrack];
     [JMessage setupJMessage:launchOptions
-                     appKey:@"4f7aef34fb361292c566a1cd"
-                    channel:@"test" apsForProduction:NO
+                     appKey:JMSSAGE_APPKEY
+                    channel:CHANNEL apsForProduction:NO
                    category:nil];
     [self initTheMainGTablebar];
     
@@ -201,7 +201,7 @@ forLocalNotification:(UILocalNotification *)notification
         fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [JPUSHService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
-    [self sendApnsNotificationSkipPage:userInfo];
+//    [self sendApnsNotificationSkipPage:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -302,7 +302,5 @@ forLocalNotification:(UILocalNotification *)notification
                                                        nil] forState:UIControlStateHighlighted];
     self.tabBarCtl.viewControllers = [NSArray arrayWithObjects:chatNav,contactsNav,settingNav,nil];
 }
-
-
 
 @end
