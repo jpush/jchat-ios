@@ -585,11 +585,11 @@
 }
 
 - (void)addCellToTabel {
-//  [_messageTableView reloadData];
-    NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0];
-    [self.messageTableView beginUpdates];
-    [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-    [self.messageTableView endUpdates];
+  [_messageTableView reloadData];
+//    NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0];
+//    [self.messageTableView beginUpdates];
+//    [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+//    [self.messageTableView endUpdates];
 }
 
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
@@ -620,7 +620,7 @@
             ChatModel *timeModel = [[ChatModel alloc ] init];
             timeModel.type = kTimeMessage;
             timeModel.messageTime = @(timeInterVal);
-            [self getTimeDate:timeInterVal];
+//            [self getTimeDate:timeInterVal];
             [_messageDataArr addObject:timeModel];
             [self addCellToTabel];
         }

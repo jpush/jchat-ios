@@ -22,6 +22,7 @@
 		1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */; };
 		1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */; };
 		1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834E1AFC91C800AC8280 /* CoreTelephony.framework */; };
+		183983661AFCCCE600AC8280 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
@@ -292,7 +293,6 @@
 		6039BD2C1B5F6CDFD9BB5291 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B13D426CE55AEDC76659 /* UIImage+MultiFormat.m */; };
 		6039BD6A5FE0420731B8833A /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B225336F1B68E6A10415 /* libMobClickLibrary.a */; };
 		6039BE427413C75524B44247 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBAC6063CD3111B1D5BB /* SDWebImageCompat.m */; };
-		6039BE5EFD513A20045DDA7D /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		6039BEB5A028137372C528B5 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BB2A0EFF4230235771DD /* MJPhotoView.m */; };
 		6039BF2B12872ADB34A48CDD /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8ABA6FD03A3F74DB106 /* MJPhotoBrowser.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
@@ -699,6 +699,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				183983661AFCCCE600AC8280 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -713,7 +714,6 @@
 				183983391AFC915C00AC8280 /* CoreAudio.framework in Frameworks */,
 				183983371AFC914900AC8280 /* Security.framework in Frameworks */,
 				183983351AFC914100AC8280 /* libz.dylib in Frameworks */,
-				6039BE5EFD513A20045DDA7D /* JMessage.framework in Frameworks */,
 				6039BD6A5FE0420731B8833A /* libMobClickLibrary.a in Frameworks */,
 				CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */,
 			);
@@ -1776,7 +1776,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "57bf0420-17b0-4bbe-ae10-7208fcb9a770";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1812,7 +1812,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "57bf0420-17b0-4bbe-ae10-7208fcb9a770";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1836,6 +1836,7 @@
 					/Users/xiaomeng/JPUSH,
 					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/JChat/lib",
+					"/Users/apple/Downloads/jchat-ios-master/JChat/lib",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1855,7 +1856,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "极光IM";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "590ddb85-1a74-4774-bd77-da67f930b1f0";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
@@ -1880,6 +1881,7 @@
 					/Users/xiaomeng/JPUSH,
 					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/JChat/lib",
+					"/Users/apple/Downloads/jchat-ios-master/JChat/lib",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1898,7 +1900,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "极光IM";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "590ddb85-1a74-4774-bd77-da67f930b1f0";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
