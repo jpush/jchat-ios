@@ -43,14 +43,7 @@
 
 #define kMessageChangeState  @"messageChangeState"
 
-#ifdef DEBUG
 #define JPIMLog(...) NSLog(@"%s %@", __PRETTY_FUNCTION__,[NSString stringWithFormat:__VA_ARGS__])
-#define DEBUGSTATE YES
-#else
-#define JMSGLog(...) do { } while (0)
-#define DEBUGSTATE NO
-#endif
-
 
 #define JCHAT_LOG_PREFIX @"JCHAT"
 
