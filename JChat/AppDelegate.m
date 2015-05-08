@@ -205,7 +205,6 @@ forLocalNotification:(UILocalNotification *)notification
         fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [JPUSHService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
-//    [self sendApnsNotificationSkipPage:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
