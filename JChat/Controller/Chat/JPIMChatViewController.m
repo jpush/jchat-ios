@@ -224,7 +224,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     for (NSInteger i=0; i<2; i++) {
     UIButton *btn =[UIButton buttonWithType:UIButtonTypeCustom];
     if (i==0) {
-        [btn setTitle:@"发起群聊" forState:UIControlStateNormal];
+//        [btn setTitle:@"发起群聊" forState:UIControlStateNormal];
     }
     if (i==1) {
         [btn setTitle:@"添加朋友" forState:UIControlStateNormal];
