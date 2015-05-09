@@ -7,7 +7,7 @@
 //
 
 #import "JPIMNewsReminderCtl.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMDetailTableViewCell.h"
 @interface JPIMNewsReminderCtl ()
 {

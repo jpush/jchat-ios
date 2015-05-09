@@ -14,7 +14,7 @@
 #import "JPIMChatViewController.h"
 #import "MBProgressHUD+Add.h"
 #import "JPIMTabBarViewController.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMRegisterViewController.h"
 #import "JPIMAlreadyLoginViewController.h"
 #import "AppDelegate.h"

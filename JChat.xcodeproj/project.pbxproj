@@ -26,9 +26,6 @@
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
-		187183151AFB80C000FB3168 /* NSObject+TimeConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181991AFB80BF00FB3168 /* NSObject+TimeConvert.m */; };
-		187183161AFB80C000FB3168 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871819B1AFB80BF00FB3168 /* NSString+MessageInputView.m */; };
-		187183171AFB80C000FB3168 /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871819C1AFB80BF00FB3168 /* UIImage +ResizeMagick.m */; };
 		187183181AFB80C000FB3168 /* JPIMChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A01AFB80BF00FB3168 /* JPIMChatViewController.m */; };
 		187183191AFB80C000FB3168 /* JPIMChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181A11AFB80BF00FB3168 /* JPIMChatViewController.xib */; };
 		1871831A1AFB80C000FB3168 /* JPIMDetailsInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A31AFB80BF00FB3168 /* JPIMDetailsInfoViewController.m */; };
@@ -69,8 +66,6 @@
 		187183401AFB80C000FB3168 /* XHVoiceRecordHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181EA1AFB80BF00FB3168 /* XHVoiceRecordHUD.m */; };
 		187183411AFB80C000FB3168 /* XHAudioPlayerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181EC1AFB80BF00FB3168 /* XHAudioPlayerHelper.m */; };
 		187183421AFB80C000FB3168 /* XHVoiceCommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181EE1AFB80BF00FB3168 /* XHVoiceCommonHelper.m */; };
-		187183431AFB80C000FB3168 /* JPIMBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181F21AFB80BF00FB3168 /* JPIMBaseViewController.m */; };
-		187183441AFB80C000FB3168 /* JPIMFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181F41AFB80BF00FB3168 /* JPIMFileManager.m */; };
 		187183451AFB80C000FB3168 /* JPIMAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181F71AFB80BF00FB3168 /* JPIMAddViewController.m */; };
 		187183461AFB80C000FB3168 /* JPIMAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181F81AFB80BF00FB3168 /* JPIMAddViewController.xib */; };
 		187183471AFB80C000FB3168 /* JPIMContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181FA1AFB80BF00FB3168 /* JPIMContactsViewController.m */; };
@@ -272,6 +267,7 @@
 		187184161AFB80C000FB3168 /* yuyin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EA1AFB80C000FB3168 /* yuyin@2x.png */; };
 		187184171AFB80C000FB3168 /* zhaopian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EB1AFB80C000FB3168 /* zhaopian@2x.png */; };
 		6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */; };
+		6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */; };
 		6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */; };
 		6039B1E2972C3E3FC1CE0676 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B36C65D718CFBA51882E /* MKAnnotationView+WebCache.m */; };
 		6039B251796A2C46155BB6FA /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6D1A2C410E351208121 /* SDWebImagePrefetcher.m */; };
@@ -279,17 +275,21 @@
 		6039B4AB434F2120F6431270 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BC3B537A9E1B6FBB30FE /* MJPhotoToolbar.m */; };
 		6039B6E00846B07D21E72217 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8EEF63EB1C41A17F0E0 /* UIImage+WebP.m */; };
 		6039B71E0D68F5E9379ABED9 /* SDWebImageDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B63C75BC675F321AB980 /* SDWebImageDownloaderOperation.m */; };
+		6039B75FB1CF5450CD0787E8 /* JPIMBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B356C2B9C193CA4CAE06 /* JPIMBaseViewController.m */; };
 		6039B7CBAC2D4E53092C0575 /* UIImageView+MJWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1B2E519803CA76428C1 /* UIImageView+MJWebCache.m */; };
 		6039B7FE80FB2DB789B210B9 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1FDE6A48DEDC098D770 /* SDWebImageManager+MJ.m */; };
 		6039B83F418699AFF8E2823A /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B470206AC46AE63B8D30 /* UIImage+GIF.m */; };
 		6039B890095007FA4FC2A231 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BF638019C00F541E859F /* SDWebImageDownloader.m */; };
 		6039B89938C2D6525B2CD299 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6BB9BF1F65544C99BED /* UIImageView+WebCache.m */; };
+		6039B9D106B00CBB96BF9458 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B20065FAE28C7715AC67 /* NSString+MessageInputView.m */; };
 		6039B9EE9A8283C9A2F5E205 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B31FB65128104C866B97 /* SDImageCache.m */; };
 		6039B9FEC9C8FBFEFE2CF747 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BDC20B7CA380B8C93BA2 /* MBProgressHUD+Add.m */; };
 		6039BA26BAC5EB168B9D4259 /* JCHATCustomFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6B7F476CC918C72C26B /* JCHATCustomFormatter.m */; };
+		6039BB20C8E8F0ECFF502423 /* NSObject+TimeConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BB3CB298D420BC511221 /* NSObject+TimeConvert.m */; };
 		6039BBEC10AE59FB8E1D4EC8 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B455EDE0E591B1087ACA /* UIButton+WebCache.m */; };
 		6039BC4A1BE30D3B3518AAC5 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6039B86DA2A18B492DE56CD8 /* MJPhotoBrowser.bundle */; };
 		6039BCCABEE11E0FAF50C41F /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B06DB77B2635035FB63D /* SDWebImageDecoder.m */; };
+		6039BCEF611ABE72279A91BE /* JPIMFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BB2B5ADBF93F1A4EBA2C /* JPIMFileManager.m */; };
 		6039BD2C1B5F6CDFD9BB5291 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B13D426CE55AEDC76659 /* UIImage+MultiFormat.m */; };
 		6039BD6A5FE0420731B8833A /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B225336F1B68E6A10415 /* libMobClickLibrary.a */; };
 		6039BE427413C75524B44247 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBAC6063CD3111B1D5BB /* SDWebImageCompat.m */; };
@@ -336,12 +336,6 @@
 		187181911AFB80BF00FB3168 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		187181931AFB80BF00FB3168 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		187181951AFB80BF00FB3168 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		187181981AFB80BF00FB3168 /* NSObject+TimeConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TimeConvert.h"; sourceTree = "<group>"; };
-		187181991AFB80BF00FB3168 /* NSObject+TimeConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TimeConvert.m"; sourceTree = "<group>"; };
-		1871819A1AFB80BF00FB3168 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
-		1871819B1AFB80BF00FB3168 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
-		1871819C1AFB80BF00FB3168 /* UIImage +ResizeMagick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage +ResizeMagick.m"; sourceTree = "<group>"; };
-		1871819D1AFB80BF00FB3168 /* UIImage+ResizeMagick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeMagick.h"; sourceTree = "<group>"; };
 		1871819F1AFB80BF00FB3168 /* JPIMChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMChatViewController.h; sourceTree = "<group>"; };
 		187181A01AFB80BF00FB3168 /* JPIMChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMChatViewController.m; sourceTree = "<group>"; };
 		187181A11AFB80BF00FB3168 /* JPIMChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMChatViewController.xib; sourceTree = "<group>"; };
@@ -411,11 +405,6 @@
 		187181EC1AFB80BF00FB3168 /* XHAudioPlayerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHAudioPlayerHelper.m; sourceTree = "<group>"; };
 		187181ED1AFB80BF00FB3168 /* XHVoiceCommonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHVoiceCommonHelper.h; sourceTree = "<group>"; };
 		187181EE1AFB80BF00FB3168 /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
-		187181F01AFB80BF00FB3168 /* JPIMCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMCommon.h; sourceTree = "<group>"; };
-		187181F11AFB80BF00FB3168 /* JPIMBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMBaseViewController.h; sourceTree = "<group>"; };
-		187181F21AFB80BF00FB3168 /* JPIMBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMBaseViewController.m; sourceTree = "<group>"; };
-		187181F31AFB80BF00FB3168 /* JPIMFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMFileManager.h; sourceTree = "<group>"; };
-		187181F41AFB80BF00FB3168 /* JPIMFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMFileManager.m; sourceTree = "<group>"; };
 		187181F61AFB80BF00FB3168 /* JPIMAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMAddViewController.h; sourceTree = "<group>"; };
 		187181F71AFB80BF00FB3168 /* JPIMAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMAddViewController.m; sourceTree = "<group>"; };
 		187181F81AFB80BF00FB3168 /* JPIMAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMAddViewController.xib; sourceTree = "<group>"; };
@@ -639,20 +628,26 @@
 		6039B1B2E519803CA76428C1 /* UIImageView+MJWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MJWebCache.m"; sourceTree = "<group>"; };
 		6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoProgressView.m; sourceTree = "<group>"; };
 		6039B1FDE6A48DEDC098D770 /* SDWebImageManager+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageManager+MJ.m"; sourceTree = "<group>"; };
+		6039B20065FAE28C7715AC67 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		6039B225336F1B68E6A10415 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		6039B22CD926FCEEE25C9291 /* SDWebImageManager+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDWebImageManager+MJ.h"; sourceTree = "<group>"; };
 		6039B270A6D75DDDC279C460 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		6039B2FBEC3CCD584D80E377 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		6039B30B4E016B6B901E3C21 /* SDWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageManager.m; sourceTree = "<group>"; };
 		6039B31FB65128104C866B97 /* SDImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageCache.m; sourceTree = "<group>"; };
 		6039B3421035D22A550F39AA /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
+		6039B3504A7D0ED5C71405FD /* JChatConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JChatConstants.h; sourceTree = "<group>"; };
 		6039B354054776BB4419272C /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
+		6039B356C2B9C193CA4CAE06 /* JPIMBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMBaseViewController.m; sourceTree = "<group>"; };
 		6039B36C65D718CFBA51882E /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		6039B3A691520DE6766F79DB /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
 		6039B455EDE0E591B1087ACA /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
 		6039B470206AC46AE63B8D30 /* UIImage+GIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GIF.m"; sourceTree = "<group>"; };
 		6039B495243C363A30A745CD /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
+		6039B4D63582A1D08C513D96 /* UIImage+ResizeMagick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeMagick.h"; sourceTree = "<group>"; };
 		6039B4EC6E0F5181F92A2AA2 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
+		6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage +ResizeMagick.m"; sourceTree = "<group>"; };
 		6039B59635D76265AE189A08 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = JChat/lib/JMessage.framework; sourceTree = "<group>"; };
 		6039B5CB4EAB97AB0096BBDA /* SDWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageOperation.h; sourceTree = "<group>"; };
 		6039B5CD3A2AEA7D09ABF7ED /* JCHATCustomFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATCustomFormatter.h; sourceTree = "<group>"; };
@@ -664,6 +659,7 @@
 		6039B6D1A2C410E351208121 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
 		6039B737320034A97DDE0E64 /* UIImage+WebP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WebP.h"; sourceTree = "<group>"; };
 		6039B76AF3DA284363B096E2 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
+		6039B7787D3ECBCF1776ED99 /* JPIMFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMFileManager.h; sourceTree = "<group>"; };
 		6039B78C91F2D914D03DCFCF /* UIImageView+MJWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MJWebCache.h"; sourceTree = "<group>"; };
 		6039B7FAFFD0EE1E9808065B /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		6039B86DA2A18B492DE56CD8 /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
@@ -672,7 +668,11 @@
 		6039B8D0274E925F69EEA8CF /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		6039B8D7CF4591D39ECC24C0 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		6039B8EEF63EB1C41A17F0E0 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
+		6039B8F661AF2A135B10045D /* NSObject+TimeConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TimeConvert.h"; sourceTree = "<group>"; };
+		6039B98212E1FC3AD18E09D4 /* JPIMBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMBaseViewController.h; sourceTree = "<group>"; };
 		6039BB2A0EFF4230235771DD /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
+		6039BB2B5ADBF93F1A4EBA2C /* JPIMFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMFileManager.m; sourceTree = "<group>"; };
+		6039BB3CB298D420BC511221 /* NSObject+TimeConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TimeConvert.m"; sourceTree = "<group>"; };
 		6039BBAC6063CD3111B1D5BB /* SDWebImageCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageCompat.m; sourceTree = "<group>"; };
 		6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
 		6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+GIF.m"; sourceTree = "<group>"; };
@@ -736,6 +736,9 @@
 				1871823F1AFB80C000FB3168 /* Resources */,
 				6039B5CC50E06EAFD3390E5B /* External */,
 				6039B5634BAC483498022015 /* UMAnalytics_Sdk */,
+				6039BAEB9C923E2519A704DF /* Category */,
+				6039B3504A7D0ED5C71405FD /* JChatConstants.h */,
+				6039B52AF12BF093A83C66AB /* Common */,
 			);
 			path = JChat;
 			sourceTree = "<group>";
@@ -743,9 +746,7 @@
 		187181961AFB80BF00FB3168 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				187181971AFB80BF00FB3168 /* Category */,
 				1871819E1AFB80BF00FB3168 /* Chat */,
-				187181EF1AFB80BF00FB3168 /* Common */,
 				187181F51AFB80BF00FB3168 /* Contacts */,
 				187181FC1AFB80BF00FB3168 /* JPIMTabBarViewController.h */,
 				187181FD1AFB80BF00FB3168 /* JPIMTabBarViewController.m */,
@@ -753,21 +754,10 @@
 				187181FF1AFB80BF00FB3168 /* Login */,
 				187182061AFB80BF00FB3168 /* PersonInfo */,
 				1871821F1AFB80BF00FB3168 /* Register */,
+				6039B98212E1FC3AD18E09D4 /* JPIMBaseViewController.h */,
+				6039B356C2B9C193CA4CAE06 /* JPIMBaseViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		187181971AFB80BF00FB3168 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				187181981AFB80BF00FB3168 /* NSObject+TimeConvert.h */,
-				187181991AFB80BF00FB3168 /* NSObject+TimeConvert.m */,
-				1871819A1AFB80BF00FB3168 /* NSString+MessageInputView.h */,
-				1871819B1AFB80BF00FB3168 /* NSString+MessageInputView.m */,
-				1871819C1AFB80BF00FB3168 /* UIImage +ResizeMagick.m */,
-				1871819D1AFB80BF00FB3168 /* UIImage+ResizeMagick.h */,
-			);
-			path = Category;
 			sourceTree = "<group>";
 		};
 		1871819E1AFB80BF00FB3168 /* Chat */ = {
@@ -886,18 +876,6 @@
 				187181E61AFB80BF00FB3168 /* XHUIKitMacro.h */,
 			);
 			path = Macro;
-			sourceTree = "<group>";
-		};
-		187181EF1AFB80BF00FB3168 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				187181F01AFB80BF00FB3168 /* JPIMCommon.h */,
-				187181F11AFB80BF00FB3168 /* JPIMBaseViewController.h */,
-				187181F21AFB80BF00FB3168 /* JPIMBaseViewController.m */,
-				187181F31AFB80BF00FB3168 /* JPIMFileManager.h */,
-				187181F41AFB80BF00FB3168 /* JPIMFileManager.m */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		187181F51AFB80BF00FB3168 /* Contacts */ = {
@@ -1265,6 +1243,15 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		6039B52AF12BF093A83C66AB /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6039B7787D3ECBCF1776ED99 /* JPIMFileManager.h */,
+				6039BB2B5ADBF93F1A4EBA2C /* JPIMFileManager.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		6039B5634BAC483498022015 /* UMAnalytics_Sdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1285,6 +1272,19 @@
 				6039B5CD3A2AEA7D09ABF7ED /* JCHATCustomFormatter.h */,
 			);
 			path = External;
+			sourceTree = "<group>";
+		};
+		6039BAEB9C923E2519A704DF /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				6039B8F661AF2A135B10045D /* NSObject+TimeConvert.h */,
+				6039BB3CB298D420BC511221 /* NSObject+TimeConvert.m */,
+				6039B2FBEC3CCD584D80E377 /* NSString+MessageInputView.h */,
+				6039B20065FAE28C7715AC67 /* NSString+MessageInputView.m */,
+				6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */,
+				6039B4D63582A1D08C513D96 /* UIImage+ResizeMagick.h */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		6039BCC351BDBF0E3134CC6D /* MBProgressHUD */ = {
@@ -1363,6 +1363,7 @@
 				TargetAttributes = {
 					18AB9C8B1A43BCB7007B2A04 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 5KYCJ437CP;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -1639,11 +1640,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187183171AFB80C000FB3168 /* UIImage +ResizeMagick.m in Sources */,
 				187183521AFB80C000FB3168 /* JPIMSettingViewController.m in Sources */,
-				187183431AFB80C000FB3168 /* JPIMBaseViewController.m in Sources */,
 				1871834D1AFB80C000FB3168 /* JPIMLoginViewController.m in Sources */,
-				187183151AFB80C000FB3168 /* NSObject+TimeConvert.m in Sources */,
 				187183241AFB80C000FB3168 /* RawAudioDataPlayer.m in Sources */,
 				187183211AFB80C000FB3168 /* JPIMSendMessageViewController.m in Sources */,
 				187183601AFB80C000FB3168 /* JPIMRegisterViewController.m in Sources */,
@@ -1657,7 +1655,6 @@
 				1871835C1AFB80C000FB3168 /* JPIMSettingCell.m in Sources */,
 				18324C041AFB861A006E8507 /* ChatTable.m in Sources */,
 				1871831C1AFB80C000FB3168 /* JPIMFriendDetailViewController.m in Sources */,
-				187183441AFB80C000FB3168 /* JPIMFileManager.m in Sources */,
 				187183251AFB80C000FB3168 /* JPIMChatTableViewCell.m in Sources */,
 				187183321AFB80C000FB3168 /* JPIMTextTableViewCell.m in Sources */,
 				187183411AFB80C000FB3168 /* XHAudioPlayerHelper.m in Sources */,
@@ -1681,7 +1678,6 @@
 				187183651AFB80C000FB3168 /* main.m in Sources */,
 				1871832B1AFB80C000FB3168 /* JPIMGroupSettingCell.m in Sources */,
 				187183541AFB80C000FB3168 /* JPIMUpdatePasswordCtl.m in Sources */,
-				187183161AFB80C000FB3168 /* NSString+MessageInputView.m in Sources */,
 				1871831E1AFB80C000FB3168 /* JPIMGroupSettingCtl.m in Sources */,
 				187183301AFB80C000FB3168 /* JPIMShowTimeCell.m in Sources */,
 				187183181AFB80C000FB3168 /* JPIMChatViewController.m in Sources */,
@@ -1713,6 +1709,11 @@
 				6039B7CBAC2D4E53092C0575 /* UIImageView+MJWebCache.m in Sources */,
 				6039B89938C2D6525B2CD299 /* UIImageView+WebCache.m in Sources */,
 				6039BA26BAC5EB168B9D4259 /* JCHATCustomFormatter.m in Sources */,
+				6039BB20C8E8F0ECFF502423 /* NSObject+TimeConvert.m in Sources */,
+				6039B9D106B00CBB96BF9458 /* NSString+MessageInputView.m in Sources */,
+				6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */,
+				6039B75FB1CF5450CD0787E8 /* JPIMBaseViewController.m in Sources */,
+				6039BCEF611ABE72279A91BE /* JPIMFileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1856,7 +1857,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "极光IM";
-				PROVISIONING_PROFILE = "84b70a84-5d5b-4e0d-b45e-672ab14e40f2";
+				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
@@ -1871,7 +1872,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-eznqhmzwwwbqkhcvblzkuwssqybu/Build/Products/Debug-iphoneos",
@@ -1900,7 +1901,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "极光IM";
-				PROVISIONING_PROFILE = "84b70a84-5d5b-4e0d-b45e-672ab14e40f2";
+				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";

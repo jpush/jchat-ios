@@ -7,7 +7,7 @@
 //
 
 #import "JPIMTextTableViewCell.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import <JMessage/JMessage.h>
 #import "JPIMSendMessageViewController.h"
 

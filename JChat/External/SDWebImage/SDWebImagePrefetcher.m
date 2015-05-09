@@ -8,7 +8,7 @@
 
 #import "SDWebImagePrefetcher.h"
 #import "SDWebImageManager.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 
 @interface SDWebImagePrefetcher ()
 

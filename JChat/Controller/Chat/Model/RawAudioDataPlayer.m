@@ -7,7 +7,7 @@
 //
 
 #import "RawAudioDataPlayer.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 
 @interface RawAudioDataPlayer()
 
