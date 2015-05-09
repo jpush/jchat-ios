@@ -1,4 +1,3 @@
-#import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
 #import <JMessage/JMSGConversation.h>
 
