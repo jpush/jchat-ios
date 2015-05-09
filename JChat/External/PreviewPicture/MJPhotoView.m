@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
 #import <JMessage/JMessage.h>
-#import "ChatModel.h"
+#import "JCHATChatModel.h"
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"
 #import "JChatConstants.h"
