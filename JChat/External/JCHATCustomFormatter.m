@@ -4,7 +4,7 @@
 //
 
 #import "JCHATCustomFormatter.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 
 
 @implementation JCHATCustomFormatter {

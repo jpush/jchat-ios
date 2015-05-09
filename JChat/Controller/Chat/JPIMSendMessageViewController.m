@@ -8,7 +8,7 @@
 
 #import "JPIMSendMessageViewController.h"
 #import "ChatModel.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMImgTableViewCell.h"
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"

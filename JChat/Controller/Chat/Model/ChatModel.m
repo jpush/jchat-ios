@@ -7,7 +7,7 @@
 //
 
 #import "ChatModel.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #define headHeight 46
 
 @implementation ChatModel

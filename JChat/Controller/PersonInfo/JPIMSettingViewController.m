@@ -7,7 +7,7 @@
 //
 
 #import "JPIMSettingViewController.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMSetting_Cell.h"
 #import "JPIMNewsReminderCtl.h"
 #import "JPIMUpdatePasswordCtl.h"

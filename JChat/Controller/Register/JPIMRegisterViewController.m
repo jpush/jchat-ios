@@ -8,7 +8,7 @@
 
 #import "JPIMRegisterViewController.h"
 #import "JPIMRegisterDetailViewController.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
 #import <CommonCrypto/CommonDigest.h>

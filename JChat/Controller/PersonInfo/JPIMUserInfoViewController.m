@@ -10,7 +10,7 @@
 #import "JPIMSettingCell.h"
 #import "JPIMPersonViewController.h"
 #import "JPIMSettingViewController.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMLoginViewController.h"
 #import "JPIMLoginViewController.h"
 #import "MBProgressHUD+Add.h"

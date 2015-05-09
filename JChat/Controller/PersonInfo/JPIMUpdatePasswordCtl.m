@@ -1,6 +1,6 @@
 
 #import "JPIMUpdatePasswordCtl.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import <JMessage/JMessage.h>
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"
