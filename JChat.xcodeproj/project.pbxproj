@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18324C041AFB861A006E8507 /* ChatTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 18324C031AFB861A006E8507 /* ChatTable.m */; };
+		18324C041AFB861A006E8507 /* JCHATChatTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 18324C031AFB861A006E8507 /* JCHATChatTable.m */; };
 		183983351AFC914100AC8280 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983341AFC914100AC8280 /* libz.dylib */; };
 		183983371AFC914900AC8280 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983361AFC914900AC8280 /* Security.framework */; };
 		183983391AFC915C00AC8280 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983381AFC915C00AC8280 /* CoreAudio.framework */; };
@@ -26,75 +26,74 @@
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
-		187183181AFB80C000FB3168 /* JPIMChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A01AFB80BF00FB3168 /* JPIMChatViewController.m */; };
-		187183191AFB80C000FB3168 /* JPIMChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181A11AFB80BF00FB3168 /* JPIMChatViewController.xib */; };
-		1871831A1AFB80C000FB3168 /* JPIMDetailsInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A31AFB80BF00FB3168 /* JPIMDetailsInfoViewController.m */; };
-		1871831B1AFB80C000FB3168 /* JPIMDetailsInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181A41AFB80BF00FB3168 /* JPIMDetailsInfoViewController.xib */; };
-		1871831C1AFB80C000FB3168 /* JPIMFriendDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A61AFB80BF00FB3168 /* JPIMFriendDetailViewController.m */; };
-		1871831D1AFB80C000FB3168 /* JPIMFriendDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181A71AFB80BF00FB3168 /* JPIMFriendDetailViewController.xib */; };
-		1871831E1AFB80C000FB3168 /* JPIMGroupSettingCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A91AFB80BF00FB3168 /* JPIMGroupSettingCtl.m */; };
-		1871831F1AFB80C000FB3168 /* JPIMSelectFriendsCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181AB1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.m */; };
-		187183201AFB80C000FB3168 /* JPIMSelectFriendsCtl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181AC1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.xib */; };
-		187183211AFB80C000FB3168 /* JPIMSendMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181AE1AFB80BF00FB3168 /* JPIMSendMessageViewController.m */; };
-		187183221AFB80C000FB3168 /* JPIMSendMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181AF1AFB80BF00FB3168 /* JPIMSendMessageViewController.xib */; };
-		187183231AFB80C000FB3168 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181B21AFB80BF00FB3168 /* ChatModel.m */; };
-		187183241AFB80C000FB3168 /* RawAudioDataPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181B41AFB80BF00FB3168 /* RawAudioDataPlayer.m */; };
-		187183251AFB80C000FB3168 /* JPIMChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181B81AFB80BF00FB3168 /* JPIMChatTableViewCell.m */; };
-		187183261AFB80C000FB3168 /* JPIMChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181B91AFB80BF00FB3168 /* JPIMChatTableViewCell.xib */; };
-		187183271AFB80C000FB3168 /* JPIMDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181BB1AFB80BF00FB3168 /* JPIMDetailTableViewCell.m */; };
-		187183281AFB80C000FB3168 /* JPIMDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181BC1AFB80BF00FB3168 /* JPIMDetailTableViewCell.xib */; };
-		187183291AFB80C000FB3168 /* JPIMFrIendDetailMessgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181BE1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.m */; };
-		1871832A1AFB80C000FB3168 /* JPIMFrIendDetailMessgeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181BF1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.xib */; };
-		1871832B1AFB80C000FB3168 /* JPIMGroupSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C11AFB80BF00FB3168 /* JPIMGroupSettingCell.m */; };
-		1871832C1AFB80C000FB3168 /* JPIMGroupSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181C21AFB80BF00FB3168 /* JPIMGroupSettingCell.xib */; };
-		1871832D1AFB80C000FB3168 /* JPIMImgTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C41AFB80BF00FB3168 /* JPIMImgTableViewCell.m */; };
-		1871832E1AFB80C000FB3168 /* JPIMSelectFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C61AFB80BF00FB3168 /* JPIMSelectFriendCell.m */; };
-		1871832F1AFB80C000FB3168 /* JPIMSelectFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181C71AFB80BF00FB3168 /* JPIMSelectFriendCell.xib */; };
-		187183301AFB80C000FB3168 /* JPIMShowTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C91AFB80BF00FB3168 /* JPIMShowTimeCell.m */; };
-		187183311AFB80C000FB3168 /* JPIMShowTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181CA1AFB80BF00FB3168 /* JPIMShowTimeCell.xib */; };
-		187183321AFB80C000FB3168 /* JPIMTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181CC1AFB80BF00FB3168 /* JPIMTextTableViewCell.m */; };
-		187183331AFB80C000FB3168 /* JPIMVoiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181CE1AFB80BF00FB3168 /* JPIMVoiceTableViewCell.m */; };
-		187183351AFB80C000FB3168 /* JPIMGroupPersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D31AFB80BF00FB3168 /* JPIMGroupPersonView.m */; };
-		187183361AFB80C000FB3168 /* JPIMGroupPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181D41AFB80BF00FB3168 /* JPIMGroupPersonView.xib */; };
-		187183371AFB80C000FB3168 /* JPIMMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D61AFB80BF00FB3168 /* JPIMMessageTextView.m */; };
-		187183381AFB80C000FB3168 /* JPIMMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D81AFB80BF00FB3168 /* JPIMMoreView.m */; };
-		187183391AFB80C000FB3168 /* JPIMMoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181D91AFB80BF00FB3168 /* JPIMMoreView.xib */; };
-		1871833A1AFB80C000FB3168 /* JPIMToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181DB1AFB80BF00FB3168 /* JPIMToolBar.m */; };
-		1871833B1AFB80C000FB3168 /* JPIMToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181DC1AFB80BF00FB3168 /* JPIMToolBar.xib */; };
-		1871833E1AFB80C000FB3168 /* RecordAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181E11AFB80BF00FB3168 /* RecordAnimationView.m */; };
+		187183181AFB80C000FB3168 /* JCHATChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A01AFB80BF00FB3168 /* JCHATChatViewController.m */; };
+		187183191AFB80C000FB3168 /* JCHATChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181A11AFB80BF00FB3168 /* JCHATChatViewController.xib */; };
+		1871831A1AFB80C000FB3168 /* JCHATDetailsInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A31AFB80BF00FB3168 /* JCHATDetailsInfoViewController.m */; };
+		1871831B1AFB80C000FB3168 /* JCHATDetailsInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181A41AFB80BF00FB3168 /* JCHATDetailsInfoViewController.xib */; };
+		1871831C1AFB80C000FB3168 /* JCHATFriendDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A61AFB80BF00FB3168 /* JCHATFriendDetailViewController.m */; };
+		1871831D1AFB80C000FB3168 /* JCHATFriendDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181A71AFB80BF00FB3168 /* JCHATFriendDetailViewController.xib */; };
+		1871831E1AFB80C000FB3168 /* JCHATGroupSettingCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181A91AFB80BF00FB3168 /* JCHATGroupSettingCtl.m */; };
+		1871831F1AFB80C000FB3168 /* JCHATSelectFriendsCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181AB1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.m */; };
+		187183201AFB80C000FB3168 /* JCHATSelectFriendsCtl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181AC1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.xib */; };
+		187183211AFB80C000FB3168 /* JCHATSendMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181AE1AFB80BF00FB3168 /* JCHATSendMessageViewController.m */; };
+		187183221AFB80C000FB3168 /* JCHATSendMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181AF1AFB80BF00FB3168 /* JCHATSendMessageViewController.xib */; };
+		187183231AFB80C000FB3168 /* JCHATChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181B21AFB80BF00FB3168 /* JCHATChatModel.m */; };
+		187183241AFB80C000FB3168 /* JCHATRawAudioDataPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181B41AFB80BF00FB3168 /* JCHATRawAudioDataPlayer.m */; };
+		187183251AFB80C000FB3168 /* JCHATChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181B81AFB80BF00FB3168 /* JCHATChatTableViewCell.m */; };
+		187183261AFB80C000FB3168 /* JCHATChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181B91AFB80BF00FB3168 /* JCHATChatTableViewCell.xib */; };
+		187183271AFB80C000FB3168 /* JCHATDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181BB1AFB80BF00FB3168 /* JCHATDetailTableViewCell.m */; };
+		187183281AFB80C000FB3168 /* JCHATDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181BC1AFB80BF00FB3168 /* JCHATDetailTableViewCell.xib */; };
+		187183291AFB80C000FB3168 /* JCHATFrIendDetailMessgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181BE1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.m */; };
+		1871832A1AFB80C000FB3168 /* JCHATFrIendDetailMessgeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181BF1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.xib */; };
+		1871832B1AFB80C000FB3168 /* JCHATGroupSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C11AFB80BF00FB3168 /* JCHATGroupSettingCell.m */; };
+		1871832C1AFB80C000FB3168 /* JCHATGroupSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181C21AFB80BF00FB3168 /* JCHATGroupSettingCell.xib */; };
+		1871832D1AFB80C000FB3168 /* JCHATImgTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C41AFB80BF00FB3168 /* JCHATImgTableViewCell.m */; };
+		1871832E1AFB80C000FB3168 /* JCHATSelectFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C61AFB80BF00FB3168 /* JCHATSelectFriendCell.m */; };
+		1871832F1AFB80C000FB3168 /* JCHATSelectFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181C71AFB80BF00FB3168 /* JCHATSelectFriendCell.xib */; };
+		187183301AFB80C000FB3168 /* JCHATShowTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C91AFB80BF00FB3168 /* JCHATShowTimeCell.m */; };
+		187183311AFB80C000FB3168 /* JCHATShowTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181CA1AFB80BF00FB3168 /* JCHATShowTimeCell.xib */; };
+		187183321AFB80C000FB3168 /* JCHATTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */; };
+		187183331AFB80C000FB3168 /* JCHATVoiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */; };
+		187183351AFB80C000FB3168 /* JCHATGroupPersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D31AFB80BF00FB3168 /* JCHATGroupPersonView.m */; };
+		187183361AFB80C000FB3168 /* JCHATGroupPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181D41AFB80BF00FB3168 /* JCHATGroupPersonView.xib */; };
+		187183371AFB80C000FB3168 /* JCHATMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D61AFB80BF00FB3168 /* JCHATMessageTextView.m */; };
+		187183381AFB80C000FB3168 /* JCHATMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D81AFB80BF00FB3168 /* JCHATMoreView.m */; };
+		187183391AFB80C000FB3168 /* JCHATMoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181D91AFB80BF00FB3168 /* JCHATMoreView.xib */; };
+		1871833A1AFB80C000FB3168 /* JCHATToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181DB1AFB80BF00FB3168 /* JCHATToolBar.m */; };
+		1871833B1AFB80C000FB3168 /* JCHATToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181DC1AFB80BF00FB3168 /* JCHATToolBar.xib */; };
+		1871833E1AFB80C000FB3168 /* JCHATRecordAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181E11AFB80BF00FB3168 /* JCHATRecordAnimationView.m */; };
 		1871833F1AFB80C000FB3168 /* XHVoiceRecordHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181E81AFB80BF00FB3168 /* XHVoiceRecordHelper.m */; };
 		187183401AFB80C000FB3168 /* XHVoiceRecordHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181EA1AFB80BF00FB3168 /* XHVoiceRecordHUD.m */; };
-		187183411AFB80C000FB3168 /* XHAudioPlayerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181EC1AFB80BF00FB3168 /* XHAudioPlayerHelper.m */; };
-		187183421AFB80C000FB3168 /* XHVoiceCommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181EE1AFB80BF00FB3168 /* XHVoiceCommonHelper.m */; };
-		187183451AFB80C000FB3168 /* JPIMAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181F71AFB80BF00FB3168 /* JPIMAddViewController.m */; };
-		187183461AFB80C000FB3168 /* JPIMAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181F81AFB80BF00FB3168 /* JPIMAddViewController.xib */; };
-		187183471AFB80C000FB3168 /* JPIMContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181FA1AFB80BF00FB3168 /* JPIMContactsViewController.m */; };
-		187183481AFB80C000FB3168 /* JPIMContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181FB1AFB80BF00FB3168 /* JPIMContactsViewController.xib */; };
-		187183491AFB80C000FB3168 /* JPIMTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181FD1AFB80BF00FB3168 /* JPIMTabBarViewController.m */; };
-		1871834A1AFB80C000FB3168 /* JPIMTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181FE1AFB80BF00FB3168 /* JPIMTabBarViewController.xib */; };
-		1871834B1AFB80C000FB3168 /* JPIMAlreadyLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182011AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.m */; };
-		1871834C1AFB80C000FB3168 /* JPIMAlreadyLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182021AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.xib */; };
-		1871834D1AFB80C000FB3168 /* JPIMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182041AFB80BF00FB3168 /* JPIMLoginViewController.m */; };
-		1871834E1AFB80C000FB3168 /* JPIMLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182051AFB80BF00FB3168 /* JPIMLoginViewController.xib */; };
-		1871834F1AFB80C000FB3168 /* JPIMNewsReminderCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182081AFB80BF00FB3168 /* JPIMNewsReminderCtl.m */; };
-		187183501AFB80C000FB3168 /* JPIMPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871820A1AFB80BF00FB3168 /* JPIMPersonViewController.m */; };
-		187183511AFB80C000FB3168 /* JPIMPersonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871820B1AFB80BF00FB3168 /* JPIMPersonViewController.xib */; };
-		187183521AFB80C000FB3168 /* JPIMSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871820D1AFB80BF00FB3168 /* JPIMSettingViewController.m */; };
-		187183531AFB80C000FB3168 /* JPIMSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871820E1AFB80BF00FB3168 /* JPIMSettingViewController.xib */; };
-		187183541AFB80C000FB3168 /* JPIMUpdatePasswordCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182101AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.m */; };
-		187183551AFB80C000FB3168 /* JPIMUpdatePasswordCtl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182111AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.xib */; };
-		187183561AFB80C000FB3168 /* JPIMUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182131AFB80BF00FB3168 /* JPIMUserInfoViewController.m */; };
-		187183571AFB80C000FB3168 /* JPIMUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182141AFB80BF00FB3168 /* JPIMUserInfoViewController.xib */; };
-		187183581AFB80C000FB3168 /* JPIMpersonInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182171AFB80BF00FB3168 /* JPIMpersonInfoCell.m */; };
-		187183591AFB80C000FB3168 /* JPIMpersonInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182181AFB80BF00FB3168 /* JPIMpersonInfoCell.xib */; };
-		1871835A1AFB80C000FB3168 /* JPIMSetting_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871821A1AFB80BF00FB3168 /* JPIMSetting_Cell.m */; };
-		1871835B1AFB80C000FB3168 /* JPIMSetting_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871821B1AFB80BF00FB3168 /* JPIMSetting_Cell.xib */; };
-		1871835C1AFB80C000FB3168 /* JPIMSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871821D1AFB80BF00FB3168 /* JPIMSettingCell.m */; };
-		1871835D1AFB80C000FB3168 /* JPIMSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871821E1AFB80BF00FB3168 /* JPIMSettingCell.xib */; };
-		1871835E1AFB80C000FB3168 /* JPIMRegisterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182211AFB80BF00FB3168 /* JPIMRegisterDetailViewController.m */; };
-		1871835F1AFB80C000FB3168 /* JPIMRegisterDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182221AFB80BF00FB3168 /* JPIMRegisterDetailViewController.xib */; };
-		187183601AFB80C000FB3168 /* JPIMRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182241AFB80BF00FB3168 /* JPIMRegisterViewController.m */; };
-		187183611AFB80C000FB3168 /* JPIMRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182251AFB80BF00FB3168 /* JPIMRegisterViewController.xib */; };
+		187183411AFB80C000FB3168 /* JCHATAudioPlayerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181EC1AFB80BF00FB3168 /* JCHATAudioPlayerHelper.m */; };
+		187183451AFB80C000FB3168 /* JCHATAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181F71AFB80BF00FB3168 /* JCHATAddViewController.m */; };
+		187183461AFB80C000FB3168 /* JCHATAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181F81AFB80BF00FB3168 /* JCHATAddViewController.xib */; };
+		187183471AFB80C000FB3168 /* JCHATContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181FA1AFB80BF00FB3168 /* JCHATContactsViewController.m */; };
+		187183481AFB80C000FB3168 /* JCHATContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181FB1AFB80BF00FB3168 /* JCHATContactsViewController.xib */; };
+		187183491AFB80C000FB3168 /* JCHATTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181FD1AFB80BF00FB3168 /* JCHATTabBarViewController.m */; };
+		1871834A1AFB80C000FB3168 /* JCHATTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181FE1AFB80BF00FB3168 /* JCHATTabBarViewController.xib */; };
+		1871834B1AFB80C000FB3168 /* JCHATAlreadyLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182011AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.m */; };
+		1871834C1AFB80C000FB3168 /* JCHATAlreadyLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182021AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.xib */; };
+		1871834D1AFB80C000FB3168 /* JCHATLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182041AFB80BF00FB3168 /* JCHATLoginViewController.m */; };
+		1871834E1AFB80C000FB3168 /* JCHATLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182051AFB80BF00FB3168 /* JCHATLoginViewController.xib */; };
+		1871834F1AFB80C000FB3168 /* JCHATNewsReminderCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182081AFB80BF00FB3168 /* JCHATNewsReminderCtl.m */; };
+		187183501AFB80C000FB3168 /* JCHATPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871820A1AFB80BF00FB3168 /* JCHATPersonViewController.m */; };
+		187183511AFB80C000FB3168 /* JCHATPersonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871820B1AFB80BF00FB3168 /* JCHATPersonViewController.xib */; };
+		187183521AFB80C000FB3168 /* JCHATSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871820D1AFB80BF00FB3168 /* JCHATSettingViewController.m */; };
+		187183531AFB80C000FB3168 /* JCHATSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871820E1AFB80BF00FB3168 /* JCHATSettingViewController.xib */; };
+		187183541AFB80C000FB3168 /* JCHATUpdatePasswordCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182101AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.m */; };
+		187183551AFB80C000FB3168 /* JCHATUpdatePasswordCtl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182111AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.xib */; };
+		187183561AFB80C000FB3168 /* JCHATUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182131AFB80BF00FB3168 /* JCHATUserInfoViewController.m */; };
+		187183571AFB80C000FB3168 /* JCHATUserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182141AFB80BF00FB3168 /* JCHATUserInfoViewController.xib */; };
+		187183581AFB80C000FB3168 /* JCHATPersonInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182171AFB80BF00FB3168 /* JCHATPersonInfoCell.m */; };
+		187183591AFB80C000FB3168 /* JCHATPersonInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182181AFB80BF00FB3168 /* JCHATPersonInfoCell.xib */; };
+		1871835A1AFB80C000FB3168 /* JCHATSetting_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871821A1AFB80BF00FB3168 /* JCHATSetting_Cell.m */; };
+		1871835B1AFB80C000FB3168 /* JCHATSetting_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871821B1AFB80BF00FB3168 /* JCHATSetting_Cell.xib */; };
+		1871835C1AFB80C000FB3168 /* JCHATSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871821D1AFB80BF00FB3168 /* JCHATSettingCell.m */; };
+		1871835D1AFB80C000FB3168 /* JCHATSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1871821E1AFB80BF00FB3168 /* JCHATSettingCell.xib */; };
+		1871835E1AFB80C000FB3168 /* JCHATRegisterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182211AFB80BF00FB3168 /* JCHATRegisterDetailViewController.m */; };
+		1871835F1AFB80C000FB3168 /* JCHATRegisterDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182221AFB80BF00FB3168 /* JCHATRegisterDetailViewController.xib */; };
+		187183601AFB80C000FB3168 /* JCHATRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182241AFB80BF00FB3168 /* JCHATRegisterViewController.m */; };
+		187183611AFB80C000FB3168 /* JCHATRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182251AFB80BF00FB3168 /* JCHATRegisterViewController.xib */; };
 		187183621AFB80C000FB3168 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 187182261AFB80BF00FB3168 /* Images.xcassets */; };
 		187183631AFB80C000FB3168 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 187182271AFB80BF00FB3168 /* Info.plist */; };
 		187183651AFB80C000FB3168 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871822A1AFB80BF00FB3168 /* main.m */; };
@@ -273,9 +272,10 @@
 		6039B251796A2C46155BB6FA /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6D1A2C410E351208121 /* SDWebImagePrefetcher.m */; };
 		6039B3C6A038F78066188F61 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B30B4E016B6B901E3C21 /* SDWebImageManager.m */; };
 		6039B4AB434F2120F6431270 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BC3B537A9E1B6FBB30FE /* MJPhotoToolbar.m */; };
+		6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */; };
 		6039B6E00846B07D21E72217 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8EEF63EB1C41A17F0E0 /* UIImage+WebP.m */; };
 		6039B71E0D68F5E9379ABED9 /* SDWebImageDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B63C75BC675F321AB980 /* SDWebImageDownloaderOperation.m */; };
-		6039B75FB1CF5450CD0787E8 /* JPIMBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B356C2B9C193CA4CAE06 /* JPIMBaseViewController.m */; };
+		6039B75FB1CF5450CD0787E8 /* JCHATBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B356C2B9C193CA4CAE06 /* JCHATBaseViewController.m */; };
 		6039B7CBAC2D4E53092C0575 /* UIImageView+MJWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1B2E519803CA76428C1 /* UIImageView+MJWebCache.m */; };
 		6039B7FE80FB2DB789B210B9 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1FDE6A48DEDC098D770 /* SDWebImageManager+MJ.m */; };
 		6039B83F418699AFF8E2823A /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B470206AC46AE63B8D30 /* UIImage+GIF.m */; };
@@ -289,7 +289,7 @@
 		6039BBEC10AE59FB8E1D4EC8 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B455EDE0E591B1087ACA /* UIButton+WebCache.m */; };
 		6039BC4A1BE30D3B3518AAC5 /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6039B86DA2A18B492DE56CD8 /* MJPhotoBrowser.bundle */; };
 		6039BCCABEE11E0FAF50C41F /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B06DB77B2635035FB63D /* SDWebImageDecoder.m */; };
-		6039BCEF611ABE72279A91BE /* JPIMFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BB2B5ADBF93F1A4EBA2C /* JPIMFileManager.m */; };
+		6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BB2B5ADBF93F1A4EBA2C /* JCHATFileManager.m */; };
 		6039BD2C1B5F6CDFD9BB5291 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B13D426CE55AEDC76659 /* UIImage+MultiFormat.m */; };
 		6039BD6A5FE0420731B8833A /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B225336F1B68E6A10415 /* libMobClickLibrary.a */; };
 		6039BE427413C75524B44247 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBAC6063CD3111B1D5BB /* SDWebImageCompat.m */; };
@@ -316,8 +316,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		18324C021AFB861A006E8507 /* ChatTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTable.h; sourceTree = "<group>"; };
-		18324C031AFB861A006E8507 /* ChatTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTable.m; sourceTree = "<group>"; };
+		18324C021AFB861A006E8507 /* JCHATChatTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATChatTable.h; sourceTree = "<group>"; };
+		18324C031AFB861A006E8507 /* JCHATChatTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATChatTable.m; sourceTree = "<group>"; };
 		183983341AFC914100AC8280 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		183983361AFC914900AC8280 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		183983381AFC915C00AC8280 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -336,64 +336,64 @@
 		187181911AFB80BF00FB3168 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		187181931AFB80BF00FB3168 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		187181951AFB80BF00FB3168 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1871819F1AFB80BF00FB3168 /* JPIMChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMChatViewController.h; sourceTree = "<group>"; };
-		187181A01AFB80BF00FB3168 /* JPIMChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMChatViewController.m; sourceTree = "<group>"; };
-		187181A11AFB80BF00FB3168 /* JPIMChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMChatViewController.xib; sourceTree = "<group>"; };
-		187181A21AFB80BF00FB3168 /* JPIMDetailsInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMDetailsInfoViewController.h; sourceTree = "<group>"; };
-		187181A31AFB80BF00FB3168 /* JPIMDetailsInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMDetailsInfoViewController.m; sourceTree = "<group>"; };
-		187181A41AFB80BF00FB3168 /* JPIMDetailsInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMDetailsInfoViewController.xib; sourceTree = "<group>"; };
-		187181A51AFB80BF00FB3168 /* JPIMFriendDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMFriendDetailViewController.h; sourceTree = "<group>"; };
-		187181A61AFB80BF00FB3168 /* JPIMFriendDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMFriendDetailViewController.m; sourceTree = "<group>"; };
-		187181A71AFB80BF00FB3168 /* JPIMFriendDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMFriendDetailViewController.xib; sourceTree = "<group>"; };
-		187181A81AFB80BF00FB3168 /* JPIMGroupSettingCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMGroupSettingCtl.h; sourceTree = "<group>"; };
-		187181A91AFB80BF00FB3168 /* JPIMGroupSettingCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMGroupSettingCtl.m; sourceTree = "<group>"; };
-		187181AA1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMSelectFriendsCtl.h; sourceTree = "<group>"; };
-		187181AB1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMSelectFriendsCtl.m; sourceTree = "<group>"; };
-		187181AC1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMSelectFriendsCtl.xib; sourceTree = "<group>"; };
-		187181AD1AFB80BF00FB3168 /* JPIMSendMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMSendMessageViewController.h; sourceTree = "<group>"; };
-		187181AE1AFB80BF00FB3168 /* JPIMSendMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMSendMessageViewController.m; sourceTree = "<group>"; };
-		187181AF1AFB80BF00FB3168 /* JPIMSendMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMSendMessageViewController.xib; sourceTree = "<group>"; };
-		187181B11AFB80BF00FB3168 /* ChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatModel.h; sourceTree = "<group>"; };
-		187181B21AFB80BF00FB3168 /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
-		187181B31AFB80BF00FB3168 /* RawAudioDataPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawAudioDataPlayer.h; sourceTree = "<group>"; };
-		187181B41AFB80BF00FB3168 /* RawAudioDataPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawAudioDataPlayer.m; sourceTree = "<group>"; };
-		187181B71AFB80BF00FB3168 /* JPIMChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMChatTableViewCell.h; sourceTree = "<group>"; };
-		187181B81AFB80BF00FB3168 /* JPIMChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMChatTableViewCell.m; sourceTree = "<group>"; };
-		187181B91AFB80BF00FB3168 /* JPIMChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMChatTableViewCell.xib; sourceTree = "<group>"; };
-		187181BA1AFB80BF00FB3168 /* JPIMDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMDetailTableViewCell.h; sourceTree = "<group>"; };
-		187181BB1AFB80BF00FB3168 /* JPIMDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMDetailTableViewCell.m; sourceTree = "<group>"; };
-		187181BC1AFB80BF00FB3168 /* JPIMDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMDetailTableViewCell.xib; sourceTree = "<group>"; };
-		187181BD1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMFrIendDetailMessgeCell.h; sourceTree = "<group>"; };
-		187181BE1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMFrIendDetailMessgeCell.m; sourceTree = "<group>"; };
-		187181BF1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMFrIendDetailMessgeCell.xib; sourceTree = "<group>"; };
-		187181C01AFB80BF00FB3168 /* JPIMGroupSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMGroupSettingCell.h; sourceTree = "<group>"; };
-		187181C11AFB80BF00FB3168 /* JPIMGroupSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMGroupSettingCell.m; sourceTree = "<group>"; };
-		187181C21AFB80BF00FB3168 /* JPIMGroupSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMGroupSettingCell.xib; sourceTree = "<group>"; };
-		187181C31AFB80BF00FB3168 /* JPIMImgTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMImgTableViewCell.h; sourceTree = "<group>"; };
-		187181C41AFB80BF00FB3168 /* JPIMImgTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMImgTableViewCell.m; sourceTree = "<group>"; };
-		187181C51AFB80BF00FB3168 /* JPIMSelectFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMSelectFriendCell.h; sourceTree = "<group>"; };
-		187181C61AFB80BF00FB3168 /* JPIMSelectFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMSelectFriendCell.m; sourceTree = "<group>"; };
-		187181C71AFB80BF00FB3168 /* JPIMSelectFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMSelectFriendCell.xib; sourceTree = "<group>"; };
-		187181C81AFB80BF00FB3168 /* JPIMShowTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMShowTimeCell.h; sourceTree = "<group>"; };
-		187181C91AFB80BF00FB3168 /* JPIMShowTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMShowTimeCell.m; sourceTree = "<group>"; };
-		187181CA1AFB80BF00FB3168 /* JPIMShowTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMShowTimeCell.xib; sourceTree = "<group>"; };
-		187181CB1AFB80BF00FB3168 /* JPIMTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMTextTableViewCell.h; sourceTree = "<group>"; };
-		187181CC1AFB80BF00FB3168 /* JPIMTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMTextTableViewCell.m; sourceTree = "<group>"; };
-		187181CD1AFB80BF00FB3168 /* JPIMVoiceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMVoiceTableViewCell.h; sourceTree = "<group>"; };
-		187181CE1AFB80BF00FB3168 /* JPIMVoiceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMVoiceTableViewCell.m; sourceTree = "<group>"; };
-		187181D21AFB80BF00FB3168 /* JPIMGroupPersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMGroupPersonView.h; sourceTree = "<group>"; };
-		187181D31AFB80BF00FB3168 /* JPIMGroupPersonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMGroupPersonView.m; sourceTree = "<group>"; };
-		187181D41AFB80BF00FB3168 /* JPIMGroupPersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMGroupPersonView.xib; sourceTree = "<group>"; };
-		187181D51AFB80BF00FB3168 /* JPIMMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMMessageTextView.h; sourceTree = "<group>"; };
-		187181D61AFB80BF00FB3168 /* JPIMMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMMessageTextView.m; sourceTree = "<group>"; };
-		187181D71AFB80BF00FB3168 /* JPIMMoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMMoreView.h; sourceTree = "<group>"; };
-		187181D81AFB80BF00FB3168 /* JPIMMoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMMoreView.m; sourceTree = "<group>"; };
-		187181D91AFB80BF00FB3168 /* JPIMMoreView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMMoreView.xib; sourceTree = "<group>"; };
-		187181DA1AFB80BF00FB3168 /* JPIMToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMToolBar.h; sourceTree = "<group>"; };
-		187181DB1AFB80BF00FB3168 /* JPIMToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMToolBar.m; sourceTree = "<group>"; };
-		187181DC1AFB80BF00FB3168 /* JPIMToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMToolBar.xib; sourceTree = "<group>"; };
-		187181E01AFB80BF00FB3168 /* RecordAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordAnimationView.h; sourceTree = "<group>"; };
-		187181E11AFB80BF00FB3168 /* RecordAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordAnimationView.m; sourceTree = "<group>"; };
+		1871819F1AFB80BF00FB3168 /* JCHATChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATChatViewController.h; sourceTree = "<group>"; };
+		187181A01AFB80BF00FB3168 /* JCHATChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATChatViewController.m; sourceTree = "<group>"; };
+		187181A11AFB80BF00FB3168 /* JCHATChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATChatViewController.xib; sourceTree = "<group>"; };
+		187181A21AFB80BF00FB3168 /* JCHATDetailsInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATDetailsInfoViewController.h; sourceTree = "<group>"; };
+		187181A31AFB80BF00FB3168 /* JCHATDetailsInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATDetailsInfoViewController.m; sourceTree = "<group>"; };
+		187181A41AFB80BF00FB3168 /* JCHATDetailsInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATDetailsInfoViewController.xib; sourceTree = "<group>"; };
+		187181A51AFB80BF00FB3168 /* JCHATFriendDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATFriendDetailViewController.h; sourceTree = "<group>"; };
+		187181A61AFB80BF00FB3168 /* JCHATFriendDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATFriendDetailViewController.m; sourceTree = "<group>"; };
+		187181A71AFB80BF00FB3168 /* JCHATFriendDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATFriendDetailViewController.xib; sourceTree = "<group>"; };
+		187181A81AFB80BF00FB3168 /* JCHATGroupSettingCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATGroupSettingCtl.h; sourceTree = "<group>"; };
+		187181A91AFB80BF00FB3168 /* JCHATGroupSettingCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATGroupSettingCtl.m; sourceTree = "<group>"; };
+		187181AA1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSelectFriendsCtl.h; sourceTree = "<group>"; };
+		187181AB1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSelectFriendsCtl.m; sourceTree = "<group>"; };
+		187181AC1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSelectFriendsCtl.xib; sourceTree = "<group>"; };
+		187181AD1AFB80BF00FB3168 /* JCHATSendMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSendMessageViewController.h; sourceTree = "<group>"; };
+		187181AE1AFB80BF00FB3168 /* JCHATSendMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSendMessageViewController.m; sourceTree = "<group>"; };
+		187181AF1AFB80BF00FB3168 /* JCHATSendMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSendMessageViewController.xib; sourceTree = "<group>"; };
+		187181B11AFB80BF00FB3168 /* JCHATChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATChatModel.h; sourceTree = "<group>"; };
+		187181B21AFB80BF00FB3168 /* JCHATChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATChatModel.m; sourceTree = "<group>"; };
+		187181B31AFB80BF00FB3168 /* JCHATRawAudioDataPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATRawAudioDataPlayer.h; sourceTree = "<group>"; };
+		187181B41AFB80BF00FB3168 /* JCHATRawAudioDataPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATRawAudioDataPlayer.m; sourceTree = "<group>"; };
+		187181B71AFB80BF00FB3168 /* JCHATChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATChatTableViewCell.h; sourceTree = "<group>"; };
+		187181B81AFB80BF00FB3168 /* JCHATChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATChatTableViewCell.m; sourceTree = "<group>"; };
+		187181B91AFB80BF00FB3168 /* JCHATChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATChatTableViewCell.xib; sourceTree = "<group>"; };
+		187181BA1AFB80BF00FB3168 /* JCHATDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATDetailTableViewCell.h; sourceTree = "<group>"; };
+		187181BB1AFB80BF00FB3168 /* JCHATDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATDetailTableViewCell.m; sourceTree = "<group>"; };
+		187181BC1AFB80BF00FB3168 /* JCHATDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATDetailTableViewCell.xib; sourceTree = "<group>"; };
+		187181BD1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATFrIendDetailMessgeCell.h; sourceTree = "<group>"; };
+		187181BE1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATFrIendDetailMessgeCell.m; sourceTree = "<group>"; };
+		187181BF1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATFrIendDetailMessgeCell.xib; sourceTree = "<group>"; };
+		187181C01AFB80BF00FB3168 /* JCHATGroupSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATGroupSettingCell.h; sourceTree = "<group>"; };
+		187181C11AFB80BF00FB3168 /* JCHATGroupSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATGroupSettingCell.m; sourceTree = "<group>"; };
+		187181C21AFB80BF00FB3168 /* JCHATGroupSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATGroupSettingCell.xib; sourceTree = "<group>"; };
+		187181C31AFB80BF00FB3168 /* JCHATImgTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATImgTableViewCell.h; sourceTree = "<group>"; };
+		187181C41AFB80BF00FB3168 /* JCHATImgTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATImgTableViewCell.m; sourceTree = "<group>"; };
+		187181C51AFB80BF00FB3168 /* JCHATSelectFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSelectFriendCell.h; sourceTree = "<group>"; };
+		187181C61AFB80BF00FB3168 /* JCHATSelectFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSelectFriendCell.m; sourceTree = "<group>"; };
+		187181C71AFB80BF00FB3168 /* JCHATSelectFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSelectFriendCell.xib; sourceTree = "<group>"; };
+		187181C81AFB80BF00FB3168 /* JCHATShowTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATShowTimeCell.h; sourceTree = "<group>"; };
+		187181C91AFB80BF00FB3168 /* JCHATShowTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATShowTimeCell.m; sourceTree = "<group>"; };
+		187181CA1AFB80BF00FB3168 /* JCHATShowTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATShowTimeCell.xib; sourceTree = "<group>"; };
+		187181CB1AFB80BF00FB3168 /* JCHATTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATTextTableViewCell.h; sourceTree = "<group>"; };
+		187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATTextTableViewCell.m; sourceTree = "<group>"; };
+		187181CD1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATVoiceTableViewCell.h; sourceTree = "<group>"; };
+		187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATVoiceTableViewCell.m; sourceTree = "<group>"; };
+		187181D21AFB80BF00FB3168 /* JCHATGroupPersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATGroupPersonView.h; sourceTree = "<group>"; };
+		187181D31AFB80BF00FB3168 /* JCHATGroupPersonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATGroupPersonView.m; sourceTree = "<group>"; };
+		187181D41AFB80BF00FB3168 /* JCHATGroupPersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATGroupPersonView.xib; sourceTree = "<group>"; };
+		187181D51AFB80BF00FB3168 /* JCHATMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageTextView.h; sourceTree = "<group>"; };
+		187181D61AFB80BF00FB3168 /* JCHATMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageTextView.m; sourceTree = "<group>"; };
+		187181D71AFB80BF00FB3168 /* JCHATMoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMoreView.h; sourceTree = "<group>"; };
+		187181D81AFB80BF00FB3168 /* JCHATMoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMoreView.m; sourceTree = "<group>"; };
+		187181D91AFB80BF00FB3168 /* JCHATMoreView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATMoreView.xib; sourceTree = "<group>"; };
+		187181DA1AFB80BF00FB3168 /* JCHATToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATToolBar.h; sourceTree = "<group>"; };
+		187181DB1AFB80BF00FB3168 /* JCHATToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATToolBar.m; sourceTree = "<group>"; };
+		187181DC1AFB80BF00FB3168 /* JCHATToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATToolBar.xib; sourceTree = "<group>"; };
+		187181E01AFB80BF00FB3168 /* JCHATRecordAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATRecordAnimationView.h; sourceTree = "<group>"; };
+		187181E11AFB80BF00FB3168 /* JCHATRecordAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATRecordAnimationView.m; sourceTree = "<group>"; };
 		187181E41AFB80BF00FB3168 /* XHFoundationMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHFoundationMacro.h; sourceTree = "<group>"; };
 		187181E51AFB80BF00FB3168 /* XHMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHMacro.h; sourceTree = "<group>"; };
 		187181E61AFB80BF00FB3168 /* XHUIKitMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHUIKitMacro.h; sourceTree = "<group>"; };
@@ -401,54 +401,52 @@
 		187181E81AFB80BF00FB3168 /* XHVoiceRecordHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceRecordHelper.m; sourceTree = "<group>"; };
 		187181E91AFB80BF00FB3168 /* XHVoiceRecordHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHVoiceRecordHUD.h; sourceTree = "<group>"; };
 		187181EA1AFB80BF00FB3168 /* XHVoiceRecordHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceRecordHUD.m; sourceTree = "<group>"; };
-		187181EB1AFB80BF00FB3168 /* XHAudioPlayerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHAudioPlayerHelper.h; sourceTree = "<group>"; };
-		187181EC1AFB80BF00FB3168 /* XHAudioPlayerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHAudioPlayerHelper.m; sourceTree = "<group>"; };
-		187181ED1AFB80BF00FB3168 /* XHVoiceCommonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHVoiceCommonHelper.h; sourceTree = "<group>"; };
-		187181EE1AFB80BF00FB3168 /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
-		187181F61AFB80BF00FB3168 /* JPIMAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMAddViewController.h; sourceTree = "<group>"; };
-		187181F71AFB80BF00FB3168 /* JPIMAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMAddViewController.m; sourceTree = "<group>"; };
-		187181F81AFB80BF00FB3168 /* JPIMAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMAddViewController.xib; sourceTree = "<group>"; };
-		187181F91AFB80BF00FB3168 /* JPIMContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMContactsViewController.h; sourceTree = "<group>"; };
-		187181FA1AFB80BF00FB3168 /* JPIMContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMContactsViewController.m; sourceTree = "<group>"; };
-		187181FB1AFB80BF00FB3168 /* JPIMContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMContactsViewController.xib; sourceTree = "<group>"; };
-		187181FC1AFB80BF00FB3168 /* JPIMTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMTabBarViewController.h; sourceTree = "<group>"; };
-		187181FD1AFB80BF00FB3168 /* JPIMTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMTabBarViewController.m; sourceTree = "<group>"; };
-		187181FE1AFB80BF00FB3168 /* JPIMTabBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMTabBarViewController.xib; sourceTree = "<group>"; };
-		187182001AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMAlreadyLoginViewController.h; sourceTree = "<group>"; };
-		187182011AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMAlreadyLoginViewController.m; sourceTree = "<group>"; };
-		187182021AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMAlreadyLoginViewController.xib; sourceTree = "<group>"; };
-		187182031AFB80BF00FB3168 /* JPIMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMLoginViewController.h; sourceTree = "<group>"; };
-		187182041AFB80BF00FB3168 /* JPIMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMLoginViewController.m; sourceTree = "<group>"; };
-		187182051AFB80BF00FB3168 /* JPIMLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMLoginViewController.xib; sourceTree = "<group>"; };
-		187182071AFB80BF00FB3168 /* JPIMNewsReminderCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMNewsReminderCtl.h; sourceTree = "<group>"; };
-		187182081AFB80BF00FB3168 /* JPIMNewsReminderCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMNewsReminderCtl.m; sourceTree = "<group>"; };
-		187182091AFB80BF00FB3168 /* JPIMPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMPersonViewController.h; sourceTree = "<group>"; };
-		1871820A1AFB80BF00FB3168 /* JPIMPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMPersonViewController.m; sourceTree = "<group>"; };
-		1871820B1AFB80BF00FB3168 /* JPIMPersonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMPersonViewController.xib; sourceTree = "<group>"; };
-		1871820C1AFB80BF00FB3168 /* JPIMSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMSettingViewController.h; sourceTree = "<group>"; };
-		1871820D1AFB80BF00FB3168 /* JPIMSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMSettingViewController.m; sourceTree = "<group>"; };
-		1871820E1AFB80BF00FB3168 /* JPIMSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMSettingViewController.xib; sourceTree = "<group>"; };
-		1871820F1AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMUpdatePasswordCtl.h; sourceTree = "<group>"; };
-		187182101AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMUpdatePasswordCtl.m; sourceTree = "<group>"; };
-		187182111AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMUpdatePasswordCtl.xib; sourceTree = "<group>"; };
-		187182121AFB80BF00FB3168 /* JPIMUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMUserInfoViewController.h; sourceTree = "<group>"; };
-		187182131AFB80BF00FB3168 /* JPIMUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMUserInfoViewController.m; sourceTree = "<group>"; };
-		187182141AFB80BF00FB3168 /* JPIMUserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMUserInfoViewController.xib; sourceTree = "<group>"; };
-		187182161AFB80BF00FB3168 /* JPIMpersonInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMpersonInfoCell.h; sourceTree = "<group>"; };
-		187182171AFB80BF00FB3168 /* JPIMpersonInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMpersonInfoCell.m; sourceTree = "<group>"; };
-		187182181AFB80BF00FB3168 /* JPIMpersonInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMpersonInfoCell.xib; sourceTree = "<group>"; };
-		187182191AFB80BF00FB3168 /* JPIMSetting_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMSetting_Cell.h; sourceTree = "<group>"; };
-		1871821A1AFB80BF00FB3168 /* JPIMSetting_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMSetting_Cell.m; sourceTree = "<group>"; };
-		1871821B1AFB80BF00FB3168 /* JPIMSetting_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMSetting_Cell.xib; sourceTree = "<group>"; };
-		1871821C1AFB80BF00FB3168 /* JPIMSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMSettingCell.h; sourceTree = "<group>"; };
-		1871821D1AFB80BF00FB3168 /* JPIMSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMSettingCell.m; sourceTree = "<group>"; };
-		1871821E1AFB80BF00FB3168 /* JPIMSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMSettingCell.xib; sourceTree = "<group>"; };
-		187182201AFB80BF00FB3168 /* JPIMRegisterDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMRegisterDetailViewController.h; sourceTree = "<group>"; };
-		187182211AFB80BF00FB3168 /* JPIMRegisterDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMRegisterDetailViewController.m; sourceTree = "<group>"; };
-		187182221AFB80BF00FB3168 /* JPIMRegisterDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMRegisterDetailViewController.xib; sourceTree = "<group>"; };
-		187182231AFB80BF00FB3168 /* JPIMRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMRegisterViewController.h; sourceTree = "<group>"; };
-		187182241AFB80BF00FB3168 /* JPIMRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMRegisterViewController.m; sourceTree = "<group>"; };
-		187182251AFB80BF00FB3168 /* JPIMRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JPIMRegisterViewController.xib; sourceTree = "<group>"; };
+		187181EB1AFB80BF00FB3168 /* JCHATAudioPlayerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAudioPlayerHelper.h; sourceTree = "<group>"; };
+		187181EC1AFB80BF00FB3168 /* JCHATAudioPlayerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAudioPlayerHelper.m; sourceTree = "<group>"; };
+		187181F61AFB80BF00FB3168 /* JCHATAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAddViewController.h; sourceTree = "<group>"; };
+		187181F71AFB80BF00FB3168 /* JCHATAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAddViewController.m; sourceTree = "<group>"; };
+		187181F81AFB80BF00FB3168 /* JCHATAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATAddViewController.xib; sourceTree = "<group>"; };
+		187181F91AFB80BF00FB3168 /* JCHATContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATContactsViewController.h; sourceTree = "<group>"; };
+		187181FA1AFB80BF00FB3168 /* JCHATContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATContactsViewController.m; sourceTree = "<group>"; };
+		187181FB1AFB80BF00FB3168 /* JCHATContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATContactsViewController.xib; sourceTree = "<group>"; };
+		187181FC1AFB80BF00FB3168 /* JCHATTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATTabBarViewController.h; sourceTree = "<group>"; };
+		187181FD1AFB80BF00FB3168 /* JCHATTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATTabBarViewController.m; sourceTree = "<group>"; };
+		187181FE1AFB80BF00FB3168 /* JCHATTabBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATTabBarViewController.xib; sourceTree = "<group>"; };
+		187182001AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAlreadyLoginViewController.h; sourceTree = "<group>"; };
+		187182011AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAlreadyLoginViewController.m; sourceTree = "<group>"; };
+		187182021AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATAlreadyLoginViewController.xib; sourceTree = "<group>"; };
+		187182031AFB80BF00FB3168 /* JCHATLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATLoginViewController.h; sourceTree = "<group>"; };
+		187182041AFB80BF00FB3168 /* JCHATLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATLoginViewController.m; sourceTree = "<group>"; };
+		187182051AFB80BF00FB3168 /* JCHATLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATLoginViewController.xib; sourceTree = "<group>"; };
+		187182071AFB80BF00FB3168 /* JCHATNewsReminderCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATNewsReminderCtl.h; sourceTree = "<group>"; };
+		187182081AFB80BF00FB3168 /* JCHATNewsReminderCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATNewsReminderCtl.m; sourceTree = "<group>"; };
+		187182091AFB80BF00FB3168 /* JCHATPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATPersonViewController.h; sourceTree = "<group>"; };
+		1871820A1AFB80BF00FB3168 /* JCHATPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATPersonViewController.m; sourceTree = "<group>"; };
+		1871820B1AFB80BF00FB3168 /* JCHATPersonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATPersonViewController.xib; sourceTree = "<group>"; };
+		1871820C1AFB80BF00FB3168 /* JCHATSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSettingViewController.h; sourceTree = "<group>"; };
+		1871820D1AFB80BF00FB3168 /* JCHATSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSettingViewController.m; sourceTree = "<group>"; };
+		1871820E1AFB80BF00FB3168 /* JCHATSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSettingViewController.xib; sourceTree = "<group>"; };
+		1871820F1AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATUpdatePasswordCtl.h; sourceTree = "<group>"; };
+		187182101AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATUpdatePasswordCtl.m; sourceTree = "<group>"; };
+		187182111AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATUpdatePasswordCtl.xib; sourceTree = "<group>"; };
+		187182121AFB80BF00FB3168 /* JCHATUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATUserInfoViewController.h; sourceTree = "<group>"; };
+		187182131AFB80BF00FB3168 /* JCHATUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATUserInfoViewController.m; sourceTree = "<group>"; };
+		187182141AFB80BF00FB3168 /* JCHATUserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATUserInfoViewController.xib; sourceTree = "<group>"; };
+		187182161AFB80BF00FB3168 /* JCHATPersonInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATPersonInfoCell.h; sourceTree = "<group>"; };
+		187182171AFB80BF00FB3168 /* JCHATPersonInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATPersonInfoCell.m; sourceTree = "<group>"; };
+		187182181AFB80BF00FB3168 /* JCHATPersonInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATPersonInfoCell.xib; sourceTree = "<group>"; };
+		187182191AFB80BF00FB3168 /* JCHATSetting_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSetting_Cell.h; sourceTree = "<group>"; };
+		1871821A1AFB80BF00FB3168 /* JCHATSetting_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSetting_Cell.m; sourceTree = "<group>"; };
+		1871821B1AFB80BF00FB3168 /* JCHATSetting_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSetting_Cell.xib; sourceTree = "<group>"; };
+		1871821C1AFB80BF00FB3168 /* JCHATSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSettingCell.h; sourceTree = "<group>"; };
+		1871821D1AFB80BF00FB3168 /* JCHATSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSettingCell.m; sourceTree = "<group>"; };
+		1871821E1AFB80BF00FB3168 /* JCHATSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSettingCell.xib; sourceTree = "<group>"; };
+		187182201AFB80BF00FB3168 /* JCHATRegisterDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATRegisterDetailViewController.h; sourceTree = "<group>"; };
+		187182211AFB80BF00FB3168 /* JCHATRegisterDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATRegisterDetailViewController.m; sourceTree = "<group>"; };
+		187182221AFB80BF00FB3168 /* JCHATRegisterDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATRegisterDetailViewController.xib; sourceTree = "<group>"; };
+		187182231AFB80BF00FB3168 /* JCHATRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATRegisterViewController.h; sourceTree = "<group>"; };
+		187182241AFB80BF00FB3168 /* JCHATRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATRegisterViewController.m; sourceTree = "<group>"; };
+		187182251AFB80BF00FB3168 /* JCHATRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATRegisterViewController.xib; sourceTree = "<group>"; };
 		187182261AFB80BF00FB3168 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		187182271AFB80BF00FB3168 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1871822A1AFB80BF00FB3168 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -638,7 +636,7 @@
 		6039B3421035D22A550F39AA /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
 		6039B3504A7D0ED5C71405FD /* JChatConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JChatConstants.h; sourceTree = "<group>"; };
 		6039B354054776BB4419272C /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
-		6039B356C2B9C193CA4CAE06 /* JPIMBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMBaseViewController.m; sourceTree = "<group>"; };
+		6039B356C2B9C193CA4CAE06 /* JCHATBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATBaseViewController.m; sourceTree = "<group>"; };
 		6039B36C65D718CFBA51882E /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		6039B3A691520DE6766F79DB /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
 		6039B455EDE0E591B1087ACA /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
@@ -659,19 +657,20 @@
 		6039B6D1A2C410E351208121 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
 		6039B737320034A97DDE0E64 /* UIImage+WebP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WebP.h"; sourceTree = "<group>"; };
 		6039B76AF3DA284363B096E2 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
-		6039B7787D3ECBCF1776ED99 /* JPIMFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMFileManager.h; sourceTree = "<group>"; };
+		6039B7787D3ECBCF1776ED99 /* JCHATFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATFileManager.h; sourceTree = "<group>"; };
 		6039B78C91F2D914D03DCFCF /* UIImageView+MJWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MJWebCache.h"; sourceTree = "<group>"; };
 		6039B7FAFFD0EE1E9808065B /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		6039B86DA2A18B492DE56CD8 /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
 		6039B89E3E5204215C45009B /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
 		6039B8ABA6FD03A3F74DB106 /* MJPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoBrowser.m; sourceTree = "<group>"; };
 		6039B8D0274E925F69EEA8CF /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
+		6039B8D5459ED605FB2FE58B /* XHVoiceCommonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHVoiceCommonHelper.h; sourceTree = "<group>"; };
 		6039B8D7CF4591D39ECC24C0 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		6039B8EEF63EB1C41A17F0E0 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
 		6039B8F661AF2A135B10045D /* NSObject+TimeConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TimeConvert.h"; sourceTree = "<group>"; };
-		6039B98212E1FC3AD18E09D4 /* JPIMBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPIMBaseViewController.h; sourceTree = "<group>"; };
+		6039B98212E1FC3AD18E09D4 /* JCHATBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATBaseViewController.h; sourceTree = "<group>"; };
 		6039BB2A0EFF4230235771DD /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
-		6039BB2B5ADBF93F1A4EBA2C /* JPIMFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPIMFileManager.m; sourceTree = "<group>"; };
+		6039BB2B5ADBF93F1A4EBA2C /* JCHATFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATFileManager.m; sourceTree = "<group>"; };
 		6039BB3CB298D420BC511221 /* NSObject+TimeConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TimeConvert.m"; sourceTree = "<group>"; };
 		6039BBAC6063CD3111B1D5BB /* SDWebImageCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageCompat.m; sourceTree = "<group>"; };
 		6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
@@ -686,6 +685,7 @@
 		6039BEC52BBB0EA3D9B61F3B /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
 		6039BF128CC5C5BE6823314B /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
 		6039BF638019C00F541E859F /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
+		6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
 		8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		8FF149F91AFBA11800D13F2E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -748,14 +748,14 @@
 			children = (
 				1871819E1AFB80BF00FB3168 /* Chat */,
 				187181F51AFB80BF00FB3168 /* Contacts */,
-				187181FC1AFB80BF00FB3168 /* JPIMTabBarViewController.h */,
-				187181FD1AFB80BF00FB3168 /* JPIMTabBarViewController.m */,
-				187181FE1AFB80BF00FB3168 /* JPIMTabBarViewController.xib */,
+				187181FC1AFB80BF00FB3168 /* JCHATTabBarViewController.h */,
+				187181FD1AFB80BF00FB3168 /* JCHATTabBarViewController.m */,
+				187181FE1AFB80BF00FB3168 /* JCHATTabBarViewController.xib */,
 				187181FF1AFB80BF00FB3168 /* Login */,
 				187182061AFB80BF00FB3168 /* PersonInfo */,
 				1871821F1AFB80BF00FB3168 /* Register */,
-				6039B98212E1FC3AD18E09D4 /* JPIMBaseViewController.h */,
-				6039B356C2B9C193CA4CAE06 /* JPIMBaseViewController.m */,
+				6039B98212E1FC3AD18E09D4 /* JCHATBaseViewController.h */,
+				6039B356C2B9C193CA4CAE06 /* JCHATBaseViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -763,23 +763,23 @@
 		1871819E1AFB80BF00FB3168 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				1871819F1AFB80BF00FB3168 /* JPIMChatViewController.h */,
-				187181A01AFB80BF00FB3168 /* JPIMChatViewController.m */,
-				187181A11AFB80BF00FB3168 /* JPIMChatViewController.xib */,
-				187181A21AFB80BF00FB3168 /* JPIMDetailsInfoViewController.h */,
-				187181A31AFB80BF00FB3168 /* JPIMDetailsInfoViewController.m */,
-				187181A41AFB80BF00FB3168 /* JPIMDetailsInfoViewController.xib */,
-				187181A51AFB80BF00FB3168 /* JPIMFriendDetailViewController.h */,
-				187181A61AFB80BF00FB3168 /* JPIMFriendDetailViewController.m */,
-				187181A71AFB80BF00FB3168 /* JPIMFriendDetailViewController.xib */,
-				187181A81AFB80BF00FB3168 /* JPIMGroupSettingCtl.h */,
-				187181A91AFB80BF00FB3168 /* JPIMGroupSettingCtl.m */,
-				187181AA1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.h */,
-				187181AB1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.m */,
-				187181AC1AFB80BF00FB3168 /* JPIMSelectFriendsCtl.xib */,
-				187181AD1AFB80BF00FB3168 /* JPIMSendMessageViewController.h */,
-				187181AE1AFB80BF00FB3168 /* JPIMSendMessageViewController.m */,
-				187181AF1AFB80BF00FB3168 /* JPIMSendMessageViewController.xib */,
+				1871819F1AFB80BF00FB3168 /* JCHATChatViewController.h */,
+				187181A01AFB80BF00FB3168 /* JCHATChatViewController.m */,
+				187181A11AFB80BF00FB3168 /* JCHATChatViewController.xib */,
+				187181A21AFB80BF00FB3168 /* JCHATDetailsInfoViewController.h */,
+				187181A31AFB80BF00FB3168 /* JCHATDetailsInfoViewController.m */,
+				187181A41AFB80BF00FB3168 /* JCHATDetailsInfoViewController.xib */,
+				187181A51AFB80BF00FB3168 /* JCHATFriendDetailViewController.h */,
+				187181A61AFB80BF00FB3168 /* JCHATFriendDetailViewController.m */,
+				187181A71AFB80BF00FB3168 /* JCHATFriendDetailViewController.xib */,
+				187181A81AFB80BF00FB3168 /* JCHATGroupSettingCtl.h */,
+				187181A91AFB80BF00FB3168 /* JCHATGroupSettingCtl.m */,
+				187181AA1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.h */,
+				187181AB1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.m */,
+				187181AC1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.xib */,
+				187181AD1AFB80BF00FB3168 /* JCHATSendMessageViewController.h */,
+				187181AE1AFB80BF00FB3168 /* JCHATSendMessageViewController.m */,
+				187181AF1AFB80BF00FB3168 /* JCHATSendMessageViewController.xib */,
 				187181B01AFB80BF00FB3168 /* Model */,
 				187181B51AFB80BF00FB3168 /* View */,
 			);
@@ -789,10 +789,10 @@
 		187181B01AFB80BF00FB3168 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				187181B11AFB80BF00FB3168 /* ChatModel.h */,
-				187181B21AFB80BF00FB3168 /* ChatModel.m */,
-				187181B31AFB80BF00FB3168 /* RawAudioDataPlayer.h */,
-				187181B41AFB80BF00FB3168 /* RawAudioDataPlayer.m */,
+				187181B11AFB80BF00FB3168 /* JCHATChatModel.h */,
+				187181B21AFB80BF00FB3168 /* JCHATChatModel.m */,
+				187181B31AFB80BF00FB3168 /* JCHATRawAudioDataPlayer.h */,
+				187181B41AFB80BF00FB3168 /* JCHATRawAudioDataPlayer.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -801,26 +801,24 @@
 			isa = PBXGroup;
 			children = (
 				187181B61AFB80BF00FB3168 /* CellView */,
-				187181D21AFB80BF00FB3168 /* JPIMGroupPersonView.h */,
-				187181D31AFB80BF00FB3168 /* JPIMGroupPersonView.m */,
-				187181D41AFB80BF00FB3168 /* JPIMGroupPersonView.xib */,
-				187181D51AFB80BF00FB3168 /* JPIMMessageTextView.h */,
-				18324C021AFB861A006E8507 /* ChatTable.h */,
-				18324C031AFB861A006E8507 /* ChatTable.m */,
-				187181D61AFB80BF00FB3168 /* JPIMMessageTextView.m */,
-				187181D71AFB80BF00FB3168 /* JPIMMoreView.h */,
-				187181D81AFB80BF00FB3168 /* JPIMMoreView.m */,
-				187181D91AFB80BF00FB3168 /* JPIMMoreView.xib */,
-				187181DA1AFB80BF00FB3168 /* JPIMToolBar.h */,
-				187181DB1AFB80BF00FB3168 /* JPIMToolBar.m */,
-				187181DC1AFB80BF00FB3168 /* JPIMToolBar.xib */,
-				187181E01AFB80BF00FB3168 /* RecordAnimationView.h */,
-				187181E11AFB80BF00FB3168 /* RecordAnimationView.m */,
+				187181D21AFB80BF00FB3168 /* JCHATGroupPersonView.h */,
+				187181D31AFB80BF00FB3168 /* JCHATGroupPersonView.m */,
+				187181D41AFB80BF00FB3168 /* JCHATGroupPersonView.xib */,
+				187181D51AFB80BF00FB3168 /* JCHATMessageTextView.h */,
+				18324C021AFB861A006E8507 /* JCHATChatTable.h */,
+				18324C031AFB861A006E8507 /* JCHATChatTable.m */,
+				187181D61AFB80BF00FB3168 /* JCHATMessageTextView.m */,
+				187181D71AFB80BF00FB3168 /* JCHATMoreView.h */,
+				187181D81AFB80BF00FB3168 /* JCHATMoreView.m */,
+				187181D91AFB80BF00FB3168 /* JCHATMoreView.xib */,
+				187181DA1AFB80BF00FB3168 /* JCHATToolBar.h */,
+				187181DB1AFB80BF00FB3168 /* JCHATToolBar.m */,
+				187181DC1AFB80BF00FB3168 /* JCHATToolBar.xib */,
+				187181E01AFB80BF00FB3168 /* JCHATRecordAnimationView.h */,
+				187181E11AFB80BF00FB3168 /* JCHATRecordAnimationView.m */,
 				187181E21AFB80BF00FB3168 /* RecordView */,
-				187181EB1AFB80BF00FB3168 /* XHAudioPlayerHelper.h */,
-				187181EC1AFB80BF00FB3168 /* XHAudioPlayerHelper.m */,
-				187181ED1AFB80BF00FB3168 /* XHVoiceCommonHelper.h */,
-				187181EE1AFB80BF00FB3168 /* XHVoiceCommonHelper.m */,
+				187181EB1AFB80BF00FB3168 /* JCHATAudioPlayerHelper.h */,
+				187181EC1AFB80BF00FB3168 /* JCHATAudioPlayerHelper.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -828,30 +826,30 @@
 		187181B61AFB80BF00FB3168 /* CellView */ = {
 			isa = PBXGroup;
 			children = (
-				187181B71AFB80BF00FB3168 /* JPIMChatTableViewCell.h */,
-				187181B81AFB80BF00FB3168 /* JPIMChatTableViewCell.m */,
-				187181B91AFB80BF00FB3168 /* JPIMChatTableViewCell.xib */,
-				187181BA1AFB80BF00FB3168 /* JPIMDetailTableViewCell.h */,
-				187181BB1AFB80BF00FB3168 /* JPIMDetailTableViewCell.m */,
-				187181BC1AFB80BF00FB3168 /* JPIMDetailTableViewCell.xib */,
-				187181BD1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.h */,
-				187181BE1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.m */,
-				187181BF1AFB80BF00FB3168 /* JPIMFrIendDetailMessgeCell.xib */,
-				187181C01AFB80BF00FB3168 /* JPIMGroupSettingCell.h */,
-				187181C11AFB80BF00FB3168 /* JPIMGroupSettingCell.m */,
-				187181C21AFB80BF00FB3168 /* JPIMGroupSettingCell.xib */,
-				187181C31AFB80BF00FB3168 /* JPIMImgTableViewCell.h */,
-				187181C41AFB80BF00FB3168 /* JPIMImgTableViewCell.m */,
-				187181C51AFB80BF00FB3168 /* JPIMSelectFriendCell.h */,
-				187181C61AFB80BF00FB3168 /* JPIMSelectFriendCell.m */,
-				187181C71AFB80BF00FB3168 /* JPIMSelectFriendCell.xib */,
-				187181C81AFB80BF00FB3168 /* JPIMShowTimeCell.h */,
-				187181C91AFB80BF00FB3168 /* JPIMShowTimeCell.m */,
-				187181CA1AFB80BF00FB3168 /* JPIMShowTimeCell.xib */,
-				187181CB1AFB80BF00FB3168 /* JPIMTextTableViewCell.h */,
-				187181CC1AFB80BF00FB3168 /* JPIMTextTableViewCell.m */,
-				187181CD1AFB80BF00FB3168 /* JPIMVoiceTableViewCell.h */,
-				187181CE1AFB80BF00FB3168 /* JPIMVoiceTableViewCell.m */,
+				187181B71AFB80BF00FB3168 /* JCHATChatTableViewCell.h */,
+				187181B81AFB80BF00FB3168 /* JCHATChatTableViewCell.m */,
+				187181B91AFB80BF00FB3168 /* JCHATChatTableViewCell.xib */,
+				187181BA1AFB80BF00FB3168 /* JCHATDetailTableViewCell.h */,
+				187181BB1AFB80BF00FB3168 /* JCHATDetailTableViewCell.m */,
+				187181BC1AFB80BF00FB3168 /* JCHATDetailTableViewCell.xib */,
+				187181BD1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.h */,
+				187181BE1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.m */,
+				187181BF1AFB80BF00FB3168 /* JCHATFrIendDetailMessgeCell.xib */,
+				187181C01AFB80BF00FB3168 /* JCHATGroupSettingCell.h */,
+				187181C11AFB80BF00FB3168 /* JCHATGroupSettingCell.m */,
+				187181C21AFB80BF00FB3168 /* JCHATGroupSettingCell.xib */,
+				187181C31AFB80BF00FB3168 /* JCHATImgTableViewCell.h */,
+				187181C41AFB80BF00FB3168 /* JCHATImgTableViewCell.m */,
+				187181C51AFB80BF00FB3168 /* JCHATSelectFriendCell.h */,
+				187181C61AFB80BF00FB3168 /* JCHATSelectFriendCell.m */,
+				187181C71AFB80BF00FB3168 /* JCHATSelectFriendCell.xib */,
+				187181C81AFB80BF00FB3168 /* JCHATShowTimeCell.h */,
+				187181C91AFB80BF00FB3168 /* JCHATShowTimeCell.m */,
+				187181CA1AFB80BF00FB3168 /* JCHATShowTimeCell.xib */,
+				187181CB1AFB80BF00FB3168 /* JCHATTextTableViewCell.h */,
+				187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */,
+				187181CD1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.h */,
+				187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */,
 			);
 			path = CellView;
 			sourceTree = "<group>";
@@ -864,6 +862,8 @@
 				187181E81AFB80BF00FB3168 /* XHVoiceRecordHelper.m */,
 				187181E91AFB80BF00FB3168 /* XHVoiceRecordHUD.h */,
 				187181EA1AFB80BF00FB3168 /* XHVoiceRecordHUD.m */,
+				6039B8D5459ED605FB2FE58B /* XHVoiceCommonHelper.h */,
+				6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */,
 			);
 			path = RecordView;
 			sourceTree = "<group>";
@@ -881,12 +881,12 @@
 		187181F51AFB80BF00FB3168 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				187181F61AFB80BF00FB3168 /* JPIMAddViewController.h */,
-				187181F71AFB80BF00FB3168 /* JPIMAddViewController.m */,
-				187181F81AFB80BF00FB3168 /* JPIMAddViewController.xib */,
-				187181F91AFB80BF00FB3168 /* JPIMContactsViewController.h */,
-				187181FA1AFB80BF00FB3168 /* JPIMContactsViewController.m */,
-				187181FB1AFB80BF00FB3168 /* JPIMContactsViewController.xib */,
+				187181F61AFB80BF00FB3168 /* JCHATAddViewController.h */,
+				187181F71AFB80BF00FB3168 /* JCHATAddViewController.m */,
+				187181F81AFB80BF00FB3168 /* JCHATAddViewController.xib */,
+				187181F91AFB80BF00FB3168 /* JCHATContactsViewController.h */,
+				187181FA1AFB80BF00FB3168 /* JCHATContactsViewController.m */,
+				187181FB1AFB80BF00FB3168 /* JCHATContactsViewController.xib */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -894,12 +894,12 @@
 		187181FF1AFB80BF00FB3168 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				187182001AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.h */,
-				187182011AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.m */,
-				187182021AFB80BF00FB3168 /* JPIMAlreadyLoginViewController.xib */,
-				187182031AFB80BF00FB3168 /* JPIMLoginViewController.h */,
-				187182041AFB80BF00FB3168 /* JPIMLoginViewController.m */,
-				187182051AFB80BF00FB3168 /* JPIMLoginViewController.xib */,
+				187182001AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.h */,
+				187182011AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.m */,
+				187182021AFB80BF00FB3168 /* JCHATAlreadyLoginViewController.xib */,
+				187182031AFB80BF00FB3168 /* JCHATLoginViewController.h */,
+				187182041AFB80BF00FB3168 /* JCHATLoginViewController.m */,
+				187182051AFB80BF00FB3168 /* JCHATLoginViewController.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -907,20 +907,20 @@
 		187182061AFB80BF00FB3168 /* PersonInfo */ = {
 			isa = PBXGroup;
 			children = (
-				187182071AFB80BF00FB3168 /* JPIMNewsReminderCtl.h */,
-				187182081AFB80BF00FB3168 /* JPIMNewsReminderCtl.m */,
-				187182091AFB80BF00FB3168 /* JPIMPersonViewController.h */,
-				1871820A1AFB80BF00FB3168 /* JPIMPersonViewController.m */,
-				1871820B1AFB80BF00FB3168 /* JPIMPersonViewController.xib */,
-				1871820C1AFB80BF00FB3168 /* JPIMSettingViewController.h */,
-				1871820D1AFB80BF00FB3168 /* JPIMSettingViewController.m */,
-				1871820E1AFB80BF00FB3168 /* JPIMSettingViewController.xib */,
-				1871820F1AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.h */,
-				187182101AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.m */,
-				187182111AFB80BF00FB3168 /* JPIMUpdatePasswordCtl.xib */,
-				187182121AFB80BF00FB3168 /* JPIMUserInfoViewController.h */,
-				187182131AFB80BF00FB3168 /* JPIMUserInfoViewController.m */,
-				187182141AFB80BF00FB3168 /* JPIMUserInfoViewController.xib */,
+				187182071AFB80BF00FB3168 /* JCHATNewsReminderCtl.h */,
+				187182081AFB80BF00FB3168 /* JCHATNewsReminderCtl.m */,
+				187182091AFB80BF00FB3168 /* JCHATPersonViewController.h */,
+				1871820A1AFB80BF00FB3168 /* JCHATPersonViewController.m */,
+				1871820B1AFB80BF00FB3168 /* JCHATPersonViewController.xib */,
+				1871820C1AFB80BF00FB3168 /* JCHATSettingViewController.h */,
+				1871820D1AFB80BF00FB3168 /* JCHATSettingViewController.m */,
+				1871820E1AFB80BF00FB3168 /* JCHATSettingViewController.xib */,
+				1871820F1AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.h */,
+				187182101AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.m */,
+				187182111AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.xib */,
+				187182121AFB80BF00FB3168 /* JCHATUserInfoViewController.h */,
+				187182131AFB80BF00FB3168 /* JCHATUserInfoViewController.m */,
+				187182141AFB80BF00FB3168 /* JCHATUserInfoViewController.xib */,
 				187182151AFB80BF00FB3168 /* View */,
 			);
 			path = PersonInfo;
@@ -929,15 +929,15 @@
 		187182151AFB80BF00FB3168 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				187182161AFB80BF00FB3168 /* JPIMpersonInfoCell.h */,
-				187182171AFB80BF00FB3168 /* JPIMpersonInfoCell.m */,
-				187182181AFB80BF00FB3168 /* JPIMpersonInfoCell.xib */,
-				187182191AFB80BF00FB3168 /* JPIMSetting_Cell.h */,
-				1871821A1AFB80BF00FB3168 /* JPIMSetting_Cell.m */,
-				1871821B1AFB80BF00FB3168 /* JPIMSetting_Cell.xib */,
-				1871821C1AFB80BF00FB3168 /* JPIMSettingCell.h */,
-				1871821D1AFB80BF00FB3168 /* JPIMSettingCell.m */,
-				1871821E1AFB80BF00FB3168 /* JPIMSettingCell.xib */,
+				187182161AFB80BF00FB3168 /* JCHATPersonInfoCell.h */,
+				187182171AFB80BF00FB3168 /* JCHATPersonInfoCell.m */,
+				187182181AFB80BF00FB3168 /* JCHATPersonInfoCell.xib */,
+				187182191AFB80BF00FB3168 /* JCHATSetting_Cell.h */,
+				1871821A1AFB80BF00FB3168 /* JCHATSetting_Cell.m */,
+				1871821B1AFB80BF00FB3168 /* JCHATSetting_Cell.xib */,
+				1871821C1AFB80BF00FB3168 /* JCHATSettingCell.h */,
+				1871821D1AFB80BF00FB3168 /* JCHATSettingCell.m */,
+				1871821E1AFB80BF00FB3168 /* JCHATSettingCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -945,12 +945,12 @@
 		1871821F1AFB80BF00FB3168 /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				187182201AFB80BF00FB3168 /* JPIMRegisterDetailViewController.h */,
-				187182211AFB80BF00FB3168 /* JPIMRegisterDetailViewController.m */,
-				187182221AFB80BF00FB3168 /* JPIMRegisterDetailViewController.xib */,
-				187182231AFB80BF00FB3168 /* JPIMRegisterViewController.h */,
-				187182241AFB80BF00FB3168 /* JPIMRegisterViewController.m */,
-				187182251AFB80BF00FB3168 /* JPIMRegisterViewController.xib */,
+				187182201AFB80BF00FB3168 /* JCHATRegisterDetailViewController.h */,
+				187182211AFB80BF00FB3168 /* JCHATRegisterDetailViewController.m */,
+				187182221AFB80BF00FB3168 /* JCHATRegisterDetailViewController.xib */,
+				187182231AFB80BF00FB3168 /* JCHATRegisterViewController.h */,
+				187182241AFB80BF00FB3168 /* JCHATRegisterViewController.m */,
+				187182251AFB80BF00FB3168 /* JCHATRegisterViewController.xib */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -1246,8 +1246,8 @@
 		6039B52AF12BF093A83C66AB /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				6039B7787D3ECBCF1776ED99 /* JPIMFileManager.h */,
-				6039BB2B5ADBF93F1A4EBA2C /* JPIMFileManager.m */,
+				6039B7787D3ECBCF1776ED99 /* JCHATFileManager.h */,
+				6039BB2B5ADBF93F1A4EBA2C /* JCHATFileManager.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1416,7 +1416,7 @@
 				187183951AFB80C000FB3168 /* point_41@3x.png in Resources */,
 				187183871AFB80C000FB3168 /* frame@3x.png in Resources */,
 				187183C31AFB80C000FB3168 /* login_11@3x.png in Resources */,
-				187183191AFB80C000FB3168 /* JPIMChatViewController.xib in Resources */,
+				187183191AFB80C000FB3168 /* JCHATChatViewController.xib in Resources */,
 				187183841AFB80C000FB3168 /* fail05@2x.png in Resources */,
 				187184001AFB80C000FB3168 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				1871838B1AFB80C000FB3168 /* headDefalt_34@3x.png in Resources */,
@@ -1433,8 +1433,8 @@
 				187183751AFB80C000FB3168 /* add_37@2x.png in Resources */,
 				187183621AFB80C000FB3168 /* Images.xcassets in Resources */,
 				187183EF1AFB80C000FB3168 /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
-				187183221AFB80C000FB3168 /* JPIMSendMessageViewController.xib in Resources */,
-				1871831B1AFB80C000FB3168 /* JPIMDetailsInfoViewController.xib in Resources */,
+				187183221AFB80C000FB3168 /* JCHATSendMessageViewController.xib in Resources */,
+				1871831B1AFB80C000FB3168 /* JCHATDetailsInfoViewController.xib in Resources */,
 				187183BF1AFB80C000FB3168 /* login_10@2x.png in Resources */,
 				187183821AFB80C000FB3168 /* face_16@2x.png in Resources */,
 				1871839B1AFB80C000FB3168 /* select@3x.png in Resources */,
@@ -1447,32 +1447,32 @@
 				187183AC1AFB80C000FB3168 /* face@2x.png in Resources */,
 				1871840F1AFB80C000FB3168 /* wo@2x.png in Resources */,
 				187183F71AFB80C000FB3168 /* RecordingSignal005@2x.png in Resources */,
-				187183611AFB80C000FB3168 /* JPIMRegisterViewController.xib in Resources */,
+				187183611AFB80C000FB3168 /* JCHATRegisterViewController.xib in Resources */,
 				187183DE1AFB80C000FB3168 /* menu_16@3x in Resources */,
 				187183CA1AFB80C000FB3168 /* login_15.@2x.png in Resources */,
-				187183591AFB80C000FB3168 /* JPIMpersonInfoCell.xib in Resources */,
+				187183591AFB80C000FB3168 /* JCHATPersonInfoCell.xib in Resources */,
 				187183F01AFB80C000FB3168 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
-				1871835F1AFB80C000FB3168 /* JPIMRegisterDetailViewController.xib in Resources */,
+				1871835F1AFB80C000FB3168 /* JCHATRegisterDetailViewController.xib in Resources */,
 				187183B61AFB80C000FB3168 /* login_03@2x.png in Resources */,
 				187183801AFB80C000FB3168 /* deleteMan@2x.png in Resources */,
 				187183E01AFB80C000FB3168 /* menu_18@3x in Resources */,
 				187183A91AFB80C000FB3168 /* chat_voice_03@2x.png in Resources */,
 				187184061AFB80C000FB3168 /* gender@3x.png in Resources */,
-				1871833B1AFB80C000FB3168 /* JPIMToolBar.xib in Resources */,
+				1871833B1AFB80C000FB3168 /* JCHATToolBar.xib in Resources */,
 				187183631AFB80C000FB3168 /* Info.plist in Resources */,
 				187183C71AFB80C000FB3168 /* login_14.@2x.png in Resources */,
 				1871838F1AFB80C000FB3168 /* location_31@3x.png in Resources */,
-				1871831D1AFB80C000FB3168 /* JPIMFriendDetailViewController.xib in Resources */,
+				1871831D1AFB80C000FB3168 /* JCHATFriendDetailViewController.xib in Resources */,
 				187183AE1AFB80C000FB3168 /* jiantou@2x.png in Resources */,
 				187183901AFB80C000FB3168 /* mychatBg@2x.png in Resources */,
 				187183EE1AFB80C000FB3168 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
 				187183D41AFB80C000FB3168 /* login_19@2x.png in Resources */,
 				187183E61AFB80C000FB3168 /* menu_25@3x in Resources */,
 				187183861AFB80C000FB3168 /* frame@2x.png in Resources */,
-				1871835D1AFB80C000FB3168 /* JPIMSettingCell.xib in Resources */,
+				1871835D1AFB80C000FB3168 /* JCHATSettingCell.xib in Resources */,
 				187183B21AFB80C000FB3168 /* login_02.@2x.png in Resources */,
 				187183E71AFB80C000FB3168 /* selectItem.png in Resources */,
-				187183311AFB80C000FB3168 /* JPIMShowTimeCell.xib in Resources */,
+				187183311AFB80C000FB3168 /* JCHATShowTimeCell.xib in Resources */,
 				187183C11AFB80C000FB3168 /* login_11.@2x.png in Resources */,
 				1871839A1AFB80C000FB3168 /* select@2x.png in Resources */,
 				187183EA1AFB80C000FB3168 /* paizhao@2x.png in Resources */,
@@ -1486,17 +1486,17 @@
 				187183D21AFB80C000FB3168 /* login_17@3x.png in Resources */,
 				187184131AFB80C000FB3168 /* wo_20@2x.png in Resources */,
 				187183961AFB80C000FB3168 /* RecordingBkg@2x.png in Resources */,
-				187183281AFB80C000FB3168 /* JPIMDetailTableViewCell.xib in Resources */,
-				1871832F1AFB80C000FB3168 /* JPIMSelectFriendCell.xib in Resources */,
+				187183281AFB80C000FB3168 /* JCHATDetailTableViewCell.xib in Resources */,
+				1871832F1AFB80C000FB3168 /* JCHATSelectFriendCell.xib in Resources */,
 				1871839C1AFB80C000FB3168 /* setting_55@2x.png in Resources */,
-				187183391AFB80C000FB3168 /* JPIMMoreView.xib in Resources */,
+				187183391AFB80C000FB3168 /* JCHATMoreView.xib in Resources */,
 				187183CF1AFB80C000FB3168 /* login_16@3x.png in Resources */,
 				187183781AFB80C000FB3168 /* arrows_43@2x.png in Resources */,
 				187183A61AFB80C000FB3168 /* 切图_47.png in Resources */,
-				187183571AFB80C000FB3168 /* JPIMUserInfoViewController.xib in Resources */,
+				187183571AFB80C000FB3168 /* JCHATUserInfoViewController.xib in Resources */,
 				187183701AFB80C000FB3168 /* add_chat@2x.png in Resources */,
 				187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */,
-				187183261AFB80C000FB3168 /* JPIMChatTableViewCell.xib in Resources */,
+				187183261AFB80C000FB3168 /* JCHATChatTableViewCell.xib in Resources */,
 				187183DF1AFB80C000FB3168 /* menu_18@2x.png in Resources */,
 				187183731AFB80C000FB3168 /* add01@2x.png in Resources */,
 				187183921AFB80C000FB3168 /* photo_24@2x.png in Resources */,
@@ -1504,7 +1504,7 @@
 				187183931AFB80C000FB3168 /* photo_24@3x.png in Resources */,
 				187183D31AFB80C000FB3168 /* login_19.@2x.png in Resources */,
 				187183DC1AFB80C000FB3168 /* menu_14@3x in Resources */,
-				1871834C1AFB80C000FB3168 /* JPIMAlreadyLoginViewController.xib in Resources */,
+				1871834C1AFB80C000FB3168 /* JCHATAlreadyLoginViewController.xib in Resources */,
 				187183761AFB80C000FB3168 /* addMan_13@2x.png in Resources */,
 				187183851AFB80C000FB3168 /* fail05@3x.png in Resources */,
 				187183CD1AFB80C000FB3168 /* login_16.@2x.png in Resources */,
@@ -1515,7 +1515,7 @@
 				1871840E1AFB80C000FB3168 /* signature@3x.png in Resources */,
 				187183C21AFB80C000FB3168 /* login_11@2x.png in Resources */,
 				187183991AFB80C000FB3168 /* search_47@3x.png in Resources */,
-				1871834A1AFB80C000FB3168 /* JPIMTabBarViewController.xib in Resources */,
+				1871834A1AFB80C000FB3168 /* JCHATTabBarViewController.xib in Resources */,
 				1871837E1AFB80C000FB3168 /* delete_49@2x.png in Resources */,
 				187183CE1AFB80C000FB3168 /* login_16@2x.png in Resources */,
 				187183CB1AFB80C000FB3168 /* login_15@2x.png in Resources */,
@@ -1533,12 +1533,12 @@
 				1871839D1AFB80C000FB3168 /* setting_55@3x.png in Resources */,
 				187183971AFB80C000FB3168 /* RecordingBkg@3x.png in Resources */,
 				187183A81AFB80C000FB3168 /* chat_menu_bar@2x.png in Resources */,
-				187183361AFB80C000FB3168 /* JPIMGroupPersonView.xib in Resources */,
+				187183361AFB80C000FB3168 /* JCHATGroupPersonView.xib in Resources */,
 				187183C01AFB80C000FB3168 /* login_10@3x.png in Resources */,
 				187183F61AFB80C000FB3168 /* RecordingSignal004@2x.png in Resources */,
 				187183EB1AFB80C000FB3168 /* receiveFailed.png in Resources */,
 				187183C61AFB80C000FB3168 /* login_13@3x.png in Resources */,
-				1871832C1AFB80C000FB3168 /* JPIMGroupSettingCell.xib in Resources */,
+				1871832C1AFB80C000FB3168 /* JCHATGroupSettingCell.xib in Resources */,
 				187183BD1AFB80C000FB3168 /* login_09@3x.png in Resources */,
 				187184161AFB80C000FB3168 /* yuyin@2x.png in Resources */,
 				187183B31AFB80C000FB3168 /* login_02@2x.png in Resources */,
@@ -1546,14 +1546,14 @@
 				187184091AFB80C000FB3168 /* loginOut_17@2x.png in Resources */,
 				187183F31AFB80C000FB3168 /* RecordingSignal001@2x.png in Resources */,
 				187184101AFB80C000FB3168 /* wo@3x.png in Resources */,
-				187183461AFB80C000FB3168 /* JPIMAddViewController.xib in Resources */,
+				187183461AFB80C000FB3168 /* JCHATAddViewController.xib in Resources */,
 				187183D71AFB80C000FB3168 /* menu_12@2x.png in Resources */,
 				187183BA1AFB80C000FB3168 /* login_04@3x.png in Resources */,
 				187183FE1AFB80C000FB3168 /* SenderVoiceNodePlaying002@2x.png in Resources */,
-				187183511AFB80C000FB3168 /* JPIMPersonViewController.xib in Resources */,
+				187183511AFB80C000FB3168 /* JCHATPersonViewController.xib in Resources */,
 				187183141AFB80C000FB3168 /* Main.storyboard in Resources */,
 				1871839F1AFB80C000FB3168 /* unselect@3x.png in Resources */,
-				187183531AFB80C000FB3168 /* JPIMSettingViewController.xib in Resources */,
+				187183531AFB80C000FB3168 /* JCHATSettingViewController.xib in Resources */,
 				187183A41AFB80C000FB3168 /* 切图_41.png in Resources */,
 				187183E11AFB80C000FB3168 /* menu_22@2x.png in Resources */,
 				1871838E1AFB80C000FB3168 /* location_31@2x.png in Resources */,
@@ -1561,7 +1561,7 @@
 				187183B01AFB80C000FB3168 /* login_01@2x.png in Resources */,
 				187184041AFB80C000FB3168 /* voice_time-short@2x.png in Resources */,
 				187183DB1AFB80C000FB3168 /* menu_14@2x.png in Resources */,
-				1871835B1AFB80C000FB3168 /* JPIMSetting_Cell.xib in Resources */,
+				1871835B1AFB80C000FB3168 /* JCHATSetting_Cell.xib in Resources */,
 				187183941AFB80C000FB3168 /* point_41@2x.png in Resources */,
 				187183EC1AFB80C000FB3168 /* ReceiverVoiceNodePlaying000@2x.png in Resources */,
 				187183A21AFB80C000FB3168 /* voice_02@2x.png in Resources */,
@@ -1570,7 +1570,7 @@
 				187183ED1AFB80C000FB3168 /* ReceiverVoiceNodePlaying001@2x.png in Resources */,
 				187184071AFB80C000FB3168 /* location_21@2x.png in Resources */,
 				187183AD1AFB80C000FB3168 /* jianpan@2x.png in Resources */,
-				187183551AFB80C000FB3168 /* JPIMUpdatePasswordCtl.xib in Resources */,
+				187183551AFB80C000FB3168 /* JCHATUpdatePasswordCtl.xib in Resources */,
 				187183E31AFB80C000FB3168 /* menu_23@2x in Resources */,
 				187183A11AFB80C000FB3168 /* video_40@3x.png in Resources */,
 				1871837D1AFB80C000FB3168 /* card_39@3x.png in Resources */,
@@ -1583,13 +1583,13 @@
 				1871840C1AFB80C000FB3168 /* setting_22@3x.png in Resources */,
 				1871837A1AFB80C000FB3168 /* camera_35@2x.png in Resources */,
 				187183C41AFB80C000FB3168 /* login_13.@2x.png in Resources */,
-				187183481AFB80C000FB3168 /* JPIMContactsViewController.xib in Resources */,
+				187183481AFB80C000FB3168 /* JCHATContactsViewController.xib in Resources */,
 				187183F11AFB80C000FB3168 /* RecordCancel@2x.png in Resources */,
-				1871832A1AFB80C000FB3168 /* JPIMFrIendDetailMessgeCell.xib in Resources */,
-				1871834E1AFB80C000FB3168 /* JPIMLoginViewController.xib in Resources */,
+				1871832A1AFB80C000FB3168 /* JCHATFrIendDetailMessgeCell.xib in Resources */,
+				1871834E1AFB80C000FB3168 /* JCHATLoginViewController.xib in Resources */,
 				187183771AFB80C000FB3168 /* addMan_13@3x.png in Resources */,
 				187183D01AFB80C000FB3168 /* login_17.@2x.png in Resources */,
-				187183201AFB80C000FB3168 /* JPIMSelectFriendsCtl.xib in Resources */,
+				187183201AFB80C000FB3168 /* JCHATSelectFriendsCtl.xib in Resources */,
 				187183BC1AFB80C000FB3168 /* login_09@2x.png in Resources */,
 				187183DD1AFB80C000FB3168 /* menu_16@2x.png in Resources */,
 				187183FC1AFB80C000FB3168 /* SenderVoiceNodePlaying000@2x.png in Resources */,
@@ -1640,50 +1640,49 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187183521AFB80C000FB3168 /* JPIMSettingViewController.m in Sources */,
-				1871834D1AFB80C000FB3168 /* JPIMLoginViewController.m in Sources */,
-				187183241AFB80C000FB3168 /* RawAudioDataPlayer.m in Sources */,
-				187183211AFB80C000FB3168 /* JPIMSendMessageViewController.m in Sources */,
-				187183601AFB80C000FB3168 /* JPIMRegisterViewController.m in Sources */,
-				1871831F1AFB80C000FB3168 /* JPIMSelectFriendsCtl.m in Sources */,
-				187183351AFB80C000FB3168 /* JPIMGroupPersonView.m in Sources */,
+				187183521AFB80C000FB3168 /* JCHATSettingViewController.m in Sources */,
+				1871834D1AFB80C000FB3168 /* JCHATLoginViewController.m in Sources */,
+				187183241AFB80C000FB3168 /* JCHATRawAudioDataPlayer.m in Sources */,
+				187183211AFB80C000FB3168 /* JCHATSendMessageViewController.m in Sources */,
+				187183601AFB80C000FB3168 /* JCHATRegisterViewController.m in Sources */,
+				1871831F1AFB80C000FB3168 /* JCHATSelectFriendsCtl.m in Sources */,
+				187183351AFB80C000FB3168 /* JCHATGroupPersonView.m in Sources */,
 				187183121AFB80C000FB3168 /* AppDelegate.m in Sources */,
-				1871833A1AFB80C000FB3168 /* JPIMToolBar.m in Sources */,
-				1871834B1AFB80C000FB3168 /* JPIMAlreadyLoginViewController.m in Sources */,
-				1871831A1AFB80C000FB3168 /* JPIMDetailsInfoViewController.m in Sources */,
-				1871832D1AFB80C000FB3168 /* JPIMImgTableViewCell.m in Sources */,
-				1871835C1AFB80C000FB3168 /* JPIMSettingCell.m in Sources */,
-				18324C041AFB861A006E8507 /* ChatTable.m in Sources */,
-				1871831C1AFB80C000FB3168 /* JPIMFriendDetailViewController.m in Sources */,
-				187183251AFB80C000FB3168 /* JPIMChatTableViewCell.m in Sources */,
-				187183321AFB80C000FB3168 /* JPIMTextTableViewCell.m in Sources */,
-				187183411AFB80C000FB3168 /* XHAudioPlayerHelper.m in Sources */,
-				187183421AFB80C000FB3168 /* XHVoiceCommonHelper.m in Sources */,
+				1871833A1AFB80C000FB3168 /* JCHATToolBar.m in Sources */,
+				1871834B1AFB80C000FB3168 /* JCHATAlreadyLoginViewController.m in Sources */,
+				1871831A1AFB80C000FB3168 /* JCHATDetailsInfoViewController.m in Sources */,
+				1871832D1AFB80C000FB3168 /* JCHATImgTableViewCell.m in Sources */,
+				1871835C1AFB80C000FB3168 /* JCHATSettingCell.m in Sources */,
+				18324C041AFB861A006E8507 /* JCHATChatTable.m in Sources */,
+				1871831C1AFB80C000FB3168 /* JCHATFriendDetailViewController.m in Sources */,
+				187183251AFB80C000FB3168 /* JCHATChatTableViewCell.m in Sources */,
+				187183321AFB80C000FB3168 /* JCHATTextTableViewCell.m in Sources */,
+				187183411AFB80C000FB3168 /* JCHATAudioPlayerHelper.m in Sources */,
 				1871833F1AFB80C000FB3168 /* XHVoiceRecordHelper.m in Sources */,
-				187183581AFB80C000FB3168 /* JPIMpersonInfoCell.m in Sources */,
+				187183581AFB80C000FB3168 /* JCHATPersonInfoCell.m in Sources */,
 				187183401AFB80C000FB3168 /* XHVoiceRecordHUD.m in Sources */,
-				187183231AFB80C000FB3168 /* ChatModel.m in Sources */,
-				187183471AFB80C000FB3168 /* JPIMContactsViewController.m in Sources */,
-				187183381AFB80C000FB3168 /* JPIMMoreView.m in Sources */,
-				187183371AFB80C000FB3168 /* JPIMMessageTextView.m in Sources */,
-				1871835A1AFB80C000FB3168 /* JPIMSetting_Cell.m in Sources */,
-				1871832E1AFB80C000FB3168 /* JPIMSelectFriendCell.m in Sources */,
-				187183501AFB80C000FB3168 /* JPIMPersonViewController.m in Sources */,
-				187183331AFB80C000FB3168 /* JPIMVoiceTableViewCell.m in Sources */,
-				187183271AFB80C000FB3168 /* JPIMDetailTableViewCell.m in Sources */,
-				187183291AFB80C000FB3168 /* JPIMFrIendDetailMessgeCell.m in Sources */,
-				1871835E1AFB80C000FB3168 /* JPIMRegisterDetailViewController.m in Sources */,
-				187183451AFB80C000FB3168 /* JPIMAddViewController.m in Sources */,
-				1871833E1AFB80C000FB3168 /* RecordAnimationView.m in Sources */,
+				187183231AFB80C000FB3168 /* JCHATChatModel.m in Sources */,
+				187183471AFB80C000FB3168 /* JCHATContactsViewController.m in Sources */,
+				187183381AFB80C000FB3168 /* JCHATMoreView.m in Sources */,
+				187183371AFB80C000FB3168 /* JCHATMessageTextView.m in Sources */,
+				1871835A1AFB80C000FB3168 /* JCHATSetting_Cell.m in Sources */,
+				1871832E1AFB80C000FB3168 /* JCHATSelectFriendCell.m in Sources */,
+				187183501AFB80C000FB3168 /* JCHATPersonViewController.m in Sources */,
+				187183331AFB80C000FB3168 /* JCHATVoiceTableViewCell.m in Sources */,
+				187183271AFB80C000FB3168 /* JCHATDetailTableViewCell.m in Sources */,
+				187183291AFB80C000FB3168 /* JCHATFrIendDetailMessgeCell.m in Sources */,
+				1871835E1AFB80C000FB3168 /* JCHATRegisterDetailViewController.m in Sources */,
+				187183451AFB80C000FB3168 /* JCHATAddViewController.m in Sources */,
+				1871833E1AFB80C000FB3168 /* JCHATRecordAnimationView.m in Sources */,
 				187183651AFB80C000FB3168 /* main.m in Sources */,
-				1871832B1AFB80C000FB3168 /* JPIMGroupSettingCell.m in Sources */,
-				187183541AFB80C000FB3168 /* JPIMUpdatePasswordCtl.m in Sources */,
-				1871831E1AFB80C000FB3168 /* JPIMGroupSettingCtl.m in Sources */,
-				187183301AFB80C000FB3168 /* JPIMShowTimeCell.m in Sources */,
-				187183181AFB80C000FB3168 /* JPIMChatViewController.m in Sources */,
-				187183561AFB80C000FB3168 /* JPIMUserInfoViewController.m in Sources */,
-				1871834F1AFB80C000FB3168 /* JPIMNewsReminderCtl.m in Sources */,
-				187183491AFB80C000FB3168 /* JPIMTabBarViewController.m in Sources */,
+				1871832B1AFB80C000FB3168 /* JCHATGroupSettingCell.m in Sources */,
+				187183541AFB80C000FB3168 /* JCHATUpdatePasswordCtl.m in Sources */,
+				1871831E1AFB80C000FB3168 /* JCHATGroupSettingCtl.m in Sources */,
+				187183301AFB80C000FB3168 /* JCHATShowTimeCell.m in Sources */,
+				187183181AFB80C000FB3168 /* JCHATChatViewController.m in Sources */,
+				187183561AFB80C000FB3168 /* JCHATUserInfoViewController.m in Sources */,
+				1871834F1AFB80C000FB3168 /* JCHATNewsReminderCtl.m in Sources */,
+				187183491AFB80C000FB3168 /* JCHATTabBarViewController.m in Sources */,
 				6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */,
 				6039BF2B12872ADB34A48CDD /* MJPhotoBrowser.m in Sources */,
 				6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */,
@@ -1712,8 +1711,9 @@
 				6039BB20C8E8F0ECFF502423 /* NSObject+TimeConvert.m in Sources */,
 				6039B9D106B00CBB96BF9458 /* NSString+MessageInputView.m in Sources */,
 				6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */,
-				6039B75FB1CF5450CD0787E8 /* JPIMBaseViewController.m in Sources */,
-				6039BCEF611ABE72279A91BE /* JPIMFileManager.m in Sources */,
+				6039B75FB1CF5450CD0787E8 /* JCHATBaseViewController.m in Sources */,
+				6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */,
+				6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
