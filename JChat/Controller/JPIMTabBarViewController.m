@@ -9,7 +9,7 @@
 #import "JPIMTabBarViewController.h"
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import <JMessage/JMessage.h>
 
 @interface JPIMTabBarViewController ()

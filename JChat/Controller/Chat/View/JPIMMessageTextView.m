@@ -7,7 +7,7 @@
 //
 
 #import "JPIMMessageTextView.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 
 @implementation JPIMMessageTextView
 #pragma mark - Setters

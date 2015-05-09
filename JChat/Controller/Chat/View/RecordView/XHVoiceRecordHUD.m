@@ -7,7 +7,7 @@
 //
 
 #import "XHVoiceRecordHUD.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #define kXHVoiceRecordPauseString @"手指上滑，取消发送"
 #define kXHVoiceRecordResaueString @"松开手指，取消发送"
 

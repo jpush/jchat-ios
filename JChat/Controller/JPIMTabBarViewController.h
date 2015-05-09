@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 
 @interface JPIMTabBarViewController : UITabBarController
 @property (nonatomic,strong) NSString *loginIdentify;

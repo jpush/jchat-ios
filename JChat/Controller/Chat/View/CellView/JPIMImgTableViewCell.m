@@ -8,7 +8,7 @@
 
 #import "JPIMImgTableViewCell.h"
 #import "ChatModel.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMFileManager.h"
 #import <JMessage/JMessage.h>
 #import "MBProgressHUD+Add.h"

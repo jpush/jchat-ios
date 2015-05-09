@@ -8,7 +8,7 @@
 
 #import "JPIMContactsViewController.h"
 #import "JPIMAddViewController.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import <JMessage/JMessage.h>
 
 

@@ -7,7 +7,7 @@
 //
 
 #import "JPIMPersonViewController.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMpersonInfoCell.h"
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"
