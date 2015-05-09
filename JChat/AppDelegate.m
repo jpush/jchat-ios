@@ -1,9 +1,9 @@
 #import "AppDelegate.h"
-#import "JPIMLoginViewController.h"
-#import "JPIMChatViewController.h"
-#import "JPIMContactsViewController.h"
-#import "JPIMUserInfoViewController.h"
-#import "JPIMFileManager.h"
+#import "JCHATLoginViewController.h"
+#import "JCHATChatViewController.h"
+#import "JCHATContactsViewController.h"
+#import "JCHATUserInfoViewController.h"
+#import "JCHATFileManager.h"
 #import "MobClick.h"
 #import "JCHATCustomFormatter.h"
 
@@ -35,7 +35,7 @@
         self.tabBarCtl.loginIdentify = kHaveLogin;
         self.window.rootViewController=self.tabBarCtl;
     } else {
-        JPIMLoginViewController *rootCtl = [[JPIMLoginViewController alloc] initWithNibName:@"JPIMLoginViewController" bundle:nil];
+        JCHATLoginViewController *rootCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
         UINavigationController *navLogin =[[UINavigationController alloc] initWithRootViewController:rootCtl];
         self.window.rootViewController=navLogin;
     }
@@ -58,7 +58,7 @@
                           name:kJPFNetworkDidLoginNotification
                         object:nil];
     
-    [JPIMFileManager initWithFilePath];//demo 初始化存储路径
+    [JCHATFileManager initWithFilePath];//demo 初始化存储路径
     return YES;
 }
 
@@ -236,11 +236,11 @@ forLocalNotification:(UILocalNotification *)notification
 
 #pragma mark --初始化各个功能模块
 -(void)initTheMainGTablebar {
-    self.tabBarCtl =[[JPIMTabBarViewController alloc] init];
+    self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
     self.tabBarCtl.loginIdentify = kFirstLogin;
     NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"], [UIImage imageNamed:@"menu_18.png"], [UIImage imageNamed:@"menu_13.png"], nil];
 
-    JPIMChatViewController *chatViewController = [[JPIMChatViewController alloc] initWithNibName:@"JPIMChatViewController"
+    JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController"
                                                                                           bundle:nil];
     UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewController];
 
@@ -258,8 +258,8 @@ forLocalNotification:(UILocalNotification *)notification
     /**
      * 联系人
      */
-    JPIMContactsViewController *contactsViewController = [[JPIMContactsViewController alloc]
-            initWithNibName:@"JPIMContactsViewController" bundle:nil];
+    JCHATContactsViewController *contactsViewController = [[JCHATContactsViewController alloc]
+            initWithNibName:@"JCHATContactsViewController" bundle:nil];
     UINavigationController *contactsNav = [[UINavigationController alloc]
             initWithRootViewController:contactsViewController];
 
@@ -274,8 +274,8 @@ forLocalNotification:(UILocalNotification *)notification
     /**
      * 设置
      */
-    JPIMUserInfoViewController *settingViewController = [[JPIMUserInfoViewController alloc]
-            initWithNibName:@"JPIMUserInfoViewController" bundle:nil];
+    JCHATUserInfoViewController *settingViewController = [[JCHATUserInfoViewController alloc]
+            initWithNibName:@"JCHATUserInfoViewController" bundle:nil];
     UINavigationController *settingNav = [[UINavigationController alloc]
             initWithRootViewController:settingViewController];
 
