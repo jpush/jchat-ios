@@ -10,10 +10,10 @@
 //  Created by zhangHao
 
 #import <JMessage/JMSGConstants.h>
-#import <JMessage/JMSGConversation.h>
 #import <JMessage/JMSGConversationManager.h>
 #import <JMessage/JMSGUserManager.h>
 #import <JMessage/JMSGMessageManager.h>
+#import <JMessage/JMSGConversation.h>
 #import <JMessage/JMSGUser.h>
 #import <JMessage/JMSGMessage.h>
 #import <JMessage/JPUSHService.h>
