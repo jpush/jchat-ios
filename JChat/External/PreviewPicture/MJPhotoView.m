@@ -14,7 +14,7 @@
 #import "ChatModel.h"
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 
 @interface MJPhotoView ()
 {

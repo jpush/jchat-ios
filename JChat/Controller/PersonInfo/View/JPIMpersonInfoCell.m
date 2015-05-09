@@ -7,7 +7,7 @@
 //
 
 #import "JPIMpersonInfoCell.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 @implementation JPIMpersonInfoCell
 
 - (void)awakeFromNib {

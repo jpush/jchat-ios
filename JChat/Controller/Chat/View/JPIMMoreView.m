@@ -7,7 +7,7 @@
 //
 
 #import "JPIMMoreView.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 @implementation JPIMMoreView
 
 /*

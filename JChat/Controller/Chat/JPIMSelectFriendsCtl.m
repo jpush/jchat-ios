@@ -7,7 +7,7 @@
 //
 
 #import "JPIMSelectFriendsCtl.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMSelectFriendCell.h"
 #import "JPIMSendMessageViewController.h"
 @interface JPIMSelectFriendsCtl ()
