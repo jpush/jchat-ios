@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "RecordAnimationView.h"
 #import "JPIMMessageTextView.h"
 @protocol SendMessageDelegate <NSObject>

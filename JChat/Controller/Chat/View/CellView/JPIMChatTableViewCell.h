@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import <JMessage/JMessage.h>
 
 @interface JPIMChatTableViewCell : UITableViewCell

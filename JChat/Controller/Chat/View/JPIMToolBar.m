@@ -7,7 +7,7 @@
 //
 
 #import "JPIMToolBar.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "RecordAnimationView.h"
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>

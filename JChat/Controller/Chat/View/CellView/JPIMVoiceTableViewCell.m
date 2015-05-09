@@ -8,7 +8,7 @@
 
 #import "JPIMVoiceTableViewCell.h"
 #import "ChatModel.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "XHAudioPlayerHelper.h"
 #import "JPIMFileManager.h"
 #import <JMessage/JMessage.h>

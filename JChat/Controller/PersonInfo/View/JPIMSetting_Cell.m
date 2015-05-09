@@ -7,7 +7,7 @@
 //
 
 #import "JPIMSetting_Cell.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 @implementation JPIMSetting_Cell
 
 - (void)awakeFromNib {

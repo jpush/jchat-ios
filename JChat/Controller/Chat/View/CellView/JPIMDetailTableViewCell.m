@@ -7,7 +7,7 @@
 //
 
 #import "JPIMDetailTableViewCell.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 
 @implementation JPIMDetailTableViewCell
 

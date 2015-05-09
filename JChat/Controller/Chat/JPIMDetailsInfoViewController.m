@@ -9,7 +9,7 @@
 #import "JPIMDetailsInfoViewController.h"
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMFriendDetailViewController.h"
 #import <JMessage/JMessage.h>
 

@@ -7,7 +7,7 @@
 //
 
 #import "JPIMGroupSettingCtl.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMGroupSettingCell.h"
 #import "JPIMGroupPersonView.h"
 
