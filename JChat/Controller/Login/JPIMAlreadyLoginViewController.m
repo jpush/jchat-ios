@@ -7,7 +7,7 @@
 //
 
 #import "JPIMAlreadyLoginViewController.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "MBProgressHUD+Add.h"
 #import "AppDelegate.h"
 #import "JPIMLoginViewController.h"

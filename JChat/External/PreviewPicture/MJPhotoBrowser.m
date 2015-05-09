@@ -11,7 +11,7 @@
 #import "MJPhotoView.h"
 #import "MJPhotoToolbar.h"
 #import <JMessage/JMessage.h>
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 //#define kPadding 10
 #define kPadding 0
 #define kPhotoViewTagOffset 1000

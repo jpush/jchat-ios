@@ -8,7 +8,7 @@
 
 #import "JPIMFriendDetailViewController.h"
 #import "JPIMpersonInfoCell.h"
-#import "JPIMCommon.h"
+#import "JChatConstants.h"
 #import "JPIMFrIendDetailMessgeCell.h"
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"

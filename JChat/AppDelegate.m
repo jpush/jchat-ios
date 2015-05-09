@@ -6,7 +6,7 @@
 #import "JPIMFileManager.h"
 #import "MobClick.h"
 #import "JCHATCustomFormatter.h"
-#import "JPIMCommon.h"
+
 #import <JMessage/JMessage.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CocoaLumberjack/DDLegacyMacros.h>
