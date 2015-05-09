@@ -1,0 +1,16 @@
+//
+//  JCHATPersonInfoCell.h
+//  JPush IM
+//
+//  Created by Apple on 15/2/5.
+//  Copyright (c) 2015年 Apple. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface JCHATPersonInfoCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UITextField *personInfoConten;
+@property (weak, nonatomic) IBOutlet UILabel *infoTitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *titleImgView;
+
+@end
