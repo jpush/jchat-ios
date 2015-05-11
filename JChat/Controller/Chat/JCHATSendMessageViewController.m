@@ -102,6 +102,9 @@
             self.title = self.user.username;
         }
     }
+  
+  
+  
     _messageDataArr =[[NSMutableArray alloc] init];
     _imgDataArr =[[NSMutableArray alloc] init];
     [self getAllMessage];
@@ -113,7 +116,8 @@
     self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
     [self.view addSubview:self.messageTableView];
-    
+
+  
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
     self.toolBar = [nib objectAtIndex:0];
     self.toolBar.contentMode = UIViewContentModeRedraw;
@@ -121,7 +125,7 @@
     self.toolBar.delegate = self;
     [self.toolBar setUserInteractionEnabled:YES];
     [self.view addSubview:self.toolBar];
-    
+  
     [self.view setBackgroundColor:[UIColor whiteColor]];
     UIButton *rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
