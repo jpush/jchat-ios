@@ -86,20 +86,19 @@
 }
 
 - (void)networkDidClose:(NSNotification *)notification {
-  JPIMLog(@"networkDidClose");
+  DDLogDebug(@"Action - networkDidClose");
 }
 
 - (void)networkDidRegister:(NSNotification *)notification {
-  JPIMLog(@"networkDidRegister");
+  DDLogDebug(@"Action - networkDidRegister");
 }
 
 - (void)networkDidLogin:(NSNotification *)notification {
-    JPIMLog(@"networkDidLogin");
- 
+  DDLogDebug(@"Action - networkDidLogin");
 }
 
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
-    JPIMLog(@"networkDidReceiveMessage");
+  DDLogDebug(@"Action - networkDidReceiveMessage");
 }
 
 - (void)serviceError:(NSNotification *)notification {

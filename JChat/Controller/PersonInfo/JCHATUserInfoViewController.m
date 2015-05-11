@@ -235,9 +235,10 @@
         JMSGUser *user = [JMSGUserManager getMyInfo];
         [JMSGUserManager getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
-                NSLog(@"getOriginAvatarImage avatarResourcePath :%@",user.avatarResourcePath);
+              JMSGUser *userObject = (JMSGUser *)resultObject;
+              DDLogInfo(@"getOriginAvatarImage:%@",userObject);
                 if (user.avatarResourcePath) {
-                    UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
+                    UIImage *headImg = [UIImage imageWithContentsOfFile:userObject.avatarResourcePath];
                     UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
                     [_bgView setImage:img];
                 }else {
