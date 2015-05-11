@@ -55,10 +55,10 @@
     [lineView setBackgroundColor:[UIColor grayColor]];
     [tableHeadView addSubview:lineView];
     
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 100-40, 60, 40)];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 100-40, 150, 40)];
     nameLabel.textColor = [UIColor grayColor];
     nameLabel.font = [UIFont boldSystemFontOfSize:18];
-    nameLabel.textAlignment =NSTextAlignmentCenter;
+    nameLabel.textAlignment = NSTextAlignmentLeft;
     
     if (self.chatUser.noteName) {
         nameLabel.text = self.chatUser.noteName;
