@@ -271,6 +271,7 @@
 		6039B1E2972C3E3FC1CE0676 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B36C65D718CFBA51882E /* MKAnnotationView+WebCache.m */; };
 		6039B251796A2C46155BB6FA /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6D1A2C410E351208121 /* SDWebImagePrefetcher.m */; };
 		6039B3C6A038F78066188F61 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B30B4E016B6B901E3C21 /* SDWebImageManager.m */; };
+		6039B40AE179D5BE54BA7580 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B38611C311283A8B123C /* JCHATStringUtils.m */; };
 		6039B4AB434F2120F6431270 /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BC3B537A9E1B6FBB30FE /* MJPhotoToolbar.m */; };
 		6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */; };
 		6039B6E00846B07D21E72217 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8EEF63EB1C41A17F0E0 /* UIImage+WebP.m */; };
@@ -638,6 +639,7 @@
 		6039B354054776BB4419272C /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
 		6039B356C2B9C193CA4CAE06 /* JCHATBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATBaseViewController.m; sourceTree = "<group>"; };
 		6039B36C65D718CFBA51882E /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
+		6039B38611C311283A8B123C /* JCHATStringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATStringUtils.m; sourceTree = "<group>"; };
 		6039B3A691520DE6766F79DB /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
 		6039B455EDE0E591B1087ACA /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
 		6039B470206AC46AE63B8D30 /* UIImage+GIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GIF.m"; sourceTree = "<group>"; };
@@ -650,6 +652,7 @@
 		6039B5CB4EAB97AB0096BBDA /* SDWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageOperation.h; sourceTree = "<group>"; };
 		6039B5CD3A2AEA7D09ABF7ED /* JCHATCustomFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATCustomFormatter.h; sourceTree = "<group>"; };
 		6039B609C61F92E43FE096BB /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
+		6039B63865A14DA26F240859 /* JCHATStringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATStringUtils.h; sourceTree = "<group>"; };
 		6039B63C75BC675F321AB980 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
 		6039B6503843277EDDD6D961 /* SDWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManager.h; sourceTree = "<group>"; };
 		6039B6B7F476CC918C72C26B /* JCHATCustomFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATCustomFormatter.m; sourceTree = "<group>"; };
@@ -1248,6 +1251,8 @@
 			children = (
 				6039B7787D3ECBCF1776ED99 /* JCHATFileManager.h */,
 				6039BB2B5ADBF93F1A4EBA2C /* JCHATFileManager.m */,
+				6039B38611C311283A8B123C /* JCHATStringUtils.m */,
+				6039B63865A14DA26F240859 /* JCHATStringUtils.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1714,6 +1719,7 @@
 				6039B75FB1CF5450CD0787E8 /* JCHATBaseViewController.m in Sources */,
 				6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */,
 				6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */,
+				6039B40AE179D5BE54BA7580 /* JCHATStringUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1777,7 +1783,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "e9a69b16-468d-4992-84ea-c4d610ef6f50";
+				PROVISIONING_PROFILE = "2b6d3ea6-fe6e-4d09-90cd-6a3007d44214";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1813,7 +1819,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "e9a69b16-468d-4992-84ea-c4d610ef6f50";
+				PROVISIONING_PROFILE = "2b6d3ea6-fe6e-4d09-90cd-6a3007d44214";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
