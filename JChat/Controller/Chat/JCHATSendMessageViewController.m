@@ -116,8 +116,6 @@
     self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
     [self.view addSubview:self.messageTableView];
-
-  
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
     self.toolBar = [nib objectAtIndex:0];
     self.toolBar.contentMode = UIViewContentModeRedraw;
