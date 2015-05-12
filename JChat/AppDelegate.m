@@ -6,9 +6,9 @@
 #import "JCHATFileManager.h"
 #import "MobClick.h"
 #import "JCHATCustomFormatter.h"
+#import "JCHATStringUtils.h"
 
 #import <JMessage/JMessage.h>
-#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <CocoaLumberjack/DDLegacyMacros.h>
 
 @implementation AppDelegate
@@ -101,9 +101,6 @@
   DDLogDebug(@"Action - networkDidReceiveMessage");
 }
 
-- (void)serviceError:(NSNotification *)notification {
-    
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     //    [JPUSHService stopLogPageView:@"aa"];
@@ -116,53 +113,63 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate
-    // timers, and store enough application state information to restore your
-    // application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called
-    // instead of applicationWillTerminate: when the user quits.
-    
-    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
-    NSInteger badge = [[[NSUserDefaults standardUserDefaults] objectForKey:kBADGE] integerValue];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
+  DDLogDebug(@"Action - applicationDidEnterBackground");
+  // Use this method to release shared resources, save user data, invalidate
+  // timers, and store enough application state information to restore your
+  // application to its current state in case it is terminated later.
+  // If your application supports background execution, this method is called
+  // instead of applicationWillTerminate: when the user quits.
+
+  [self resetApplicationBadge];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    NSInteger badge = [[[NSUserDefaults standardUserDefaults] objectForKey:kBADGE] integerValue];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
-    [application cancelAllLocalNotifications];
+  DDLogDebug(@"Action - applicationWillEnterForeground");
+
+  [application cancelAllLocalNotifications];
 }
 
+
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the
-    // application was inactive. If the application was previously in the
-    // background, optionally refresh the user interface.
+  // Restart any tasks that were paused (or not yet started) while the
+  // application was inactive. If the application was previously in the
+  // background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if
-    // appropriate. See also applicationDidEnterBackground:.
+  DDLogVerbose(@"Action - applicationWillTerminate");
+  // Called when the application is about to terminate. Save data if
+  // appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)application:(UIApplication *)application
-        didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [NSString stringWithFormat:@"%@", deviceToken];
-    [UIColor colorWithRed:0.0 / 255
-                    green:122.0 / 255
-                     blue:255.0 / 255
-                    alpha:1];
-    JPIMLog(@"%@", [NSString stringWithFormat:@"Device Token: %@", deviceToken]);
-    [JPUSHService registerDeviceToken:deviceToken];
+
+// ---------------------- JPUSH
+// 通常会调用 JPUSHService 方法去完成 Push 相关的功能
+
+- (void)                             application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  DDLogInfo(@"Action - didRegisterForRemoteNotificationsWithDeviceToken");
+
+  [NSString stringWithFormat:@"%@", deviceToken];
+  [UIColor colorWithRed:0.0 / 255
+                  green:122.0 / 255
+                   blue:255.0 / 255
+                  alpha:1];
+  DDLogVerbose(@"Got Device Token - %@", deviceToken);
+
+  [JPUSHService registerDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)application
-        didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    JPIMLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
+- (void)                             application:(UIApplication *)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  DDLogVerbose(@"Action - didFailToRegisterForRemoteNotificationsWithError - %@", error);
 }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-- (void)application:(UIApplication *)application
-        didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+
+- (void)                application:(UIApplication *)application
+didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+  DDLogInfo(@"Action - didRegisterUserNotificationSettings");
 }
 
 // Called when your app has been activated by the user selecting an action from
@@ -170,10 +177,11 @@
 // A nil action identifier indicates the default action.
 // You should call the completion handler as soon as you've finished handling
 // the action.
-- (void)application:(UIApplication *)application
+- (void)       application:(UIApplication *)application
 handleActionWithIdentifier:(NSString *)identifier
-forLocalNotification:(UILocalNotification *)notification
-  completionHandler:(void (^)())completionHandler {
+      forLocalNotification:(UILocalNotification *)notification
+         completionHandler:(void (^)())completionHandler {
+  DDLogDebug(@"Action - handleActionWithIdentifier:forLocalNotification");
 }
 
 // Called when your app has been activated by the user selecting an action from
@@ -181,56 +189,50 @@ forLocalNotification:(UILocalNotification *)notification
 // A nil action identifier indicates the default action.
 // You should call the completion handler as soon as you've finished handling
 // the action.
-- (void)application:(UIApplication *)application
-        handleActionWithIdentifier:(NSString *)identifier
-        forRemoteNotification:(NSDictionary *)userInfo
-  completionHandler:(void (^)())completionHandler {
-}
-#endif
-
-- (void)application:(UIApplication *)application
-        didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [JPUSHService handleRemoteNotification:userInfo];
-    NSLog(@"收到通知:%@", [self logDic:userInfo]);
-//    NSInteger badge = [[[NSUserDefaults standardUserDefaults] objectForKey:kBADGE] integerValue];
-//    badge++;
-//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
-//    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld",badge] forKey:kBADGE];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
+- (void)       application:(UIApplication *)application
+handleActionWithIdentifier:(NSString *)identifier
+     forRemoteNotification:(NSDictionary *)userInfo
+         completionHandler:(void (^)())completionHandler {
+  DDLogDebug(@"Action - handleActionWithIdentifier:forRemoteNotification");
 }
 
-- (void)application:(UIApplication *)application
-        didReceiveRemoteNotification:(NSDictionary *)userInfo
-        fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [JPUSHService handleRemoteNotification:userInfo];
-    NSLog(@"收到通知:%@", [self logDic:userInfo]);
-    completionHandler(UIBackgroundFetchResultNewData);
+#endif // end of - > __IPHONE_7_1
+
+- (void)         application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo {
+  DDLogDebug(@"Action - didReceiveRemoteNotification");
+
+  [JPUSHService handleRemoteNotification:userInfo];
+
+  DDLogVerbose(@"收到通知 - %@", [JCHATStringUtils dictionary2String:userInfo]);
 }
 
-- (void)application:(UIApplication *)application
-        didReceiveLocalNotification:(UILocalNotification *)notification {
-    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+- (void)         application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+      fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+  DDLogDebug(@"Action - didReceiveRemoteNotification:fetchCompletionHandler");
+
+  [JPUSHService handleRemoteNotification:userInfo];
+
+  DDLogVerbose(@"收到通知 - %@", [JCHATStringUtils dictionary2String:userInfo]);
+
+  completionHandler(UIBackgroundFetchResultNewData);
 }
 
-// log NSSet with UTF8
-// if not ,log will be \Uxxx
-- (NSString *)logDic:(NSDictionary *)dic {
-    if (![dic count]) {
-        return nil;
-    }
-    NSString *tempStr1 = [[dic description] stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *str = [NSPropertyListSerialization propertyListFromData:tempData
-                                                     mutabilityOption:NSPropertyListImmutable
-                                                               format:NULL
-                                                     errorDescription:NULL];
-    return str;
+- (void)        application:(UIApplication *)application
+didReceiveLocalNotification:(UILocalNotification *)notification {
+  DDLogDebug(@"Action - didReceiveLocalNotification");
+
+  [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
 }
+
+
+// ---------- end of JPUSH
+
+
 
 - (void)sendApnsNotificationSkipPage:(NSDictionary *)notificaton {
-    [[NSNotificationCenter defaultCenter] postNotificationName:KApnsNotification object:notificaton];
+  [[NSNotificationCenter defaultCenter] postNotificationName:KApnsNotification object:notificaton];
 }
 
 #pragma mark --初始化各个功能模块
@@ -327,5 +329,17 @@ forLocalNotification:(UILocalNotification *)notification
 - (void)onlineConfigCallBack:(NSNotification *)note {
     NSLog(@"online config has fininshed and note = %@", note.userInfo);
 }
+
+
+- (void)resetApplicationBadge {
+  DDLogVerbose(@"Action - resetApplicationBadge");
+
+  NSInteger badge = [[[NSUserDefaults standardUserDefaults] objectForKey:kBADGE] integerValue];
+  [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
+
+  [JPUSHService setBadge:badge];
+}
+
+
 
 @end
