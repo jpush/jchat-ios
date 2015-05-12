@@ -9,57 +9,62 @@
 #import "JCHATStringUtils.h"
 
 #import <JMessage/JMessage.h>
-#import <CocoaLumberjack/DDLegacyMacros.h>
 
 @implementation AppDelegate
 
 
+- (BOOL)          application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [self initLogger];
 
-- (BOOL)application:(UIApplication *)application
-        didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self initLogger];
+  DDLogInfo(@"Action - didFinishLaunchingWithOptions");
 
-    DDLogInfo(@"Action - didFinishLaunchingWithOptions");
+  // init third-party SDK
+  [JMessage setupJMessage:launchOptions
+                   appKey:JMSSAGE_APPKEY
+                  channel:CHANNEL apsForProduction:NO
+                 category:nil];
+  [self registerJPushStatusNotification];
+  [self umengTrack];
 
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-    [self.window makeKeyAndVisible];
-    [self umengTrack];
-    [JMessage setupJMessage:launchOptions
-                     appKey:JMSSAGE_APPKEY
-                    channel:CHANNEL apsForProduction:NO
-                   category:nil];
-    [self initTheMainGTablebar];
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kuserName]) {
-        self.tabBarCtl.loginIdentify = kHaveLogin;
-        self.window.rootViewController=self.tabBarCtl;
-    } else {
-        JCHATLoginViewController *rootCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
-        UINavigationController *navLogin =[[UINavigationController alloc] initWithRootViewController:rootCtl];
-        self.window.rootViewController=navLogin;
-    }
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-    [defaultCenter addObserver:self
-                      selector:@selector(networkDidSetup:)
-                          name:kJPFNetworkDidSetupNotification
-                        object:nil];
-    [defaultCenter addObserver:self
-                      selector:@selector(networkDidClose:)
-                          name:kJPFNetworkDidCloseNotification
-                        object:nil];
-    [defaultCenter addObserver:self
-                      selector:@selector(networkDidRegister:)
-                          name:kJPFNetworkDidRegisterNotification
-                        object:nil];
-    [defaultCenter addObserver:self
-                      selector:@selector(networkDidLogin:)
-                          name:kJPFNetworkDidLoginNotification
-                        object:nil];
-    
-    [JCHATFileManager initWithFilePath];//demo 初始化存储路径
-    return YES;
+  [self.window makeKeyAndVisible];
+
+  [self initTheMainGTablebar];
+
+  if ([[NSUserDefaults standardUserDefaults] objectForKey:kuserName]) {
+    self.tabBarCtl.loginIdentify = kHaveLogin;
+    self.window.rootViewController = self.tabBarCtl;
+  } else {
+    JCHATLoginViewController *rootCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
+    UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:rootCtl];
+    self.window.rootViewController = navLogin;
+  }
+
+  [JCHATFileManager initWithFilePath];//demo 初始化存储路径
+  return YES;
+}
+
+- (void)registerJPushStatusNotification {
+  NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter addObserver:self
+                    selector:@selector(networkDidSetup:)
+                        name:kJPFNetworkDidSetupNotification
+                      object:nil];
+  [defaultCenter addObserver:self
+                    selector:@selector(networkDidClose:)
+                        name:kJPFNetworkDidCloseNotification
+                      object:nil];
+  [defaultCenter addObserver:self
+                    selector:@selector(networkDidRegister:)
+                        name:kJPFNetworkDidRegisterNotification
+                      object:nil];
+  [defaultCenter addObserver:self
+                    selector:@selector(networkDidLogin:)
+                        name:kJPFNetworkDidLoginNotification
+                      object:nil];
 }
 
 - (void)initLogger {
@@ -95,22 +100,27 @@
 
 }
 
+// notification from JPush
 - (void)networkDidSetup:(NSNotification *)notification {
   DDLogDebug(@"Action - networkDidSetup");
 }
 
+// notification from JPush
 - (void)networkDidClose:(NSNotification *)notification {
   DDLogDebug(@"Action - networkDidClose");
 }
 
+// notification from JPush
 - (void)networkDidRegister:(NSNotification *)notification {
   DDLogDebug(@"Action - networkDidRegister");
 }
 
+// notification from JPush
 - (void)networkDidLogin:(NSNotification *)notification {
   DDLogDebug(@"Action - networkDidLogin");
 }
 
+// notification from JPush
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
   DDLogDebug(@"Action - networkDidReceiveMessage");
 }
@@ -253,7 +263,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 -(void)initTheMainGTablebar {
     self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
     self.tabBarCtl.loginIdentify = kFirstLogin;
-    NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"], [UIImage imageNamed:@"menu_18.png"], [UIImage imageNamed:@"menu_13.png"], nil];
+    NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"],
+            [UIImage imageNamed:@"menu_18.png"], [UIImage imageNamed:@"menu_13.png"], nil];
 
     JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController"
                                                                                           bundle:nil];
@@ -322,28 +333,13 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 
 - (void)umengTrack {
-    //    [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
-    [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
+    // [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
+    // [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    //
-    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:nil];
-    //   reportPolicy为枚举类型,可以为 REALTIME, BATCH,SENDDAILY,SENDWIFIONLY几种
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy)REALTIME channelId:nil];
+    //   reportPolicy为枚举类型,可以为 REALTIME, BATCH, SENDDAILY, SENDWIFIONLY 几种
     //   channelId 为NSString * 类型，channelId 为nil或@""时,默认会被被当作@"App Store"渠道
-
-    //      [MobClick checkUpdate];   //自动更新检查, 如果需要自定义更新请使用下面的方法,需要接收一个(NSDictionary *)appInfo的参数
-    //    [MobClick checkUpdateWithDelegate:self selector:@selector(updateMethod:)];
-
-    [MobClick updateOnlineConfig];  //在线参数配置
-
-    //    1.6.8之前的初始化方法
-    //    [MobClick setDelegate:self reportPolicy:REALTIME];  //建议使用新方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
 }
-
-- (void)onlineConfigCallBack:(NSNotification *)note {
-    NSLog(@"online config has fininshed and note = %@", note.userInfo);
-}
-
 
 - (void)resetApplicationBadge {
   DDLogVerbose(@"Action - resetApplicationBadge");
