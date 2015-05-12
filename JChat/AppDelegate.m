@@ -63,22 +63,36 @@
 }
 
 - (void)initLogger {
-  [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
-//  [[DDTTYLogger sharedInstance] setForegroundColor:RGBCOLOR(0, 0, 255)
-//                                   backgroundColor:nil
-//                                           forFlag:LOG_FLAG_INFO];
-
   JCHATCustomFormatter *formatter = [[JCHATCustomFormatter alloc] init];
 
-    // XCode console
+  // XCode console
   [[DDTTYLogger sharedInstance] setLogFormatter:formatter];
   [DDLog addLogger:[DDTTYLogger sharedInstance]];
+
+  // Apple System
+  [[DDASLLogger sharedInstance] setLogFormatter:formatter];
+  [DDLog addLogger:[DDASLLogger sharedInstance]];
 
   DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
   fileLogger.rollingFrequency = 60 * 60 * 24; // 一个LogFile的有效期长，有效期内Log都会写入该LogFile
   fileLogger.logFileManager.maximumNumberOfLogFiles = 7;//最多LogFile的数量
   [fileLogger setLogFormatter:formatter];
   [DDLog addLogger:fileLogger];
+
+  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(255, 0, 0)
+                                      backgroundColor:nil
+                                              forFlag:LOG_FLAG_ERROR];
+  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(255, 215, 0)
+                                      backgroundColor:nil
+                                              forFlag:LOG_FLAG_WARN];
+  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(0, 255, 0)
+                                      backgroundColor:nil
+                                              forFlag:LOG_FLAG_DEBUG];
+  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(0, 0, 255)
+                                      backgroundColor:nil
+                                              forFlag:LOG_FLAG_INFO];
+  [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+
 }
 
 - (void)networkDidSetup:(NSNotification *)notification {
