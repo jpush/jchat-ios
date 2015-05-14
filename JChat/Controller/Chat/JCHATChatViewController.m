@@ -224,14 +224,14 @@ NSInteger sortType(id object1,id object2,void *cha) {
     for (NSInteger i=0; i<2; i++) {
     UIButton *btn =[UIButton buttonWithType:UIButtonTypeCustom];
     if (i==0) {
-//        [btn setTitle:@"发起群聊" forState:UIControlStateNormal];
+        [btn setTitle:@"发起群聊" forState:UIControlStateNormal];
     }
     if (i==1) {
         [btn setTitle:@"添加朋友" forState:UIControlStateNormal];
     }
     [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag=i + 100;
-    [btn setFrame:CGRectMake(10, i*30, 80, 30)];
+    [btn setFrame:CGRectMake(10, i*30+20, 80, 30)];
     [self.addBgView addSubview:btn];
     }
 }
@@ -239,9 +239,10 @@ NSInteger sortType(id object1,id object2,void *cha) {
 -(void)btnClick :(UIButton *)btn {
     [self.addBgView setHidden:YES];
     if (btn.tag == 100) {
-//    JCHATSelectFriendsCtl *selectCtl =[[JCHATSelectFriendsCtl alloc] init];
-//    UINavigationController *selectNav =[[UINavigationController alloc] initWithRootViewController:selectCtl];
-//    [self.navigationController presentViewController:selectNav animated:YES completion:nil];
+    //
+    JCHATSelectFriendsCtl *selectCtl =[[JCHATSelectFriendsCtl alloc] init];
+    UINavigationController *selectNav =[[UINavigationController alloc] initWithRootViewController:selectCtl];
+    [self.navigationController presentViewController:selectNav animated:YES completion:nil];
     }else if (btn.tag == 101) {
     UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"添加好友" message:@"输入好友用户名!"
                                                      delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
