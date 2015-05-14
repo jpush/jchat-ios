@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 #import "DDLog.h"
 
+#define COMMON_LOGGER_NAME @"JCHAT"
 
 @interface JCHATCustomFormatter : NSObject <DDLogFormatter>
 
