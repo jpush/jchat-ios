@@ -45,7 +45,7 @@
 
 #define JPIMLog(...) NSLog(@"%s %@", __PRETTY_FUNCTION__,[NSString stringWithFormat:__VA_ARGS__])
 
-#define JCHAT_LOG_PREFIX @"JCHAT"
+#define LOG_PREFIX @"JChat"
 
 /**
   DDLogError 错误：真的出错了，逻辑不正常
