@@ -16,6 +16,7 @@
 - (BOOL)          application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [self initLogger];
+  TICK;
 
   DDLogInfo(@"Action - didFinishLaunchingWithOptions");
 
@@ -24,7 +25,14 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                    appKey:JMSSAGE_APPKEY
                   channel:CHANNEL apsForProduction:NO
                  category:nil];
+
+  [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound |
+                                                    UIUserNotificationTypeAlert)
+                                        categories:nil];
+
   [self registerJPushStatusNotification];
+
   [self umengTrack];
 
 
@@ -44,6 +52,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   }
 
   [JCHATFileManager initWithFilePath];//demo 初始化存储路径
+  TOCK(@"App init");
   return YES;
 }
 
@@ -97,7 +106,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                                       backgroundColor:nil
                                               forFlag:LOG_FLAG_INFO];
   [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
-
 }
 
 // notification from JPush
