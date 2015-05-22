@@ -107,8 +107,8 @@
         if (![[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
             [[alertView textFieldAtIndex:0] resignFirstResponder];
           
-            JPIMLog(@"%@ %@",[alertView textFieldAtIndex:0].text, [JMSGUserManager getMyInfo].password);
-            if ([[alertView textFieldAtIndex:0].text isEqualToString:[JMSGUserManager getMyInfo].password] ) {
+            JPIMLog(@"%@ %@",[alertView textFieldAtIndex:0].text, [JMSGUser getMyInfo].password);
+            if ([[alertView textFieldAtIndex:0].text isEqualToString:[JMSGUser getMyInfo].password] ) {
                 
                 JCHATUpdatePasswordCtl *updateWordCtl =[[JCHATUpdatePasswordCtl alloc] init];
                 [self.navigationController pushViewController:updateWordCtl animated:YES];
