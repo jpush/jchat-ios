@@ -216,13 +216,13 @@
             [self.conversation getMessage:_model.messageId completionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
                    _message = _sendFailMessage = resultObject;
-                    [JMSGMessageManager sendMessage:_sendFailMessage];
+                    [JMSGMessage sendMessage:_sendFailMessage];
                 }else {
                     NSLog(@"获取消息失败!");
                 }
             }];
         }else {
-            [JMSGMessageManager sendMessage:_sendFailMessage];
+            [JMSGMessage sendMessage:_sendFailMessage];
             JPIMLog(@"重新发送消息:%@",_sendFailMessage);
         }
     }

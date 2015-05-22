@@ -73,7 +73,7 @@
     [_groupTextField resignFirstResponder];
     JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
     sendMessageCtl.hidesBottomBarWhenPushed=YES;
-    sendMessageCtl.conversationType = kGroup;
+    sendMessageCtl.conversationType = kJMSGGroup;
     [self.navigationController pushViewController:sendMessageCtl animated:YES];
 }
 

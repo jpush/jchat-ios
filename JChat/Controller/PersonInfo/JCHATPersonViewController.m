@@ -55,7 +55,7 @@
     _personTabl.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_personTabl];
     NSString *name;
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    JMSGUser *user = [JMSGUser getMyInfo];
     if (user.nickname) {
         name = user.nickname;
     }else {
@@ -68,7 +68,7 @@
 - (void)loadUserInfoData {
     _infoArr = [[NSMutableArray alloc]init];
     NSString *name;
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    JMSGUser *user = [JMSGUser getMyInfo];
 
     if (user.nickname) {
         name = user.nickname;
@@ -136,13 +136,13 @@
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    JMSGUser *user = [JMSGUser getMyInfo];
     if (buttonIndex ==1) {
         [[alertView textFieldAtIndex:0] resignFirstResponder];
         [MBProgressHUD showMessage:@"正在修改" toView:self.view];
         if (![[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
             if (alertView.tag == 0) {
-                [JMSGUserManager updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGNickname completionHandler:^(id resultObject, NSError *error) {
+                [JMSGUser updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGNickname completionHandler:^(id resultObject, NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                     if (error == nil) {
                         JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *) [_personTabl cellForRowAtIndexPath:[NSIndexPath indexPathForRow:alertView.tag inSection:0]];
@@ -153,7 +153,7 @@
                     }
                 }];
             } else if (alertView.tag ==1) {
-                [JMSGUserManager updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGGender completionHandler:^(id resultObject, NSError *error) {
+                [JMSGUser updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGGender completionHandler:^(id resultObject, NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
                     if (error == nil) {
@@ -173,7 +173,7 @@
                     }
                 }];
             } else if (alertView.tag == 2) {
-                [JMSGUserManager updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGRegion completionHandler:^(id resultObject, NSError *error) {
+                [JMSGUser updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGRegion completionHandler:^(id resultObject, NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                     if (error == nil) {
                         JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *) [_personTabl cellForRowAtIndexPath:[NSIndexPath indexPathForRow:alertView.tag inSection:0]];
@@ -184,7 +184,7 @@
                     }
                 }];
             } else if (alertView.tag ==3) {
-                [JMSGUserManager updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGSignature completionHandler:^(id resultObject, NSError *error) {
+                [JMSGUser updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGSignature completionHandler:^(id resultObject, NSError *error) {
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                     if (error == nil) {
                         [MBProgressHUD showMessage:@"修改成功" view:self.view];
