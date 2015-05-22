@@ -116,7 +116,7 @@
 - (IBAction)loginBtnClick:(id)sender {
     [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
     if (![self.passwordField.text isEqualToString:@""] && ![self.accountField.text isEqualToString:@""]) {
-        [JMSGUserManager loginWithUsername:self.accountField.text password:self.passwordField.text completionHandler:^(id resultObject, NSError *error) {
+        [JMSGUser loginWithUsername:self.accountField.text password:self.passwordField.text completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
                 AppDelegate *appdelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
                 if ([appdelegate.tabBarCtl.loginIdentify isEqualToString:kHaveLogin]) {

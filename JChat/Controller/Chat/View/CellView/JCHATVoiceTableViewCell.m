@@ -177,14 +177,14 @@
                     self.voiceFailMessage = resultObject;
                     self.voiceFailMessage.resourcePath = self.model.voicePath;
                     self.message = resultObject;
-                    [JMSGMessageManager sendMessage:self.voiceFailMessage];
+                    [JMSGMessage sendMessage:self.voiceFailMessage];
                 }else {
                     JPIMLog(@"获取消息失败!");
                 }
             }];
         }else {
             self.voiceFailMessage.resourcePath = self.model.voicePath;
-            [JMSGMessageManager sendMessage:self.voiceFailMessage];
+            [JMSGMessage sendMessage:self.voiceFailMessage];
         }
     }
 }
@@ -268,7 +268,7 @@
         [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
                 NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-                [JMSGMessageManager getVoiceFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                [JMSGMessage getVoiceFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
                     JPIMMAINTHEAD(^{
                         if (error == nil) {
                             self.model.voicePath = [(NSURL *)resultObject path];
@@ -354,7 +354,7 @@
     _message.duration = self.model.voiceTime;
     _message.timestamp = self.model.messageTime;
     _message.resourcePath = self.model.voicePath;
-    [JMSGMessageManager sendMessage:_message];
+    [JMSGMessage sendMessage:_message];
     JPIMLog(@"sendt voiceMessage:%@",_message);
 }
 

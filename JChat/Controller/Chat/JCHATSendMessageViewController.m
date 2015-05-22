@@ -50,13 +50,13 @@
     if (self.user) {
         self.targetName = self.user.username;
     }else if (_conversation){
-        self.targetName = _conversation.targetName;
+        self.targetName = _conversation.target_name;
     }else {
         JPIMLog(@"聊天未知错误");
     }
     if (!_conversation) {
         if (self.user) {
-             [JMSGConversationManager createConversation:self.user.username withType:kSingle completionHandler:^(id resultObject, NSError *error) {
+             [JMSGConversation createConversation:self.user.username withType:kJMSGSingle completionHandler:^(id resultObject, NSError *error) {
                  _conversation = (JMSGConversation  *)resultObject ;
                  [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                      if (error == nil) {
@@ -71,7 +71,7 @@
     }
     __weak __typeof(self)weakSelf = self;
     if (!self.user) {
-        [JMSGUserManager getUserInfoWithUsername:_conversation.targetName completionHandler:^(id resultObject, NSError *error) {
+        [JMSGUser getUserInfoWithUsername:_conversation.target_id completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
                 JPIMMAINTHEAD(^{
                     __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -87,7 +87,7 @@
             } else {
                 __strong __typeof(weakSelf) strongSelf = weakSelf;
                 JPIMMAINTHEAD(^{
-                    strongSelf.title = _conversation.targetName;
+                    strongSelf.title = _conversation.target_name;
                     JPIMLog(@"没有这个用户");
                 });
             }
@@ -157,13 +157,13 @@
     NSDictionary *apnsDic = [no object];
     NSString *targetNameStr = [apnsDic[@"aps"] objectForKey:@"alert"];
     NSString *targetName = [[targetNameStr componentsSeparatedByString:@":"] objectAtIndex:0];
-    if ([targetName isEqualToString:_conversation.targetName] || [targetName isEqualToString:_conversation.targetName]) {
+    if ([targetName isEqualToString:_conversation.target_name] || [targetName isEqualToString:_conversation.target_name]) {
         return;
     }
-  if ([targetName isEqualToString:[JMSGUserManager getMyInfo].username]) {
+  if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
     return;
   }
-    [JMSGConversationManager getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
+    [JMSGConversation getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
             _conversation = resultObject;
             [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
@@ -173,7 +173,7 @@
                     JPIMLog(@"清零失败");
                 }
             }];
-            [JMSGUserManager getUserInfoWithUsername:targetName completionHandler:^(id resultObject, NSError *error) {
+            [JMSGUser getUserInfoWithUsername:targetName completionHandler:^(id resultObject, NSError *error) {
                 self.user = resultObject;
                 [self getAllMessage];
                 self.title = targetName;
@@ -252,11 +252,11 @@
             model.messageStatus = [message.status integerValue];
             model.displayName = message.display_name;
             model.readState = YES;
-            JMSGUser *user = [JMSGUserManager getMyInfo];
+            JMSGUser *user = [JMSGUser getMyInfo];
             if ([message.target_name isEqualToString :user.username]) {
                 model.who=NO;
                 model.avatar = _conversation.avatarThumb;
-                model.targetName = _conversation.targetName;
+                model.targetName = _conversation.target_name;
             }else{
                 model.who=YES;
                 model.avatar = user.avatarThumbPath;
@@ -304,7 +304,7 @@
 -(void)receiveMessageNotifi:(NSNotification *)notifi
 {
     JPIMMAINTHEAD(^{
-        JMSGUser *user = [JMSGUserManager getMyInfo];
+        JMSGUser *user = [JMSGUser getMyInfo];
         [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
             }else {
@@ -338,11 +338,11 @@
         if ([user.username isEqualToString:message.target_name]) {
              model.who = YES;
             model.avatar = user.avatarThumbPath;
-            model.targetName = [JMSGUserManager getMyInfo].username;
+            model.targetName = [JMSGUser getMyInfo].username;
         }else {
             model.who=NO;
             model.avatar = _conversation.avatarThumb;
-            model.targetName = _conversation.targetName;
+            model.targetName = _conversation.target_name;
         }
         model.messageTime = message.timestamp;
         JPIMLog(@"Received message:%@",message);
@@ -403,7 +403,7 @@
 #pragma mark --增加朋友
 -(void)addFriends
 {
-    if (self.conversationType == kSingle) {
+    if (self.conversationType == kJMSGSingle) {
         JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
         detailsInfoCtl.chatUser = self.user;
         [self.navigationController pushViewController:detailsInfoCtl animated:YES];
@@ -455,14 +455,14 @@
 {
     img = [img resizedImageByWidth:upLoadImgWidth];
     UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
-    NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetName andData:UIImageJPEGRepresentation(img, 1)];
-    NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetName andData:UIImageJPEGRepresentation(smallpImg, 1)];
+    NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(img, 1)];
+    NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(smallpImg, 1)];
     JCHATChatModel *model =[[JCHATChatModel alloc] init];
     model.who = YES;
     model.sendFlag = NO;
     model.conversation = _conversation;
     model.targetName = self.targetName;
-    model.avatar = [JMSGUserManager getMyInfo].avatarThumbPath;
+    model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
     model.messageStatus = kSending;
     model.type = kImageMessage;
     model.pictureImgPath = bigPath;
@@ -574,9 +574,9 @@
     model.who = YES;
     model.conversation = _conversation;
     model.targetName = self.targetName;
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    JMSGUser *user = [JMSGUser getMyInfo];
     model.avatar = user.avatarThumbPath;
-    model.targetName = _conversation.targetName;
+    model.targetName = _conversation.target_id;
     model.messageStatus = kSending;
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
     model.messageTime = @(timeInterVal);
@@ -759,7 +759,7 @@
     model.messageId = message.messageId;
     message.timestamp = model.messageTime;
     message.contentText = model.chatContent;
-    [JMSGMessageManager sendMessage:message];
+    [JMSGMessage sendMessage:message];
     JPIMLog(@"Sent message:%@",message.contentText);
 }
 
@@ -896,7 +896,7 @@
     }else{
         model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
     }
-    model.avatar = [JMSGUserManager getMyInfo].avatarThumbPath;
+    model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
     model.type=kVoiceMessage;
     model.conversation = _conversation;
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];

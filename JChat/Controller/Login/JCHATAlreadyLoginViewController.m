@@ -63,7 +63,7 @@
     
     [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
     if (![self.passwordField.text isEqualToString:@""] && ![self.passwordField.text isEqualToString:@""]) {
-        [JMSGUserManager loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:kuserName] password:self.passwordField.text completionHandler:^(id resultObject, NSError *error) {
+        [JMSGUser loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:kuserName] password:self.passwordField.text completionHandler:^(id resultObject, NSError *error) {
             if (error != nil) {
                 NSLog(@"login success");
                 AppDelegate *appdelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
