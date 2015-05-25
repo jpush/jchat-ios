@@ -269,6 +269,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 #pragma mark --初始化各个功能模块
 -(void)initTheMainGTablebar {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
     self.tabBarCtl.loginIdentify = kFirstLogin;
     NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"],
@@ -338,6 +340,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                                                        titleHighlightedColor, NSForegroundColorAttributeName,
                                                        nil] forState:UIControlStateHighlighted];
     self.tabBarCtl.viewControllers = [NSArray arrayWithObjects:chatNav,contactsNav,settingNav,nil];
+#pragma clang diagnostic pop
 }
 
 - (void)umengTrack {

@@ -26,7 +26,11 @@
     if (self.type == kJMSGTextMessage) {
         UIFont *font =[UIFont systemFontOfSize:18];
         CGSize maxSize = CGSizeMake(200, 2000);
-        CGSize realSize =[self.chatContent sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByWordWrapping];
+        
+        NSMutableParagraphStyle *paragraphStyle= [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        CGSize realSize = [self.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
+//        CGSize realSize =[self.chatContent sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByWordWrapping];
         CGSize imgSize =realSize;
         imgSize.height=realSize.height+20;
         imgSize.width=realSize.width+2*15;
