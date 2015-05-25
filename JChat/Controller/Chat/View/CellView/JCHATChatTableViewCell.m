@@ -81,6 +81,8 @@
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:conversation.avatarThumb]) {
     [self.headView setImage:[UIImage imageWithContentsOfFile:conversation.avatarThumb]];
+    }else {
+    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
     }
     if (conversation.latest_displayName != nil) {
     self.nickName.text = conversation.latest_displayName;

@@ -244,7 +244,6 @@
     __block NSMutableArray * arrList;
     [_messageDataArr removeAllObjects];
     [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-        JPIMMAINTHEAD((^{
         arrList = resultObject;
         for (NSInteger i=0; i< [arrList count]; i++) {
             JMSGMessage *message =[arrList objectAtIndex:i];
@@ -255,7 +254,7 @@
             model.displayName = message.display_name;
             model.readState = YES;
             JMSGUser *user = [JMSGUser getMyInfo];
-            if ([message.target_name isEqualToString :user.username]) {
+            if ([message.target_id isEqualToString :user.username]) {
                 model.who=NO;
                 model.avatar = _conversation.avatarThumb;
                 model.targetId = _conversation.target_id;
@@ -298,7 +297,7 @@
             [_messageTableView reloadData];
         if ([_messageDataArr count] != 0) {
             [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-        }        }));
+        }
     }];
 }
 
