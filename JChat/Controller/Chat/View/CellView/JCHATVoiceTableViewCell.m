@@ -350,7 +350,7 @@
     [self.stateView startAnimating];
     self.model.messageStatus = kSending;
     _message = [[JMSGVoiceMessage alloc] init];
-    _message.target_name = self.model.targetName;
+    _message.target_id = self.model.targetId;
     _message.duration = self.model.voiceTime;
     _message.timestamp = self.model.messageTime;
     _message.resourcePath = self.model.voicePath;
