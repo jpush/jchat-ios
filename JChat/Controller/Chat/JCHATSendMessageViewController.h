@@ -27,7 +27,6 @@
 @property (nonatomic, strong, readwrite) XHVoiceRecordHUD *voiceRecordHUD;
 @property (nonatomic, strong, readwrite) JCHATVoiceTableViewCell *saveVoiceCell;
 @property (strong, nonatomic)  JMSGConversation *conversation;
-@property (assign, nonatomic)  ConversationType conversationType;
 @property (strong, nonatomic)  NSString *targetName;
 @property (strong, nonatomic)  JMSGUser *user;
 @property (strong, nonatomic)  NSMutableArray *conversationList;

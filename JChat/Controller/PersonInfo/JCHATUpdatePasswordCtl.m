@@ -39,9 +39,9 @@
     }else if ([self.passwordField.text isEqualToString:@""] && [self.passwordFieldAgain.text isEqualToString:@""]) {
         [MBProgressHUD showMessage:@"请输入密码!" view:self.view];
     }else {
-        JMSGUser *user = [JMSGUserManager getMyInfo];
+        JMSGUser *user = [JMSGUser getMyInfo];
         [MBProgressHUD showMessage:@"正在修改" toView:self.view];
-        [JMSGUserManager updatePasswordWithNewPassword:self.passwordField.text oldPassword:user.password completionHandler:^(id resultObject, NSError *error) {
+        [JMSGUser updatePasswordWithNewPassword:self.passwordField.text oldPassword:user.password completionHandler:^(id resultObject, NSError *error) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (error == nil) {
                 JPIMLog(@"更新密码成功");
