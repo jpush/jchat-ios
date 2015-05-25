@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     // Do any additional setup after loading the view from its nib.
     self.registerBtn.layer.cornerRadius=4;
     [self.registerBtn.layer setMasksToBounds:YES];
