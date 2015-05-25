@@ -10,7 +10,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "JMSGConstants.h"
+#import <JMessage/JMSGConstants.h>
 
 @class JMSGMessage;
 

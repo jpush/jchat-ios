@@ -11,8 +11,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "JMSGConstants.h"
-#import "JMSGConversation.h"
+#import <JMessage/JMSGConstants.h>
+#import <JMessage/JMSGConversation.h>
 
 @class JMSGImageMessage;
 @class JMSGVoiceMessage;
