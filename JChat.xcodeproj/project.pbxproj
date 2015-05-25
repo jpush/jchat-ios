@@ -264,6 +264,7 @@
 		187184151AFB80C000FB3168 /* wutouxiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182E91AFB80C000FB3168 /* wutouxiang@2x.png */; };
 		187184161AFB80C000FB3168 /* yuyin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EA1AFB80C000FB3168 /* yuyin@2x.png */; };
 		187184171AFB80C000FB3168 /* zhaopian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EB1AFB80C000FB3168 /* zhaopian@2x.png */; };
+		1878EAB91B12B96400DE2BA7 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1878EAB81B12B96400DE2BA7 /* JMessage.framework */; };
 		6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */; };
 		6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */; };
 		6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */; };
@@ -619,6 +620,7 @@
 		187182E91AFB80C000FB3168 /* wutouxiang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wutouxiang@2x.png"; sourceTree = "<group>"; };
 		187182EA1AFB80C000FB3168 /* yuyin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yuyin@2x.png"; sourceTree = "<group>"; };
 		187182EB1AFB80C000FB3168 /* zhaopian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhaopian@2x.png"; sourceTree = "<group>"; };
+		1878EAB81B12B96400DE2BA7 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "极光IM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6039B06DB77B2635035FB63D /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
 		6039B0BD0BDE32F4350A8FA7 /* UIButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WebCache.h"; sourceTree = "<group>"; };
@@ -702,7 +704,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F98FA9E1B0EDA1300C74558 /* JMessage.framework in Frameworks */,
+				1878EAB91B12B96400DE2BA7 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -730,12 +732,12 @@
 			children = (
 				187181901AFB80BF00FB3168 /* AppDelegate.h */,
 				187181911AFB80BF00FB3168 /* AppDelegate.m */,
+				187182271AFB80BF00FB3168 /* Info.plist */,
+				1871822A1AFB80BF00FB3168 /* main.m */,
+				187182261AFB80BF00FB3168 /* Images.xcassets */,
 				187181921AFB80BF00FB3168 /* LaunchScreen.xib */,
 				187181941AFB80BF00FB3168 /* Main.storyboard */,
 				187181961AFB80BF00FB3168 /* Controller */,
-				187182261AFB80BF00FB3168 /* Images.xcassets */,
-				187182271AFB80BF00FB3168 /* Info.plist */,
-				1871822A1AFB80BF00FB3168 /* main.m */,
 				1871823F1AFB80C000FB3168 /* Resources */,
 				6039B5CC50E06EAFD3390E5B /* External */,
 				6039B5634BAC483498022015 /* UMAnalytics_Sdk */,
@@ -1186,6 +1188,7 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1878EAB81B12B96400DE2BA7 /* JMessage.framework */,
 				1839834E1AFC91C800AC8280 /* CoreTelephony.framework */,
 				1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */,
 				1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */,
@@ -1844,6 +1847,10 @@
 					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/JChat/lib",
 					"/Users/apple/Downloads/jchat-ios-master/JChat/lib",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/JChat-einramxrexmmmlfbwzhpjvhwyrim/Build/Products/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
+					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Release-iphoneos",
+					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1853,11 +1860,12 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/JChat/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1889,6 +1897,10 @@
 					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/JChat/lib",
 					"/Users/apple/Downloads/jchat-ios-master/JChat/lib",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/JChat-einramxrexmmmlfbwzhpjvhwyrim/Build/Products/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
+					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Release-iphoneos",
+					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1897,11 +1909,12 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/JChat/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";

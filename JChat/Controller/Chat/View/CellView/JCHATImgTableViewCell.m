@@ -199,7 +199,7 @@
     self.contentImgView.alpha=0.5;
     self.model.messageStatus = kSending;
     _message =[[JMSGImageMessage alloc] init];
-    _message.target_name=self.model.targetName;
+    _message.target_id=self.model.targetId;
     _message.timestamp = self.model.messageTime;
     __weak typeof(self)weakSelf = self;
     _message.progressCallback=^(float percent){
