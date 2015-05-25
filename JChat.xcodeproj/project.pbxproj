@@ -94,7 +94,6 @@
 		187183601AFB80C000FB3168 /* JCHATRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187182241AFB80BF00FB3168 /* JCHATRegisterViewController.m */; };
 		187183611AFB80C000FB3168 /* JCHATRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187182251AFB80BF00FB3168 /* JCHATRegisterViewController.xib */; };
 		187183621AFB80C000FB3168 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 187182261AFB80BF00FB3168 /* Images.xcassets */; };
-		187183631AFB80C000FB3168 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 187182271AFB80BF00FB3168 /* Info.plist */; };
 		187183651AFB80C000FB3168 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871822A1AFB80BF00FB3168 /* main.m */; };
 		187183701AFB80C000FB3168 /* add_chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182401AFB80C000FB3168 /* add_chat@2x.png */; };
 		187183711AFB80C000FB3168 /* bar_anxia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182411AFB80C000FB3168 /* bar_anxia@2x.png */; };
@@ -298,7 +297,6 @@
 		6039BF2B12872ADB34A48CDD /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8ABA6FD03A3F74DB106 /* MJPhotoBrowser.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
-		8F98FA9E1B0EDA1300C74558 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */; };
@@ -1467,7 +1465,6 @@
 				187183A91AFB80C000FB3168 /* chat_voice_03@2x.png in Resources */,
 				187184061AFB80C000FB3168 /* gender@3x.png in Resources */,
 				1871833B1AFB80C000FB3168 /* JCHATToolBar.xib in Resources */,
-				187183631AFB80C000FB3168 /* Info.plist in Resources */,
 				187183C71AFB80C000FB3168 /* login_14.@2x.png in Resources */,
 				1871838F1AFB80C000FB3168 /* location_31@3x.png in Resources */,
 				1871831D1AFB80C000FB3168 /* JCHATFriendDetailViewController.xib in Resources */,
@@ -1839,18 +1836,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-eznqhmzwwwbqkhcvblzkuwssqybu/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/Demo/lib",
-					/Users/xiaomeng/JPUSH,
-					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
-					/Users/xiaomeng/JPUSH,
-					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/JChat/lib",
-					"/Users/apple/Downloads/jchat-ios-master/JChat/lib",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/JChat-einramxrexmmmlfbwzhpjvhwyrim/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
-					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Release-iphoneos",
-					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1865,7 +1851,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1889,18 +1874,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-eznqhmzwwwbqkhcvblzkuwssqybu/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/Demo/lib",
-					/Users/xiaomeng/JPUSH,
-					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
-					/Users/xiaomeng/JPUSH,
-					"IM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/JChat/lib",
-					"/Users/apple/Downloads/jchat-ios-master/JChat/lib",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/JChat-einramxrexmmmlfbwzhpjvhwyrim/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
-					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Release-iphoneos",
-					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1914,7 +1888,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";

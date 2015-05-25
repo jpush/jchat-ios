@@ -57,7 +57,7 @@
             if (error ==nil) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [MBProgressHUD showSuccess:@"注册成功！" toView:self.view];
-                JCHATRegisterDetailViewController *registerDetail = [[JCHATRegisterDetailViewController alloc] initWithNibName:@"JCHATRegisterDetailViewController" bundle:nil];
+//                JCHATRegisterDetailViewController *registerDetail = [[JCHATRegisterDetailViewController alloc] initWithNibName:@"JCHATRegisterDetailViewController" bundle:nil];
                 [self.navigationController popViewControllerAnimated:YES];
             }else {
                 if (error.code == 1004 ) {
