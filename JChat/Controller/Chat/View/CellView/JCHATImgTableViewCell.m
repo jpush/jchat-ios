@@ -74,7 +74,7 @@
         [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
         [self addSubview:self.sendFailView];
         [self headAddGesture];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGSendMessageResult object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGNotification_SendMessageResult object:nil];
     }
     return self;
 }
@@ -97,12 +97,12 @@
         [self.circleView stopAnimating];
         self.contentImgView.alpha = 1;
         if (error == nil) {
-            self.model.messageStatus = kSendSucceed;
+            self.model.messageStatus = kJMSGStatusSendSucceed;
             [self.sendFailView setHidden:YES];
             [self.circleView stopAnimating];
             [self.circleView setHidden:YES];
         }else {
-            self.model.messageStatus = kSendFail;
+            self.model.messageStatus = kJMSGStatusSendFail;
             [self.sendFailView setHidden:NO];
             [self.circleView stopAnimating];
             [self.circleView setHidden:YES];
@@ -136,7 +136,7 @@
         [self.circleView setHidden:NO];
         [self.circleView startAnimating];
         self.contentImgView.alpha = 0.5;
-        self.model.messageStatus = kSending;
+        self.model.messageStatus = kJMSGStatusSending;
         __weak typeof(self)weakSelf = self;
         if (!self.sendFailImgMessage) {
             [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
@@ -171,7 +171,7 @@
     self.conversation = chatModel.conversation;
     self.model = chatModel;
      [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
-    if (self.model.messageStatus == kReceiveDownloadFailed) {
+    if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
         [self.contentImgView setImage:[UIImage imageNamed:@"receiveFailed.png"]];
     } else {
         [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
@@ -197,7 +197,7 @@
     [self.circleView setHidden:NO];
     [self.circleView startAnimating];
     self.contentImgView.alpha=0.5;
-    self.model.messageStatus = kSending;
+    self.model.messageStatus = kJMSGStatusSending;
     _message =[[JMSGImageMessage alloc] init];
     _message.target_id=self.model.targetId;
     _message.timestamp = self.model.messageTime;
@@ -213,7 +213,7 @@
 
 - (void)tapPicture:(UIGestureRecognizer *)gesture
 {
-    if (self.model.messageStatus == kReceiveDownloadFailed) {
+    if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
         NSLog(@"正在下载缩略图");
         JPIMLog(@"Action");
         [self.downLoadIndicatorView setHidden:NO];
@@ -226,7 +226,7 @@
                         [self.downLoadIndicatorView stopAnimating];
                         if (error == nil) {
                             self.model.pictureThumbImgPath = [(NSURL *)resultObject path];
-                            self.model.messageStatus = kReceiveSucceed;
+                            self.model.messageStatus = kJMSGStatusReceiveSucceed;
                             [self.contentImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
                             [self updateFrame];
                             JPIMLog(@"下载缩略图成功 :%@",[(NSURL *)resultObject path]);
@@ -261,7 +261,7 @@
     NSInteger imgHeight;
     NSInteger imgWidth;
     [self.percentLabel setHidden:NO];
-    if (self.model.messageStatus == kReceiveDownloadFailed) {
+    if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
         imgHeight = 200;
         imgWidth  = 150;
         [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
@@ -276,15 +276,15 @@
             imgWidth  = showImg.size.width/2;
         }
     }
-    if (self.model.messageStatus == kSending || self.model.messageStatus == kReceiving) {
+    if (self.model.messageStatus == kJMSGStatusSending || self.model.messageStatus == kJMSGStatusReceiving) {
         [self.circleView setHidden:NO];
         [self.sendFailView setHidden:YES];
-    }else if (self.model.messageStatus == kSendSucceed || self.model.messageStatus == kReceiveSucceed)
+    }else if (self.model.messageStatus == kJMSGStatusSendSucceed || self.model.messageStatus == kJMSGStatusReceiveSucceed)
     {
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:YES];
         [self.percentLabel setHidden:YES];
-    }else if (self.model.messageStatus == kSendFail || self.model.messageStatus == kReceiveDownloadFailed)
+    }else if (self.model.messageStatus == kJMSGStatusSendFail || self.model.messageStatus == kJMSGStatusReceiveDownloadFailed)
     {
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:NO];
