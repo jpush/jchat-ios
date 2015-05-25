@@ -436,5 +436,9 @@ NSInteger sortType(id object1,id object2,void *cha) {
     // Pass the selected object to the new view controller.
 }
 */
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+
+}
+
 
 @end
