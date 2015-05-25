@@ -23,7 +23,7 @@
 
 -(CGSize )getTextSize
 {
-    if (self.type == kTextMessage) {
+    if (self.type == kJMSGTextMessage) {
         UIFont *font =[UIFont systemFontOfSize:18];
         CGSize maxSize = CGSizeMake(200, 2000);
         CGSize realSize =[self.chatContent sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByWordWrapping];

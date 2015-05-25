@@ -95,7 +95,9 @@
     self.continuePlayer=NO;
     [self headAddGesture];
         
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGSendMessageResult object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sendMessageResponse:)
+                                                 name:JMSGNotification_SendMessageResult object:nil];
     }
     return self;
 }
@@ -117,12 +119,12 @@
         }
         [self.stateView stopAnimating];
         if (error == nil) {
-            self.model.messageStatus = kSendSucceed;
+            self.model.messageStatus = kJMSGStatusSendSucceed;
             [self.sendFailView setHidden:YES];
             [self.stateView stopAnimating];
             [self.stateView setHidden:YES];
         }else {
-            self.model.messageStatus = kSendFail;
+            self.model.messageStatus = kJMSGStatusSendFail;
             [self.sendFailView setHidden:NO];
             [self.stateView stopAnimating];
             [self.stateView setHidden:YES];
@@ -170,7 +172,7 @@
         [self.sendFailView setHidden:YES];
         [self.stateView setHidden:NO];
         [self.stateView startAnimating];
-        self.model.messageStatus = kSending;
+        self.model.messageStatus = kJMSGStatusSending;
         if (!self.voiceFailMessage) {
             [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
@@ -264,7 +266,7 @@
 -(void)playerVoice
 {
     JPIMLog(@"Action");
-    if (self.model.messageStatus == kReceiveDownloadFailed) {
+    if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
         [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
                 NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
@@ -272,7 +274,7 @@
                     JPIMMAINTHEAD(^{
                         if (error == nil) {
                             self.model.voicePath = [(NSURL *)resultObject path];
-                            self.model.messageStatus = kReceiveSucceed;
+                            self.model.messageStatus = kJMSGStatusReceiveSucceed;
                             JPIMLog(@"下载语音成功 :%@",[(NSURL *)resultObject path]);
                             [MBProgressHUD showMessage:@"下载语音成功" view:self];
                             [self playerVoice];
@@ -348,7 +350,7 @@
     JPIMLog(@"Action");
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
-    self.model.messageStatus = kSending;
+    self.model.messageStatus = kJMSGStatusSending;
     _message = [[JMSGVoiceMessage alloc] init];
     _message.target_id = self.model.targetId;
     _message.duration = self.model.voiceTime;
@@ -370,14 +372,14 @@
     }else{
         [self.readView setHidden:NO];
     }
-    if (self.model.messageStatus== kSending) {
+    if (self.model.messageStatus== kJMSGStatusSending) {
         [self.stateView setHidden:NO];
         [self.sendFailView setHidden:YES];
-    }else if (self.model.messageStatus == kSendSucceed)
+    }else if (self.model.messageStatus == kJMSGStatusSendSucceed)
     {
         [self.stateView setHidden:YES];
         [self.sendFailView setHidden:YES];
-    }else if (self.model.messageStatus == kSendFail)
+    }else if (self.model.messageStatus == kJMSGStatusSendFail)
     {
         [self.stateView setHidden:YES];
         [self.sendFailView setHidden:NO];
