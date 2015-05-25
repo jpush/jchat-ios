@@ -298,6 +298,7 @@
 		6039BF2B12872ADB34A48CDD /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8ABA6FD03A3F74DB106 /* MJPhotoBrowser.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
+		8F98FA9E1B0EDA1300C74558 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */; };

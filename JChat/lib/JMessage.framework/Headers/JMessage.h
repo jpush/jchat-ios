@@ -1,22 +1,21 @@
-//	| |    | |  \ \  / /  | |    | |   / _______|
-//	| |____| |   \ \/ /   | |____| |  / /
-//	| |____| |    \  /    | |____| |  | |   _____
-//	| |    | |    /  \    | |    | |  | |  |____ |
-//  | |    | |   / /\ \   | |    | |  \ \______| |
-//  | |    | |  /_/  \_\  | |    | |   \_________|
-//
-//	Copyright (c) 2012年 HXHG. All rights reserved.
-//	http://www.jpush.cn
-//  Created by zhangHao
+/*
+ *	| |    | |  \ \  / /  | |    | |   / _______|
+ *	| |____| |   \ \/ /   | |____| |  / /
+ *	| |____| |    \  /    | |____| |  | |   _____
+ * 	| |    | |    /  \    | |    | |  | |  |____ |
+ *  | |    | |   / /\ \   | |    | |  \ \______| |
+ *  | |    | |  /_/  \_\  | |    | |   \_________|
+ *
+ * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
+ */
 
+#import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
-#import <JMessage/JMSGConversationManager.h>
-#import <JMessage/JMSGUserManager.h>
-#import <JMessage/JMSGMessageManager.h>
 #import <JMessage/JMSGConversation.h>
-#import <JMessage/JMSGUser.h>
 #import <JMessage/JMSGMessage.h>
 #import <JMessage/JPUSHService.h>
+#import <JMessage/JMSGUser.h>
+#import <JMessage/JMSGGroup.h>
 
 @interface JMessage : NSObject
 

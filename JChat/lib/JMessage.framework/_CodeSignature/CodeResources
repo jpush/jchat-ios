@@ -6,43 +6,35 @@
 	<dict>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		4nTLCQXvliHftACZi+MBrcyuRjM=
+		6C4uiFCrCpUO9EF8gOZseaDjxd8=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		LZdVvJLumELbcRCmeyvIkBne4kQ=
+		/vsWYu7gVibSMBFDQy1usqirzNY=
 		</data>
-		<key>Headers/JMSGConversationManager.h</key>
+		<key>Headers/JMSGGroup.h</key>
 		<data>
-		QjY3mgdS+aW+48+yZZ/I++Xj+Ts=
+		sGe6BP0pe0gDhbJ0R2dxLmSLTmY=
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		VPxCy+E+rZnUCOpTqzGdxHULqDs=
-		</data>
-		<key>Headers/JMSGMessageManager.h</key>
-		<data>
-		GRkGSwogtCQt7LExAFsOrfDuAMM=
+		i4ZJrWOR5PWJmR/3vK3nVhF+Pys=
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		xTTT06hfZt4/uu195/UuI745uhQ=
-		</data>
-		<key>Headers/JMSGUserManager.h</key>
-		<data>
-		IpDyiuCX4eH7kMn7MeyjAUlE8j8=
+		LYgKFrSz154YE+6YWFoUqU0JgV8=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		bAhwnLE9Bs42+9jDDiDoVA1NsY8=
+		uHAwnL5A1fcCmgmobaN9Jq/yMbs=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>
-		Db/xBsVa0BRJYS2zFHezvYdZDNY=
+		JVICXgRlJqSE4GJFyaW9mypXuvM=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		MWIqV7TkQRlc2iLHcAZ7fYAcZZ8=
+		mnMIhdCYAlZtWMhg5zjiqZYGO/4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -53,39 +45,31 @@
 	<dict>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		4nTLCQXvliHftACZi+MBrcyuRjM=
+		6C4uiFCrCpUO9EF8gOZseaDjxd8=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		LZdVvJLumELbcRCmeyvIkBne4kQ=
+		/vsWYu7gVibSMBFDQy1usqirzNY=
 		</data>
-		<key>Headers/JMSGConversationManager.h</key>
+		<key>Headers/JMSGGroup.h</key>
 		<data>
-		QjY3mgdS+aW+48+yZZ/I++Xj+Ts=
+		sGe6BP0pe0gDhbJ0R2dxLmSLTmY=
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		VPxCy+E+rZnUCOpTqzGdxHULqDs=
-		</data>
-		<key>Headers/JMSGMessageManager.h</key>
-		<data>
-		GRkGSwogtCQt7LExAFsOrfDuAMM=
+		i4ZJrWOR5PWJmR/3vK3nVhF+Pys=
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		xTTT06hfZt4/uu195/UuI745uhQ=
-		</data>
-		<key>Headers/JMSGUserManager.h</key>
-		<data>
-		IpDyiuCX4eH7kMn7MeyjAUlE8j8=
+		LYgKFrSz154YE+6YWFoUqU0JgV8=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		bAhwnLE9Bs42+9jDDiDoVA1NsY8=
+		uHAwnL5A1fcCmgmobaN9Jq/yMbs=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>
-		Db/xBsVa0BRJYS2zFHezvYdZDNY=
+		JVICXgRlJqSE4GJFyaW9mypXuvM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>

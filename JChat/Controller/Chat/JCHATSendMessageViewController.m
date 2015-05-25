@@ -46,7 +46,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
   if (self.user) {
       self.targetName = self.user.username;
   }else if (_conversation){
@@ -87,6 +87,7 @@
               strongSelf.title = strongSelf.user.nickname;
             } else {
               strongSelf.title = strongSelf.user.username;
+
             }
           });
         } else {
@@ -911,6 +912,7 @@
   [_messageDataArr addObject:model];
   [self.messageTableView reloadData];
   [self scrollToEnd];
+
 }
 
 #pragma mark - RecorderPath Helper Method

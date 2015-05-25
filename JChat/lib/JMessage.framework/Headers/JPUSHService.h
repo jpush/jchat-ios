@@ -1,14 +1,18 @@
-//
-//  JPUSHService.h
-//  JPUSHService
-//
-//  Created by JPush on 12-8-15.
-//  Copyright (c) 2012年 HXHG. All rights reserved.
-//  Version: 2.0.0
+/*
+ *	| |    | |  \ \  / /  | |    | |   / _______|
+ *	| |____| |   \ \/ /   | |____| |  / /
+ *	| |____| |    \  /    | |____| |  | |   _____
+ * 	| |    | |    /  \    | |    | |  | |  |____ |
+ *  | |    | |   / /\ \   | |    | |  \ \______| |
+ *  | |    | |  /_/  \_\  | |    | |   \_________|
+ *
+ * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
+ */
 
 @class CLRegion;
 @class UILocalNotification;
 
+extern NSString *const kJPFNetworkIsConnectingNotification; // 正在连接中
 extern NSString *const kJPFNetworkDidSetupNotification;     // 建立连接
 extern NSString *const kJPFNetworkDidCloseNotification;     // 关闭连接
 extern NSString *const kJPFNetworkDidRegisterNotification;  // 注册成功
