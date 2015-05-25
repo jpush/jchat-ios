@@ -21,7 +21,7 @@
 /**
  *  收取收到消息通知
  */
-extern NSString *KJMSG_ReceiveMessage;
+extern NSString *const kJMSG_ReceiveMessage;
 
 extern NSString *JMSGSendMessageResult;
 #ifndef JMSGSendMessageObject
