@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action ");
+  DDLogDebug(@"Action - viewDidLoad");
     // Do any additional setup after loading the view from its nib.
     self.loginBtn.layer.cornerRadius=4;
     [self.loginBtn.layer setMasksToBounds:YES];
@@ -46,8 +46,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar setHidden:NO];
 }
@@ -98,9 +97,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 #pragma mark --触摸屏幕
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.passwordField resignFirstResponder];
 }
 

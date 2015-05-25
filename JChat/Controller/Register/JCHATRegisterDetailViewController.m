@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
     [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];

@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action ");
+  DDLogDebug(@"Action - viewDidLoad");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(netWorkConnectClose)
                                                  name:kJPFNetworkDidCloseNotification
@@ -105,8 +105,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
 }
 
-- (void)receiveNotificationSkipToChatPageView:(NSNotification *)no {
-    JPIMLog(@"%@",no);
+- (void)receiveNotificationSkipToChatPageView:(NSNotification *)notification {
+    DDLogDebug(@"Action - receiveNotificationSkipToChatPageView - %@", notification);
     JCHATSendMessageViewController *sendMessageCtl;
     for (UIViewController *ctl in self.navigationController.childViewControllers) {
         if ([ctl isKindOfClass:[JCHATSendMessageViewController class]]) {
@@ -118,7 +118,7 @@
     }
     sendMessageCtl.hidesBottomBarWhenPushed = YES;
     sendMessageCtl.conversation.chatType = kJMSGSingle;
-    NSDictionary *apnsDic = [no object];
+    NSDictionary *apnsDic = [notification object];
     NSString *targetName = [apnsDic[@"aps"] objectForKey:@"alert"];
     if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
         return;
@@ -142,9 +142,9 @@
             [self saveBadge:badge];
             [conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
-                    JPIMLog(@"消息清零成功");
+                    DDLogDebug(@"消息清零成功");
                 }else {
-                    JPIMLog(@"消息清零失败");
+                    DDLogDebug(@"消息清零失败");
                 }
             }];
         }];
@@ -326,20 +326,20 @@ NSInteger sortType(id object1,id object2,void *cha) {
 
 //进入编辑模式，按下出现的编辑按钮后
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - tableView");
     JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
     [JMSGConversation deleteConversation:conversation.target_id completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
-            JPIMLog(@"delete conversation success");
+          DDLogDebug(@"delete conversation success");
         }else {
-            JPIMLog(@"delete conversation error");
+          DDLogDebug(@"delete conversation error");
         }
     }];
     [conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
-            JPIMLog(@"delete message success");
+          DDLogDebug(@"delete message success");
         }else {
-            JPIMLog(@"delete message error");
+          DDLogDebug(@"delete message error");
         }
     }];
     [_conversationArr removeObjectAtIndex:indexPath.row];
