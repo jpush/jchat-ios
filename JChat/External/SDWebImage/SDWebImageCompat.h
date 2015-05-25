@@ -41,7 +41,10 @@
     #define SDDispatchQueueSetterSementics assign
 #endif
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundefined-inline"
 extern inline UIImage *SDScaledImageForKey(NSString *key, UIImage *image);
+#pragma clang diagnostic pop
 
 #define dispatch_main_sync_safe(block)\
     if ([NSThread isMainThread])\

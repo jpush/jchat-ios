@@ -302,7 +302,7 @@
             }
             else
             {
-                #warning 图片处理
+//                #warning 图片处理
                 if (_dealedBlock) {
                     self.imageData = _dealedBlock(image, self.imageData);
                     image = [UIImage imageWithData:self.imageData];
