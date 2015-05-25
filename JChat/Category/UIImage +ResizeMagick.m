@@ -12,12 +12,15 @@
 
 - (NSData *) resizedAndReturnData
 {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
     UIImage *newImage = [self  resizedImageByMagick:@"1024x1024"];
     NSData *imgData1 = UIImageJPEGRepresentation(newImage, 1.0f);
     NSData *imgData2 = UIImageJPEGRepresentation(newImage, 0.7f);
     NSData *imgData3 = UIImageJPEGRepresentation(newImage, 0.4f);
     NSData *imgData4 = UIImageJPEGRepresentation(newImage, 0.0f);
     return imgData3;
+#pragma clang diagnostic pop
 }
 
 - (NSString *) resizedAndReturnPath

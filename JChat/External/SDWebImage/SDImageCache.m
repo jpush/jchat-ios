@@ -449,6 +449,8 @@ static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week
 
 - (int)getDiskCount
 {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
     int count = 0;
     NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:self.diskCachePath];
     for (NSString *fileName in fileEnumerator)
@@ -457,6 +459,7 @@ static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week
     }
     
     return count;
+#pragma clang diagnostic pop
 }
 
 - (void)calculateSizeWithCompletionBlock:(void (^)(NSUInteger fileCount, unsigned long long totalSize))completionBlock
