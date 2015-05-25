@@ -348,7 +348,7 @@
 		187181A81AFB80BF00FB3168 /* JCHATGroupSettingCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATGroupSettingCtl.h; sourceTree = "<group>"; };
 		187181A91AFB80BF00FB3168 /* JCHATGroupSettingCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATGroupSettingCtl.m; sourceTree = "<group>"; };
 		187181AA1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSelectFriendsCtl.h; sourceTree = "<group>"; };
-		187181AB1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSelectFriendsCtl.m; sourceTree = "<group>"; };
+		187181AB1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = JCHATSelectFriendsCtl.m; sourceTree = "<group>"; tabWidth = 2; };
 		187181AC1AFB80BF00FB3168 /* JCHATSelectFriendsCtl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSelectFriendsCtl.xib; sourceTree = "<group>"; };
 		187181AD1AFB80BF00FB3168 /* JCHATSendMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSendMessageViewController.h; sourceTree = "<group>"; };
 		187181AE1AFB80BF00FB3168 /* JCHATSendMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSendMessageViewController.m; sourceTree = "<group>"; };
