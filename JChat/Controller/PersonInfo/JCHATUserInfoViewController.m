@@ -41,8 +41,8 @@
     [_bgView setUserInteractionEnabled:YES];
     [_bgView setBackgroundColor:[UIColor clearColor]];
     [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
-    JMSGUser *user = [JMSGUserManager getMyInfo];
-    [JMSGUserManager getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
+    JMSGUser *user = [JMSGUser getMyInfo];
+    [JMSGUser getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
             if (user.avatarResourcePath) {
                 UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
@@ -72,10 +72,10 @@
     self.settingTableView.separatorColor = [UIColor clearColor];
     self.settingTableView.tableHeaderView = _bgView;
     
-    if ([JMSGUserManager getMyInfo].nickname) {
-        self.titleArr = @[[JMSGUserManager getMyInfo].nickname,@"设置",@"退出登录"];
-    }else if ([JMSGUserManager getMyInfo].username){
-        self.titleArr = @[[JMSGUserManager getMyInfo].username,@"设置",@"退出登录"];
+    if ([JMSGUser getMyInfo].nickname) {
+        self.titleArr = @[[JMSGUser getMyInfo].nickname,@"设置",@"退出登录"];
+    }else if ([JMSGUser getMyInfo].username){
+        self.titleArr = @[[JMSGUser getMyInfo].username,@"设置",@"退出登录"];
     }else {
         self.titleArr = @[@"",@"设置",@"退出登录"];
     }
@@ -84,15 +84,15 @@
 }
 
 - (void)updateAvatar {
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    JMSGUser *user = [JMSGUser getMyInfo];
     JPIMLog(@"avatarResourcePath :%@",user.avatarResourcePath);
     if (user.avatarResourcePath) {
         UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
         UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
         [_bgView setImage:img];
     }else {
-        JMSGUser *user = [JMSGUserManager getMyInfo];
-        [JMSGUserManager getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
+        JMSGUser *user = [JMSGUser getMyInfo];
+        [JMSGUser getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
                 JPIMLog(@"getOriginAvatarImage avatarResourcePath :%@",user.avatarResourcePath);
                 if (user.avatarResourcePath) {
@@ -167,10 +167,10 @@
     [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
     UIImage *image;
     image = [info objectForKey:UIImagePickerControllerEditedImage];
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    JMSGUser *user = [JMSGUser getMyInfo];
     image = [image resizedImageByWidth:upLoadImgWidth];
     NSString *imgPath = [JCHATFileManager saveImageWithConversationID:user.username andData:UIImageJPEGRepresentation(image, 1)];
-    [JMSGUserManager updateMyInfoWithParameter:imgPath withType:kJMSGAvatar completionHandler:^(id resultObject, NSError *error) {
+    [JMSGUser updateMyInfoWithParameter:imgPath withType:kJMSGAvatar completionHandler:^(id resultObject, NSError *error) {
         JPIMMAINTHEAD(^{
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if (error == nil) {
@@ -225,15 +225,15 @@
 }
 
 - (void)updateUserInfo {
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    JMSGUser *user = [JMSGUser getMyInfo];
     NSLog(@"avatarResourcePath :%@",user.avatarResourcePath);
     if (user.avatarResourcePath) {
         UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
         UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
         [_bgView setImage:img];
     } else {
-        JMSGUser *user = [JMSGUserManager getMyInfo];
-        [JMSGUserManager getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
+        JMSGUser *user = [JMSGUser getMyInfo];
+        [JMSGUser getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
               JMSGUser *userObject = (JMSGUser *)resultObject;
               DDLogInfo(@"getOriginAvatarImage:%@",userObject);
@@ -249,10 +249,10 @@
             }
         }];
     }
-    if ([JMSGUserManager getMyInfo].nickname) {
-        self.titleArr = @[[JMSGUserManager getMyInfo].nickname,@"设置",@"退出登录"];
-    }else if ([JMSGUserManager getMyInfo].username){
-        self.titleArr = @[[JMSGUserManager getMyInfo].username,@"设置",@"退出登录"];
+    if ([JMSGUser getMyInfo].nickname) {
+        self.titleArr = @[[JMSGUser getMyInfo].nickname,@"设置",@"退出登录"];
+    }else if ([JMSGUser getMyInfo].username){
+        self.titleArr = @[[JMSGUser getMyInfo].username,@"设置",@"退出登录"];
     }else {
         self.titleArr = @[@"",@"设置",@"退出登录"];
     }
@@ -318,7 +318,7 @@
         }
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [JMSGUserManager logoutWithCompletionHandler:^(id resultObject, NSError *error) {
+        [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
         }];
     }
 }

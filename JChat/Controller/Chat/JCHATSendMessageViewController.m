@@ -45,123 +45,127 @@
 @implementation JCHATSendMessageViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    JPIMLog(@"Action");
-    if (self.user) {
-        self.targetName = self.user.username;
-    }else if (_conversation){
-        self.targetName = _conversation.targetName;
-    }else {
-        JPIMLog(@"聊天未知错误");
-    }
-    if (!_conversation) {
-        if (self.user) {
-             [JMSGConversationManager createConversation:self.user.username withType:kSingle completionHandler:^(id resultObject, NSError *error) {
-                 _conversation = (JMSGConversation  *)resultObject ;
-                 [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-                     if (error == nil) {
-                         JPIMLog(@"消息清零成功");
-                     }else {
-                         JPIMLog(@"消息清零失败");
-                     }
-                 }];
-                 
-            }];
-        }
-    }
+  [super viewDidLoad];
+  JPIMLog(@"Action");
+  if (self.user) {
+      self.targetName = self.user.username;
+  }else if (_conversation){
+      self.targetName = _conversation.target_name;
+  }else {
+      JPIMLog(@"聊天未知错误");
+  }
+
+  if (!_conversation) {
+      if (self.user) {
+           [JMSGConversation createConversation:self.user.username withType:kJMSGSingle completionHandler:^(id resultObject, NSError *error) {
+               _conversation = (JMSGConversation  *)resultObject ;
+               [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
+                   if (error == nil) {
+                       JPIMLog(@"消息清零成功");
+                   }else {
+                       JPIMLog(@"消息清零失败");
+                   }
+               }];
+               
+          }];
+      }
+  }
+  
+  if (self.conversation && self.conversation.chatType == kJMSGGroup) {
+    self.title = _conversation.target_name;
+  }else {
     __weak __typeof(self)weakSelf = self;
     if (!self.user) {
-        [JMSGUserManager getUserInfoWithUsername:_conversation.targetName completionHandler:^(id resultObject, NSError *error) {
-            if (error == nil) {
-                JPIMMAINTHEAD(^{
-                    __strong __typeof(weakSelf) strongSelf = weakSelf;
-                    strongSelf.user = ((JMSGUser *) resultObject);
-                    if (strongSelf.user.noteName != nil && ![strongSelf.user.noteName isEqualToString:KNull]) {
-                        strongSelf.title = strongSelf.user.noteName;
-                    } else if (strongSelf.user.nickname != nil && ![strongSelf.user.nickname isEqualToString:KNull]) {
-                        strongSelf.title = strongSelf.user.nickname;
-                    } else {
-                        strongSelf.title = strongSelf.user.username;
-                    }
-                });
+      [JMSGUser getUserInfoWithUsername:_conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+        if (error == nil) {
+          JPIMMAINTHEAD(^{
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            strongSelf.user = ((JMSGUser *) resultObject);
+            if (strongSelf.user.noteName != nil && ![strongSelf.user.noteName isEqualToString:KNull]) {
+              strongSelf.title = strongSelf.user.noteName;
+            } else if (strongSelf.user.nickname != nil && ![strongSelf.user.nickname isEqualToString:KNull]) {
+              strongSelf.title = strongSelf.user.nickname;
             } else {
-                __strong __typeof(weakSelf) strongSelf = weakSelf;
-                JPIMMAINTHEAD(^{
-                    strongSelf.title = _conversation.targetName;
-                    JPIMLog(@"没有这个用户");
-                });
+              strongSelf.title = strongSelf.user.username;
             }
-        }];
-        
+          });
+        } else {
+          __strong __typeof(weakSelf) strongSelf = weakSelf;
+          JPIMMAINTHEAD(^{
+            strongSelf.title = _conversation.target_id;
+            JPIMLog(@"没有这个用户");
+          });
+        }
+      }];
+      
     } else {
       if (self.user.noteName != nil && ![self.user.noteName isEqualToString:KNull]) {
-            self.title = self.user.noteName;
-        }else if (self.user.nickname !=nil && ![self.user.nickname isEqualToString:KNull]) {
-            self.title = self.user.nickname;
-        }else {
-            self.title = self.user.username;
-        }
+        self.title = self.user.noteName;
+      }else if (self.user.nickname !=nil && ![self.user.nickname isEqualToString:KNull]) {
+        self.title = self.user.nickname;
+      }else {
+        self.title = self.user.username;
+      }
     }
-  
-  
-  
-    _messageDataArr =[[NSMutableArray alloc] init];
-    _imgDataArr =[[NSMutableArray alloc] init];
-    [self getAllMessage];
-    self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)) style:UITableViewStylePlain];
-    self.messageTableView.userInteractionEnabled = YES;
-    self.messageTableView.showsVerticalScrollIndicator=NO;
-    self.messageTableView.delegate = self;
-    self.messageTableView.dataSource = self;
-    self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
-    [self.view addSubview:self.messageTableView];
-    NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
-    self.toolBar = [nib objectAtIndex:0];
-    self.toolBar.contentMode = UIViewContentModeRedraw;
-    [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height-45, self.view.bounds.size.width, 45)];
-    self.toolBar.delegate = self;
-    [self.toolBar setUserInteractionEnabled:YES];
-    [self.view addSubview:self.toolBar];
-  
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    UIButton *rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
-    [rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];//为导航栏添加右侧按钮
 
-    UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-    [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-    self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [self.view addGestureRecognizer:gesture];
-    NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
-    self.moreView = [temXib objectAtIndex:0];
-    self.moreView.delegate=self;
-    if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
-        [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
-    }else {
-        [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
-    }
-    [self.view addSubview:self.moreView];
-    [self addNotification];
+  }
+    _messageDataArr =[[NSMutableArray alloc] init];
+  _imgDataArr =[[NSMutableArray alloc] init];
+  [self getAllMessage];
+  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)) style:UITableViewStylePlain];
+  self.messageTableView.userInteractionEnabled = YES;
+  self.messageTableView.showsVerticalScrollIndicator=NO;
+  self.messageTableView.delegate = self;
+  self.messageTableView.dataSource = self;
+  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
+  [self.view addSubview:self.messageTableView];
+  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
+  self.toolBar = [nib objectAtIndex:0];
+  self.toolBar.contentMode = UIViewContentModeRedraw;
+  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height-45, self.view.bounds.size.width, 45)];
+  self.toolBar.delegate = self;
+  [self.toolBar setUserInteractionEnabled:YES];
+  [self.view addSubview:self.toolBar];
+
+  [self.view setBackgroundColor:[UIColor whiteColor]];
+  UIButton *rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
+  [rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
+  [rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];//为导航栏添加右侧按钮
+
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
+  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
+  UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+  [self.view addGestureRecognizer:gesture];
+  NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
+  self.moreView = [temXib objectAtIndex:0];
+  self.moreView.delegate=self;
+  if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
+      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
+  }else {
+      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
+  }
+  [self.view addSubview:self.moreView];
+  [self addNotification];
 }
 
 - (void)receiveNotificationSkipToChatPageView:(NSNotification *)no {
     NSDictionary *apnsDic = [no object];
     NSString *targetNameStr = [apnsDic[@"aps"] objectForKey:@"alert"];
     NSString *targetName = [[targetNameStr componentsSeparatedByString:@":"] objectAtIndex:0];
-    if ([targetName isEqualToString:_conversation.targetName] || [targetName isEqualToString:_conversation.targetName]) {
+    if ([targetName isEqualToString:_conversation.target_id] || [targetName isEqualToString:_conversation.target_id]) {
         return;
     }
-  if ([targetName isEqualToString:[JMSGUserManager getMyInfo].username]) {
+  if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
     return;
   }
-    [JMSGConversationManager getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
+    [JMSGConversation getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
             _conversation = resultObject;
             [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
@@ -171,7 +175,7 @@
                     JPIMLog(@"清零失败");
                 }
             }];
-            [JMSGUserManager getUserInfoWithUsername:targetName completionHandler:^(id resultObject, NSError *error) {
+            [JMSGUser getUserInfoWithUsername:targetName completionHandler:^(id resultObject, NSError *error) {
                 self.user = resultObject;
                 [self getAllMessage];
                 self.title = targetName;
@@ -250,15 +254,15 @@
             model.messageStatus = [message.status integerValue];
             model.displayName = message.display_name;
             model.readState = YES;
-            JMSGUser *user = [JMSGUserManager getMyInfo];
+            JMSGUser *user = [JMSGUser getMyInfo];
             if ([message.target_name isEqualToString :user.username]) {
                 model.who=NO;
                 model.avatar = _conversation.avatarThumb;
-                model.targetName = _conversation.targetName;
+                model.targetId = _conversation.target_id;
             }else{
                 model.who=YES;
                 model.avatar = user.avatarThumbPath;
-                model.targetName = user.username;
+                model.targetId = user.username;
             }
             if (message.messageType == kTextMessage) {
                 model.type=kTextMessage;
@@ -302,7 +306,7 @@
 -(void)receiveMessageNotifi:(NSNotification *)notifi
 {
     JPIMMAINTHEAD(^{
-        JMSGUser *user = [JMSGUserManager getMyInfo];
+        JMSGUser *user = [JMSGUser getMyInfo];
         [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
             }else {
@@ -316,7 +320,7 @@
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
         model.messageId = message.messageId;
         model.conversation = _conversation;
-        model.targetName = message.target_name;
+        model.targetId = message.target_id;
         model.messageStatus = [message.status integerValue];
         if (message.messageType == kTextMessage) {
             model.type=kTextMessage;
@@ -336,11 +340,11 @@
         if ([user.username isEqualToString:message.target_name]) {
              model.who = YES;
             model.avatar = user.avatarThumbPath;
-            model.targetName = [JMSGUserManager getMyInfo].username;
+            model.targetId = [JMSGUser getMyInfo].username;
         }else {
             model.who=NO;
             model.avatar = _conversation.avatarThumb;
-            model.targetName = _conversation.targetName;
+            model.targetId = _conversation.target_id;
         }
         model.messageTime = message.timestamp;
         JPIMLog(@"Received message:%@",message);
@@ -401,7 +405,7 @@
 #pragma mark --增加朋友
 -(void)addFriends
 {
-    if (self.conversationType == kSingle) {
+    if (self.conversation.chatType == kJMSGSingle) {
         JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
         detailsInfoCtl.chatUser = self.user;
         [self.navigationController pushViewController:detailsInfoCtl animated:YES];
@@ -453,14 +457,14 @@
 {
     img = [img resizedImageByWidth:upLoadImgWidth];
     UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
-    NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetName andData:UIImageJPEGRepresentation(img, 1)];
-    NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetName andData:UIImageJPEGRepresentation(smallpImg, 1)];
+    NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(img, 1)];
+    NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(smallpImg, 1)];
     JCHATChatModel *model =[[JCHATChatModel alloc] init];
     model.who = YES;
     model.sendFlag = NO;
     model.conversation = _conversation;
-    model.targetName = self.targetName;
-    model.avatar = [JMSGUserManager getMyInfo].avatarThumbPath;
+    model.targetId = self.conversation.target_id;
+    model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
     model.messageStatus = kSending;
     model.type = kImageMessage;
     model.pictureImgPath = bigPath;
@@ -571,10 +575,10 @@
     JCHATChatModel *model = [[JCHATChatModel alloc] init];
     model.who = YES;
     model.conversation = _conversation;
-    model.targetName = self.targetName;
-    JMSGUser *user = [JMSGUserManager getMyInfo];
+    model.displayName = self.targetName;
+    JMSGUser *user = [JMSGUser getMyInfo];
     model.avatar = user.avatarThumbPath;
-    model.targetName = _conversation.targetName;
+    model.targetId = _conversation.target_id;
     model.messageStatus = kSending;
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
     model.messageTime = @(timeInterVal);
@@ -753,11 +757,11 @@
 - (void)sendMessage :(JCHATChatModel *)model {
     model.messageStatus = kSending;
     JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
-    message.target_name = model.targetName;
+    message.target_id = model.targetId;
     model.messageId = message.messageId;
     message.timestamp = model.messageTime;
     message.contentText = model.chatContent;
-    [JMSGMessageManager sendMessage:message];
+    [JMSGMessage sendMessage:message];
     JPIMLog(@"Sent message:%@",message.contentText);
 }
 
@@ -877,7 +881,7 @@
 #pragma mark - Message Send helper Method
 #pragma mark --发送语音
 - (void)didSendMessageWithVoice:(NSString *)voicePath voiceDuration:(NSString*)voiceDuration {
-    if ([voiceDuration integerValue]<0.5 || [voiceDuration integerValue]>60) {
+  if ([voiceDuration integerValue]<0.5 || [voiceDuration integerValue]>60) {
         if ([voiceDuration integerValue]<0.5) {
             JPIMLog(@"录音时长小于 0.5s");
         }else {
@@ -885,28 +889,29 @@
         }
         [JCHATFileManager deleteFile:voicePath];
         return;
-    }
-    NSString *savePath = [JCHATFileManager copyFile:voicePath withType:FILE_AUDIO From:@"" to:@"guanjingfen"];
-    [JCHATFileManager deleteFile:voicePath];
-    JCHATChatModel *model =[[JCHATChatModel alloc] init];
-    if ([voiceDuration integerValue] >= 60) {
-        model.voiceTime = @"60''";
-    }else{
-        model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
-    }
-    model.avatar = [JMSGUserManager getMyInfo].avatarThumbPath;
-    model.type=kVoiceMessage;
-    model.conversation = _conversation;
-    NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-    model.messageTime = @(timeInterVal);
-    model.targetName = self.targetName;
-    model.readState=YES;
-    model.who=YES;
-    model.sendFlag = NO;
-    model.voicePath=savePath;
-    [_messageDataArr addObject:model];
-    [self.messageTableView reloadData];
-    [self scrollToEnd];
+  }
+  NSString *savePath = [JCHATFileManager copyFile:voicePath withType:FILE_AUDIO From:@"" to:@"guanjingfen"];
+  [JCHATFileManager deleteFile:voicePath];
+  JCHATChatModel *model =[[JCHATChatModel alloc] init];
+  if ([voiceDuration integerValue] >= 60) {
+      model.voiceTime = @"60''";
+  }else{
+      model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
+  }
+  model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
+  model.type=kVoiceMessage;
+  model.conversation = _conversation;
+  NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
+  model.messageTime = @(timeInterVal);
+  model.targetId = self.conversation.target_id;
+  model.displayName = self.targetName;
+  model.readState=YES;
+  model.who=YES;
+  model.sendFlag = NO;
+  model.voicePath=savePath;
+  [_messageDataArr addObject:model];
+  [self.messageTableView reloadData];
+  [self scrollToEnd];
 }
 
 #pragma mark - RecorderPath Helper Method

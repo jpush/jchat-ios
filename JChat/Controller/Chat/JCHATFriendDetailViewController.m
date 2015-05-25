@@ -76,7 +76,7 @@
     _infoArr = [[NSMutableArray alloc]init];
     [MBProgressHUD showMessage:@"正在加载！" toView:self.view];
     __weak __typeof(self)weakSelf = self;
-    [JMSGUserManager getUserInfoWithUsername:self.userInfo.username completionHandler:^(id resultObject, NSError *error) {
+    [JMSGUser getUserInfoWithUsername:self.userInfo.username completionHandler:^(id resultObject, NSError *error) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
 
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

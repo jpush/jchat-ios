@@ -146,7 +146,7 @@
                     weakSelf.sendFailImgMessage.progressCallback=^(float percent){
                     weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
                     };
-                    [JMSGMessageManager sendMessage:self.sendFailImgMessage];
+                    [JMSGMessage sendMessage:self.sendFailImgMessage];
                 }else {
                     NSLog(@"获取消息失败!");
                 }
@@ -155,7 +155,7 @@
             self.sendFailImgMessage.progressCallback=^(float percent){
                 weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
             };
-            [JMSGMessageManager sendMessage:self.sendFailImgMessage];
+            [JMSGMessage sendMessage:self.sendFailImgMessage];
         }
     }
 }
@@ -199,7 +199,7 @@
     self.contentImgView.alpha=0.5;
     self.model.messageStatus = kSending;
     _message =[[JMSGImageMessage alloc] init];
-    _message.target_name=self.model.targetName;
+    _message.target_id=self.model.targetId;
     _message.timestamp = self.model.messageTime;
     __weak typeof(self)weakSelf = self;
     _message.progressCallback=^(float percent){
@@ -207,7 +207,7 @@
     };
     _message.resourcePath = self.model.pictureImgPath;
     _message.thumbPath = self.model.pictureThumbImgPath;
-    [JMSGMessageManager sendMessage:_message];
+    [JMSGMessage sendMessage:_message];
     JPIMLog(@"sendt imgMessage:%@",_message);
 }
 
@@ -221,7 +221,7 @@
         [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
                 NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-                [JMSGMessageManager getThumbImageFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                [JMSGMessage getThumbImageFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
                     JPIMMAINTHEAD(^{
                         [self.downLoadIndicatorView stopAnimating];
                         if (error == nil) {
