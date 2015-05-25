@@ -12,7 +12,7 @@
 
 @interface JCHATChatModel : NSObject
 @property (nonatomic,strong)   NSString *messageId;
-@property (nonatomic,strong)   NSString *targetName;
+@property (nonatomic,strong)   NSString *targetId;
 @property (nonatomic,strong)   NSString *avatar;
 @property (nonatomic,strong)   NSString *displayName;
 @property (nonatomic,strong)   NSString *chatContent;

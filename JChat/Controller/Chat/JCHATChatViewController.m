@@ -109,10 +109,10 @@
        sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
     }
     sendMessageCtl.hidesBottomBarWhenPushed = YES;
-    sendMessageCtl.conversationType = kSingle;
+    sendMessageCtl.conversation.chatType = kJMSGSingle;
     NSDictionary *apnsDic = [no object];
     NSString *targetName = [apnsDic[@"aps"] objectForKey:@"alert"];
-    if ([targetName isEqualToString:[JMSGUserManager getMyInfo].username]) {
+    if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
         return;
     }
    __block JMSGConversation *conversation;
@@ -123,7 +123,7 @@
         }
     }
     if (!conversation) {
-        [JMSGConversationManager createConversation:targetName withType:kSingle completionHandler:^(id resultObject, NSError *error) {
+        [JMSGConversation createConversation:targetName withType:kJMSGSingle completionHandler:^(id resultObject, NSError *error) {
             conversation = (JMSGConversation  *)resultObject ;
             JPIMMAINTHEAD(^{
                 sendMessageCtl.conversation = conversation;
@@ -182,7 +182,7 @@
 
 - (void)getConversationList {
     [self.addBgView setHidden:YES];
-    [JMSGConversationManager getConversationListWithCompletionHandler:^(id resultObject, NSError *error) {
+    [JMSGConversation getConversationListWithCompletionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
             JPIMMAINTHEAD(^{
                 _conversationArr = [self sortConversation:resultObject];
@@ -263,13 +263,13 @@ NSInteger sortType(id object1,id object2,void *cha) {
         sendMessageCtl.hidesBottomBarWhenPushed=YES;
         [[alertView textFieldAtIndex:0] resignFirstResponder];
         __weak __typeof(self)weakSelf = self;
-        [JMSGUserManager getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+        [JMSGUser getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if (error == nil) {
                 __strong __typeof(weakSelf) strongSelf = weakSelf;
                 sendMessageCtl.user = ((JMSGUser *) resultObject);
                 NSLog(@"username :%@", sendMessageCtl.user.username);
-                if (![sendMessageCtl.user.username isEqualToString:[JMSGUserManager getMyInfo].username]) {
+                if (![sendMessageCtl.user.username isEqualToString:[JMSGUser getMyInfo].username]) {
                     [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
                 } else {
                     [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
@@ -320,7 +320,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     JPIMLog(@"Action");
     JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
-    [JMSGConversationManager deleteConversation:conversation.targetName completionHandler:^(id resultObject, NSError *error) {
+    [JMSGConversation deleteConversation:conversation.target_id completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
             JPIMLog(@"delete conversation success");
         }else {
@@ -382,7 +382,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
     sendMessageCtl.hidesBottomBarWhenPushed=YES;
-    sendMessageCtl.conversationType = kSingle;
+    sendMessageCtl.conversation.chatType = kJMSGSingle;
     JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
     sendMessageCtl.conversation = conversation;
     sendMessageCtl.conversationList = _conversationArr;

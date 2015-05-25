@@ -53,7 +53,7 @@
     [self.passwordField resignFirstResponder];
     [MBProgressHUD showMessage:@"正在注册" view:self.view];
     if (![self.passwordField.text isEqualToString:@""] && ![self.accountField.text isEqualToString:@""]) {
-        [JMSGUserManager registerWithUsername:self.accountField.text password:self.passwordField.text completionHandler:^(id resultObject, NSError *error) {
+        [JMSGUser registerWithUsername:self.accountField.text password:self.passwordField.text completionHandler:^(id resultObject, NSError *error) {
             if (error ==nil) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [MBProgressHUD showSuccess:@"注册成功！" toView:self.view];

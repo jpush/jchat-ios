@@ -92,7 +92,7 @@
                 if (_photo.message.messageId) {
                     [_conversation getMessage:_photo.message.messageId completionHandler:^(id resultObject, NSError *error) {
                         if (error ==nil) {
-                            [JMSGMessageManager getMetaImageFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                            [JMSGMessage getMetaImageFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
                                 if (error == nil) {
                                     JPIMLog(@"下载大图 success");
                                     _photo.url = resultObject;
@@ -145,7 +145,7 @@
             if (_photo.message.messageId) {
                 [_conversation getMessage:_photo.message.messageId completionHandler:^(id resultObject, NSError *error) {
                     if (error ==nil) {
-                        [JMSGMessageManager getMetaImageFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                        [JMSGMessage getMetaImageFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
                             if (error == nil) {
                                 JPIMLog(@"下载大图 success");
                                 _photo.url = resultObject;
