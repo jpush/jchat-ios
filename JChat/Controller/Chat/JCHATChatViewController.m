@@ -41,7 +41,7 @@
                                                  name:kJPFNetworkDidLoginNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reveiveMessageNotifi:) name:KJMSG_ReceiveMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reveiveMessageNotifi:) name:kJMSG_ReceiveMessage object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alreadyLoginClick) name:kLogin_NotifiCation object:nil];
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
     self.navigationController.navigationBar.alpha=0.8;
