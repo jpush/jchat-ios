@@ -76,7 +76,7 @@
 
 - (void)creadBuddleChatView
 {
-        if (_model.type == kTextMessage) {
+        if (_model.type == kJMSGTextMessage) {
             UIFont *font =[UIFont systemFontOfSize:18];
             CGSize maxSize = CGSizeMake(200, 2000);
             CGSize realSize =[_model.chatContent sizeWithFont:font
@@ -133,16 +133,16 @@
     [self.stateView setHidden:YES];
     [self.stateView stopAnimating];
     [self.sendFailView setHidden:YES];
-    if (_model.messageStatus == kSending || _model.messageStatus == kReceiving) {
+    if (_model.messageStatus == kJMSGStatusSending || _model.messageStatus == kJMSGStatusReceiving) {
         [self.stateView setHidden:NO];
         [self.stateView startAnimating];
         [self.sendFailView setHidden:YES];
-    }else if (_model.messageStatus == kSendSucceed || _model.messageStatus == kReceiveSucceed)
+    }else if (_model.messageStatus == kJMSGStatusSendSucceed || _model.messageStatus == kJMSGStatusReceiveSucceed)
     {
         [self.stateView stopAnimating];
         [self.stateView setHidden:YES];
         [self.sendFailView setHidden:YES];
-    }else if (_model.messageStatus == kSendFail || _model.messageStatus == kReceiveDownloadFailed)
+    }else if (_model.messageStatus == kJMSGStatusSendFail || _model.messageStatus == kJMSGStatusReceiveDownloadFailed)
     {
         [self.stateView stopAnimating];
         [self.stateView setHidden:YES];
@@ -175,7 +175,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         [self.sendFailView setHidden:YES];
-        _model.messageStatus = kSending;
+        _model.messageStatus = kJMSGStatusSending;
         [self.stateView setHidden:NO];
         [self.stateView startAnimating];
         if (!_sendFailMessage) {

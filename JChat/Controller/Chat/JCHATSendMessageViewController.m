@@ -264,13 +264,13 @@
                 model.avatar = user.avatarThumbPath;
                 model.targetId = user.username;
             }
-            if (message.messageType == kTextMessage) {
-                model.type=kTextMessage;
+            if (message.messageType == kJMSGTextMessage) {
+                model.type=kJMSGTextMessage;
                 JMSGContentMessage *contentMessage = (JMSGContentMessage *)message;
                 model.chatContent = contentMessage.contentText;
-            }else if (message.messageType == kImageMessage)
+            }else if (message.messageType == kJMSGImageMessage)
             {
-                model.type= kImageMessage;
+                model.type= kJMSGImageMessage;
                 JMSGImageMessage *imageMessage = (JMSGImageMessage *)message;
                 if (imageMessage.resourcePath != nil) {
                     model.pictureImgPath = imageMessage.resourcePath;
@@ -283,9 +283,9 @@
                     [_imgDataArr addObject:model];
                 }
                 model.photoIndex = [_imgDataArr count] -1;
-            }else if (message.messageType == kVoiceMessage)
+            }else if (message.messageType == kJMSGVoiceMessage)
             {
-                model.type = kVoiceMessage;
+                model.type = kJMSGVoiceMessage;
                 JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *)message;
                 model.voicePath = voiceMessage.resourcePath;
                 model.voiceTime = [NSString stringWithFormat:@"%@",voiceMessage.duration];
@@ -322,17 +322,17 @@
         model.conversation = _conversation;
         model.targetId = message.target_id;
         model.messageStatus = [message.status integerValue];
-        if (message.messageType == kTextMessage) {
-            model.type=kTextMessage;
+        if (message.messageType == kJMSGTextMessage) {
+            model.type=kJMSGTextMessage;
             JMSGContentMessage *contentMessage =  (JMSGContentMessage *)message;
             model.chatContent = contentMessage.contentText;
-        } else if (message.messageType == kImageMessage) {
-            model.type=kImageMessage;
+        } else if (message.messageType == kJMSGImageMessage) {
+            model.type=kJMSGImageMessage;
             model.pictureThumbImgPath = ((JMSGImageMessage *)message).thumbPath;
             [_imgDataArr addObject:model];
             model.photoIndex = [_imgDataArr count] -1;
-        } else if (message.messageType == kVoiceMessage){
-            model.type = kVoiceMessage;
+        } else if (message.messageType == kJMSGVoiceMessage){
+            model.type = kJMSGVoiceMessage;
             model.voicePath =((JMSGVoiceMessage *)message).resourcePath;
             model.voiceTime = [((JMSGVoiceMessage *)message).duration stringByAppendingString:@"''"];
             model.readState = NO;
@@ -465,8 +465,8 @@
     model.conversation = _conversation;
     model.targetId = self.conversation.target_id;
     model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
-    model.messageStatus = kSending;
-    model.type = kImageMessage;
+    model.messageStatus = kJMSGStatusSending;
+    model.type = kJMSGImageMessage;
     model.pictureImgPath = bigPath;
     model.pictureThumbImgPath = smallImgPath;
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
@@ -497,9 +497,15 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGSendMessageResult object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNotifi:) name:kJMSG_ReceiveMessage object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sendMessageResponse:)
+                                                 name:JMSGNotification_SendMessageResult object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveMessageNotifi:)
+                                                 name:JMSGNotification_ReceiveMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveNotificationSkipToChatPageView:)
+                                                 name:KApnsNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeMessageState:)
                                                  name:kMessageChangeState
@@ -579,11 +585,11 @@
     JMSGUser *user = [JMSGUser getMyInfo];
     model.avatar = user.avatarThumbPath;
     model.targetId = _conversation.target_id;
-    model.messageStatus = kSending;
+    model.messageStatus = kJMSGStatusSending;
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
     model.messageTime = @(timeInterVal);
     model.sendFlag = NO;
-    model.type = kTextMessage;
+    model.type = kJMSGTextMessage;
     model.chatContent = text;
     [_messageDataArr addObject:model];
     [self addCellToTabel];
@@ -602,13 +608,13 @@
 - (void)addmessageShowTimeData {
     JCHATChatModel *lastModel =[_messageDataArr lastObject];
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-    if ([_messageDataArr count]>0 && lastModel.type != kTimeMessage) {
+    if ([_messageDataArr count]>0 && lastModel.type != kJMSGTimeMessage) {
         NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
         NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
         NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
         if (fabs(timeBetween) > interval) {
             JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
-            timeModel.type = kTimeMessage;
+            timeModel.type = kJMSGTimeMessage;
             timeModel.messageTime = @(timeInterVal);
             [_messageDataArr addObject:timeModel];
             [self addCellToTabel];
@@ -618,13 +624,13 @@
 
 - (void)compareReceiveMessageTimeInterVal :(NSTimeInterval )timeInterVal {
     JCHATChatModel *lastModel =[_messageDataArr lastObject];
-    if ([_messageDataArr count]>0 && lastModel.type != kTimeMessage) {
+    if ([_messageDataArr count]>0 && lastModel.type != kJMSGTimeMessage) {
         NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
         NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
         NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
         if (fabs(timeBetween) > interval) {
             JCHATChatModel *timeModel = [[JCHATChatModel alloc] init];
-            timeModel.type = kTimeMessage;
+            timeModel.type = kJMSGTimeMessage;
             timeModel.messageTime = @(timeInterVal);
 //            [self getTimeDate:timeInterVal];
             [_messageDataArr addObject:timeModel];
@@ -642,10 +648,10 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     JCHATChatModel *model =[_messageDataArr objectAtIndex:indexPath.row];
-    if (model.type==kTextMessage) {
+    if (model.type==kJMSGTextMessage) {
         return model.getTextSize.height+8;
-    }else if(model.type == kImageMessage){
-        if (model.messageStatus == kReceiveDownloadFailed) {
+    }else if(model.type == kJMSGImageMessage){
+        if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
             return 150;
         }else {
             UIImage *img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
@@ -655,7 +661,7 @@
                 return img.size.height/2;
             }
         }
-    }else if(model.type==kVoiceMessage)
+    }else if(model.type==kJMSGVoiceMessage)
     {
         return 60;
     }else{
@@ -708,7 +714,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JCHATChatModel *model =[_messageDataArr objectAtIndex:indexPath.row];
-    if (model.type == kTextMessage) {
+    if (model.type == kJMSGTextMessage) {
         static NSString *cellIdentifier = @"textCell";
         JCHATTextTableViewCell *cell = (JCHATTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
@@ -720,7 +726,7 @@
         }
         [cell setCellData:model delegate:self];
         return cell;
-    }else if(model.type == kImageMessage)
+    }else if(model.type == kJMSGImageMessage)
     {
         static NSString *cellIdentifier = @"imgCell";
         JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -729,7 +735,7 @@
         }
         [cell setCellData:self chatModel:model indexPath:indexPath];
         return cell;
-    }else if (model.type == kVoiceMessage)
+    }else if (model.type == kJMSGVoiceMessage)
     {
         static NSString *cellIdentifier = @"voiceCell";
         JCHATVoiceTableViewCell *cell = (JCHATVoiceTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -738,7 +744,7 @@
         }
         [cell setCellData:model delegate:self indexPath:indexPath];
         return cell;
-    }else if (model.type == kTimeMessage) {
+    }else if (model.type == kJMSGTimeMessage) {
         static NSString *cellIdentifier = @"timeCell";
         JCHATShowTimeCell *cell = (JCHATShowTimeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
@@ -755,7 +761,7 @@
 
 #pragma mark --发送消息
 - (void)sendMessage :(JCHATChatModel *)model {
-    model.messageStatus = kSending;
+    model.messageStatus = kJMSGStatusSending;
     JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
     message.target_id = model.targetId;
     model.messageId = message.messageId;
@@ -810,7 +816,7 @@
     NSMutableArray *urlArr =[NSMutableArray array];
     for (NSInteger i=0; i<[_messageDataArr count]; i++) {
         JCHATChatModel *model = [_messageDataArr objectAtIndex:i];
-        if (model.type == kImageMessage) {
+        if (model.type == kJMSGImageMessage) {
             [urlArr addObject:model.pictureImgPath];
         }
     }
@@ -899,7 +905,7 @@
       model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
   }
   model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
-  model.type=kVoiceMessage;
+  model.type=kJMSGVoiceMessage;
   model.conversation = _conversation;
   NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
   model.messageTime = @(timeInterVal);
@@ -948,7 +954,7 @@
     JCHATVoiceTableViewCell *tempCell =(JCHATVoiceTableViewCell *)cell;
     if ([_messageDataArr count]-1>indexPath.row) {
         JCHATChatModel *model =[_messageDataArr objectAtIndex:indexPath.row+1];
-        if (model.type==kVoiceMessage && !model.readState) {
+        if (model.type==kJMSGVoiceMessage && !model.readState) {
             tempCell.continuePlayer=YES;
         }
     }
@@ -958,7 +964,7 @@
 - (void)successionalPlayVoice:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     if ([_messageDataArr count]-1>indexPath.row) {
         JCHATChatModel *model =[_messageDataArr objectAtIndex:indexPath.row+1];
-        if (model.type==kVoiceMessage&& !model.readState) {
+        if (model.type==kJMSGVoiceMessage&& !model.readState) {
              JCHATVoiceTableViewCell *voiceCell =(JCHATVoiceTableViewCell *)[self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:0]];
             [voiceCell playerVoice];
         }
