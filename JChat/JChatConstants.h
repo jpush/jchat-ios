@@ -11,6 +11,11 @@
 
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
+
+#define TICK      NSDate *startTime = [NSDate date]
+#define TOCK(action) DDLogDebug(@"%@ - TimeInSeconds - %f", action, -[startTime timeIntervalSinceNow])
+
+
 /*========================================屏幕适配============================================*/
 
 #define kIOSVersions [[[UIDevice currentDevice] systemVersion] floatValue] //获得iOS版本
