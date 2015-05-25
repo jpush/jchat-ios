@@ -49,40 +49,6 @@
     return self;
 }
 
-//#pragma mark --发送消息响应
-//- (void)sendMessageResponse:(NSNotification *)response {
-//    JPIMMAINTHEAD(^{
-//        NSDictionary *responseDic = [response userInfo];
-//        JMSGContentMessage *message = [responseDic objectForKey:JMSGSendMessage];
-//        NSError *error = [responseDic objectForKey:JMSGSendMessageError];
-//        NSLog(@"sendMessageResponse %@",message);
-//        NSLog(@"sendMessageResponse error %@",error);
-//        NSLog(@"response messageId %@ messageID %@",message.messageId,_message.messageId);
-//        if (![message.messageId isEqualToString:_message.messageId]) {
-//            return ;
-//        }
-//        [self.stateView stopAnimating];
-//        if (error==nil) {
-//        self.model.messageStatus = kSendSucceed;
-//        [self.stateView setHidden:YES];
-//        [self.sendFailView setHidden:YES];
-//        NSLog(@"UI send Text content successs:%@",self.model.chatContent);
-//        NSLog(@"UI model successs %@",self.model);
-//        NSLog(@"UI model messageStatus successs %zd",self.model.messageStatus);
-//        NSLog(@"cell subviews successs %@",self.subviews);
-//      }else {
-//        self.model.messageStatus = kSendFail;
-//        [self.stateView setHidden:YES];
-//        _sendFailMessage = message;
-//        NSLog(@"UI send Text content fail:%@",self.model.chatContent);
-//        NSLog(@"UI model fail %@",self.model);
-//        NSLog(@"UI model messageStatus fail %zd",self.model.messageStatus);
-//        NSLog(@"cell subviews fail %@",self.subviews);
-//      }
-//      [self creadBuddleChatView];
-//    });
-//}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     // Configure the view for the selected state
@@ -230,7 +196,7 @@
 
 - (void)pushPersonInfoCtlClick {
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectHeadView:)]) {
-        NSLog(@"%@",_model.targetName);
+        NSLog(@"%@",_model.targetId);
         [self.delegate selectHeadView:_model];
     }
 }
