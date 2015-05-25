@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self laodData];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     self.groupTab = [[JCHATChatTable alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight)];
     self.groupTab.dataSource = self;
     self.groupTab.delegate = self;

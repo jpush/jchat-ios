@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+    DDLogDebug(@"Action - viewDidLoad");
     self.title = @"详细资料";
     [self loadUserInfoData];
     UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
