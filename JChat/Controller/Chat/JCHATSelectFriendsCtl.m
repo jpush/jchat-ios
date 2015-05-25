@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
   [self sectionIndexTitles];
   UIView *headView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth, 60)];
   [headView setBackgroundColor:[UIColor whiteColor]];
