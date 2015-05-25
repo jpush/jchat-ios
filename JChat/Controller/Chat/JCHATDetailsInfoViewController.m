@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     self.title=@"聊天详情";
     UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];

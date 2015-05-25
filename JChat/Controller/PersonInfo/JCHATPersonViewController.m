@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     [self.view setBackgroundColor:[UIColor whiteColor]];
      self.navigationController.interactivePopGestureRecognizer.delegate = self;
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);

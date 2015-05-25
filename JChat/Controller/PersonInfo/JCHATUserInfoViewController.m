@@ -34,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     [self.view setBackgroundColor:[UIColor clearColor]];
     //设置背景图片
     _bgView =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, (kApplicationHeight)/2)];
@@ -85,7 +85,7 @@
 
 - (void)updateAvatar {
     JMSGUser *user = [JMSGUser getMyInfo];
-    JPIMLog(@"avatarResourcePath :%@",user.avatarResourcePath);
+  DDLogDebug(@"avatarResourcePath :%@",user.avatarResourcePath);
     if (user.avatarResourcePath) {
         UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
         UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
@@ -130,7 +130,7 @@
 #pragma mark -调用相册
 -(void)photoClick
 {
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - photoClick");
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.allowsEditing = YES;
     picker.delegate = self;
@@ -145,7 +145,7 @@
 #pragma mark --调用相机
 -(void)cameraClick
 {
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - cameraClick");
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.allowsEditing = YES;
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -163,7 +163,7 @@
 //相机,相册Finish的代理
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - imagePickerController");
     [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
     UIImage *image;
     image = [info objectForKey:UIImagePickerControllerEditedImage];
@@ -176,7 +176,7 @@
             if (error == nil) {
                 [MBProgressHUD showMessage:@"上传成功" view:self.view];
                 if (user.avatarResourcePath) {
-                    JPIMLog(@"update headView success %@",user);
+                  DDLogDebug(@"update headView success %@",user);
                     UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
                     UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
                     [_bgView setImage:img];
@@ -184,7 +184,7 @@
                     [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
                 }
             } else {
-                JPIMLog(@"update headView fail");
+              DDLogDebug(@"update headView fail");
                 [MBProgressHUD showMessage:@"上传失败!" view:self.view];
             }
         });
@@ -229,7 +229,7 @@
 
 - (void)updateUserInfo {
     JMSGUser *user = [JMSGUser getMyInfo];
-    NSLog(@"avatarResourcePath :%@",user.avatarResourcePath);
+  DDLogDebug(@"avatarResourcePath :%@",user.avatarResourcePath);
     if (user.avatarResourcePath) {
         UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
         UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
@@ -310,7 +310,7 @@
     }else if (buttonIndex==1)
     {
       [MBProgressHUD showMessage:@"正在退出登录！" view:self.view];
-        NSLog(@"loginOutWithSuccessCallback success");
+      DDLogDebug(@"loginOutWithSuccessCallback success");
         AppDelegate *appdelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
         if ([appdelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
             [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
