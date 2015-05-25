@@ -43,8 +43,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
-    pushFlag=NO;
+  DDLogDebug(@"Action - viewDidLoad");
+  pushFlag = NO;
+
     [self.view setBackgroundColor:[UIColor colorWithRed:72/255.0 green:62/255.0 blue:39/255.0 alpha:1.0]];
     self.passwordField.secureTextEntry=YES;
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
