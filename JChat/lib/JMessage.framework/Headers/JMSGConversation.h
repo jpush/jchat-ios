@@ -10,93 +10,95 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <JMessage/JMSGConstants.h>
+#import "JMSGConstants.h"
 
 @class JMSGMessage;
 
-/***************************************声明枚举类型*********************************************/
+/**
+* 会话变更通知
+*/
+extern NSString *const JMSGNotification_ConversationInfoChanged;
+
+
 /**
 *  会话类型
 */
- typedef NS_ENUM(NSInteger, ConversationType) {
-   kJMSGSingle = 0,
-   kJMSGGroup,
- };
+typedef NS_ENUM(NSInteger, JMSGConversationType) {
+  kJMSGSingle = 0,
+  kJMSGGroup,
+};
 
 /**
 *  消息内容类型
 */
- typedef NS_ENUM(NSInteger, MessageContentType) {
-   kTextMessage = 0,
-   kImageMessage,
-   kVoiceMessage,
-   kCustomMessage,
-   kLocationMessage,
-   kCmdMessage,
-   kTimeMessage,
- };
+typedef NS_ENUM(NSInteger, JMSGMessageContentType) {
+  kJMSGTextMessage = 0,
+  kJMSGImageMessage,
+  kJMSGVoiceMessage,
+  kJMSGCustomMessage,
+  kJMSGLocationMessage,
+  kJMSGCmdMessage,
+  kJMSGTimeMessage,
+};
 
 /**
 *  消息状态类型
 */
- typedef NS_ENUM(NSInteger, MessageStatusType) {
-   kNone = 0,
-   kSendSucceed,
-   kSendFail,
-   kSending,
-   kUploadSucceed,
-   kSendDraft,
-   kReceiving,
-   kReceiveSucceed,
-   kReceiveFailed,
-   kReceiveDownloadFailed,
- };
+typedef NS_ENUM(NSInteger, JMSGMessageStatusType) {
+  kJMSGStatusNone = 0,
+  kJMSGStatusSendSucceed,
+  kJMSGStatusSendFail,
+  kJMSGStatusSending,
+  kJMSGStatusUploadSucceed,
+  kJMSGStatusSendDraft,
+  kJMSGStatusReceiving,
+  kJMSGStatusReceiveSucceed,
+  kJMSGStatusReceiveFailed,
+  kJMSGStatusReceiveDownloadFailed,
+};
 
 /**
 *  消息类型
 */
- typedef NS_ENUM(NSInteger, MessageMetaType) {
-   kSendType,
-   kReceiveType,
- };
+typedef NS_ENUM(NSInteger, JMSGMessageMetaType) {
+  kJMSGMetaSendType,
+  kJMSGMetaReceiveType,
+};
 
-/**
-*  消息类型
-*/
 
 /**
 *  上传文件类型
 */
- typedef NS_ENUM(NSInteger, FileType) {
-   kTextFileType,
-   kImageFileType,
-   kVoiceFileType,
-   kCustomFileType,
- };
-/*******************************************************************************************/
+typedef NS_ENUM(NSInteger, JMSGFileType) {
+  kJMSGTextFileType,
+  kJMSGImageFileType,
+  kJMSGVoiceFileType,
+  kJMSGCustomFileType,
+};
 
-extern NSString *kJMSGConversationInfoChanged;
+
 
 @interface JMSGConversation : NSObject
 // @property(readonly, strong, atomic) JMSGConversationModel *conversationModel;
-@property (atomic, strong) NSString *Id;//聊天会话ID
-@property (nonatomic, strong) NSString *type;//聊天会话类型
-@property (nonatomic, strong) NSString *target_id;//聊天会话目标id
-@property (nonatomic, strong) NSString *target_name;//聊天对象的昵称
+ @property (atomic, strong) NSString *Id;//聊天会话ID
+ @property (assign, nonatomic) JMSGConversationType chatType;
+ @property (atomic, strong) NSString *target_id;//聊天会话目标id
+ @property (atomic, strong) NSString *target_name;//聊天对象的昵称
 
-@property (nonatomic, strong) NSString *latest_type;//最后消息的内容类型
-@property (nonatomic, strong) NSString *latest_text;//最后消息内容
-@property (nonatomic, strong) NSString *latest_date;//最后消息日期
-@property (nonatomic, strong) NSString *latest_displayName;
-@property (atomic, assign) MessageStatusType latest_text_state;
+ @property (nonatomic, strong) NSString *latest_type;//最后消息的内容类型
+ @property (nonatomic, strong) NSString *latest_text;//最后消息内容
+ @property (nonatomic, strong) NSString *latest_date;//最后消息日期
+ @property (nonatomic, strong) NSString *latest_displayName;
 
-@property (atomic, strong) NSNumber *unread_cnt;//未读消息数量
-@property (atomic, assign) MessageStatusType latest_messageStatus;//最后消息状态
-@property (nonatomic, strong) NSString *msg_table_name;//该会话所对应的Message表的表名
+ @property (atomic, assign) JMSGMessageStatusType latest_text_state;
+
+ @property (atomic, strong) NSNumber *unread_cnt;//未读消息数量
+ @property (atomic, assign) JMSGMessageStatusType latest_messageStatus;//最后消息状态
+
+ @property (nonatomic, strong) NSString *msg_table_name;//该会话所对应的Message表的表名
 
 // @property(readonly, strong, nonatomic) NSString *targetName;
-@property(nonatomic,strong,getter=avatarThumb) NSString *avatarThumb;
-@property(readonly, assign, nonatomic) ConversationType chatType;
+ @property(nonatomic,strong,getter=avatarThumb) NSString *avatarThumb;
 
 
 /**
@@ -155,7 +157,7 @@ extern NSString *kJMSGConversationInfoChanged;
  *
  */
 + (void)createConversation:(NSString *)targetUserName
-                  withType:(ConversationType)conversationType
+                  withType:(JMSGConversationType)conversationType
          completionHandler:(JMSGCompletionHandler)handler;
 
 /**
