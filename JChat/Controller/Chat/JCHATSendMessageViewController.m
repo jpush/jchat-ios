@@ -45,15 +45,17 @@
 @implementation JCHATSendMessageViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    JPIMLog(@"Action");
-    if (self.user) {
-        self.targetName = self.user.username;
-    }else if (_conversation){
-        self.targetName = _conversation.target_name;
-    }else {
-        JPIMLog(@"聊天未知错误");
-    }
+  [super viewDidLoad];
+  DDLogDebug(@"Action - viewDidLoad");
+
+  if (self.user) {
+    self.targetName = self.user.username;
+  } else if (_conversation) {
+    self.targetName = _conversation.latest_displayName;
+  } else {
+    DDLogDebug(@"聊天未知错误");
+  }
+  
     if (!_conversation) {
         if (self.user) {
              [JMSGConversation createConversation:self.user.username withType:kJMSGSingle completionHandler:^(id resultObject, NSError *error) {
@@ -496,7 +498,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGSendMessageResult object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNotifi:) name:KJMSG_ReceiveMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNotifi:) name:kJMSG_ReceiveMessage object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeMessageState:)
