@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,7 +15,6 @@
                     <rect key="frame" x="4" y="0.0" width="46" height="46"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="0IF-yc-H47"/>
-                        <constraint firstAttribute="width" constant="46" id="kjK-Va-gMI"/>
                     </constraints>
                     <state key="normal" image="addMan_13.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -24,14 +23,14 @@
                         <action selector="headViewBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="QLQ-Wz-hnx"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6d7-tY-UO6">
-                    <rect key="frame" x="10" y="54" width="34" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6d7-tY-UO6">
+                    <rect key="frame" x="0.0" y="54" width="56" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="34" id="Hoa-1C-szd"/>
+                        <constraint firstAttribute="width" constant="56" id="Hoa-1C-szd"/>
                         <constraint firstAttribute="height" constant="21" id="R73-lD-42e"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0q-dv-nx0">
@@ -49,18 +48,16 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="6d7-tY-UO6" firstAttribute="trailing" secondItem="t0q-dv-nx0" secondAttribute="trailing" id="Azh-Ao-K9x"/>
                 <constraint firstItem="t0q-dv-nx0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DJt-d6-gqb"/>
                 <constraint firstAttribute="trailing" secondItem="t0q-dv-nx0" secondAttribute="trailing" id="HIS-r0-MsW"/>
                 <constraint firstItem="6d7-tY-UO6" firstAttribute="top" secondItem="73S-EI-iRM" secondAttribute="bottom" constant="8" id="MQa-fO-lBN"/>
                 <constraint firstItem="t0q-dv-nx0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="36" id="PQY-fz-eXZ"/>
                 <constraint firstItem="6d7-tY-UO6" firstAttribute="top" secondItem="t0q-dv-nx0" secondAttribute="bottom" constant="34" id="XEo-es-rWM"/>
-                <constraint firstAttribute="trailing" secondItem="73S-EI-iRM" secondAttribute="trailing" constant="6" id="ZTG-DU-2ni"/>
-                <constraint firstItem="73S-EI-iRM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="edC-Ft-IkF"/>
                 <constraint firstItem="6d7-tY-UO6" firstAttribute="top" secondItem="73S-EI-iRM" secondAttribute="bottom" constant="8" id="gIF-pK-pH3"/>
                 <constraint firstAttribute="bottom" secondItem="6d7-tY-UO6" secondAttribute="bottom" id="htB-J0-fuQ"/>
                 <constraint firstItem="73S-EI-iRM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jie-OB-BkC"/>
-                <constraint firstAttribute="trailing" secondItem="6d7-tY-UO6" secondAttribute="trailing" constant="12" id="sRh-9T-Zye"/>
-                <constraint firstItem="6d7-tY-UO6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="w95-cz-kD0"/>
+                <constraint firstItem="73S-EI-iRM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="k46-sT-AZ0"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

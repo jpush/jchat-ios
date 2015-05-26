@@ -29,7 +29,6 @@
 @property (strong, nonatomic)  JMSGConversation *conversation;
 @property (strong, nonatomic)  NSString *targetName;
 @property (strong, nonatomic)  JMSGUser *user;
-@property (strong, nonatomic)  NSMutableArray *conversationList;
 
 /**
  *  管理录音工具对象
