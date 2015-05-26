@@ -10,6 +10,9 @@
 #import "JChatConstants.h"
 #import "JCHATGroupSettingCell.h"
 #import "JCHATGroupPersonView.h"
+#import "MBProgressHUD+Add.h"
+#import "MBProgressHUD.h"
+#import <JMessage/JMessage.h>
 
 #define kheadViewHeight 100
 
@@ -17,7 +20,7 @@
 {
     UIScrollView *_headView;
     NSArray *_groupTitleData;
-    NSMutableArray *_groupData;
+   __block NSMutableArray *_groupData;
     UIButton *_deleteBtn;
     NSMutableArray *_groupBtnArr;
 }
@@ -26,35 +29,45 @@
 @implementation JCHATGroupSettingCtl
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    [self laodData];
+  [super viewDidLoad];
+
+  self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
+  self.navigationController.navigationBar.alpha=0.8;
+  
+  NSShadow *shadow = [[NSShadow alloc]init];
+  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+  shadow.shadowOffset = CGSizeMake(0,-1);
+  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                   shadow,NSShadowAttributeName,
+                                                                   [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
+                                                                   nil]];
   DDLogDebug(@"Action - viewDidLoad");
-    self.groupTab = [[JCHATChatTable alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight)];
-    self.groupTab.dataSource = self;
-    self.groupTab.delegate = self;
-    self.groupTab.touchDelegate = self;
-    [self.groupTab setBackgroundColor:[UIColor whiteColor]];
-    self.groupTab.separatorStyle=UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.groupTab];
-   
-    self.title=@"聊天详情";
-    UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-    [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-    _groupTitleData =@[@"群聊名称",@"清空聊天记录",@"删除并退出"];
-    
-    _headView = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 0, kApplicationWidth, kheadViewHeight)];
-    [_headView setBackgroundColor:[UIColor whiteColor]];
-    UIView *headLine = [[UIView alloc]initWithFrame:CGRectMake(0, kheadViewHeight-1, kApplicationWidth, 1)];
-    [headLine setBackgroundColor:[UIColor colorWithRed:197/255.0 green:197/255.0 blue:197/255.0 alpha:197/255.0]];
-    [_headView addSubview:headLine];
-    _headView.showsHorizontalScrollIndicator =NO;
-    _headView.showsVerticalScrollIndicator =NO;
-    self.groupTab.tableHeaderView = _headView;
-    
-    [self reloadHeadViewData];
+  self.title=@"聊天详情";
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
+  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  _groupTitleData =@[@"群聊名称",@"清空聊天记录",@"删除并退出"];
+
+  self.groupTab = [[JCHATChatTable alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight)];
+  self.groupTab.dataSource = self;
+  self.groupTab.delegate = self;
+  self.groupTab.touchDelegate = self;
+  [self.groupTab setBackgroundColor:[UIColor whiteColor]];
+  self.groupTab.separatorStyle = UITableViewCellSeparatorStyleNone;
+  [self.view addSubview:self.groupTab];
+  
+  _headView = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 0, kApplicationWidth, kheadViewHeight)];
+  [_headView setBackgroundColor:[UIColor whiteColor]];
+  UIView *headLine = [[UIView alloc]initWithFrame:CGRectMake(0, kheadViewHeight-1, kApplicationWidth, 1)];
+  [headLine setBackgroundColor:[UIColor colorWithRed:197/255.0 green:197/255.0 blue:197/255.0 alpha:197/255.0]];
+  [_headView addSubview:headLine];
+  _headView.showsHorizontalScrollIndicator =NO;
+  _headView.showsVerticalScrollIndicator =NO;
+  self.groupTab.tableHeaderView = _headView;
+  [self laodData];
 }
 
 - (void)tableView:(UITableView *)tableView touchesBegan:(NSSet *)touches
@@ -69,18 +82,19 @@
 }
 
 - (void)laodData {
-    NSString *name;
-    _groupData = [[NSMutableArray alloc]init];
-    for (NSInteger i=0; i<3; i++) {
-        if (i == 0) {
-            name = @"账上";
-        }else if (i ==1) {
-            name = @"张三";
-        }else if (i ==2) {
-            name = @"李四";
-        }
-        [_groupData addObject:name];
+   typeof(self) __weak weakSelf = self;
+  [MBProgressHUD showMessage:@"正在获取群成员" toView:self.view];
+  [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    typeof(weakSelf) __strong strongSelf = weakSelf;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    if (error == nil) {
+      [MBProgressHUD showMessage:@"获取群成员成功" view:self.view];
+      _groupData = [NSMutableArray arrayWithArray:resultObject];
+      [strongSelf reloadHeadViewData];
+    }else {
+      [MBProgressHUD showMessage:@"获取群成员失败" view:self.view];
     }
+  }];
 }
 
 - (void)reloadHeadViewData {
@@ -113,7 +127,8 @@
         }else {
             [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
             personView.headViewBtn.tag = 1000+i;
-            personView.memberLable.text = [_groupData objectAtIndex:i];
+          JMSGUser *user = [_groupData objectAtIndex:i];
+            personView.memberLable.text = user.username;
         }
     }
     [self reloadHeadScrollViewContentSize];
@@ -174,7 +189,8 @@
         personView.memberLable.text = @"";
         if (i <= [_groupData count] -1) {
             personView.headViewBtn.tag = 1000+i;
-            personView.memberLable.text = [_groupData objectAtIndex:i];
+          JMSGUser *user = [_groupData objectAtIndex:i];
+            personView.memberLable.text = user.username;
         }
         [UIView animateWithDuration:0.3 animations:^{
             [personView setFrame:CGRectMake(10+(i * (56 + 10)), 10, 56, 75)];
@@ -266,13 +282,26 @@
         if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
             return;
         }
-        [self addMember:[alertView textFieldAtIndex:0].text];
+      [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
+      
+      [JMSGGroup addMembers:self.conversation.target_id members:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+        if (error == nil) {
+          for (NSInteger i=0; i<[(NSMutableArray *)resultObject count]; i++) {
+            [self addMember:[(NSMutableArray *)resultObject objectAtIndex:i]];
+          }
+        }else {
+          [MBProgressHUD showMessage:@"获取成员信息失败" view:self.view];
+        }
+      }];
     }else {
+      
     }
 }
 
-- (void)addMember:(NSString *)memberName {
-    [_groupData addObject:memberName];
+- (void)addMember:(JMSGUser *)member {
+    [_groupData addObject:member];
     if ([_groupBtnArr count] ==2) {
         for (NSInteger i=0; i<2; i++) {
             NSArray *personXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATGroupPersonView"owner:self options:nil];
