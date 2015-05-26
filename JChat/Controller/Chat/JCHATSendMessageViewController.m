@@ -52,7 +52,7 @@
   }else if (_conversation){
       self.targetName = _conversation.target_name;
   }else {
-      JPIMLog(@"聊天未知错误");
+    DDLogDebug(@"聊天未知错误");
   }
 
   if (!_conversation) {
@@ -61,9 +61,9 @@
                _conversation = (JMSGConversation  *)resultObject ;
                [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                    if (error == nil) {
-                       JPIMLog(@"消息清零成功");
+                     DDLogDebug(@"消息清零成功");
                    }else {
-                       JPIMLog(@"消息清零失败");
+                     DDLogDebug(@"消息清零失败");
                    }
                }];
                
@@ -94,7 +94,7 @@
           __strong __typeof(weakSelf) strongSelf = weakSelf;
           JPIMMAINTHEAD(^{
             strongSelf.title = _conversation.target_id;
-            JPIMLog(@"没有这个用户");
+            DDLogDebug(@"没有这个用户");
           });
         }
       }];
@@ -171,9 +171,9 @@
             _conversation = resultObject;
             [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
-                    JPIMLog(@"清零成功");
+                  DDLogDebug(@"清零成功");
                 }else {
-                    JPIMLog(@"清零失败");
+                  DDLogDebug(@"清零失败");
                 }
             }];
             [JMSGUser getUserInfoWithUsername:targetName completionHandler:^(id resultObject, NSError *error) {
@@ -189,28 +189,28 @@
 
 #pragma mark --发送消息响应
 - (void)sendMessageResponse:(NSNotification *)response {
-    JPIMMAINTHEAD(^{
-        NSDictionary *responseDic = [response userInfo];
-        JMSGMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
-        NSError *error = [responseDic objectForKey:JMSGSendMessageError];
-        if (error == nil) {
-            JPIMLog(@"Sent message Response:%@",message);
-        }else {
-            JPIMLog(@"Sent message Response:%@",message);
-            JPIMLog(@"Sent message Response error:%@",error);
-            if (error.code == 800013) {
-                JPIMLog(@"用户登出了");
-            }
-        }
-        JCHATChatModel *model ;
-        for (NSInteger i=0; i < [_messageDataArr count]; i++) {
-            model = [_messageDataArr objectAtIndex:i];
-            if ([message.messageId isEqualToString:model.messageId]) {
-                model.messageStatus = [message.status integerValue];
-            }
-        }
-        [_messageTableView reloadData];
-    });
+  JPIMMAINTHEAD(^{
+    NSDictionary *responseDic = [response userInfo];
+    JMSGMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
+    NSError *error = [responseDic objectForKey:JMSGSendMessageError];
+    if (error == nil) {
+      DDLogDebug(@"Sent message Response:%@", message);
+    } else {
+      DDLogDebug(@"Sent message Response:%@", message);
+      DDLogDebug(@"Sent message Response error:%@", error);
+      if (error.code == 800013) {
+        DDLogError(@"用户登出了");
+      }
+    }
+    JCHATChatModel *model;
+    for (NSInteger i = 0; i < [_messageDataArr count]; i++) {
+      model = [_messageDataArr objectAtIndex:i];
+      if ([message.messageId isEqualToString:model.messageId]) {
+        model.messageStatus = [message.status integerValue];
+      }
+    }
+    [_messageTableView reloadData];
+  });
 }
 
 - (void)changeMessageState:(JMSGMessage *)message {
@@ -224,11 +224,11 @@
     }
 }
 
-- (bool)checkDevice:(NSString*)name {
-    NSString* deviceType = [UIDevice currentDevice].model;
-    JPIMLog(@"deviceType = %@", deviceType);
-    NSRange range = [deviceType rangeOfString:name];
-    return range.location != NSNotFound;
+- (bool)checkDevice:(NSString *)name {
+  NSString *deviceType = [UIDevice currentDevice].model;
+  DDLogDebug(@"deviceType = %@", deviceType);
+  NSRange range = [deviceType rangeOfString:name];
+  return range.location != NSNotFound;
 }
 
 - (void)getAllMessage {
@@ -293,14 +293,13 @@
 }
 
 #pragma mark --收到消息
--(void)receiveMessageNotifi:(NSNotification *)notifi
-{
+-(void)receiveMessageNotifi:(NSNotification *)notifi {
     JPIMMAINTHEAD(^{
         JMSGUser *user = [JMSGUser getMyInfo];
         [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
             }else {
-                JPIMLog(@"消息未读数清空失败");
+                DDLogDebug(@"消息未读数清空失败");
             }
         }];
         JMSGMessage *message = (JMSGMessage *)[notifi object];
@@ -337,7 +336,7 @@
             model.targetId = _conversation.target_id;
         }
         model.messageTime = message.timestamp;
-        JPIMLog(@"Received message:%@",message);
+        DDLogDebug(@"Received message:%@",message);
         [self getTimeDate:[model.messageTime doubleValue]];
         [self compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
         [_messageDataArr addObject:model];
@@ -358,8 +357,8 @@
         WEAKSELF
         _voiceRecordHelper = [[XHVoiceRecordHelper alloc] init];
         _voiceRecordHelper.maxTimeStopRecorderCompletion = ^{
-            JPIMLog(@"已经达到最大限制时间了，进入下一步的提示");
-            [weakSelf finishRecorded];
+          DDLogDebug(@"已经达到最大限制时间了，进入下一步的提示");
+          [weakSelf finishRecorded];
         };
         _voiceRecordHelper.peakPowerForChannel = ^(float peakPowerForChannel) {
             weakSelf.voiceRecordHUD.peakPower = peakPowerForChannel;
@@ -659,9 +658,9 @@
     [self.navigationController setNavigationBarHidden:NO];
     [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
-            JPIMLog(@"清零成功");
+          DDLogDebug(@"清零成功");
         }else {
-            JPIMLog(@"清零失败");
+          DDLogDebug(@"清零失败");
         }
     }];
 //    // 禁用 iOS7 返回手势
@@ -753,7 +752,7 @@
     message.timestamp = model.messageTime;
     message.contentText = model.chatContent;
     [JMSGMessage sendMessage:message];
-    JPIMLog(@"Sent message:%@",message.contentText);
+  DDLogDebug(@"Sent message:%@",message.contentText);
 }
 
 - (void)selectHeadView:(JCHATChatModel *)model {
@@ -809,36 +808,36 @@
 }
 
 - (void)didStartRecordingVoiceAction {
-    JPIMLog(@"didStartRecordingVoice");
-    [self startRecord];
+  DDLogDebug(@"Action - didStartRecordingVoice");
+  [self startRecord];
 }
 
 - (void)didCancelRecordingVoiceAction {
-    JPIMLog(@"didCancelRecordingVoice");
-    [self cancelRecord];
+  DDLogDebug(@"Action - didCancelRecordingVoice");
+  [self cancelRecord];
 }
 
 - (void)didFinishRecoingVoiceAction {
-    JPIMLog(@"didFinishRecoingVoice");
-    [self finishRecorded];
+  DDLogDebug(@"Action - didFinishRecoingVoice");
+  [self finishRecorded];
 }
 
 - (void)didDragOutsideAction {
-    JPIMLog(@"didDragOutsideAction");
-    [self resumeRecord];
+  DDLogDebug(@"Actino - didDragOutsideAction");
+  [self resumeRecord];
 }
 
 - (void)didDragInsideAction {
-    JPIMLog(@"didDragInsideAction");
-    [self pauseRecord];
+  DDLogDebug(@"Action - didDragInsideAction");
+  [self pauseRecord];
 }
 
 - (void)pauseRecord {
-    [self.voiceRecordHUD pauseRecord];
+  [self.voiceRecordHUD pauseRecord];
 }
 
 - (void)resumeRecord {
-    [self.voiceRecordHUD resaueRecord];
+  [self.voiceRecordHUD resaueRecord];
 }
 
 - (void)cancelRecord {
@@ -853,30 +852,35 @@
 
 #pragma mark - Voice Recording Helper Method
 - (void)startRecord {
-    [self.voiceRecordHUD startRecordingHUDAtView:self.view];
-    [self.voiceRecordHelper startRecordingWithPath:[self getRecorderPath] StartRecorderCompletion:^{
-    }];
+  DDLogDebug(@"Action - startRecord");
+  [self.voiceRecordHUD startRecordingHUDAtView:self.view];
+  [self.voiceRecordHelper startRecordingWithPath:[self getRecorderPath] StartRecorderCompletion:^{
+  }];
 }
 
 #pragma mark --录音完毕
 - (void)finishRecorded {
-    WEAKSELF
-    [self.voiceRecordHUD stopRecordCompled:^(BOOL fnished) {
-        weakSelf.voiceRecordHUD = nil;
-    }];
-    [self.voiceRecordHelper stopRecordingWithStopRecorderCompletion:^{
-        [weakSelf didSendMessageWithVoice:weakSelf.voiceRecordHelper.recordPath voiceDuration:weakSelf.voiceRecordHelper.recordDuration];
-    }];
+  DDLogDebug(@"Action - finishRecorded");
+  WEAKSELF
+  [self.voiceRecordHUD stopRecordCompled:^(BOOL fnished) {
+    weakSelf.voiceRecordHUD = nil;
+  }];
+  [self.voiceRecordHelper stopRecordingWithStopRecorderCompletion:^{
+    [weakSelf didSendMessageWithVoice:weakSelf.voiceRecordHelper.recordPath voiceDuration:weakSelf.voiceRecordHelper.recordDuration];
+  }];
 }
 
 #pragma mark - Message Send helper Method
 #pragma mark --发送语音
-- (void)didSendMessageWithVoice:(NSString *)voicePath voiceDuration:(NSString*)voiceDuration {
+- (void)didSendMessageWithVoice:(NSString *)voicePath
+                  voiceDuration:(NSString*)voiceDuration {
+  DDLogDebug(@"Action - didSendMessageWithVoice");
+
   if ([voiceDuration integerValue]<0.5 || [voiceDuration integerValue]>60) {
         if ([voiceDuration integerValue]<0.5) {
-            JPIMLog(@"录音时长小于 0.5s");
+          DDLogDebug(@"录音时长小于 0.5s");
         }else {
-            JPIMLog(@"录音时长大于 60s");
+          DDLogDebug(@"录音时长大于 60s");
         }
         [JCHATFileManager deleteFile:voicePath];
         return;
@@ -934,15 +938,15 @@
 
 
 #pragma mark ---
-- (void)getContinuePlay:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
-{
-    JCHATVoiceTableViewCell *tempCell =(JCHATVoiceTableViewCell *)cell;
-    if ([_messageDataArr count]-1>indexPath.row) {
-        JCHATChatModel *model =[_messageDataArr objectAtIndex:indexPath.row+1];
-        if (model.type==kJMSGVoiceMessage && !model.readState) {
-            tempCell.continuePlayer=YES;
-        }
+- (void)getContinuePlay:(UITableViewCell *)cell
+              indexPath:(NSIndexPath *)indexPath {
+  JCHATVoiceTableViewCell *tempCell = (JCHATVoiceTableViewCell *) cell;
+  if ([_messageDataArr count] - 1 > indexPath.row) {
+    JCHATChatModel *model = [_messageDataArr objectAtIndex:indexPath.row + 1];
+    if (model.type == kJMSGVoiceMessage && !model.readState) {
+      tempCell.continuePlayer = YES;
     }
+  }
 }
 
 #pragma mark --连续播放语音

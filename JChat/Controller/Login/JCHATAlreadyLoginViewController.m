@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action ");
+  DDLogDebug(@"Action - viewDidLoad");
     // Do any additional setup after loading the view from its nib.
     self.loginBtn.layer.cornerRadius=4;
     [self.loginBtn.layer setMasksToBounds:YES];
@@ -30,11 +30,14 @@
     self.navigationController.navigationBar.alpha=0.8;
     self.title=@"极光IM";
     [self.passwordField setSecureTextEntry:YES];
+    
+    NSShadow *shadow = [[NSShadow alloc]init];
+    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+    shadow.shadowOffset = CGSizeMake(0,-1);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], UITextAttributeTextColor,
-                                                                     [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1], UITextAttributeTextShadowColor,
-                                                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                                                     [UIFont boldSystemFontOfSize:18], UITextAttributeFont,
+                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                     shadow,NSShadowAttributeName,
+                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
                                                                      nil]];
 }
 
@@ -43,8 +46,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.navigationController.navigationBar setHidden:NO];
 }
@@ -95,9 +97,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 #pragma mark --触摸屏幕
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.passwordField resignFirstResponder];
 }
 

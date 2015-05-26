@@ -129,7 +129,7 @@
                 [self removeEmptyBuffer:outQB];
                 
                 NSUInteger readLength = (lengthLeft > EVERY_READ_LENGTH) ? EVERY_READ_LENGTH : lengthLeft;
-                outQB->mAudioDataByteSize = readLength;
+                outQB->mAudioDataByteSize = (int)readLength;
                 Byte *audioData = (Byte *)outQB->mAudioData;
                 memcpy(audioData, [mPcmData bytes] + readedBytes, readLength);
                 readedBytes += readLength;

@@ -417,4 +417,17 @@
     // Configure the view for the selected state
 }
 
+- (void)successionalPlayVoice:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
+
+}
+
+- (void)getContinuePlay:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
+
+}
+
+- (void)selectHeadView:(JCHATChatModel *)model {
+
+}
+
+
 @end

@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     // Do any additional setup after loading the view from its nib.
     self.registerBtn.layer.cornerRadius=4;
     [self.registerBtn.layer setMasksToBounds:YES];
@@ -29,11 +29,14 @@
     self.navigationController.navigationBar.alpha=0.8;
     self.title=@"极光IM";
     self.passwordField.secureTextEntry=YES;
+    
+    NSShadow *shadow = [[NSShadow alloc]init];
+    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+    shadow.shadowOffset = CGSizeMake(0,-1);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], UITextAttributeTextColor,
-                                                                     [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1], UITextAttributeTextShadowColor,
-                                                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                                                     [UIFont boldSystemFontOfSize:18], UITextAttributeFont,
+                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                     shadow,NSShadowAttributeName,
+                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
                                                                      nil]];
 }
 
@@ -57,7 +60,7 @@
             if (error ==nil) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [MBProgressHUD showSuccess:@"注册成功！" toView:self.view];
-                JCHATRegisterDetailViewController *registerDetail = [[JCHATRegisterDetailViewController alloc] initWithNibName:@"JCHATRegisterDetailViewController" bundle:nil];
+//                JCHATRegisterDetailViewController *registerDetail = [[JCHATRegisterDetailViewController alloc] initWithNibName:@"JCHATRegisterDetailViewController" bundle:nil];
                 [self.navigationController popViewControllerAnimated:YES];
             }else {
                 if (error.code == 1004 ) {

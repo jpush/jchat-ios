@@ -26,17 +26,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - viewDidLoad");
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
     self.navigationController.navigationBar.alpha=0.8;
     self.title=@"设置";
+    
+    NSShadow *shadow = [[NSShadow alloc]init];
+    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+    shadow.shadowOffset = CGSizeMake(0,-1);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], UITextAttributeTextColor,
-                                                                     [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1], UITextAttributeTextShadowColor,
-                                                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                                                     [UIFont boldSystemFontOfSize:18], UITextAttributeFont,
-                                                                     nil]]; UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                     shadow,NSShadowAttributeName,
+                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
+                                                                     nil]];
+    UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
     [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];

@@ -10,7 +10,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "JMSGConstants.h"
+#import <JMessage/JMSGConstants.h>
 
 /**
 *  更新用户信息类型
