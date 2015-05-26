@@ -219,7 +219,7 @@
     }else{
         voiceImagePreStr = @"ReceiverVoiceNodePlaying00";
     }
-    self.voiceImgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%ld.png",voiceImagePreStr,self.index%4]];
+    self.voiceImgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%zd.png",voiceImagePreStr,self.index%4]];
     if (self.playing) {
         self.index ++;
         [self performSelector:@selector(changeVoiceImage) withObject:nil afterDelay:0.25];
