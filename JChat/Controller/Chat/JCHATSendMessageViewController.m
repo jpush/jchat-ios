@@ -231,7 +231,7 @@
     count = count + [conversation.unread_cnt integerValue];
   }
   [JPUSHService setBadge:count];
-  DDLogDebug(@"setBadge:%ld", count);
+  DDLogDebug(@"setBadge:%zd", count);
 }
 
 - (bool)checkDevice:(NSString *)name {
