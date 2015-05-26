@@ -19,21 +19,10 @@
 @implementation JCHATTabBarViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    JPIMLog(@"Action");
-    if ([self getLoginInfoValue:kuserName]) {
-    }
-}
-
-- (void)getUserInfo {
-//    [JMSGUserManager getUserInfo:[self getLoginInfoValue:kUSERNAME] completionHandler:^(id resultObject, NSError *error) {
-//        if (error ==nil) {
-//            NSLog(@"重登获取用户信息 success");
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kLogin_NotifiCation object:nil];
-//        }else {
-//            NSLog(@"重登获取用户信息 fail");
-//        }
-//    }];
+  [super viewDidLoad];
+  DDLogDebug(@"Action - viewDidLoad");
+  if ([self getLoginInfoValue:kuserName]) {
+  }
 }
 
 - (NSString *)getLoginInfoValue:(NSString *)identify {
@@ -52,14 +41,5 @@
     [super didReceiveMemoryWarning];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
