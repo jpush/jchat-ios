@@ -81,6 +81,10 @@
 }
 
 - (void)rightBtnClick {
+  if (_groupTextField.text == nil) {
+    [MBProgressHUD showMessage:@"请输入群名称！" view:self.view];
+    return;
+  }
   [_groupTextField resignFirstResponder];
   [MBProgressHUD showMessage:@"正在创建群组！" toView:self.view];
   JMSGGroup *group = [[JMSGGroup alloc]init];
@@ -88,15 +92,15 @@
   [JMSGGroup createGroup:group completionHandler:^(id resultObject, NSError *error) {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error ==nil) {
-      JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-      sendMessageCtl.hidesBottomBarWhenPushed=YES;
-      sendMessageCtl.conversation = resultObject;
-      [self.navigationController pushViewController:sendMessageCtl animated:YES];
+      [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+      [[NSNotificationCenter defaultCenter] postNotificationName:kCreatGroupState object:resultObject];
     }else {
       [MBProgressHUD showMessage:@"创建群组失败！" view:self.view];
     }
   }];
 }
+
+
 
 - (void)backClick {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
