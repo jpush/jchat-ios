@@ -515,7 +515,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	indicatorF.size.width = MIN(indicatorF.size.width, maxWidth);
 	totalSize.width = MAX(totalSize.width, indicatorF.size.width);
 	totalSize.height += indicatorF.size.height;
-	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
 	CGSize labelSize = [label.text sizeWithFont:label.font];
 	labelSize.width = MIN(labelSize.width, maxWidth);
 	totalSize.width = MAX(totalSize.width, labelSize.width);
@@ -582,6 +583,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	}
 	
 	self.size = totalSize;
+#pragma clang diagnostic pop
 }
 
 #pragma mark BG Drawing

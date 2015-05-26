@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action ");
+  DDLogDebug(@"Action - viewDidLoad");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(netWorkConnectClose)
                                                  name:kJPFNetworkDidCloseNotification
@@ -55,11 +55,14 @@
   
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
     self.navigationController.navigationBar.alpha=0.8;
+    
+    NSShadow *shadow = [[NSShadow alloc]init];
+    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+    shadow.shadowOffset = CGSizeMake(0,-1);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], UITextAttributeTextColor,
-                                                                     [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1], UITextAttributeTextShadowColor,
-                                                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                                                     [UIFont boldSystemFontOfSize:18], UITextAttributeFont,
+                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                     shadow,NSShadowAttributeName,
+                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
                                                                      nil]];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.chatTableView setBackgroundColor:[UIColor whiteColor]];
@@ -115,8 +118,8 @@
   [self.navigationController pushViewController:sendMessageCtl animated:YES];
 }
 
-- (void)receiveNotificationSkipToChatPageView:(NSNotification *)no {
-    JPIMLog(@"%@",no);
+- (void)receiveNotificationSkipToChatPageView:(NSNotification *)notification {
+    DDLogDebug(@"Action - receiveNotificationSkipToChatPageView - %@", notification);
     JCHATSendMessageViewController *sendMessageCtl;
     for (UIViewController *ctl in self.navigationController.childViewControllers) {
         if ([ctl isKindOfClass:[JCHATSendMessageViewController class]]) {
@@ -128,7 +131,7 @@
     }
     sendMessageCtl.hidesBottomBarWhenPushed = YES;
     sendMessageCtl.conversation.chatType = kJMSGSingle;
-    NSDictionary *apnsDic = [no object];
+    NSDictionary *apnsDic = [notification object];
     NSString *targetName = [apnsDic[@"aps"] objectForKey:@"alert"];
     if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
         return;
@@ -151,9 +154,9 @@
             [self saveBadge:badge];
             [conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
-                    JPIMLog(@"消息清零成功");
+                    DDLogDebug(@"消息清零成功");
                 }else {
-                    JPIMLog(@"消息清零失败");
+                    DDLogDebug(@"消息清零失败");
                 }
             }];
         }];
@@ -247,7 +250,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     }
     [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag=i + 100;
-    [btn setFrame:CGRectMake(10, i*30+20, 80, 30)];
+    [btn setFrame:CGRectMake(10, i*30+30, 80, 30)];
     [self.addBgView addSubview:btn];
     }
 }
@@ -334,20 +337,20 @@ NSInteger sortType(id object1,id object2,void *cha) {
 
 //进入编辑模式，按下出现的编辑按钮后
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    JPIMLog(@"Action");
+  DDLogDebug(@"Action - tableView");
     JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
     [JMSGConversation deleteConversation:conversation.target_id completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
-            JPIMLog(@"delete conversation success");
+          DDLogDebug(@"delete conversation success");
         }else {
-            JPIMLog(@"delete conversation error");
+          DDLogDebug(@"delete conversation error");
         }
     }];
     [conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
-            JPIMLog(@"delete message success");
+          DDLogDebug(@"delete message success");
         }else {
-            JPIMLog(@"delete message error");
+          DDLogDebug(@"delete message error");
         }
     }];
     [_conversationArr removeObjectAtIndex:indexPath.row];
@@ -443,5 +446,9 @@ NSInteger sortType(id object1,id object2,void *cha) {
     // Pass the selected object to the new view controller.
 }
 */
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+
+}
+
 
 @end

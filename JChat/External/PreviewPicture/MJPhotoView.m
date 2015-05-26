@@ -139,7 +139,7 @@
         [self addSubview:_photoLoadingView];
         __weak MJPhotoView *photoView = self;
         _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
-        __weak MJPhotoLoadingView *loading = _photoLoadingView;
+//        __weak MJPhotoLoadingView *loading = _photoLoadingView;
         NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
         __weak MJPhoto *photo = _photo;
             if (_photo.message.messageId) {
@@ -150,7 +150,7 @@
                                 JPIMLog(@"下载大图 success");
                                 _photo.url = resultObject;
                                 _photo.message.pictureImgPath = [(NSURL *)resultObject path];
-                                UIImage *img = [UIImage imageWithContentsOfFile:_photo.message.pictureImgPath];
+//                                UIImage *img = [UIImage imageWithContentsOfFile:_photo.message.pictureImgPath];
                                 
                                 [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                                     photo.image = image;

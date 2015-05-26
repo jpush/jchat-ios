@@ -79,9 +79,11 @@
         if (_model.type == kJMSGTextMessage) {
             UIFont *font =[UIFont systemFontOfSize:18];
             CGSize maxSize = CGSizeMake(200, 2000);
-            CGSize realSize =[_model.chatContent sizeWithFont:font
-                                                constrainedToSize:maxSize
-                                                    lineBreakMode:NSLineBreakByWordWrapping];
+            
+            NSMutableParagraphStyle *paragraphStyle= [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            CGSize realSize = [_model.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
+//            [_model.chatContent sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByWordWrapping];
             UIImage *img=nil;
             if (_model.who) {
                 img =[UIImage imageNamed:@"mychatBg"];

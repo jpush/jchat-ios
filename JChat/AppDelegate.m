@@ -269,6 +269,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 #pragma mark --初始化各个功能模块
 -(void)initTheMainGTablebar {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
     self.tabBarCtl.loginIdentify = kFirstLogin;
     NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"],
@@ -322,22 +324,23 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     settingNav.tabBarItem = settingTab;
 
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0], UITextAttributeTextColor,
+                                                       [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                        nil] forState:UIControlStateNormal];
     UIColor *titleHighlightedColor = [UIColor whiteColor];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       titleHighlightedColor, UITextAttributeTextColor,
+                                                       titleHighlightedColor, NSForegroundColorAttributeName,
                                                        nil] forState:UIControlStateSelected];
     UIImage* tabBarBackground = [UIImage imageNamed:@"bar"];
     [[UITabBar appearance] setBackgroundImage:[tabBarBackground resizableImageWithCapInsets:UIEdgeInsetsZero]];
     //    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selectItem"]];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [UIColor grayColor], UITextAttributeTextColor,
+                                                       [UIColor grayColor], NSForegroundColorAttributeName,
                                                        nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       titleHighlightedColor, UITextAttributeTextColor,
+                                                       titleHighlightedColor, NSForegroundColorAttributeName,
                                                        nil] forState:UIControlStateHighlighted];
     self.tabBarCtl.viewControllers = [NSArray arrayWithObjects:chatNav,contactsNav,settingNav,nil];
+#pragma clang diagnostic pop
 }
 
 - (void)umengTrack {

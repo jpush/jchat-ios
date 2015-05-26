@@ -43,18 +43,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JPIMLog(@"Action");
-    pushFlag=NO;
+  DDLogDebug(@"Action - viewDidLoad");
+  pushFlag = NO;
+
     [self.view setBackgroundColor:[UIColor colorWithRed:72/255.0 green:62/255.0 blue:39/255.0 alpha:1.0]];
     self.passwordField.secureTextEntry=YES;
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
     self.navigationController.navigationBar.alpha=0.8;
     self.title=@"极光IM";
+    
+    NSShadow *shadow = [[NSShadow alloc]init];
+    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+    shadow.shadowOffset = CGSizeMake(0,-1);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], UITextAttributeTextColor,
-                                                                     [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1], UITextAttributeTextShadowColor,
-                                                                     [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                                                     [UIFont boldSystemFontOfSize:18], UITextAttributeFont,
+                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                     shadow, NSShadowAttributeName,
+                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
                                                                      nil]];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.userNameLine setBackgroundColor:[UIColor grayColor]];

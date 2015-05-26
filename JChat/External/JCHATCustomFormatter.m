@@ -82,4 +82,12 @@
   }
 }
 
+- (void)didAddToLogger:(id <DDLogger>)logger {
+    OSAtomicIncrement32(&atomicLoggerCount);
+}
+
+- (void)willRemoveFromLogger:(id <DDLogger>)logger {
+    OSAtomicDecrement32(&atomicLoggerCount);
+}
+
 @end
