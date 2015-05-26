@@ -224,16 +224,6 @@
     }
 }
 
-- (void)setbadge {
-    NSInteger count = 0;
-    for (NSInteger i=0; i< [self.conversationList count] ; i++) {
-        JMSGConversation *conversation = [self.conversationList objectAtIndex:i];
-        count = count + [conversation.unread_cnt integerValue];
-    }
-    [JPUSHService setBadge:count];
-    JPIMLog(@"setBadge:%ld",count);
-}
-
 - (bool)checkDevice:(NSString*)name {
     NSString* deviceType = [UIDevice currentDevice].model;
     JPIMLog(@"deviceType = %@", deviceType);
@@ -388,12 +378,6 @@
 
 -(void)backClick {
     [self.navigationController popViewControllerAnimated:YES];
-//    if (self.conversationType == kSingle) {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }else {
-//        AppDelegate *appdelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
-//        [self.navigationController popToViewController:appdelegate.tabBarCtl animated:YES];
-//    }
 }
 
 - (void)pressVoiceBtnToHideKeyBoard
@@ -763,6 +747,7 @@
 - (void)sendMessage :(JCHATChatModel *)model {
     model.messageStatus = kJMSGStatusSending;
     JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
+    message.sendMessageType = kJMSGGroup;
     message.target_id = model.targetId;
     model.messageId = message.messageId;
     message.timestamp = model.messageTime;

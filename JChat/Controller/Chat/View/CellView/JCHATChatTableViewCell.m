@@ -84,8 +84,8 @@
     }else {
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
     }
-    if (conversation.latest_displayName != nil) {
-    self.nickName.text = conversation.latest_displayName;
+    if (conversation.target_name != nil) {
+    self.nickName.text = conversation.target_name;
     }else {
     self.nickName.text = conversation.target_id;
     }
