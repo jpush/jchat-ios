@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "JCHATChatTable.h"
 #import "JCHATGroupPersonView.h"
+
+@class JMSGConversation;
+
 @interface JCHATGroupSettingCtl : UIViewController<UITableViewDataSource,UITableViewDelegate,TouchTableViewDelegate,GroupPersonDelegate>
 @property (nonatomic,strong) JCHATChatTable *groupTab;
+@property (nonatomic,strong) JMSGConversation *conversation;
 
 @end
