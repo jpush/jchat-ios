@@ -394,6 +394,7 @@
         [self.navigationController pushViewController:detailsInfoCtl animated:YES];
     }else{
         JCHATGroupSettingCtl *groupSettingCtl = [[JCHATGroupSettingCtl alloc] init];
+        groupSettingCtl.conversation = self.conversation;
         [self.navigationController pushViewController:groupSettingCtl animated:YES];
     }
 }
