@@ -48,6 +48,11 @@
                                              selector:@selector(alreadyLoginClick)
                                                  name:kLogin_NotifiCation object:nil];
   
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(creatGroupSuccessToPushView:)
+                                               name:kCreatGroupState
+                                             object:nil];
+  
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
     self.navigationController.navigationBar.alpha=0.8;
     
@@ -105,6 +110,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
 }
 
+#pragma mark --创建群成功Push group viewctl
+- (void)creatGroupSuccessToPushView:(NSNotification *)object{
+  JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
+  sendMessageCtl.hidesBottomBarWhenPushed=YES;
+  sendMessageCtl.conversation = (JMSGConversation *)[object object];
+  [self.navigationController pushViewController:sendMessageCtl animated:YES];
+}
+
 - (void)receiveNotificationSkipToChatPageView:(NSNotification *)notification {
     DDLogDebug(@"Action - receiveNotificationSkipToChatPageView - %@", notification);
     JCHATSendMessageViewController *sendMessageCtl;
@@ -135,7 +148,6 @@
             conversation = (JMSGConversation  *)resultObject ;
             JPIMMAINTHEAD(^{
                 sendMessageCtl.conversation = conversation;
-                sendMessageCtl.conversationList = _conversationArr;
                 [self.navigationController pushViewController:sendMessageCtl animated:YES];
             });
             NSInteger badge = _unreadCount - [conversation.unread_cnt integerValue];
@@ -151,7 +163,6 @@
         return;
     }
     sendMessageCtl.conversation = conversation;
-    sendMessageCtl.conversationList = _conversationArr;
     [self.navigationController pushViewController:sendMessageCtl animated:YES];
     NSInteger badge = _unreadCount - [conversation.unread_cnt integerValue];
     [self saveBadge:badge];
@@ -239,7 +250,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     }
     [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag=i + 100;
-    [btn setFrame:CGRectMake(10, i*30+20, 80, 30)];
+    [btn setFrame:CGRectMake(10, i*30+30, 80, 30)];
     [self.addBgView addSubview:btn];
     }
 }
@@ -393,7 +404,6 @@ NSInteger sortType(id object1,id object2,void *cha) {
     sendMessageCtl.conversation.chatType = kJMSGSingle;
     JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
     sendMessageCtl.conversation = conversation;
-    sendMessageCtl.conversationList = _conversationArr;
     [self.navigationController pushViewController:sendMessageCtl animated:YES];
     NSInteger badge = _unreadCount - [conversation.unread_cnt integerValue];
     [self saveBadge:badge];
