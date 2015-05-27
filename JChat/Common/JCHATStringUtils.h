@@ -11,4 +11,10 @@
 
 + (NSString *)dictionary2String:(NSDictionary *)dictionary;
 
++ (NSString *)getFriendlyDateString:(NSTimeInterval)timeInterval;
+
++ (NSString *)getFriendlyDateString:(NSTimeInterval)timeInterval
+                    forConversation:(BOOL)isShort;
+
 @end
+
