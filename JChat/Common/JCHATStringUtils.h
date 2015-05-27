@@ -13,4 +13,8 @@
 
 + (NSString *)getFriendlyDateString:(NSTimeInterval)timeInterval;
 
++ (NSString *)getFriendlyDateString:(NSTimeInterval)timeInterval
+                    forConversation:(BOOL)isShort;
+
 @end
+
