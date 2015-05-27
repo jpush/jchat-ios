@@ -11,32 +11,42 @@
 #import "JCHATAudioPlayerHelper.h"
 #import <JMessage/JMessage.h>
 
+
 @protocol playVoiceDelegate <NSObject>
--(void)successionalPlayVoice:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath;
--(void)getContinuePlay:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath;
--(void)selectHeadView:(JCHATChatModel *)model;
+- (void)successionalPlayVoice:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath;
+
+- (void)getContinuePlay:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath;
+
+- (void)selectHeadView:(JCHATChatModel *)model;
 @end
 
-@interface JCHATVoiceTableViewCell : UITableViewCell<XHAudioPlayerHelperDelegate,playVoiceDelegate>
-@property (strong, nonatomic)    UIImageView *voiceBgView;
-@property (strong, nonatomic)  UILabel *voiceTimeLable;
-@property (strong, nonatomic)  UIImageView *voiceImgView;
-@property (assign, nonatomic)  BOOL playing;
-@property (assign, nonatomic)  NSInteger index;
-@property (strong, nonatomic)    UIImageView *headView;
-@property (strong, nonatomic)  JCHATChatModel *model;
-@property (strong, nonatomic)  UIActivityIndicatorView *stateView;
-@property (strong, nonatomic)  UIImageView *sendFailView;
-@property (strong, nonatomic)  UIImageView *readView;
-@property (strong, nonatomic)  JMSGVoiceMessage *voiceFailMessage;
-@property (strong, nonatomic)  JMSGConversation *conversation;
-@property (strong, nonatomic)  NSIndexPath *indexPath;
-@property (assign, nonatomic)  BOOL continuePlayer;
-@property (assign, nonatomic)  id<playVoiceDelegate> delegate;
-@property (strong, nonatomic)  JMSGVoiceMessage *message;
+@interface JCHATVoiceTableViewCell : UITableViewCell <
+    XHAudioPlayerHelperDelegate,
+    playVoiceDelegate>
 
--(void)playerVoice;
--(void)setCellData :(JCHATChatModel *)model delegate :(id<playVoiceDelegate>)delegate indexPath :(NSIndexPath *)indexPath;
--(void)uploadVoice;
+@property(strong, nonatomic) UIImageView *voiceBgView;
+@property(strong, nonatomic) UILabel *voiceTimeLable;
+@property(strong, nonatomic) UIImageView *voiceImgView;
+@property(assign, nonatomic) BOOL playing;
+@property(assign, nonatomic) NSInteger index;
+@property(strong, nonatomic) UIImageView *headView;
+@property(strong, nonatomic) JCHATChatModel *model;
+@property(strong, nonatomic) UIActivityIndicatorView *stateView;
+@property(strong, nonatomic) UIImageView *sendFailView;
+@property(strong, nonatomic) UIImageView *readView;
+@property(strong, nonatomic) JMSGVoiceMessage *voiceFailMessage;
+@property(strong, nonatomic) JMSGConversation *conversation;
+@property(strong, nonatomic) NSIndexPath *indexPath;
+@property(assign, nonatomic) BOOL continuePlayer;
+@property(assign, nonatomic) id <playVoiceDelegate> delegate;
+@property(strong, nonatomic) JMSGVoiceMessage *message;
+
+- (void)playVoice;
+
+- (void)setCellData:(JCHATChatModel *)model
+           delegate:(id <playVoiceDelegate>)delegate
+          indexPath:(NSIndexPath *)indexPath;
+
+- (void)uploadVoice;
 
 @end
