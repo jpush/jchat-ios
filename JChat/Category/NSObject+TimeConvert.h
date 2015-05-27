@@ -10,11 +10,11 @@
 
 @interface NSObject (TimeConvert)
 
--(NSString *)getTimeDate :(NSTimeInterval) time;
+- (NSString *)getTimeDate:(NSTimeInterval)time;
 
--(NSString *)getCurrentTimeDate;
+- (NSString *)getCurrentTimeDate;
 
--(NSTimeInterval )getCurrentTimeInterval;
+- (NSTimeInterval)getCurrentTimeInterval;
 
 - (NSString *)findendliyTime:(NSString *)dataTime;
 
