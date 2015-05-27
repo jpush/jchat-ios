@@ -8,6 +8,7 @@
 
 #import "JCHATChatTableViewCell.h"
 #import "NSObject+TimeConvert.h"
+#import "JCHATStringUtils.h"
 
 @implementation JCHATChatTableViewCell
 
@@ -99,7 +100,8 @@
   }
 
   if (conversation.latest_date != nil && ![conversation.latest_date isEqualToString:@"(null)"]) {
-    self.time.text = [self getTimeDate:[conversation.latest_date longLongValue]];
+    double time = [conversation.latest_date longLongValue];
+    self.time.text = [JCHATStringUtils getFriendlyDateString:time forConversation:false];
   } else {
     self.time.text = @"";
   }

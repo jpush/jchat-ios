@@ -268,6 +268,7 @@
 		6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */; };
 		6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */; };
 		6039B1E2972C3E3FC1CE0676 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B36C65D718CFBA51882E /* MKAnnotationView+WebCache.m */; };
+		6039B1E9989D1A1D82C2D934 /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B01E3B7B47BDC0C01ECC /* NSDate+Utilities.m */; };
 		6039B251796A2C46155BB6FA /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B6D1A2C410E351208121 /* SDWebImagePrefetcher.m */; };
 		6039B3C6A038F78066188F61 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B30B4E016B6B901E3C21 /* SDWebImageManager.m */; };
 		6039B40AE179D5BE54BA7580 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B38611C311283A8B123C /* JCHATStringUtils.m */; };
@@ -295,12 +296,24 @@
 		6039BE427413C75524B44247 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBAC6063CD3111B1D5BB /* SDWebImageCompat.m */; };
 		6039BEB5A028137372C528B5 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BB2A0EFF4230235771DD /* MJPhotoView.m */; };
 		6039BF2B12872ADB34A48CDD /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8ABA6FD03A3F74DB106 /* MJPhotoBrowser.m */; };
+		6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
+		8F8840B21B15AF9500BDC126 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8F8840AA1B159E7500BDC126 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18AB9C841A43BCB7007B2A04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18AB9C8B1A43BCB7007B2A04;
+			remoteInfo = "极光IM";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AAC65A4A1AF76DA000BBFCF9 /* Embed Frameworks */ = {
@@ -619,7 +632,8 @@
 		187182EA1AFB80C000FB3168 /* yuyin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yuyin@2x.png"; sourceTree = "<group>"; };
 		187182EB1AFB80C000FB3168 /* zhaopian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhaopian@2x.png"; sourceTree = "<group>"; };
 		18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "极光IM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		18BD333F1B159CE000020E7B /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
+		6039B01E3B7B47BDC0C01ECC /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
+		6039B022FAE23DE6605B7836 /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
 		6039B06DB77B2635035FB63D /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
 		6039B0BD0BDE32F4350A8FA7 /* UIButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WebCache.h"; sourceTree = "<group>"; };
 		6039B0F1D2F087535BBD3C00 /* NSData+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+GIF.h"; sourceTree = "<group>"; };
@@ -686,9 +700,13 @@
 		6039BE9A1F9056FD04B88AAA /* UIImage+MultiFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MultiFormat.h"; sourceTree = "<group>"; };
 		6039BEB10923FB51E2BE9734 /* UIImage+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GIF.h"; sourceTree = "<group>"; };
 		6039BEC52BBB0EA3D9B61F3B /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
+		6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATStringUtils.m; sourceTree = "<group>"; };
 		6039BF128CC5C5BE6823314B /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
 		6039BF638019C00F541E859F /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
 		6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
+		8F8840A41B159E7500BDC126 /* JChat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JChat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F8840A71B159E7500BDC126 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F8840B01B15AB9200BDC126 /* libPods-极光IM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-极光IM.a"; path = "Pods/../build/Debug-iphoneos/libPods-极光IM.a"; sourceTree = "<group>"; };
 		8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		8FF149F91AFBA11800D13F2E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -704,7 +722,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18BD33401B159CE000020E7B /* JMessage.framework in Frameworks */,
+				8F8840B21B15AF9500BDC126 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -721,6 +739,13 @@
 				183983351AFC914100AC8280 /* libz.dylib in Frameworks */,
 				6039BD6A5FE0420731B8833A /* libMobClickLibrary.a in Frameworks */,
 				CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F8840A11B159E7500BDC126 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1171,6 +1196,7 @@
 			isa = PBXGroup;
 			children = (
 				1871818F1AFB80BF00FB3168 /* JChat */,
+				8F8840A51B159E7500BDC126 /* JChat Tests */,
 				18AB9C8D1A43BCB7007B2A04 /* Products */,
 				18AB9CF41A43BD28007B2A04 /* Frameworks */,
 				BCBAFCA78C2C29219712FDA3 /* Pods */,
@@ -1181,6 +1207,7 @@
 			isa = PBXGroup;
 			children = (
 				18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */,
+				8F8840A41B159E7500BDC126 /* JChat Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1188,7 +1215,7 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				18BD333F1B159CE000020E7B /* JMessage.framework */,
+				8F8840B01B15AB9200BDC126 /* libPods-极光IM.a */,
 				AA3FDC661B142A0C007EBE72 /* JMessage.framework */,
 				AA3F99DC1B1356B000A98E5F /* JMessage.framework */,
 				1839834E1AFC91C800AC8280 /* CoreTelephony.framework */,
@@ -1293,6 +1320,8 @@
 				6039B20065FAE28C7715AC67 /* NSString+MessageInputView.m */,
 				6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */,
 				6039B4D63582A1D08C513D96 /* UIImage+ResizeMagick.h */,
+				6039B01E3B7B47BDC0C01ECC /* NSDate+Utilities.m */,
+				6039B022FAE23DE6605B7836 /* NSDate+Utilities.h */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1307,6 +1336,14 @@
 				6039BDC20B7CA380B8C93BA2 /* MBProgressHUD+Add.m */,
 			);
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		6039BE248B937F2130DAEDE8 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		6039BFD78E9C07C5645BE76E /* PreviewPicture */ = {
@@ -1329,6 +1366,23 @@
 			path = PreviewPicture;
 			sourceTree = "<group>";
 		};
+		8F8840A51B159E7500BDC126 /* JChat Tests */ = {
+			isa = PBXGroup;
+			children = (
+				8F8840A61B159E7500BDC126 /* Supporting Files */,
+				6039BE248B937F2130DAEDE8 /* Common */,
+			);
+			path = "JChat Tests";
+			sourceTree = "<group>";
+		};
+		8F8840A61B159E7500BDC126 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8F8840A71B159E7500BDC126 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		BCBAFCA78C2C29219712FDA3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1341,9 +1395,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		18AB9C8B1A43BCB7007B2A04 /* 极光IM */ = {
+		18AB9C8B1A43BCB7007B2A04 /* JChat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "极光IM" */;
+			buildConfigurationList = 18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "JChat" */;
 			buildPhases = (
 				C9EBE297F75C7A300D95F727 /* Check Pods Manifest.lock */,
 				18AB9C881A43BCB7007B2A04 /* Sources */,
@@ -1356,10 +1410,28 @@
 			);
 			dependencies = (
 			);
-			name = "极光IM";
+			name = JChat;
 			productName = "JPush IM";
 			productReference = 18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8F8840A31B159E7500BDC126 /* JChat Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F8840AE1B159E7500BDC126 /* Build configuration list for PBXNativeTarget "JChat Tests" */;
+			buildPhases = (
+				8F8840A01B159E7500BDC126 /* Sources */,
+				8F8840A11B159E7500BDC126 /* Frameworks */,
+				8F8840A21B159E7500BDC126 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F8840AB1B159E7500BDC126 /* PBXTargetDependency */,
+			);
+			name = "JChat Tests";
+			productName = "JChat Tests";
+			productReference = 8F8840A41B159E7500BDC126 /* JChat Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -1380,6 +1452,10 @@
 							};
 						};
 					};
+					8F8840A31B159E7500BDC126 = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = 18AB9C8B1A43BCB7007B2A04;
+					};
 				};
 			};
 			buildConfigurationList = 18AB9C871A43BCB7007B2A04 /* Build configuration list for PBXProject "JChat" */;
@@ -1395,7 +1471,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				18AB9C8B1A43BCB7007B2A04 /* 极光IM */,
+				18AB9C8B1A43BCB7007B2A04 /* JChat */,
+				8F8840A31B159E7500BDC126 /* JChat Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1609,6 +1686,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8F8840A21B159E7500BDC126 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1724,10 +1808,27 @@
 				6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */,
 				6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */,
 				6039B40AE179D5BE54BA7580 /* JCHATStringUtils.m in Sources */,
+				6039B1E9989D1A1D82C2D934 /* NSDate+Utilities.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F8840A01B159E7500BDC126 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8F8840AB1B159E7500BDC126 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18AB9C8B1A43BCB7007B2A04 /* JChat */;
+			targetProxy = 8F8840AA1B159E7500BDC126 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		187181921AFB80BF00FB3168 /* LaunchScreen.xib */ = {
@@ -1908,6 +2009,75 @@
 			};
 			name = Release;
 		};
+		8F8840AC1B159E7500BDC126 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/JChat/lib",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "JChat Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
+			};
+			name = Debug;
+		};
+		8F8840AD1B159E7500BDC126 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/JChat/lib",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "JChat Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1920,11 +2090,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "极光IM" */ = {
+		18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "JChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18AB9CB01A43BCB7007B2A04 /* Debug */,
 				18AB9CB11A43BCB7007B2A04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F8840AE1B159E7500BDC126 /* Build configuration list for PBXNativeTarget "JChat Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F8840AC1B159E7500BDC126 /* Debug */,
+				8F8840AD1B159E7500BDC126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

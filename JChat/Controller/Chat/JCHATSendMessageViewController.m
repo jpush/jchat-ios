@@ -30,6 +30,7 @@
 #import "JCHATFriendDetailViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "MobClick.h"
+#import "JCHATStringUtils.h"
 #import <JMessage/JMessage.h>
 #define interval 60*2
 
@@ -344,8 +345,7 @@
             model.targetId = _conversation.target_id;
         }
         model.messageTime = message.timestamp;
-        DDLogDebug(@"Received message:%@",message);
-        [self getTimeDate:[model.messageTime doubleValue]];
+        DDLogDebug(@"Received message:%@", message);
         [self compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
         [_messageDataArr addObject:model];
         [self addCellToTabel];
@@ -744,7 +744,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATShowTimeCell" owner:self options:nil] lastObject];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        cell.messageTimeLabel.text = [self getTimeDate:[model.messageTime doubleValue]];
+        cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
         return cell;
     }
     else{
@@ -968,7 +968,7 @@
         JCHATChatModel *model =[_messageDataArr objectAtIndex:indexPath.row+1];
         if (model.type==kJMSGVoiceMessage&& !model.readState) {
              JCHATVoiceTableViewCell *voiceCell =(JCHATVoiceTableViewCell *)[self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:0]];
-            [voiceCell playerVoice];
+            [voiceCell playVoice];
         }
     }
 }
