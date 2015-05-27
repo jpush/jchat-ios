@@ -189,7 +189,7 @@
 
 #pragma mark --发送消息响应
 - (void)sendMessageResponse:(NSNotification *)response {
-  JPIMMAINTHEAD(^{
+
     NSDictionary *responseDic = [response userInfo];
     JMSGMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
     NSError *error = [responseDic objectForKey:JMSGSendMessageError];
@@ -206,9 +206,17 @@
     for (NSInteger i = 0; i < [_messageDataArr count]; i++) {
       model = [_messageDataArr objectAtIndex:i];
       if ([message.messageId isEqualToString:model.messageId]) {
+        if (message.messageType == kJMSGVoiceMessage) {
+          JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *)message;
+          model.voicePath = voiceMessage.resourcePath;
+        }else if (message.messageType == kJMSGImageMessage) {
+          JMSGImageMessage *imgMessage = (JMSGImageMessage *)message;
+          model.pictureImgPath = imgMessage.resourcePath;
+        }
         model.messageStatus = [message.status integerValue];
       }
     }
+    JPIMMAINTHEAD(^{
     [_messageTableView reloadData];
   });
 }
@@ -890,11 +898,8 @@
         }else {
           DDLogDebug(@"录音时长大于 60s");
         }
-        [JCHATFileManager deleteFile:voicePath];
         return;
   }
-  NSString *savePath = [JCHATFileManager copyFile:voicePath withType:FILE_AUDIO From:@"" to:@"guanjingfen"];
-  [JCHATFileManager deleteFile:voicePath];
   JCHATChatModel *model =[[JCHATChatModel alloc] init];
   if ([voiceDuration integerValue] >= 60) {
       model.voiceTime = @"60''";
@@ -911,7 +916,8 @@
   model.readState=YES;
   model.who=YES;
   model.sendFlag = NO;
-  model.voicePath=savePath;
+  model.mediaData = [NSData dataWithContentsOfFile:voicePath];
+  [JCHATFileManager deleteFile:voicePath];
   [_messageDataArr addObject:model];
   [self.messageTableView reloadData];
   [self scrollToEnd];

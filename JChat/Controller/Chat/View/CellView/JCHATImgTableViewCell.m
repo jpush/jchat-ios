@@ -200,13 +200,14 @@
     self.model.messageStatus = kJMSGStatusSending;
     _message =[[JMSGImageMessage alloc] init];
     _message.target_id=self.model.targetId;
+    self.model.messageId = _message.messageId;
     _message.timestamp = self.model.messageTime;
     __weak typeof(self)weakSelf = self;
     _message.progressCallback=^(float percent){
         weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
     };
 //    _message.resourcePath = self.model.pictureImgPath;
-//    _message.mediaData = self.model.mediaData;
+    _message.mediaData = self.model.mediaData;
     _message.thumbPath = self.model.pictureThumbImgPath;
     [JMSGMessage sendMessage:_message];
     JPIMLog(@"sendt imgMessage:%@",_message);
