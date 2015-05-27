@@ -747,13 +747,19 @@
 #pragma mark --发送消息
 - (void)sendMessage :(JCHATChatModel *)model {
     model.messageStatus = kJMSGStatusSending;
-    JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
+
+  JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
+  if (self.conversation.chatType == kJMSGSingle) {
     message.sendMessageType = kJMSGSingle;
-    message.target_id = model.targetId;
-    model.messageId = message.messageId;
-    message.timestamp = model.messageTime;
-    message.contentText = model.chatContent;
-    [JMSGMessage sendMessage:message];
+  }else {
+    message.sendMessageType = kJMSGGroup;
+  }
+  message.target_id = model.targetId;
+  model.messageId = message.messageId;
+  message.timestamp = model.messageTime;
+  message.contentText = model.chatContent;
+  [JMSGMessage sendMessage:message];
+
   DDLogDebug(@"Sent message:%@",message.contentText);
 }
 
