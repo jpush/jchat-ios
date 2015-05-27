@@ -84,7 +84,7 @@
 }
 
 - (void)rightBtnClick {
-  if (_groupTextField.text == nil) {
+  if ([_groupTextField.text isEqualToString:@""]) {
     [MBProgressHUD showMessage:@"请输入群名称！" view:self.view];
     return;
   }
@@ -97,13 +97,13 @@
     if (error ==nil) {
       [self.navigationController dismissViewControllerAnimated:YES completion:nil];
       [[NSNotificationCenter defaultCenter] postNotificationName:kCreatGroupState object:resultObject];
+    }else if (error.code == 808003) {
+      [MBProgressHUD showMessage:@"创建群组数量达到上限！" view:self.view];
     }else {
       [MBProgressHUD showMessage:@"创建群组失败！" view:self.view];
     }
   }];
 }
-
-
 
 - (void)backClick {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
