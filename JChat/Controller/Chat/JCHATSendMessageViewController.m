@@ -921,7 +921,6 @@
   [_messageDataArr addObject:model];
   [self.messageTableView reloadData];
   [self scrollToEnd];
-
 }
 
 #pragma mark - RecorderPath Helper Method
