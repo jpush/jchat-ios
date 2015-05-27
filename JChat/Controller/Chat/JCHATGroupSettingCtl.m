@@ -297,26 +297,33 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView.tag == 300) {
-        if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
-            return;
-        }
-      [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
-      
-      [JMSGGroup addMembers:self.conversation.target_id members:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-
-        if (error == nil) {
-          for (NSInteger i=0; i<[(NSMutableArray *)resultObject count]; i++) {
-            [self addMember:[(NSMutableArray *)resultObject objectAtIndex:i]];
-          }
-        }else {
-          [MBProgressHUD showMessage:@"获取成员信息失败" view:self.view];
-        }
-      }];
-    }else {
-      
+  if (alertView.tag == 300) {
+      if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
+          return;
     }
+    [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
+    [JMSGGroup addMembers:self.conversation.target_id members:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      if (error == nil) {
+        for (NSInteger i=0; i<[(NSMutableArray *)resultObject count]; i++) {
+          [self addMember:[(NSMutableArray *)resultObject objectAtIndex:i]];
+        }
+      }else {
+        [MBProgressHUD showMessage:@"获取成员信息失败" view:self.view];
+      }
+    }];
+  }else {
+  [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
+  [JMSGGroup exitGoup:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    if (error == nil) {
+      [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];
+      [self.navigationController popToRootViewControllerAnimated:YES];
+    }else {
+      [MBProgressHUD showMessage:@"退出群组失败！" view:self.view];
+    }
+  }];
+  }
 }
 
 - (void)addMember:(JMSGUser *)member {
