@@ -347,15 +347,16 @@
 #pragma mark-上传语音
 -(void)uploadVoice
 {
-    JPIMLog(@"Action");
+    JPIMLog(@"Action uploadVoice");
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     self.model.messageStatus = kJMSGStatusSending;
     _message = [[JMSGVoiceMessage alloc] init];
+    self.model.messageId = _message.messageId;
     _message.target_id = self.model.targetId;
     _message.duration = self.model.voiceTime;
     _message.timestamp = self.model.messageTime;
-    _message.resourcePath = self.model.voicePath;
+    _message.mediaData = self.model.mediaData;
     [JMSGMessage sendMessage:_message];
     JPIMLog(@"sendt voiceMessage:%@",_message);
 }
