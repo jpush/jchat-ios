@@ -25,16 +25,67 @@
   [super tearDown];
 }
 
-- (void)testGetFriendlyDateString {
-  NSDate *theDate = [NSDate dateWithMinutesFromNow:62];
+- (void)testGetFriendlyDateString_Full {
+  // just now
+  NSDate *theDate = [NSDate dateWithTimeIntervalSinceNow:-10];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970]);
+
+  // minutes
+  theDate = [NSDate dateWithMinutesBeforeNow:3];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970]);
+
+  // today
+  theDate = [NSDate dateWithHoursBeforeNow:2];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970]);
+
+  // yesterday
+  theDate = [NSDate dateWithHoursBeforeNow:24];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970]);
   
-  NSTimeInterval theInterval = theDate.timeIntervalSince1970;
-  NSString *result = [JCHATStringUtils getFriendlyDateString:theInterval];
+  // this week
+  theDate = [NSDate dateWithDaysBeforeNow:2];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970]);
   
-  NSLog(@"The dateString - %@", result);
+  // past days
+  theDate = [NSDate dateWithDaysBeforeNow:10];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970]);
+  
 
   XCTAssert(YES, @"Pass");
 }
 
+- (void)testGetFriendlyDateString_Short {
+  // just now
+  NSDate *theDate = [NSDate dateWithTimeIntervalSinceNow:-10];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970
+                                                        forConversation:YES]);
+
+  // minutes
+  theDate = [NSDate dateWithMinutesBeforeNow:3];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970
+                                                        forConversation:YES]);
+
+  // today
+  theDate = [NSDate dateWithHoursBeforeNow:2];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970
+                                                        forConversation:YES]);
+
+  // yesterday
+  theDate = [NSDate dateWithHoursBeforeNow:24];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970
+                                                        forConversation:YES]);
+
+  // this week
+  theDate = [NSDate dateWithDaysBeforeNow:2];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970
+                                                        forConversation:YES]);
+
+  // past days
+  theDate = [NSDate dateWithDaysBeforeNow:10];
+  NSLog(@"The dateString - %@", [JCHATStringUtils getFriendlyDateString:theDate.timeIntervalSince1970
+                                                        forConversation:YES]);
+
+  XCTAssert(YES, @"Pass");
+}
 
 @end

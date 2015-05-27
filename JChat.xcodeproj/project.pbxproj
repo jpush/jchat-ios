@@ -299,6 +299,7 @@
 		6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
+		8F8840B21B15AF9500BDC126 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */; };
@@ -630,7 +631,6 @@
 		187182E91AFB80C000FB3168 /* wutouxiang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wutouxiang@2x.png"; sourceTree = "<group>"; };
 		187182EA1AFB80C000FB3168 /* yuyin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yuyin@2x.png"; sourceTree = "<group>"; };
 		187182EB1AFB80C000FB3168 /* zhaopian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhaopian@2x.png"; sourceTree = "<group>"; };
-		1878EAB81B12B96400DE2BA7 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "极光IM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6039B01E3B7B47BDC0C01ECC /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
 		6039B022FAE23DE6605B7836 /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
@@ -706,6 +706,7 @@
 		6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
 		8F8840A41B159E7500BDC126 /* JChat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JChat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8840A71B159E7500BDC126 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F8840B01B15AB9200BDC126 /* libPods-极光IM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-极光IM.a"; path = "Pods/../build/Debug-iphoneos/libPods-极光IM.a"; sourceTree = "<group>"; };
 		8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		8FF149F91AFBA11800D13F2E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -721,7 +722,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18BD33401B159CE000020E7B /* JMessage.framework in Frameworks */,
+				8F8840B21B15AF9500BDC126 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -1214,7 +1215,7 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				18BD333F1B159CE000020E7B /* JMessage.framework */,
+				8F8840B01B15AB9200BDC126 /* libPods-极光IM.a */,
 				AA3FDC661B142A0C007EBE72 /* JMessage.framework */,
 				AA3F99DC1B1356B000A98E5F /* JMessage.framework */,
 				1839834E1AFC91C800AC8280 /* CoreTelephony.framework */,
@@ -1394,9 +1395,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		18AB9C8B1A43BCB7007B2A04 /* 极光IM */ = {
+		18AB9C8B1A43BCB7007B2A04 /* JChat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "极光IM" */;
+			buildConfigurationList = 18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "JChat" */;
 			buildPhases = (
 				C9EBE297F75C7A300D95F727 /* Check Pods Manifest.lock */,
 				18AB9C881A43BCB7007B2A04 /* Sources */,
@@ -1409,7 +1410,7 @@
 			);
 			dependencies = (
 			);
-			name = "极光IM";
+			name = JChat;
 			productName = "JPush IM";
 			productReference = 18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */;
 			productType = "com.apple.product-type.application";
@@ -1470,7 +1471,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				18AB9C8B1A43BCB7007B2A04 /* 极光IM */,
+				18AB9C8B1A43BCB7007B2A04 /* JChat */,
 				8F8840A31B159E7500BDC126 /* JChat Tests */,
 			);
 		};
@@ -1824,7 +1825,7 @@
 /* Begin PBXTargetDependency section */
 		8F8840AB1B159E7500BDC126 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 18AB9C8B1A43BCB7007B2A04 /* 极光IM */;
+			target = 18AB9C8B1A43BCB7007B2A04 /* JChat */;
 			targetProxy = 8F8840AA1B159E7500BDC126 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2017,6 +2018,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/JChat/lib",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2026,6 +2028,17 @@
 				INFOPLIST_FILE = "JChat Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
@@ -2042,11 +2055,23 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/JChat/lib",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "JChat Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
@@ -2065,7 +2090,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "极光IM" */ = {
+		18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "JChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18AB9CB01A43BCB7007B2A04 /* Debug */,
