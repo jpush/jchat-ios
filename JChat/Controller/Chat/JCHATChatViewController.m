@@ -202,8 +202,9 @@
 - (void)getConversationList {
     [self.addBgView setHidden:YES];
     [JMSGConversation getConversationListWithCompletionHandler:^(id resultObject, NSError *error) {
+      JPIMMAINTHEAD(^{
+
         if (error == nil) {
-            JPIMMAINTHEAD(^{
                 _conversationArr = [self sortConversation:resultObject];
                 _unreadCount = 0;
                 for (NSInteger i=0; i < [_conversationArr count]; i++) {
@@ -211,10 +212,11 @@
                     _unreadCount = _unreadCount + [conversation.unread_cnt integerValue];
                 }
                 [self saveBadge:_unreadCount];
-                [self.chatTableView reloadData];
-            });
         }else {
+          _conversationArr = nil;
         }
+        [self.chatTableView reloadData];
+      });
     }];
 }
 
