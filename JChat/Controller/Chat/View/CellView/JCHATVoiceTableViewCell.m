@@ -109,7 +109,7 @@
     JMSGVoiceMessage *message = responseDic[JMSGSendMessageObject];
 
     if (![message.messageId isEqualToString:_message.messageId]) {
-      DDLogWarn(@"The response msgId is ont this cell");
+      DDLogWarn(@"The response msgId is not for this cell");
       return;
     }
 
@@ -254,7 +254,8 @@
   }
   if (!_model.sendFlag) {
     _model.sendFlag = YES;
-    [self uploadVoice];
+    // 展示这一条消息时检查状态，从而发送
+    [self sendVoiceMessage];
   }
   [self getLengthWithDuration:[model.voiceTime integerValue]];
 }
@@ -349,11 +350,12 @@
 }
 
 #pragma mark-上传语音
-- (void)uploadVoice {
-  DDLogDebug(@"Action - uploadVoice");
+- (void)sendVoiceMessage {
+  DDLogDebug(@"Action - sendVoiceMessage");
   [self.stateView setHidden:NO];
   [self.stateView startAnimating];
   self.model.messageStatus = kJMSGStatusSending;
+
   _message = [[JMSGVoiceMessage alloc] init];
   self.model.messageId = _message.messageId;
   _message.target_id = self.model.targetId;
@@ -361,7 +363,7 @@
   _message.timestamp = self.model.messageTime;
   _message.mediaData = self.model.mediaData;
   [JMSGMessage sendMessage:_message];
-  JPIMLog(@"sent voiceMessage:%@", _message);
+  DDLogVerbose(@"Sent voiceMessage - %@", _message);
 }
 
 - (void)layoutSubviews {

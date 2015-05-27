@@ -31,7 +31,7 @@
 @property (nonatomic,strong)   UIActivityIndicatorView *downLoadIndicatorView;
 @property (strong, nonatomic)  JMSGImageMessage *message;
 
--(void)uploadPicturePhoto;
+-(void)sendImageMessage;
 -(void)setCellData :(UIViewController *)controler
          chatModel :(JCHATChatModel *)chatModel
          indexPath :(NSIndexPath *)indexPath;
