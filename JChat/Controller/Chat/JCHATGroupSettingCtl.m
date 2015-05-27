@@ -168,23 +168,34 @@
 }
 
 - (void)deleteMemberWithPersonView:(JCHATGroupPersonView *)personView {
-    if ([_groupData count] == 1) {
+  if ([_groupData count] == 1) {
         return;
-    }
-    [personView removeFromSuperview];
-    [_groupBtnArr removeObjectAtIndex:personView.headViewBtn.tag - 1000];
-    [_groupData removeObjectAtIndex:personView.headViewBtn.tag - 1000];
-    [self reloadGroupPersonViewFrame];
-
-    if ([_groupData count] == 1) {
+  }
+  
+  [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
+  JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
+  [JMSGGroup deleteGroupMember:self.conversation.target_id members:user.username completionHandler:^(id resultObject, NSError *error) {
+  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    if (error == nil) {
+      [MBProgressHUD showMessage:@"删除好友成功！" view:self.view];
+      [personView removeFromSuperview];
+      [_groupBtnArr removeObjectAtIndex:personView.headViewBtn.tag - 1000];
+      [_groupData removeObjectAtIndex:personView.headViewBtn.tag - 1000];
+      [self reloadGroupPersonViewFrame];
+      if ([_groupData count] == 1) {
         JCHATGroupPersonView *personView = [_groupBtnArr lastObject];
         if (personView.headViewBtn.tag == 20000) {
-            [personView removeFromSuperview];
-            [_groupBtnArr removeLastObject];
-            [self showDeleteMemberIcon:NO];
+          [personView removeFromSuperview];
+          [_groupBtnArr removeLastObject];
+          [self showDeleteMemberIcon:NO];
         }
         return;
+      }
+
+    }else {
+      [MBProgressHUD showMessage:@"删除好友失败！" view:self.view];
     }
+  }];
 }
 
 - (void)reloadGroupPersonViewFrame {
