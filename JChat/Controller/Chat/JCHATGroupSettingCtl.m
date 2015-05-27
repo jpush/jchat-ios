@@ -67,7 +67,7 @@
   _headView.showsHorizontalScrollIndicator =NO;
   _headView.showsVerticalScrollIndicator =NO;
   self.groupTab.tableHeaderView = _headView;
-  [self laodData];
+  [self getGroupMemberList];
 }
 
 - (void)tableView:(UITableView *)tableView touchesBegan:(NSSet *)touches
@@ -81,7 +81,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)laodData {
+- (void)getGroupMemberList {
    typeof(self) __weak weakSelf = self;
   [MBProgressHUD showMessage:@"正在获取群成员" toView:self.view];
   [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
@@ -128,7 +128,11 @@
             [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
             personView.headViewBtn.tag = 1000+i;
           JMSGUser *user = [_groupData objectAtIndex:i];
+          if (user.nickname) {
+            personView.memberLable.text = user.nickname;
+          }else {
             personView.memberLable.text = user.username;
+          }
         }
     }
     [self reloadHeadScrollViewContentSize];
@@ -190,7 +194,11 @@
         if (i <= [_groupData count] -1) {
             personView.headViewBtn.tag = 1000+i;
           JMSGUser *user = [_groupData objectAtIndex:i];
+          if (user.nickname) {
+            personView.memberLable.text = user.nickname;
+          }else {
             personView.memberLable.text = user.username;
+          }
         }
         [UIView animateWithDuration:0.3 animations:^{
             [personView setFrame:CGRectMake(10+(i * (56 + 10)), 10, 56, 75)];
