@@ -75,45 +75,47 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void)setcellDataWithConversation:(JMSGConversation *)conversation {
-    self.headView.layer.cornerRadius = 23;
-    [self.headView.layer setMasksToBounds:YES];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:conversation.avatarThumb]) {
+- (void)setCellDataWithConversation:(JMSGConversation *)conversation {
+  self.headView.layer.cornerRadius = 23;
+  [self.headView.layer setMasksToBounds:YES];
+
+  if ([[NSFileManager defaultManager] fileExistsAtPath:conversation.avatarThumb]) {
     [self.headView setImage:[UIImage imageWithContentsOfFile:conversation.avatarThumb]];
-    }else {
+  } else {
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
-    }
-    if (conversation.target_name != nil) {
+  }
+
+  if (conversation.target_name != nil) {
     self.nickName.text = conversation.target_name;
-    }else {
+  } else {
     self.nickName.text = conversation.target_id;
-    }
-    
-    if ([conversation.unread_cnt integerValue]>0) {
+  }
+
+  if ([conversation.unread_cnt integerValue] > 0) {
     [self.messageNumberLabel setHidden:NO];
-    self.messageNumberLabel.text = [NSString stringWithFormat:@"%@",conversation.unread_cnt];
-    } else {
+    self.messageNumberLabel.text = [NSString stringWithFormat:@"%@", conversation.unread_cnt];
+  } else {
     [self.messageNumberLabel setHidden:YES];
-    }
-    
-    if (conversation.latest_date !=nil && ![conversation.latest_date isEqualToString:@"(null)"]) {
+  }
+
+  if (conversation.latest_date != nil && ![conversation.latest_date isEqualToString:@"(null)"]) {
     self.time.text = [self getTimeDate:[conversation.latest_date longLongValue]];
-    }else {
+  } else {
     self.time.text = @"";
-    }
-    if (conversation.latest_type == nil) {
-    self.message.text =@"";
-    return ;
-    }
-    
-    if ([conversation.latest_type isEqualToString:@"text"]) {
+  }
+
+  if (conversation.latest_type == nil) {
+    self.message.text = @"";
+    return;
+  }
+
+  if ([conversation.latest_type isEqualToString:@"text"]) {
     self.message.text = conversation.latest_text;
-    }else if ([conversation.latest_type isEqualToString:@"image"]){
-    self.message.text =@"[图片]";
-    }else if ([conversation.latest_type isEqualToString:@"voice"]){
-       self.message.text =@"[语音]";
-    }
+  } else if ([conversation.latest_type isEqualToString:@"image"]) {
+    self.message.text = @"[图片]";
+  } else if ([conversation.latest_type isEqualToString:@"voice"]) {
+    self.message.text = @"[语音]";
+  }
 }
 
 @end

@@ -102,6 +102,7 @@ extern NSString * const JMSGNotification_ReceiveMessage;
 
 @property (atomic, strong)JMSGonProgressUpdate   progressCallback;
 @property (atomic, strong)NSString              *resourcePath;
+@property (atomic, strong)NSData                *mediaData;
 @property (atomic, assign)CGSize                 imgSize;
 
 @end

@@ -377,7 +377,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
-    [cell setcellDataWithConversation:conversation];
+  [cell setCellDataWithConversation:conversation];
     return cell;
 }
 
@@ -410,7 +410,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 - (void)saveBadge:(NSInteger)badge {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld",badge] forKey:kBADGE];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%zd",badge] forKey:kBADGE];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

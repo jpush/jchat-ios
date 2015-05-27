@@ -18,6 +18,6 @@
 @property (nonatomic, strong) UIView *cellLine;
 @property (nonatomic, strong) UILabel *messageNumberLabel;
 
-- (void)setcellDataWithConversation:(JMSGConversation *)conversation;
+- (void)setCellDataWithConversation:(JMSGConversation *)conversation;
 
 @end

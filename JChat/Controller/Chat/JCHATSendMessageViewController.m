@@ -452,6 +452,7 @@
     model.messageStatus = kJMSGStatusSending;
     model.type = kJMSGImageMessage;
     model.pictureImgPath = bigPath;
+  model.mediaData = UIImageJPEGRepresentation(smallpImg, 1);
     model.pictureThumbImgPath = smallImgPath;
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
     model.messageTime = @(timeInterVal);
@@ -746,6 +747,7 @@
 #pragma mark --发送消息
 - (void)sendMessage :(JCHATChatModel *)model {
     model.messageStatus = kJMSGStatusSending;
+
   JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
   if (self.conversation.chatType == kJMSGSingle) {
     message.sendMessageType = kJMSGSingle;
@@ -757,6 +759,7 @@
   message.timestamp = model.messageTime;
   message.contentText = model.chatContent;
   [JMSGMessage sendMessage:message];
+
   DDLogDebug(@"Sent message:%@",message.contentText);
 }
 
