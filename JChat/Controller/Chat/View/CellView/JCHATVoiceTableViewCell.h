@@ -47,6 +47,6 @@
            delegate:(id <playVoiceDelegate>)delegate
           indexPath:(NSIndexPath *)indexPath;
 
-- (void)uploadVoice;
+- (void)sendVoiceMessage;
 
 @end

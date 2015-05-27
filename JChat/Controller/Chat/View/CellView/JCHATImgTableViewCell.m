@@ -7,13 +7,11 @@
 //
 
 #import "JCHATImgTableViewCell.h"
-#import "JCHATChatModel.h"
 #import "JChatConstants.h"
-#import "JCHATFileManager.h"
-#import <JMessage/JMessage.h>
 #import "MBProgressHUD+Add.h"
-#import "MBProgressHUD.h"
+
 #define headHeight 46
+
 
 @implementation JCHATImgTableViewCell
 
@@ -81,14 +79,14 @@
 
 #pragma mark --发送消息响应
 - (void)sendMessageResponse:(NSNotification *)response {
-    JPIMMAINTHEAD(^{
+  DDLogDebug(@"Event - sendMessageResponse");
+
+  JPIMMAINTHEAD(^{
         NSDictionary *responseDic = [response userInfo];
         NSError *error = [responseDic objectForKey:JMSGSendMessageError];
         JMSGImageMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
         if (error == nil) {
-            JPIMLog(@"Sent voiceMessage Response:%@",message);
         }else {
-            JPIMLog(@"Sent voiceMessage Response:%@",message);
             JPIMLog(@"Sent voiceMessage Response error:%@",error);
         }
         if (![message.messageId isEqualToString:_message.messageId]) {
@@ -186,31 +184,30 @@
     [self updateFrame];
     if (!_model.sendFlag) {
         _model.sendFlag = YES;
-        [self uploadPicturePhoto];
+      [self sendImageMessage];
     }
 }
 
 #pragma mark --上传图片
-- (void)uploadPicturePhoto
-{
-    JPIMLog(@"Action");
-    [self.circleView setHidden:NO];
-    [self.circleView startAnimating];
-    self.contentImgView.alpha=0.5;
-    self.model.messageStatus = kJMSGStatusSending;
-    _message =[[JMSGImageMessage alloc] init];
-    _message.target_id=self.model.targetId;
-    self.model.messageId = _message.messageId;
-    _message.timestamp = self.model.messageTime;
-    __weak typeof(self)weakSelf = self;
-    _message.progressCallback=^(float percent){
-        weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
-    };
+- (void)sendImageMessage {
+  DDLogDebug(@"Action - sendImageMessage");
+  [self.circleView setHidden:NO];
+  [self.circleView startAnimating];
+  self.contentImgView.alpha = 0.5;
+  self.model.messageStatus = kJMSGStatusSending;
+  _message = [[JMSGImageMessage alloc] init];
+  _message.target_id = self.model.targetId;
+  self.model.messageId = _message.messageId;
+  _message.timestamp = self.model.messageTime;
+  __weak typeof(self) weakSelf = self;
+  _message.progressCallback = ^(float percent) {
+    weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
+  };
 //    _message.resourcePath = self.model.pictureImgPath;
-    _message.mediaData = self.model.mediaData;
-    _message.thumbPath = self.model.pictureThumbImgPath;
-    [JMSGMessage sendMessage:_message];
-    JPIMLog(@"sendt imgMessage:%@",_message);
+  _message.mediaData = self.model.mediaData;
+  _message.thumbPath = self.model.pictureThumbImgPath;
+  [JMSGMessage sendMessage:_message];
+  DDLogDebug(@"Sent image message - %@", _message);
 }
 
 - (void)tapPicture:(UIGestureRecognizer *)gesture
