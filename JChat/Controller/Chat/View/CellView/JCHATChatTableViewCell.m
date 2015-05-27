@@ -7,7 +7,6 @@
 //
 
 #import "JCHATChatTableViewCell.h"
-#import "NSObject+TimeConvert.h"
 #import "JCHATStringUtils.h"
 
 @implementation JCHATChatTableViewCell
