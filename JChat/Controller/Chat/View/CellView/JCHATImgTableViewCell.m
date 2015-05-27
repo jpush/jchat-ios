@@ -206,7 +206,7 @@
         weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
     };
 //    _message.resourcePath = self.model.pictureImgPath;
-    _message.mediaData = self.model.mediaData;
+//    _message.mediaData = self.model.mediaData;
     _message.thumbPath = self.model.pictureThumbImgPath;
     [JMSGMessage sendMessage:_message];
     JPIMLog(@"sendt imgMessage:%@",_message);
