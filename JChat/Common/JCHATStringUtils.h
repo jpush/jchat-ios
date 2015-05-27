@@ -11,4 +11,6 @@
 
 + (NSString *)dictionary2String:(NSDictionary *)dictionary;
 
++ (NSString *)getFriendlyDateString:(NSTimeInterval)timeInterval;
+
 @end
