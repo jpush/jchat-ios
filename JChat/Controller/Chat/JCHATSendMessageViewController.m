@@ -419,6 +419,7 @@
   }else{
     JCHATGroupSettingCtl *groupSettingCtl = [[JCHATGroupSettingCtl alloc] init];
     groupSettingCtl.conversation = self.conversation;
+    groupSettingCtl.sendMessageCtl = self;
     [self.navigationController pushViewController:groupSettingCtl animated:YES];
   }
 }
@@ -521,10 +522,19 @@
                                              selector:@selector(changeMessageState:)
                                                  name:kMessageChangeState
                                                object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(deleteAllMessage)
+                                               name:kDeleteAllMessage
+                                             object:nil];
 //    [self.toolBar.textView addObserver:self
 //                            forKeyPath:@"contentSize"
 //                               options:NSKeyValueObservingOptionNew
 //                               context:nil];
+}
+
+- (void)deleteAllMessage {
+  [_messageDataArr removeAllObjects];
+  [_messageTableView reloadData];
 }
 
 -(void)inputKeyboardWillShow:(NSNotification *)notification{

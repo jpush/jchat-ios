@@ -165,9 +165,6 @@
   }];
 }
 
-
-
-
 - (void)reloadHeadScrollViewContentSize {
     [_headView setContentSize:CGSizeMake(10 +((56+10) *[_groupBtnArr count]), _headView.bounds.size.height)];
 }
@@ -354,6 +351,17 @@
           [self.navigationController popToRootViewControllerAnimated:YES];
         }else {
           [MBProgressHUD showMessage:@"退出群组失败！" view:self.view];
+        }
+      }];
+    }
+  }else {
+    if (buttonIndex ==1) {
+      [self.conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
+        if (error == nil) {
+          [MBProgressHUD showMessage:@"删除消息成功" view:self.view];
+          [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAllMessage object:nil];
+        }else {
+          [MBProgressHUD showMessage:@"删除消息失败" view:self.view];
         }
       }];
     }
