@@ -100,7 +100,7 @@
 
   if (conversation.latest_date != nil && ![conversation.latest_date isEqualToString:@"(null)"]) {
     double time = [conversation.latest_date longLongValue];
-    self.time.text = [JCHATStringUtils getFriendlyDateString:time forConversation:false];
+    self.time.text = [JCHATStringUtils getFriendlyDateString:time forConversation:YES];
   } else {
     self.time.text = @"";
   }

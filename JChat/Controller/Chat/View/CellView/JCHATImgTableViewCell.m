@@ -194,20 +194,28 @@
   [self.circleView setHidden:NO];
   [self.circleView startAnimating];
   self.contentImgView.alpha = 0.5;
+
   self.model.messageStatus = kJMSGStatusSending;
   _message = [[JMSGImageMessage alloc] init];
-  _message.target_id = self.model.targetId;
   self.model.messageId = _message.messageId;
-  _message.timestamp = self.model.messageTime;
+
   __weak typeof(self) weakSelf = self;
   _message.progressCallback = ^(float percent) {
     weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
   };
-//    _message.resourcePath = self.model.pictureImgPath;
+
+  if (self.conversation.chatType == kJMSGSingle) {
+    _message.sendMessageType = kJMSGSingle;
+  }else {
+    _message.sendMessageType = kJMSGGroup;
+  }
+  _message.target_id = self.model.targetId;
+  _message.timestamp = self.model.messageTime;
   _message.mediaData = self.model.mediaData;
   _message.thumbPath = self.model.pictureThumbImgPath;
+
+  DDLogVerbose(@"The imageMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
-  DDLogDebug(@"Sent image message - %@", _message);
 }
 
 - (void)tapPicture:(UIGestureRecognizer *)gesture
