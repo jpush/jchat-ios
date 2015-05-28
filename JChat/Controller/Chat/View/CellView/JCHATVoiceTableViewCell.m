@@ -358,12 +358,19 @@
 
   _message = [[JMSGVoiceMessage alloc] init];
   self.model.messageId = _message.messageId;
+
+  if (self.conversation.chatType == kJMSGSingle) {
+    _message.sendMessageType = kJMSGSingle;
+  }else {
+    _message.sendMessageType = kJMSGGroup;
+  }
   _message.target_id = self.model.targetId;
   _message.duration = self.model.voiceTime;
   _message.timestamp = self.model.messageTime;
   _message.mediaData = self.model.mediaData;
+
+  DDLogVerbose(@"The voiceMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
-  DDLogVerbose(@"Sent voiceMessage - %@", _message);
 }
 
 - (void)layoutSubviews {
