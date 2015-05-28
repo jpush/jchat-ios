@@ -449,7 +449,7 @@
 
 #pragma mark --发送图片
 - (void)prepareImageMessage:(UIImage *)img {
-  DDLogDebug(@"Action - sendImageMessage");
+  DDLogDebug(@"Action - prepareImageMessage");
   img = [img resizedImageByWidth:upLoadImgWidth];
   UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
   NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(img, 1)];
@@ -769,18 +769,19 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.messageStatus = kJMSGStatusSending;
 
   JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
+  model.messageId = message.messageId;
+
   if (self.conversation.chatType == kJMSGSingle) {
     message.sendMessageType = kJMSGSingle;
   }else {
     message.sendMessageType = kJMSGGroup;
   }
   message.target_id = model.targetId;
-  model.messageId = message.messageId;
   message.timestamp = model.messageTime;
   message.contentText = model.chatContent;
-  [JMSGMessage sendMessage:message];
 
-  DDLogDebug(@"Sent message:%@",message.contentText);
+  DDLogVerbose(@"The message:%@", message);
+  [JMSGMessage sendMessage:message];
 }
 
 - (void)selectHeadView:(JCHATChatModel *)model {
