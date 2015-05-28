@@ -138,6 +138,35 @@
     [self reloadHeadScrollViewContentSize];
 }
 
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+  
+  [MBProgressHUD showMessage:@"更新群组名称" toView:self.view];
+  typeof(self) __weak weakSelf = self;
+  [JMSGGroup getGroupInfo:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    typeof(weakSelf) __strong strongSelf = weakSelf;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    if (error == nil) {
+      JMSGGroup *group = (JMSGGroup *)resultObject;
+      group.group_name = textField.text;
+      [JMSGGroup updateGroupInfo:group completionHandler:^(id resultObject, NSError *error) {
+        if (error == nil) {
+          strongSelf.conversation.target_name = textField.text;
+          JPIMMAINTHEAD(^{
+            [strongSelf.groupTab reloadData];
+          });
+          [MBProgressHUD showMessage:@"更新群组名称成功" view:self.view];
+        }else {
+          [MBProgressHUD showMessage:@"更新群组名称失败" view:self.view];
+        }
+      }];
+    }else {
+      [MBProgressHUD showMessage:@"更新群组名称失败" view:self.view];
+    }
+  }];
+}
+
+
+
 
 - (void)reloadHeadScrollViewContentSize {
     [_headView setContentSize:CGSizeMake(10 +((56+10) *[_groupBtnArr count]), _headView.bounds.size.height)];
@@ -191,7 +220,6 @@
         }
         return;
       }
-
     }else {
       [MBProgressHUD showMessage:@"删除好友失败！" view:self.view];
     }
@@ -262,6 +290,10 @@
             cell.groupName.textAlignment = NSTextAlignmentRight;
         }
         cell.groupTitle.text = [_groupTitleData objectAtIndex:indexPath.row];
+      if (indexPath.row == 0) {
+        cell.groupName.delegate = self;
+        cell.groupName.text = self.conversation.target_name;
+      }
         if (indexPath.row == 1) {
             [cell.groupName setHidden:YES];
         }
@@ -312,17 +344,19 @@
         [MBProgressHUD showMessage:@"获取成员信息失败" view:self.view];
       }
     }];
-  }else {
-  [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
-  [JMSGGroup exitGoup:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
-  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    if (error == nil) {
-      [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];
-      [self.navigationController popToRootViewControllerAnimated:YES];
-    }else {
-      [MBProgressHUD showMessage:@"退出群组失败！" view:self.view];
+  }else if (alertView.tag !=100) {
+    if (buttonIndex ==1) {
+      [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
+      [JMSGGroup exitGoup:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (error == nil) {
+          [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];
+          [self.navigationController popToRootViewControllerAnimated:YES];
+        }else {
+          [MBProgressHUD showMessage:@"退出群组失败！" view:self.view];
+        }
+      }];
     }
-  }];
   }
 }
 
