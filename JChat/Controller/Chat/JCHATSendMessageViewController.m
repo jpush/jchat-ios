@@ -399,15 +399,16 @@
 #pragma mark --增加朋友
 -(void)addFriends
 {
-    if (self.conversation.chatType == kJMSGSingle) {
-        JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
-        detailsInfoCtl.chatUser = self.user;
-        [self.navigationController pushViewController:detailsInfoCtl animated:YES];
-    }else{
-        JCHATGroupSettingCtl *groupSettingCtl = [[JCHATGroupSettingCtl alloc] init];
-        groupSettingCtl.conversation = self.conversation;
-        [self.navigationController pushViewController:groupSettingCtl animated:YES];
-    }
+  if (self.conversation.chatType == kJMSGSingle) {
+    JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
+    detailsInfoCtl.chatUser = self.user;
+    detailsInfoCtl.sendMessageCtl = self;
+    [self.navigationController pushViewController:detailsInfoCtl animated:YES];
+  }else{
+    JCHATGroupSettingCtl *groupSettingCtl = [[JCHATGroupSettingCtl alloc] init];
+    groupSettingCtl.conversation = self.conversation;
+    [self.navigationController pushViewController:groupSettingCtl animated:YES];
+  }
 }
 
 #pragma mark -调用相册
@@ -671,21 +672,27 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:NO];
-    [self.toolBar drawRect:self.toolBar.frame];
-    [self.navigationController setNavigationBarHidden:NO];
-    [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          DDLogDebug(@"清零成功");
-        }else {
-          DDLogDebug(@"清零失败");
-        }
-    }];
+  [super viewWillAppear:NO];
+  [self.toolBar drawRect:self.toolBar.frame];
+  [self.navigationController setNavigationBarHidden:NO];
+  [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
+      if (error == nil) {
+        DDLogDebug(@"清零成功");
+      }else {
+        DDLogDebug(@"清零失败");
+      }
+  }];
+  
 //    // 禁用 iOS7 返回手势
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }
-    [self.messageTableView reloadData];
+  if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+      self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+  }
+  if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
+    self.user = nil;
+    self.title = self.targetName;
+    [_messageDataArr removeAllObjects];
+  }
+  [self.messageTableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

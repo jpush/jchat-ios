@@ -23,62 +23,96 @@
 @implementation JCHATDetailsInfoViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-    self.title=@"聊天详情";
-    UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-    [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.title=@"聊天详情";
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
+  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  
+  [self.view setBackgroundColor:[UIColor orangeColor]];
+  [self.detailTableView setBackgroundColor:[UIColor whiteColor]];
+  UIView *tableHeadView =[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
+  [tableHeadView setBackgroundColor:[UIColor whiteColor]];
+  
+  _headView =[[UIImageView alloc] initWithFrame:CGRectMake(20, (80-46)/2, 46, 46)];
+  [_headView setBackgroundColor:[UIColor clearColor]];
+  [_headView setUserInteractionEnabled:YES];
+  UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeadClick)];
+  [_headView addGestureRecognizer:gesture];
+  if ([[NSFileManager defaultManager] fileExistsAtPath:self.chatUser.avatarThumbPath]) {
+      [_headView setImage:[UIImage imageNamed:self.chatUser.avatarThumbPath]];
+  }else {
+      [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+  }
+  [_headView.layer setMasksToBounds:YES];
+  [_headView.layer setCornerRadius:23];
+  [tableHeadView addSubview:_headView];
+  
+  UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 99,kApplicationWidth, 1)];
+  [lineView setBackgroundColor:[UIColor grayColor]];
+  [tableHeadView addSubview:lineView];
+  
+  UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 100-40, 150, 40)];
+  nameLabel.textColor = [UIColor grayColor];
+  nameLabel.font = [UIFont boldSystemFontOfSize:18];
+  nameLabel.textAlignment = NSTextAlignmentLeft;
+  
+  if (self.chatUser.noteName) {
+      nameLabel.text = self.chatUser.noteName;
+  }else if (self.chatUser.nickname) {
+      nameLabel.text = self.chatUser.nickname;
+  }else {
+      nameLabel.text = self.chatUser.username;
+  }
+  
+  [tableHeadView addSubview:nameLabel];
+  UIButton *addView =[[UIButton alloc] initWithFrame:CGRectMake(75, (80-46)/2, 46, 46)];
+  [addView setBackgroundColor:[UIColor clearColor]];
+  [addView addTarget:self action:@selector(addFriend) forControlEvents:UIControlEventTouchUpInside];
+  [addView setImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
+  [tableHeadView addSubview:addView];
+  
+  self.detailTableView.tableHeaderView = tableHeadView;
+  self.detailArr =@[@{@"section0" :@[@"清空聊天记录"]}];
+  self.detailTableView.dataSource=self;
+  self.detailTableView.delegate=self;
+  self.detailTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+}
+
+#pragma mark -- 加入好友到群
+- (void)addFriend {
+  UIAlertView *alerView = [[UIAlertView alloc]initWithTitle:@"添加好友到群" message:@"输入好友的用户名" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+  alerView.alertViewStyle =UIAlertViewStylePlainTextInput;
+  [alerView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  if (buttonIndex == 0) {
     
-    [self.view setBackgroundColor:[UIColor orangeColor]];
-    [self.detailTableView setBackgroundColor:[UIColor whiteColor]];
-    UIView *tableHeadView =[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
-    [tableHeadView setBackgroundColor:[UIColor whiteColor]];
-    
-    _headView =[[UIImageView alloc] initWithFrame:CGRectMake(20, (80-46)/2, 46, 46)];
-    [_headView setBackgroundColor:[UIColor clearColor]];
-    [_headView setUserInteractionEnabled:YES];
-    UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeadClick)];
-    [_headView addGestureRecognizer:gesture];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:self.chatUser.avatarThumbPath]) {
-        [_headView setImage:[UIImage imageNamed:self.chatUser.avatarThumbPath]];
-    }else {
-        [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-    }
-    [_headView.layer setMasksToBounds:YES];
-    [_headView.layer setCornerRadius:23];
-    [tableHeadView addSubview:_headView];
-    
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 99,kApplicationWidth, 1)];
-    [lineView setBackgroundColor:[UIColor grayColor]];
-    [tableHeadView addSubview:lineView];
-    
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 100-40, 150, 40)];
-    nameLabel.textColor = [UIColor grayColor];
-    nameLabel.font = [UIFont boldSystemFontOfSize:18];
-    nameLabel.textAlignment = NSTextAlignmentLeft;
-    
-    if (self.chatUser.noteName) {
-        nameLabel.text = self.chatUser.noteName;
-    }else if (self.chatUser.nickname) {
-        nameLabel.text = self.chatUser.nickname;
-    }else {
-        nameLabel.text = self.chatUser.username;
-    }
-    [tableHeadView addSubview:nameLabel];
-    UIButton *addView =[[UIButton alloc] initWithFrame:CGRectMake(75, (80-46)/2, 46, 46)];
-    [addView setBackgroundColor:[UIColor clearColor]];
-    [addView setImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
-    [tableHeadView addSubview:addView];
-    [addView setHidden:YES];
-    
-    self.detailTableView.tableHeaderView=tableHeadView;
-    self.detailArr =@[@{@"section0" :@[@"清空聊天记录"]}];
-    self.detailTableView.dataSource=self;
-    self.detailTableView.delegate=self;
-    self.detailTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+  }else {
+    [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
+    JMSGGroup *group = [[JMSGGroup alloc]init];
+    group.group_name =[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser getMyInfo].username,self.chatUser.username,[alertView textFieldAtIndex:0].text];
+    group.group_members = [NSString stringWithFormat:@"%@,%@",self.chatUser.username,[alertView textFieldAtIndex:0].text];
+    // block self
+    typeof(self) __weak weakSelf = self;
+    [JMSGGroup createGroup:group completionHandler:^(id resultObject, NSError *error) {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    typeof(weakSelf) __strong strongSelf = weakSelf;
+      if (error == nil) {
+        [MBProgressHUD showMessage:@"创建群成功" view:self.view];
+        strongSelf.sendMessageCtl.conversation = resultObject;
+        strongSelf.sendMessageCtl.targetName = group.group_name;
+        [strongSelf.navigationController popViewControllerAnimated:YES];
+      }else {
+        [MBProgressHUD showMessage:@"创建群失败" view:self.view];
+
+      }
+    }];
+  }
 }
 
 - (void)tapHeadClick {
