@@ -320,10 +320,20 @@
                 DDLogDebug(@"消息未读数清空失败");
             }
         }];
+
         JMSGMessage *message = (JMSGMessage *)[notification object];
-        if (![message.target_name isEqualToString:self.user.username]) {
-            return ;
+        DDLogDebug(@"The received msg - %@", message);
+
+        if (_conversation.chatType == kJMSGSingle) {
+          if (![message.target_id isEqualToString:self.user.username]) {
+            // FIXME - This condition should be done by SDK.
+            DDLogWarn(@"It's single chat, but the targetId of the msg is not me. Throw away.");
+            return;
+          }
+        } else {
+
         }
+
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
         model.messageId = message.messageId;
         model.conversation = _conversation;
@@ -344,17 +354,19 @@
             model.voiceTime = [((JMSGVoiceMessage *)message).duration stringByAppendingString:@"''"];
             model.readState = NO;
         }
-        if ([user.username isEqualToString:message.target_name]) {
-             model.who = YES;
+
+        if ([user.username isEqualToString:message.target_id]) {
+            model.who = YES;
             model.avatar = user.avatarThumbPath;
             model.targetId = [JMSGUser getMyInfo].username;
         }else {
-            model.who=NO;
+            DDLogWarn(@"Should not be here. The msg target_id is not me.");
+          model.who = NO;
             model.avatar = _conversation.avatarThumb;
             model.targetId = _conversation.target_id;
         }
+
         model.messageTime = message.timestamp;
-        DDLogDebug(@"Received message - %@", message);
         [self compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
         [_messageDataArr addObject:model];
         [self addCellToTabel];
