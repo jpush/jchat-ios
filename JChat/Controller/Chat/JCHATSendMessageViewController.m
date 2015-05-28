@@ -701,9 +701,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
     self.user = nil;
-    self.title = self.targetName;
     [_messageDataArr removeAllObjects];
   }
+  self.title = self.conversation.target_name;
   [self.messageTableView reloadData];
 }
 
