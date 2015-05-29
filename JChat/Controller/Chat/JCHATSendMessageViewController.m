@@ -325,6 +325,10 @@
         NSDictionary *userInfo = [notification userInfo];
         JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
         DDLogDebug(@"The received msg - %@", message);
+        if (!message) {
+          DDLogWarn(@"No message content in notification.");
+          return;
+        }
 
         if (_conversation.chatType == kJMSGSingle) {
           if (![message.target_id isEqualToString:self.user.username]) {
@@ -333,7 +337,7 @@
             return;
           }
         } else {
-
+          DDLogVerbose(@"It is a group chat.");
         }
 
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
@@ -362,8 +366,7 @@
             model.avatar = user.avatarThumbPath;
             model.targetId = [JMSGUser getMyInfo].username;
         }else {
-            DDLogWarn(@"Should not be here. The msg target_id is not me.");
-          model.who = NO;
+            model.who = NO;
             model.avatar = _conversation.avatarThumb;
             model.targetId = _conversation.target_id;
         }
@@ -421,6 +424,7 @@
   }else{
     JCHATGroupSettingCtl *groupSettingCtl = [[JCHATGroupSettingCtl alloc] init];
     groupSettingCtl.conversation = self.conversation;
+    groupSettingCtl.sendMessageCtl = self;
     [self.navigationController pushViewController:groupSettingCtl animated:YES];
   }
 }
@@ -523,10 +527,19 @@
                                              selector:@selector(changeMessageState:)
                                                  name:kMessageChangeState
                                                object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(deleteAllMessage)
+                                               name:kDeleteAllMessage
+                                             object:nil];
 //    [self.toolBar.textView addObserver:self
 //                            forKeyPath:@"contentSize"
 //                               options:NSKeyValueObservingOptionNew
 //                               context:nil];
+}
+
+- (void)deleteAllMessage {
+  [_messageDataArr removeAllObjects];
+  [_messageTableView reloadData];
 }
 
 -(void)inputKeyboardWillShow:(NSNotification *)notification{
@@ -703,9 +716,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
     self.user = nil;
-    self.title = self.targetName;
     [_messageDataArr removeAllObjects];
   }
+  self.title = self.conversation.target_name;
   [self.messageTableView reloadData];
 }
 
