@@ -323,6 +323,10 @@
 
         JMSGMessage *message = (JMSGMessage *)[notification object];
         DDLogDebug(@"The received msg - %@", message);
+        if (!message) {
+          DDLogWarn(@"No message content in notification.");
+          return;
+        }
 
         if (_conversation.chatType == kJMSGSingle) {
           if (![message.target_id isEqualToString:self.user.username]) {
@@ -331,7 +335,7 @@
             return;
           }
         } else {
-
+          DDLogVerbose(@"It is a group chat.");
         }
 
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
@@ -360,8 +364,7 @@
             model.avatar = user.avatarThumbPath;
             model.targetId = [JMSGUser getMyInfo].username;
         }else {
-            DDLogWarn(@"Should not be here. The msg target_id is not me.");
-          model.who = NO;
+            model.who = NO;
             model.avatar = _conversation.avatarThumb;
             model.targetId = _conversation.target_id;
         }
