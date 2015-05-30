@@ -142,7 +142,7 @@
   [self.view addGestureRecognizer:gesture];
   NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
   self.moreView = [temXib objectAtIndex:0];
-  self.moreView.delegate=self;
+  self.moreView.delegate = self;
   if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
       [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
   }else {
@@ -570,7 +570,7 @@
     [self.messageTableView reloadData];
     [UIView animateWithDuration:0.3 animations:^{
         [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-        [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.view.bounds.size.width, 45)];
+        [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
       [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
     }];
 }
