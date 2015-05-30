@@ -312,7 +312,7 @@
         }];
 
         NSDictionary *userInfo = [notification userInfo];
-        JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
+        JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_SendMessageResult]);
         DDLogDebug(@"The received msg - %@", message);
         if (!message) {
           DDLogWarn(@"No message content in notification.");
@@ -571,17 +571,24 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
         [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.view.bounds.size.width, 45)];
+      [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
     }];
 }
 
 #pragma mark --按下功能响应
 - (void)pressMoreBtnClick:(UIButton *)btn {
-    self.barBottomFlag=NO;
-    [self.toolBar.textView resignFirstResponder];
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.toolBar setFrame:CGRectMake(0, kScreenHeight-45-self.moreView.bounds.size.height, self.view.bounds.size.width, 45)];
-        [self.moreView setFrame:CGRectMake(0, kScreenHeight-self.moreView.bounds.size.height, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-    }];
+  self.barBottomFlag=NO;
+  [self.toolBar.textView resignFirstResponder];
+  [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.moreView.bounds.size.width, self.moreView.bounds.size.height)];
+  [UIView animateWithDuration:0.3 animations:^{
+  [self.toolBar setFrame:CGRectMake(0, kScreenHeight-45-self.moreView.bounds.size.height, self.view.bounds.size.width, 45)];
+  [self.moreView setFrame:CGRectMake(0, kScreenHeight-self.moreView.bounds.size.height, self.view.bounds.size.width, self.moreView.bounds.size.height)];
+    
+  }];
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,self.toolBar.frame.origin.y)];
+    [self scrollToEnd];
+  }];
 }
 
 -(void)noPressmoreBtnClick:(UIButton *)btn {
