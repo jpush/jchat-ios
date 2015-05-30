@@ -24,6 +24,11 @@ typedef NS_ENUM(NSUInteger, JMSGUpdateUserInfoType) {
   kJMSGAvatar    = 5,
 };
 
+typedef NS_ENUM(NSUInteger, JMSGUserGender){
+  kJMSGUnknown = 0,
+  kJMSGMale,
+  kJMSGFemale,
+};
 
 @interface JMSGUser : NSObject <NSCopying>
 
@@ -31,7 +36,7 @@ typedef NS_ENUM(NSUInteger, JMSGUpdateUserInfoType) {
  @property (atomic,strong, readonly) NSString *avatarResourcePath;
  @property (atomic,strong, readonly) NSString *avatarThumbPath;
  @property (atomic,strong, readonly) NSString *birthday;
- @property (atomic,strong, readonly) NSNumber *userGender;
+ @property (atomic,assign, readonly) JMSGUserGender userGender;
  @property (atomic,strong, readonly) NSString *cTime;
 
  @property (atomic,assign, readonly) NSInteger star;
