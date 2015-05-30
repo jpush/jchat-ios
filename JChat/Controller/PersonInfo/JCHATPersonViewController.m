@@ -80,9 +80,9 @@
     }
     [_infoArr addObject:name];
 
-    if ([user.userGender integerValue]==0) {
+    if (user.userGender == kJMSGUnknown) {
         [_infoArr addObject:@"未知"];
-    } else if ([user.userGender integerValue] == 1){
+    } else if (user.userGender == kJMSGMale){
         [_infoArr addObject:@"男"];
     } else {
         [_infoArr addObject:@"女"];
@@ -161,10 +161,10 @@
 
                     if (error == nil) {
                         JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *) [_personTabl cellForRowAtIndexPath:[NSIndexPath indexPathForRow:alertView.tag inSection:0]];
-                        if ([user.userGender integerValue] == 1) {
+                        if (user.userGender == kJMSGMale) {
                             cell.personInfoConten.text = @"男";
 
-                        } else if ([user.userGender integerValue] == 2) {
+                        } else if (user.userGender == kJMSGFemale) {
                             cell.personInfoConten.text = @"女";
                         } else {
                             cell.personInfoConten.text = @"未知";
