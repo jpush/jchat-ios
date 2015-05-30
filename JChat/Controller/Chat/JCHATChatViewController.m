@@ -4,8 +4,6 @@
 #import "JCHATSendMessageViewController.h"
 #import "JCHATSelectFriendsCtl.h"
 #import "MBProgressHUD+Add.h"
-#import "MobClick.h"
-#import <JMessage/JMessage.h>
 
 @interface JCHATChatViewController ()
 {

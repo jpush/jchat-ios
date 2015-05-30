@@ -90,7 +90,6 @@
               strongSelf.title = strongSelf.user.nickname;
             } else {
               strongSelf.title = strongSelf.user.username;
-
             }
           });
         } else {
@@ -101,16 +100,6 @@
           });
         }
       }];
-
-    } else {
-      // FIXME - self.user 为空，怎么还去从 self.user 上找到 title ?
-      if (self.user.noteName != nil && ![self.user.noteName isEqualToString:KNull]) {
-        self.title = self.user.noteName;
-      }else if (self.user.nickname !=nil && ![self.user.nickname isEqualToString:KNull]) {
-        self.title = self.user.nickname;
-      }else {
-        self.title = self.user.username;
-      }
     }
   }
 
@@ -153,7 +142,7 @@
   [self.view addGestureRecognizer:gesture];
   NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
   self.moreView = [temXib objectAtIndex:0];
-  self.moreView.delegate=self;
+  self.moreView.delegate = self;
   if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
       [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
   }else {
@@ -323,7 +312,7 @@
         }];
 
         NSDictionary *userInfo = [notification userInfo];
-        JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
+        JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_SendMessageResult]);
         DDLogDebug(@"The received msg - %@", message);
         if (!message) {
           DDLogWarn(@"No message content in notification.");
@@ -507,6 +496,7 @@
     //给键盘注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(inputKeyboardWillShow:)
+     
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -575,23 +565,30 @@
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
     self.barBottomFlag=YES;
-    self.previousTextViewContentHeight=31;
-    self.toolBar.addButton.selected=NO;
+    self.previousTextViewContentHeight = 31;
+    self.toolBar.addButton.selected = NO;
     [self.messageTableView reloadData];
     [UIView animateWithDuration:0.3 animations:^{
         [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-        [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.view.bounds.size.width, 45)];
+        [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
+      [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
     }];
 }
 
 #pragma mark --按下功能响应
 - (void)pressMoreBtnClick:(UIButton *)btn {
-    self.barBottomFlag=NO;
-    [self.toolBar.textView resignFirstResponder];
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.toolBar setFrame:CGRectMake(0, kScreenHeight-45-self.moreView.bounds.size.height, self.view.bounds.size.width, 45)];
-        [self.moreView setFrame:CGRectMake(0, kScreenHeight-self.moreView.bounds.size.height, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-    }];
+  self.barBottomFlag=NO;
+  [self.toolBar.textView resignFirstResponder];
+  [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.moreView.bounds.size.width, self.moreView.bounds.size.height)];
+  [UIView animateWithDuration:0.3 animations:^{
+  [self.toolBar setFrame:CGRectMake(0, kScreenHeight-45-self.moreView.bounds.size.height, self.view.bounds.size.width, 45)];
+  [self.moreView setFrame:CGRectMake(0, kScreenHeight-self.moreView.bounds.size.height, self.view.bounds.size.width, self.moreView.bounds.size.height)];
+  }];
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenHeight-45-(kNavigationBarHeight+kStatusBarHeight) - self.moreView.bounds.size.height)];
+    [self scrollToEnd];
+  }];
 }
 
 -(void)noPressmoreBtnClick:(UIButton *)btn {
