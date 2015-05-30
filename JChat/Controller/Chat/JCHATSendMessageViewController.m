@@ -89,7 +89,6 @@
               strongSelf.title = strongSelf.user.nickname;
             } else {
               strongSelf.title = strongSelf.user.username;
-
             }
           });
         } else {
@@ -100,16 +99,6 @@
           });
         }
       }];
-
-    } else {
-      // FIXME - self.user 为空，怎么还去从 self.user 上找到 title ?
-      if (self.user.noteName != nil && ![self.user.noteName isEqualToString:KNull]) {
-        self.title = self.user.noteName;
-      }else if (self.user.nickname !=nil && ![self.user.nickname isEqualToString:KNull]) {
-        self.title = self.user.nickname;
-      }else {
-        self.title = self.user.username;
-      }
     }
   }
 
@@ -502,6 +491,7 @@
     //给键盘注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(inputKeyboardWillShow:)
+     
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -570,8 +560,8 @@
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
     self.barBottomFlag=YES;
-    self.previousTextViewContentHeight=31;
-    self.toolBar.addButton.selected=NO;
+    self.previousTextViewContentHeight = 31;
+    self.toolBar.addButton.selected = NO;
     [self.messageTableView reloadData];
     [UIView animateWithDuration:0.3 animations:^{
         [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
