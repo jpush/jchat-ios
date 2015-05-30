@@ -22,6 +22,7 @@
 #import "JCHATFriendDetailViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "JCHATStringUtils.h"
+#import <JMessage/JMessage.h>
 
 #define interval 60*2
 
@@ -188,8 +189,8 @@
 - (void)sendMessageResponse:(NSNotification *)response {
   DDLogDebug(@"Event - sendMessageResponse");
   NSDictionary *responseDic = [response userInfo];
-  JMSGMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
-  NSError *error = [responseDic objectForKey:JMSGSendMessageError];
+  JMSGMessage *message = responseDic[JMSGSendMessageObject];
+  NSError *error = responseDic[JMSGSendMessageError];
   if (error == nil) {
   } else {
     DDLogDebug(@"Sent response error - %@", error);
@@ -200,7 +201,7 @@
 
   JCHATChatModel *model;
   for (NSInteger i = 0; i < [_messageDataArr count]; i++) {
-    model = [_messageDataArr objectAtIndex:i];
+    model = _messageDataArr[i];
     if ([message.messageId isEqualToString:model.messageId]) {
       if (message.messageType == kJMSGVoiceMessage) {
         JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *) message;
@@ -310,8 +311,13 @@
             }
         }];
 
-        JMSGMessage *message = (JMSGMessage *)[notification object];
+        NSDictionary *userInfo = [notification userInfo];
+        JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
         DDLogDebug(@"The received msg - %@", message);
+        if (!message) {
+          DDLogWarn(@"No message content in notification.");
+          return;
+        }
 
         if (_conversation.chatType == kJMSGSingle) {
           if (![message.target_id isEqualToString:self.user.username]) {
@@ -320,7 +326,7 @@
             return;
           }
         } else {
-
+          DDLogVerbose(@"It is a group chat.");
         }
 
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
@@ -349,8 +355,7 @@
             model.avatar = user.avatarThumbPath;
             model.targetId = [JMSGUser getMyInfo].username;
         }else {
-            DDLogWarn(@"Should not be here. The msg target_id is not me.");
-          model.who = NO;
+            model.who = NO;
             model.avatar = _conversation.avatarThumb;
             model.targetId = _conversation.target_id;
         }
