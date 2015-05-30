@@ -583,10 +583,10 @@
   [UIView animateWithDuration:0.3 animations:^{
   [self.toolBar setFrame:CGRectMake(0, kScreenHeight-45-self.moreView.bounds.size.height, self.view.bounds.size.width, 45)];
   [self.moreView setFrame:CGRectMake(0, kScreenHeight-self.moreView.bounds.size.height, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-    
   }];
+  
   [UIView animateWithDuration:0.3 animations:^{
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,self.toolBar.frame.origin.y)];
+    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenHeight-45-(kNavigationBarHeight+kStatusBarHeight) - self.moreView.bounds.size.height)];
     [self scrollToEnd];
   }];
 }
