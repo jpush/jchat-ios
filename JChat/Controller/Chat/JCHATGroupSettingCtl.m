@@ -67,6 +67,7 @@
   _headView.showsHorizontalScrollIndicator =NO;
   _headView.showsVerticalScrollIndicator =NO;
   self.groupTab.tableHeaderView = _headView;
+  
   [self getGroupMemberList];
 }
 
@@ -81,18 +82,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 - (void)getGroupMemberList {
    typeof(self) __weak weakSelf = self;
-  [MBProgressHUD showMessage:@"正在获取群成员" toView:self.view];
   [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
     typeof(weakSelf) __strong strongSelf = weakSelf;
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error == nil) {
-      [MBProgressHUD showMessage:@"获取群成员成功" view:self.view];
       _groupData = [NSMutableArray arrayWithArray:resultObject];
       [strongSelf reloadHeadViewData];
     }else {
-      [MBProgressHUD showMessage:@"获取群成员失败" view:self.view];
     }
   }];
 }
