@@ -29,6 +29,7 @@ extern NSString * const JMSGNotification_ReceiveMessage;
 extern NSString * const JMSGNotification_MessageKey;
 
 
+
 #ifndef JMSGSendMessageObject
 #define JMSGSendMessageObject  @"message"
 #endif
