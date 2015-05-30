@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1822AFD51B17026A00E0529C /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1822AFD41B17026A00E0529C /* JMessage.framework */; };
 		18324C041AFB861A006E8507 /* JCHATChatTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 18324C031AFB861A006E8507 /* JCHATChatTable.m */; };
 		183983351AFC914100AC8280 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983341AFC914100AC8280 /* libz.dylib */; };
 		183983371AFC914900AC8280 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983361AFC914900AC8280 /* Security.framework */; };
@@ -301,6 +300,7 @@
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
+		AABB175C1B1783450035C87A /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3F99DC1B1356B000A98E5F /* JMessage.framework */; };
 		CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */; };
 /* End PBXBuildFile section */
 
@@ -328,7 +328,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1822AFD41B17026A00E0529C /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		18324C021AFB861A006E8507 /* JCHATChatTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATChatTable.h; sourceTree = "<group>"; };
 		18324C031AFB861A006E8507 /* JCHATChatTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATChatTable.m; sourceTree = "<group>"; };
 		183983341AFC914100AC8280 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -722,7 +721,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1822AFD51B17026A00E0529C /* JMessage.framework in Frameworks */,
+				AABB175C1B1783450035C87A /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -1215,7 +1214,6 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1822AFD41B17026A00E0529C /* JMessage.framework */,
 				8F8840B01B15AB9200BDC126 /* libPods-极光IM.a */,
 				AA3FDC661B142A0C007EBE72 /* JMessage.framework */,
 				AA3F99DC1B1356B000A98E5F /* JMessage.framework */,
