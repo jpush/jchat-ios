@@ -26,6 +26,8 @@ extern NSString * const JMSGNotification_SendMessageResult;
 * 收取收到消息通知
 */
 extern NSString * const JMSGNotification_ReceiveMessage;
+extern NSString * const JMSGNotification_MessageKey;
+
 
 
 #ifndef JMSGSendMessageObject
