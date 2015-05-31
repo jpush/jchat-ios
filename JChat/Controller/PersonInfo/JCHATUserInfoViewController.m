@@ -34,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  DDLogDebug(@"Action - viewDidLoad");
+    DDLogDebug(@"Action - viewDidLoad");
     [self.view setBackgroundColor:[UIColor clearColor]];
     //设置背景图片
     _bgView =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, (kApplicationHeight)/2)];
@@ -169,8 +169,8 @@
     image = [info objectForKey:UIImagePickerControllerEditedImage];
     JMSGUser *user = [JMSGUser getMyInfo];
     image = [image resizedImageByWidth:upLoadImgWidth];
-    NSString *imgPath = [JCHATFileManager saveImageWithConversationID:user.username andData:UIImageJPEGRepresentation(image, 1)];
-    [JMSGUser updateMyInfoWithParameter:imgPath withType:kJMSGAvatar completionHandler:^(id resultObject, NSError *error) {
+//    NSString *imgPath = [JCHATFileManager saveImageWithConversationID:user.username andData:UIImageJPEGRepresentation(image, 1)];
+    [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) withType:kJMSGAvatar completionHandler:^(id resultObject, NSError *error) {
         JPIMMAINTHEAD(^{
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if (error == nil) {
