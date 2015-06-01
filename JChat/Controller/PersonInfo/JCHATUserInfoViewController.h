@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCHATUserInfoViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface JCHATUserInfoViewController : UIViewController <
+    UITableViewDataSource,
+    UITableViewDelegate,
+    UIAlertViewDelegate,
+    UIActionSheetDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate>
 
 - (void)updateUserInfo;
 
