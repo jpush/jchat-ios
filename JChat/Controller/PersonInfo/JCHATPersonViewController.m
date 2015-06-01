@@ -17,12 +17,18 @@
 @interface JCHATPersonViewController () <
     TouchTableViewDelegate,
     UIAlertViewDelegate,
-    UIGestureRecognizerDelegate> {
+    UIGestureRecognizerDelegate,
+    UIPickerViewDataSource,
+    UIPickerViewDelegate> {
 
   JCHATChatTable *_personTabl;
   NSArray *_titleArr;
   NSArray *_imgArr;
   NSMutableArray *_infoArr;
+  UIPickerView *_genderPicker;
+  NSArray *_pickerDataArr;
+  NSNumber *_genderNumber;
+  BOOL _selectFlagGender;
 }
 @end
 
@@ -31,8 +37,10 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  _selectFlagGender = NO;
   DDLogDebug(@"Action - viewDidLoad");
-
+  _genderNumber = [NSNumber numberWithInt:1];
+  
   [self.view setBackgroundColor:[UIColor whiteColor]];
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
@@ -74,9 +82,58 @@
   } else {
     name = user.username;
   }
+  
+  _genderPicker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, kScreenHeight, kApplicationWidth, 100)];
+  _genderPicker.dataSource = self;
+  _genderPicker.delegate = self;
+  _genderPicker.tag = 200;
+  [self.view addSubview:_genderPicker];
 
   _titleArr = @[@"昵称", @"性别", @"地区", @"个性签名"];
   _imgArr = @[@"wo_20", @"gender", @"location_21", @"signature"];
+  _pickerDataArr = @[@"男", @"女",@"未知"];
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+
+  return 1;
+}
+
+-(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+  return [_pickerDataArr count];
+}
+
+-(NSString*) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+  return [_pickerDataArr objectAtIndex:row];
+}
+
+
+#pragma mark --选择更改性别
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+  if (component == 0 && row ==0) {
+    _genderNumber = [NSNumber numberWithInt:1];
+  }else if (component == 0 && row == 1) {
+    _genderNumber = [NSNumber numberWithInt:2];
+  }else {
+    _genderNumber = [NSNumber numberWithInt:0];
+  }
+}
+
+- (void)showResultInfo:(id)resultObject error:(NSError *)error {
+  if (error == nil) {
+    JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *) [_personTabl cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    JMSGUser *user = [JMSGUser getMyInfo];
+    if (user.userGender == kJMSGMale) {
+      cell.personInfoConten.text = @"男";
+    } else if (user.userGender == kJMSGFemale) {
+      cell.personInfoConten.text = @"女";
+    } else {
+      cell.personInfoConten.text = @"未知";
+    }
+    [MBProgressHUD showMessage:@"修改成功" view:self.view];
+  }else {
+    [MBProgressHUD showMessage:@"修改失败！" view:self.view];
+  }
 }
 
 - (void)loadUserInfoData {
@@ -113,6 +170,13 @@
 - (void)tableView:(UITableView *)tableView
      touchesBegan:(NSSet *)touches
         withEvent:(UIEvent *)event {
+  if (_selectFlagGender) {
+    [JMSGUser updateMyInfoWithParameter:_genderNumber withType:kJMSGGender completionHandler:^(id resultObject, NSError *error) {
+      [self showResultInfo:resultObject error:error];
+    }];
+    _selectFlagGender = NO;
+  }
+  [self showSelectGenderView:NO];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -137,12 +201,29 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *titleArr = @[@"输入昵称", @"输入性别", @"输入地区", @"个性签名"];
-  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[titleArr objectAtIndex:indexPath.row] message:nil
-                                                    delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-  alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-  alertView.tag = indexPath.row;
-  [alertView show];
+  if (indexPath.row == 1) {
+    _selectFlagGender = YES;
+    [self showSelectGenderView:YES];
+  }else {
+    NSArray *titleArr = @[@"输入昵称", @"输入性别", @"输入地区", @"个性签名"];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[titleArr objectAtIndex:indexPath.row] message:nil
+                                                       delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertView.tag = indexPath.row;
+    [alertView show];
+  }
+}
+
+- (void)showSelectGenderView:(BOOL)flag {
+  if (!flag) {
+    [UIView animateWithDuration:0.5 animations:^{
+      [_genderPicker setFrame:CGRectMake(0, self.view.bounds.size.height, _genderPicker.bounds.size.width, _genderPicker.bounds.size.height)];
+    }];
+  }else {
+    [UIView animateWithDuration:0.5 animations:^{
+      [_genderPicker setFrame:CGRectMake(0, self.view.bounds.size.height - _genderPicker.bounds.size.height, _genderPicker.bounds.size.width, _genderPicker.bounds.size.height)];
+    }];
+  }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

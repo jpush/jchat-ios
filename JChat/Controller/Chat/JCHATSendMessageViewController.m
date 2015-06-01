@@ -22,7 +22,6 @@
 #import "JCHATFriendDetailViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "JCHATStringUtils.h"
-#import <JMessage/JMessage.h>
 
 #define interval 60*2
 
@@ -333,7 +332,7 @@
         }];
 
         NSDictionary *userInfo = [notification userInfo];
-        JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_SendMessageResult]);
+        JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
         DDLogDebug(@"The received msg - %@", message);
         if (!message) {
           DDLogWarn(@"No message content in notification.");
