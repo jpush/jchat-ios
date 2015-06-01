@@ -188,20 +188,36 @@
 #pragma mark --发送消息响应
 - (void)sendMessageResponse:(NSNotification *)response {
   DDLogDebug(@"Event - sendMessageResponse");
+
   NSDictionary *responseDic = [response userInfo];
   JMSGMessage *message = responseDic[JMSGSendMessageObject];
   NSError *error = responseDic[JMSGSendMessageError];
   if (error == nil) {
   } else {
     DDLogDebug(@"Sent response error - %@", error);
-    if (error.code == 800013) {
-      DDLogError(@"用户登出了");
+    NSString *alert = @"发消息返回错误";
+    if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
+      alert = @"本用户登出了。可能在其他设备上做了登录。";
+    } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
+      alert = @"本用户从未登录。（有可能是客户端BUG？）";
+    } else if (error.code == JCHAT_ERROR_MSG_TARGET_NOT_EXIST) {
+      alert = @"发送消息的目标用户不存在。";
+    } else if (error.code == JCHAT_ERROR_MSG_GROUP_NOT_EXIST) {
+      alert = @"发送消息的目标群组不存在。";
+    } else if (error.code == JCHAT_ERROR_MSG_USER_NOT_IN_GROUP) {
+      alert = @"当前用户不在本群组里";
     }
+    DDLogWarn(alert);
+
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD showMessage:alert view:self.view];
   }
+  DDLogDebug(@"The message status - %zd", message.status.integerValue);
 
   JCHATChatModel *model;
   for (NSInteger i = 0; i < [_messageDataArr count]; i++) {
     model = _messageDataArr[i];
+    // FIXME - 逐步扫描，找到当前的这条消息，然后改变状态。这个作法太低效了。
     if ([message.messageId isEqualToString:model.messageId]) {
       if (message.messageType == kJMSGVoiceMessage) {
         JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *) message;
@@ -210,11 +226,13 @@
         JMSGImageMessage *imgMessage = (JMSGImageMessage *) message;
         model.pictureImgPath = imgMessage.resourcePath;
       }
-      model.messageStatus = [message.status integerValue];
+
+      model.messageStatus = (JMSGMessageStatusType) [message.status integerValue];
     }
   }
 
   JPIMMAINTHEAD(^{
+    // TODO - 这一条是刷新整个的 View ？
     [_messageTableView reloadData];
   });
 }
@@ -223,7 +241,7 @@
 - (void)changeMessageState:(JMSGMessage *)message {
   DDLogDebug(@"Action - changeMessageState");
   for (NSInteger i = 0; i < [_messageDataArr count]; i++) {
-    JCHATChatModel *model = [_messageDataArr objectAtIndex:i];
+    JCHATChatModel *model = _messageDataArr[i];
     if ([message.messageId isEqualToString:model.messageId]) {
       model.messageStatus = [message.status integerValue];
       [self.messageTableView reloadData];
@@ -302,6 +320,7 @@
 #pragma mark --收到消息
 -(void)receiveMessageNotification:(NSNotification *)notification {
   DDLogDebug(@"Event - receiveMessageNotification");
+
     JPIMMAINTHEAD(^{
         JMSGUser *user = [JMSGUser getMyInfo];
         [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {

@@ -59,7 +59,7 @@
 
   _personTabl = [[JCHATChatTable alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight - kNavigationBarHeight - kStatusBarHeight)];
   _personTabl.touchDelegate = self;
-  _personTabl.backgroundColor = [UIColor whiteColor]];
+  _personTabl.backgroundColor = [UIColor whiteColor];
   _personTabl.scrollEnabled = NO;
   _personTabl.dataSource = self;
   _personTabl.delegate = self;
