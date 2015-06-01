@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface JCHATRegisterDetailViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField *nickNameField;
+
+@property(weak, nonatomic) IBOutlet UITextField *nickNameField;
 
 @end
