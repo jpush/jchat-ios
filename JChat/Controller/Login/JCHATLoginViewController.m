@@ -111,11 +111,11 @@
         [self userLoginSave];
       } else {
         NSString *alert = @"用户登录失败";
-        if (error.code == JCHAT_ERROR_LOGIN_NOT_EXIST) {
+        if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
           alert = @"用户名不存在";
-        } else if (error.code == JCHAT_ERROR_LOGIN_WRONG_PASSWORD) {
+        } else if (error.code == JCHAT_ERROR_USER_WRONG_PASSWORD) {
           alert = @"密码错误！";
-        } else if (error.code == JCHAT_ERROR_PARAS_INVALID) {
+        } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
           alert = @"用户名或者密码不合法！";
         }
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
