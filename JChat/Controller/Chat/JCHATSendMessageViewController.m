@@ -54,11 +54,13 @@
   if (!_conversation) {
     if (self.user) {
       DDLogDebug(@"No conversation - to create single");
+        __weak typeof(self) weakSelf = self;
       [JMSGConversation createConversation:self.user.username
                                   withType:kJMSGSingle
                          completionHandler:^(id resultObject, NSError *error) {
                            _conversation = (JMSGConversation *) resultObject;
 
+                            weakSelf.title = _conversation.target_name;
                            [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                              if (error == nil) {
                              } else {
