@@ -24,88 +24,122 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(netWorkConnectClose)
-                                                 name:kJPFNetworkDidCloseNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(netWorkConnectSetup)
-                                                 name:kJPFNetworkDidSetupNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(connectSucceed)
-                                                 name:kJPFNetworkDidLoginNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reveiveMessageNotifi:)
-                                                 name:JMSGNotification_ReceiveMessage object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(alreadyLoginClick)
-                                                 name:kLogin_NotifiCation object:nil];
   
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(creatGroupSuccessToPushView:)
-                                               name:kCreatGroupState
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(netWorkConnectClose)
+                                               name:kJPFNetworkDidCloseNotification
                                              object:nil];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(conversatinInfoChange:)
+                                             name:JMSGNotification_ConversationInfoChanged
+                                           object:nil];
   
-    self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-    self.navigationController.navigationBar.alpha=0.8;
-    
-    NSShadow *shadow = [[NSShadow alloc]init];
-    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-    shadow.shadowOffset = CGSizeMake(0,-1);
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                                     shadow,NSShadowAttributeName,
-                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
-                                                                     nil]];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.chatTableView setBackgroundColor:[UIColor whiteColor]];
-    self.chatTableView.dataSource=self;
-    self.chatTableView.delegate=self;
-    self.chatTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    self.chatTableView.touchDelegate = self;
-    
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = @"会话";
-    self.navigationItem.titleView = titleLabel;
-    
-    _rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_rightBarButton setFrame:CGRectMake(0, 0, 30, 30)];
-    [_rightBarButton addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_rightBarButton setImage:[UIImage imageNamed:@"add_37"] forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarButton];//为导航栏添加右侧按钮
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    searchBar.placeholder = @"搜索";
-    [searchBar sizeToFit];
-    searchBar.searchBarStyle = UISearchBarStyleProminent;
-    // 添加 searchbar 到 headerview
-//    self.chatTableView.tableHeaderView = searchBar;
-    // 用 searchbar 初始化 SearchDisplayController
-    // 并把 searchDisplayController 和当前 controller 关联起来
-   self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    // searchResultsDataSource 就是 UITableViewDataSource
-    searchDisplayController.searchResultsDataSource = self;
-    // searchResultsDelegate 就是 UITableViewDelegate
-    searchDisplayController.searchResultsDelegate = self;
-    self.addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 65, 100, 100)];
-    [self.addBgView setBackgroundColor:[UIColor clearColor]];
-    [self.addBgView setUserInteractionEnabled:YES];
-    UIImage *frameImg =[UIImage imageNamed:@"frame"];
-    frameImg =[frameImg resizableImageWithCapInsets:UIEdgeInsetsMake(30, 10, 30, 10) resizingMode:UIImageResizingModeTile];
-    [self.addBgView setImage:frameImg];
-    [self.view addSubview:self.addBgView];
-    [self.view bringSubviewToFront:self.addBgView];
-    [self.addBgView setHidden:YES];
-    [self addBtn];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(netWorkConnectSetup)
+                                               name:kJPFNetworkDidSetupNotification
+                                             object:nil];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(connectSucceed)
+                                               name:kJPFNetworkDidLoginNotification
+                                             object:nil];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(reveiveMessageNotifi:)
+                                               name:JMSGNotification_ReceiveMessage object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(alreadyLoginClick)
+                                               name:kLogin_NotifiCation object:nil];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(creatGroupSuccessToPushView:)
+                                             name:kCreatGroupState
+                                           object:nil];
+
+  self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
+  self.navigationController.navigationBar.alpha=0.8;
+
+  NSShadow *shadow = [[NSShadow alloc]init];
+  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+  shadow.shadowOffset = CGSizeMake(0,-1);
+  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                   shadow,NSShadowAttributeName,
+                                                                   [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
+                                                                   nil]];
+  [self.view setBackgroundColor:[UIColor whiteColor]];
+  [self.chatTableView setBackgroundColor:[UIColor whiteColor]];
+  self.chatTableView.dataSource=self;
+  self.chatTableView.delegate=self;
+  self.chatTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+  self.chatTableView.touchDelegate = self;
+
+  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+  titleLabel.backgroundColor = [UIColor clearColor];
+  titleLabel.font = [UIFont boldSystemFontOfSize:20];
+  titleLabel.textColor = [UIColor whiteColor];
+  titleLabel.textAlignment = NSTextAlignmentCenter;
+  titleLabel.text = @"会话";
+  self.navigationItem.titleView = titleLabel;
+
+  _rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [_rightBarButton setFrame:CGRectMake(0, 0, 30, 30)];
+  [_rightBarButton addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+  [_rightBarButton setImage:[UIImage imageNamed:@"add_37"] forState:UIControlStateNormal];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarButton];//为导航栏添加右侧按钮
+  UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+  searchBar.placeholder = @"搜索";
+  [searchBar sizeToFit];
+  searchBar.searchBarStyle = UISearchBarStyleProminent;
+  // 添加 searchbar 到 headerview
+  //    self.chatTableView.tableHeaderView = searchBar;
+  // 用 searchbar 初始化 SearchDisplayController
+  // 并把 searchDisplayController 和当前 controller 关联起来
+  self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+  // searchResultsDataSource 就是 UITableViewDataSource
+  searchDisplayController.searchResultsDataSource = self;
+  // searchResultsDelegate 就是 UITableViewDelegate
+  searchDisplayController.searchResultsDelegate = self;
+  self.addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 65, 100, 100)];
+  [self.addBgView setBackgroundColor:[UIColor clearColor]];
+  [self.addBgView setUserInteractionEnabled:YES];
+  UIImage *frameImg =[UIImage imageNamed:@"frame"];
+  frameImg =[frameImg resizableImageWithCapInsets:UIEdgeInsetsMake(30, 10, 30, 10) resizingMode:UIImageResizingModeTile];
+  [self.addBgView setImage:frameImg];
+  [self.view addSubview:self.addBgView];
+  [self.view bringSubviewToFront:self.addBgView];
+  [self.addBgView setHidden:YES];
+  [self addBtn];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
+}
+
+#pragma mark --会话信息改变
+- (void)conversatinInfoChange:(NSNotification *)notification {
+//  NSDictionary *userInfo = [notification userInfo];
+// __block NSString *targetId = [userInfo objectForKey:JMSGNotification_ConversationInfoChangedKey];
+//  [JMSGConversation getConversation:targetId completionHandler:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      JPIMMAINTHEAD(^{
+//        [self reloadConversationInfo:resultObject];
+//      });
+//    }else {
+//      
+//    }
+//  }];
+}
+
+- (void)reloadConversationInfo:(JMSGConversation *)conversation {
+  for (NSInteger i=0; i<[_conversationArr count]; i++) {
+    JMSGConversation *conversationObject = [_conversationArr objectAtIndex:i];
+    if ([conversationObject.Id isEqualToString:conversation.Id]) {
+      [_conversationArr removeObjectAtIndex:i];
+      [_conversationArr insertObject:conversation atIndex:i];
+      [_chatTableView reloadData];
+      return;
+    }
+  }
 }
 
 #pragma mark --创建群成功Push group viewctl
