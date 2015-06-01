@@ -16,7 +16,7 @@
 #import "AppDelegate.h"
 #import "UIImage+ResizeMagick.h"
 #import <JMessage/JMessage.h>
-
+#import <MobileCoreServices/UTCoreTypes.h>
 
 @interface JCHATUserInfoViewController ()
 
@@ -145,15 +145,11 @@
   }
 }
 
+
 #pragma mark -调用相册
-
-- (void)photoClick {
-  DDLogDebug(@"Action - photoClick");
-
+-(void)photoClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-  picker.allowsEditing = YES;
   picker.delegate = self;
-  picker.editing = YES;
   picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
   NSArray *temp_MediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
   picker.mediaTypes = temp_MediaTypes;
@@ -162,16 +158,14 @@
 }
 
 #pragma mark --调用相机
-
-- (void)cameraClick {
-  DDLogDebug(@"Action - cameraClick");
-
+-(void)cameraClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-  picker.allowsEditing = YES;
-  if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+  if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    NSArray *temp_MediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
-    picker.mediaTypes = temp_MediaTypes;
+    NSString *requiredMediaType = ( NSString *)kUTTypeImage;
+    NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
+    [picker setMediaTypes:arrMediaTypes];
+    picker.showsCameraControls = YES;
     picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     picker.editing = YES;
     picker.delegate = self;
