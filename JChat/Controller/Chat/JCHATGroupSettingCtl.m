@@ -30,7 +30,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupMemberChange object:nil];
   self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
   self.navigationController.navigationBar.alpha=0.8;
   
@@ -71,6 +72,19 @@
   [self getGroupMemberList];
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)gropMemberChange:(NSNotification *)notificationObject {
+  NSDictionary *userInfo = [notificationObject userInfo];
+  NSMutableArray *userList = [userInfo objectForKey:JMSGNotification_GroupMemberKey];
+  JPIMMAINTHEAD(^{
+    _groupData = [NSMutableArray arrayWithArray:userList];
+    [self reloadHeadViewData];
+  });
+}
+
 - (void)tableView:(UITableView *)tableView touchesBegan:(NSSet *)touches
         withEvent:(UIEvent *)event {
     JCHATGroupSettingCell *groupNameCell =(JCHATGroupSettingCell *)[self.groupTab cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
@@ -87,7 +101,6 @@
    typeof(self) __weak weakSelf = self;
   [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
     typeof(weakSelf) __strong strongSelf = weakSelf;
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error == nil) {
       _groupData = [NSMutableArray arrayWithArray:resultObject];
       [strongSelf reloadHeadViewData];
@@ -127,7 +140,7 @@
             [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
             personView.headViewBtn.tag = 1000+i;
           JMSGUser *user = [_groupData objectAtIndex:i];
-          if (user.nickname) {
+          if (user.nickname && ![user.nickname isEqualToString:@"(null)"]) {
             personView.memberLable.text = user.nickname;
           }else {
             personView.memberLable.text = user.username;

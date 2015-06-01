@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface JCHATRegisterViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *registerBtn;
-@property (weak, nonatomic) IBOutlet UITextField *accountField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+
+@property(weak, nonatomic) IBOutlet UIButton *registerBtn;
+@property(weak, nonatomic) IBOutlet UITextField *accountField;
+@property(weak, nonatomic) IBOutlet UITextField *passwordField;
 
 @end
