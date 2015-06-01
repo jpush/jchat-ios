@@ -96,9 +96,9 @@
         } else {
             _nameLabel.text = user.username;
         }
-        if ([user.userGender integerValue] == 0) {
+        if (user.userGender == kJMSGUnknown) {
             [_infoArr addObject:@"未知"];
-        } else if ([user.userGender integerValue] == 1) {
+        } else if (user.userGender == kJMSGMale) {
             [_infoArr addObject:@"男"];
         } else {
             [_infoArr addObject:@"女"];
