@@ -77,7 +77,7 @@
         NSString *alert = @"注册失败";
         if (error.code == JCHAT_ERROR_REGISTER_EXIST) {
           alert = @"用户已经存在！";
-        } else if (error.code == JCHAT_ERROR_PARAS_INVALID) {
+        } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
           alert = @"用户名或者密码不合法";
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
