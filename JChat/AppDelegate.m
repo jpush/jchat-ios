@@ -63,6 +63,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                         name:kJPFNetworkDidSetupNotification
                       object:nil];
   [defaultCenter addObserver:self
+                    selector:@selector(networkIsConnecting:)
+                        name:kJPFNetworkIsConnectingNotification
+                      object:nil];
+  [defaultCenter addObserver:self
                     selector:@selector(networkDidClose:)
                         name:kJPFNetworkDidCloseNotification
                       object:nil];
@@ -74,6 +78,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                     selector:@selector(networkDidLogin:)
                         name:kJPFNetworkDidLoginNotification
                       object:nil];
+
+  [defaultCenter addObserver:self
+                    selector:@selector(receivePushMessage:)
+                        name:kJPFNetworkDidReceiveMessageNotification
+                      object:nil];
+
 }
 
 - (void)initLogger {
@@ -110,27 +120,44 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 // notification from JPush
 - (void)networkDidSetup:(NSNotification *)notification {
-  DDLogDebug(@"Action - networkDidSetup");
+  DDLogDebug(@"Event - networkDidSetup");
+}
+
+// notification from JPush
+- (void)networkIsConnecting:(NSNotification *)notification {
+  DDLogDebug(@"Event - networkIsConnecting");
 }
 
 // notification from JPush
 - (void)networkDidClose:(NSNotification *)notification {
-  DDLogDebug(@"Action - networkDidClose");
+  DDLogDebug(@"Event - networkDidClose");
 }
 
 // notification from JPush
 - (void)networkDidRegister:(NSNotification *)notification {
-  DDLogDebug(@"Action - networkDidRegister");
+  DDLogDebug(@"Event - networkDidRegister");
 }
 
 // notification from JPush
 - (void)networkDidLogin:(NSNotification *)notification {
-  DDLogDebug(@"Action - networkDidLogin");
+  DDLogDebug(@"Event - networkDidLogin");
 }
 
 // notification from JPush
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
-  DDLogDebug(@"Action - networkDidReceiveMessage");
+  DDLogDebug(@"Event - networkDidReceiveMessage");
+}
+
+// notification from JPush
+- (void)receivePushMessage:(NSNotification *)notification {
+  DDLogDebug(@"Event - receivePushMessage");
+
+  NSDictionary *info = notification.userInfo;
+  if (info) {
+    DDLogDebug(@"The message - %@", info);
+  } else {
+    DDLogWarn(@"Unexpected - no user info in jpush mesasge");
+  }
 }
 
 
