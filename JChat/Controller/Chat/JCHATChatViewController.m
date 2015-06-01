@@ -113,6 +113,8 @@
   [self.addBgView setHidden:YES];
   [self addBtn];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getConversationList) name:JMSGNotification_ConversationInfoChanged object:nil];
+
 }
 
 #pragma mark --会话信息改变
