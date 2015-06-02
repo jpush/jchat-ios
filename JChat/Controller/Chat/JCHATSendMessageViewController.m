@@ -43,9 +43,10 @@
   DDLogDebug(@"Action - viewDidLoad");
 
   if (self.user) {
-    self.targetName = self.user.username;
+   self.targetName = self.user.username;
+  [self setTitleWithUser:self.user];
   } else if (_conversation) {
-    self.targetName = _conversation.target_name;
+   self.title = self.targetName = _conversation.target_name;
   } else {
     DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
   }
@@ -85,13 +86,7 @@
           JPIMMAINTHEAD(^{
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.user = ((JMSGUser *) resultObject);
-            if (strongSelf.user.noteName != nil && ![strongSelf.user.noteName isEqualToString:KNull]) {
-              strongSelf.title = strongSelf.user.noteName;
-            } else if (strongSelf.user.nickname != nil && ![strongSelf.user.nickname isEqualToString:KNull]) {
-              strongSelf.title = strongSelf.user.nickname;
-            } else {
-              strongSelf.title = strongSelf.user.username;
-            }
+            [self setTitleWithUser:strongSelf.user];
           });
         } else {
           __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -152,6 +147,35 @@
   [self.view addSubview:self.moreView];
 
   [self addNotification];
+  
+  [self sendInfoRequest];
+}
+
+- (void)setTitleWithUser:(JMSGUser *)user {
+  if (user.noteName != nil && ![user.noteName isEqualToString:KNull]) {
+    self.title = user.noteName;
+  } else if (user.nickname != nil && ![user.nickname isEqualToString:KNull]) {
+    self.title = user.nickname;
+  } else {
+    self.title = user.username;
+  }
+}
+
+- (void)sendInfoRequest {
+  if (self.user) {
+    [JMSGUser getUserInfoWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
+      if (resultObject) {
+        [self setTitleWithUser:resultObject];
+      }
+    }];
+  }else if (self.conversation && self.conversation.chatType == kJMSGGroup) {
+    [JMSGGroup getGroupInfo:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    }];
+  }else if (self.conversation && self.conversation.chatType == kJMSGSingle) {
+    [JMSGUser getUserInfoWithUsername:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+      [self setTitleWithUser:resultObject];
+    }];
+  }
 }
 
 - (void)receiveNotificationSkipToChatPageView:(NSNotification *)notification {
@@ -541,10 +565,43 @@
                                            selector:@selector(deleteAllMessage)
                                                name:kDeleteAllMessage
                                              object:nil];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(receiveEeventMessageNotification:)
+                                               name:JMSGNotification_EventMessage
+                                             object:nil];
 //    [self.toolBar.textView addObserver:self
 //                            forKeyPath:@"contentSize"
 //                               options:NSKeyValueObservingOptionNew
 //                               context:nil];
+}
+
+#pragma mark --接收EventNotification
+- (void)receiveEeventMessageNotification:(NSNotification *)notification {
+  NSDictionary *infoDic = [notification userInfo];
+  
+  JMSGEventMessage *eventMessage = [infoDic objectForKey:JMSGNotification_EventKey];
+  
+  if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.target_id longLongValue]) {
+    JCHATChatModel *model = [[JCHATChatModel alloc]init];
+    model.chatType = kJMSGGroup;
+    model.type = kJMSGEventMessage;
+    NSString *memberStr = @"";
+    for (NSInteger i =0; i<[eventMessage.targetList count]; i++) {
+      
+      memberStr =[NSString stringWithFormat:@"%@ %@",memberStr,[eventMessage.targetList objectAtIndex:i]];
+    }
+    if (eventMessage.type == kJMSGDeleteGroupMemberEvent) {
+      model.chatContent = [memberStr stringByAppendingString:@"被踢出群聊"];
+    }else if (eventMessage.type == kJMSGExitGroupEvent) {
+      model.chatContent = [memberStr stringByAppendingString:@"退群了"];
+
+    }else if (eventMessage.type == kJMSGAddGroupMemberEvent) {
+      model.chatContent = [memberStr stringByAppendingString:@"加入群聊"];
+    }
+    [_messageDataArr addObject:model];
+    [_messageTableView reloadData];
+  }
 }
 
 - (void)deleteAllMessage {
@@ -564,7 +621,7 @@
     [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
 }
 
-- (void)inputKeyboardWillHide:(NSNotification *)notification{
+- (void)inputKeyboardWillHide:(NSNotification *)notification {
     CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
         [UIView animateWithDuration:animationTime animations:^{
@@ -735,7 +792,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     self.user = nil;
     [_messageDataArr removeAllObjects];
   }
-  self.title = self.conversation.target_name;
   [self.messageTableView reloadData];
 }
 
@@ -799,14 +855,18 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         [cell setCellData:model delegate:self indexPath:indexPath];
         return cell;
-    }else if (model.type == kJMSGTimeMessage) {
+    }else if (model.type == kJMSGTimeMessage || model.type == kJMSGEventMessage) {
         static NSString *cellIdentifier = @"timeCell";
         JCHATShowTimeCell *cell = (JCHATShowTimeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATShowTimeCell" owner:self options:nil] lastObject];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+      if (model.type == kJMSGEventMessage) {
+        cell.messageTimeLabel.text = model.chatContent;
+      }else {
         cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
+      }
         return cell;
     }
     else{

@@ -106,6 +106,7 @@
         [MBProgressHUD showMessage:@"创建群成功" view:self.view];
         strongSelf.sendMessageCtl.conversation = resultObject;
         strongSelf.sendMessageCtl.targetName = group.group_name;
+        strongSelf.sendMessageCtl.title = group.group_name;
         [strongSelf.navigationController popViewControllerAnimated:YES];
       }else {
         [MBProgressHUD showMessage:@"创建群失败" view:self.view];
