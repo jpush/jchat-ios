@@ -32,7 +32,7 @@
   [super viewDidLoad];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupMemberChange object:nil];
-  self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
+  self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
   self.navigationController.navigationBar.alpha=0.8;
   
   NSShadow *shadow = [[NSShadow alloc]init];
@@ -163,6 +163,7 @@
       [JMSGGroup updateGroupInfo:group completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
           strongSelf.conversation.target_name = textField.text;
+          strongSelf.sendMessageCtl.title = textField.text;
           JPIMMAINTHEAD(^{
             [strongSelf.groupTab reloadData];
           });

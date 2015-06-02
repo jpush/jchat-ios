@@ -32,11 +32,6 @@
                                              object:nil];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(conversatinInfoChange:)
-                                             name:JMSGNotification_ConversationInfoChanged
-                                           object:nil];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(netWorkConnectSetup)
                                                name:kJPFNetworkDidSetupNotification
                                              object:nil];
@@ -47,8 +42,21 @@
                                              object:nil];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(isConnecting)
+                                               name:kJPFNetworkIsConnectingNotification
+                                             object:nil];
+
+
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(conversatinInfoChange:)
+                                             name:JMSGNotification_ConversationInfoChanged
+                                           object:nil];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(reveiveMessageNotifi:)
                                                name:JMSGNotification_ReceiveMessage object:nil];
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(alreadyLoginClick)
                                                name:kLogin_NotifiCation object:nil];
@@ -203,7 +211,7 @@
 }
 
 - (void)netWorkConnectClose {
-    titleLabel.text =@"未连接...";
+    titleLabel.text =@"未连接";
 }
 
 - (void)netWorkConnectSetup {
@@ -211,8 +219,12 @@
 }
 
 - (void)connectSucceed {
-    titleLabel.text =@"连接成功...";
+    titleLabel.text =@"连接成功";
     [self performSelector:@selector(showName) withObject:nil afterDelay:1];
+}
+
+- (void)isConnecting {
+  titleLabel.text =@"正在连接...";
 }
 
 - (void)showName {
