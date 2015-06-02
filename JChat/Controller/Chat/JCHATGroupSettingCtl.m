@@ -163,6 +163,7 @@
       [JMSGGroup updateGroupInfo:group completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
           strongSelf.conversation.target_name = textField.text;
+          strongSelf.sendMessageCtl.title = textField.text;
           JPIMMAINTHEAD(^{
             [strongSelf.groupTab reloadData];
           });

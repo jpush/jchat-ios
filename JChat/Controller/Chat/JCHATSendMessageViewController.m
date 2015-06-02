@@ -783,7 +783,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     self.user = nil;
     [_messageDataArr removeAllObjects];
   }
-  self.title = self.conversation.target_name;
   [self.messageTableView reloadData];
 }
 
