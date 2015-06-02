@@ -45,14 +45,6 @@
                                            selector:@selector(isConnecting)
                                                name:kJPFNetworkIsConnectingNotification
                                              object:nil];
-
-
-
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(conversatinInfoChange:)
-                                             name:JMSGNotification_ConversationInfoChanged
-                                           object:nil];
-  
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(reveiveMessageNotifi:)
                                                name:JMSGNotification_ReceiveMessage object:nil];
@@ -127,17 +119,17 @@
 
 #pragma mark --会话信息改变
 - (void)conversatinInfoChange:(NSNotification *)notification {
-//  NSDictionary *userInfo = [notification userInfo];
-// __block NSString *targetId = [userInfo objectForKey:JMSGNotification_ConversationInfoChangedKey];
-//  [JMSGConversation getConversation:targetId completionHandler:^(id resultObject, NSError *error) {
-//    if (error == nil) {
-//      JPIMMAINTHEAD(^{
-//        [self reloadConversationInfo:resultObject];
-//      });
-//    }else {
-//      
-//    }
-//  }];
+  NSDictionary *userInfo = [notification userInfo];
+ __block NSString *targetId = [userInfo objectForKey:JMSGNotification_ConversationInfoChangedKey];
+  [JMSGConversation getConversation:targetId completionHandler:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      JPIMMAINTHEAD(^{
+        [self reloadConversationInfo:resultObject];
+      });
+    }else {
+      
+    }
+  }];
 }
 
 - (void)reloadConversationInfo:(JMSGConversation *)conversation {
@@ -215,21 +207,17 @@
 }
 
 - (void)netWorkConnectSetup {
-    titleLabel.text =@"正在连接...";
+    titleLabel.text =@"收取中...";
 }
 
 - (void)connectSucceed {
-    titleLabel.text =@"连接成功";
-    [self performSelector:@selector(showName) withObject:nil afterDelay:1];
+    titleLabel.text =@"会话";
 }
 
 - (void)isConnecting {
-  titleLabel.text =@"正在连接...";
+  titleLabel.text =@"连接中...";
 }
 
-- (void)showName {
-    titleLabel.text =@"会话";
-}
 
 #pragma mark --收到消息
 - (void)reveiveMessageNotifi :(NSNotification *)notifi {
