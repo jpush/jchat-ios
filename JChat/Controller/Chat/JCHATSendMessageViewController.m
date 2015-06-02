@@ -43,9 +43,10 @@
   DDLogDebug(@"Action - viewDidLoad");
 
   if (self.user) {
-    self.targetName = self.user.username;
+   self.targetName = self.user.username;
+  [self setTitleWithUser:self.user];
   } else if (_conversation) {
-    self.targetName = _conversation.target_name;
+   self.title = self.targetName = _conversation.target_name;
   } else {
     DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
   }
@@ -85,13 +86,7 @@
           JPIMMAINTHEAD(^{
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.user = ((JMSGUser *) resultObject);
-            if (strongSelf.user.noteName != nil && ![strongSelf.user.noteName isEqualToString:KNull]) {
-              strongSelf.title = strongSelf.user.noteName;
-            } else if (strongSelf.user.nickname != nil && ![strongSelf.user.nickname isEqualToString:KNull]) {
-              strongSelf.title = strongSelf.user.nickname;
-            } else {
-              strongSelf.title = strongSelf.user.username;
-            }
+            [self setTitleWithUser:strongSelf.user];
           });
         } else {
           __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -156,15 +151,29 @@
   [self sendInfoRequest];
 }
 
+- (void)setTitleWithUser:(JMSGUser *)user {
+  if (user.noteName != nil && ![user.noteName isEqualToString:KNull]) {
+    self.title = user.noteName;
+  } else if (user.nickname != nil && ![user.nickname isEqualToString:KNull]) {
+    self.title = user.nickname;
+  } else {
+    self.title = user.username;
+  }
+}
+
 - (void)sendInfoRequest {
   if (self.user) {
     [JMSGUser getUserInfoWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
+      if (resultObject) {
+        [self setTitleWithUser:resultObject];
+      }
     }];
   }else if (self.conversation && self.conversation.chatType == kJMSGGroup) {
     [JMSGGroup getGroupInfo:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
     }];
   }else if (self.conversation && self.conversation.chatType == kJMSGSingle) {
     [JMSGUser getUserInfoWithUsername:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+      [self setTitleWithUser:resultObject];
     }];
   }
 }
