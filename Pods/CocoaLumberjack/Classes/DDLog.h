@@ -262,7 +262,7 @@ NSString * DDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
  * (SOME_FRAMEWORK_LOG_FLAG_TRACE & DDLogLevelVerbose) => (01000000 & 00011111) => NO
  *
  * Consider passing DDLogLevelAll to this method, which has all bits set.
- * You can also use the exclusive-or bitwise operator to get a bitmask that has all flags set,
+ * You can also use the exclusive-or bitwise eventOperator to get a bitmask that has all flags set,
  * except the ones you explicitly don't want. For example, if you wanted everything except verbose & debug:
  *
  * ((DDLogLevelAll ^ DDLogLevelVerbose) | DDLogLevelInfo)
