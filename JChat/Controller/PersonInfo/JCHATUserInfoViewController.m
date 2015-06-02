@@ -181,7 +181,7 @@
 
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
   UIImage *image;
-  image = [info objectForKey:UIImagePickerControllerEditedImage];
+  image = [info objectForKey:UIImagePickerControllerOriginalImage];
   JMSGUser *user = [JMSGUser getMyInfo];
   image = [image resizedImageByWidth:upLoadImgWidth];
   [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1)
