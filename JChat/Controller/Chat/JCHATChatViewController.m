@@ -223,7 +223,7 @@
 }
 
 - (void)isConnecting {
-  titleLabel.text =@"收取中...";
+  titleLabel.text =@"连接中...";
 }
 
 
