@@ -152,6 +152,18 @@
   [self.view addSubview:self.moreView];
 
   [self addNotification];
+  
+  [self sendInfoRequest];
+}
+
+- (void)sendInfoRequest {
+  if (self.user) {
+    [JMSGUser getUserInfoWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
+    }];
+  }else if (self.conversation) {
+    [JMSGGroup getGroupInfo:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    }];
+  }
 }
 
 - (void)receiveNotificationSkipToChatPageView:(NSNotification *)notification {
