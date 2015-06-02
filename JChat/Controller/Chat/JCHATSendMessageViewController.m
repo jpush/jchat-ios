@@ -160,8 +160,11 @@
   if (self.user) {
     [JMSGUser getUserInfoWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
     }];
-  }else if (self.conversation) {
+  }else if (self.conversation && self.conversation.chatType == kJMSGGroup) {
     [JMSGGroup getGroupInfo:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    }];
+  }else if (self.conversation && self.conversation.chatType == kJMSGSingle) {
+    [JMSGUser getUserInfoWithUsername:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
     }];
   }
 }
