@@ -25,12 +25,15 @@
 
 #define interval 60*2
 
+NSString * const JCHATMessage      = @"JCHATMessage";
+NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
+
 @interface JCHATSendMessageViewController () {
 
 @private
-  NSMutableArray *_messageDataArr;
   NSMutableArray *_imgDataArr;
   __block JMSGConversation *_conversation;
+  NSMutableDictionary *_messageDic;
 }
 
 @end
@@ -41,7 +44,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-
   if (self.user) {
    self.targetName = self.user.username;
   [self setTitleWithUser:self.user];
@@ -99,7 +101,11 @@
     }
   }
 
-  _messageDataArr = [[NSMutableArray alloc] init];
+  _messageDic = [[NSMutableDictionary alloc]init];
+  NSMutableArray *messageIdArr = [[NSMutableArray alloc]init];
+  NSMutableDictionary *messageDic = [[NSMutableDictionary alloc]initWithCapacity:10];
+  _messageDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:messageDic,JCHATMessage,messageIdArr,JCHATMessageIdKey,nil];
+  
   _imgDataArr =[[NSMutableArray alloc] init];
 
   [self getAllMessage];
@@ -239,22 +245,21 @@
   }
   DDLogDebug(@"The message status - %zd", message.status.integerValue);
 
-  JCHATChatModel *model;
-  for (NSInteger i = 0; i < [_messageDataArr count]; i++) {
-    model = _messageDataArr[i];
-    // FIXME - 逐步扫描，找到当前的这条消息，然后改变状态。这个作法太低效了。
-    if ([message.messageId isEqualToString:model.messageId]) {
-      if (message.messageType == kJMSGVoiceMessage) {
-        JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *) message;
-        model.voicePath = voiceMessage.resourcePath;
-      } else if (message.messageType == kJMSGImageMessage) {
-        JMSGImageMessage *imgMessage = (JMSGImageMessage *) message;
-        model.pictureImgPath = imgMessage.resourcePath;
-      }
-
-      model.messageStatus = (JMSGMessageStatusType) [message.status integerValue];
-    }
+  NSMutableDictionary *messageDataDic =_messageDic[JCHATMessage];
+  
+ JCHATChatModel *model = messageDataDic[message.messageId];
+  if (!model) {
+    return;
   }
+  if (message.messageType == kJMSGVoiceMessage) {
+    JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *) message;
+    model.voicePath = voiceMessage.resourcePath;
+  } else if (message.messageType == kJMSGImageMessage) {
+    JMSGImageMessage *imgMessage = (JMSGImageMessage *) message;
+    model.pictureImgPath = imgMessage.resourcePath;
+  }
+  
+  model.messageStatus = (JMSGMessageStatusType) [message.status integerValue];
 
   JPIMMAINTHEAD(^{
     // TODO - 这一条是刷新整个的 View ？
@@ -265,13 +270,12 @@
 // FIXME - 现在的作法效率低，一条一条搜索。应该用个 HashMap 其 Key 是 messageID
 - (void)changeMessageState:(JMSGMessage *)message {
   DDLogDebug(@"Action - changeMessageState");
-  for (NSInteger i = 0; i < [_messageDataArr count]; i++) {
-    JCHATChatModel *model = _messageDataArr[i];
-    if ([message.messageId isEqualToString:model.messageId]) {
-      model.messageStatus = [message.status integerValue];
-      [self.messageTableView reloadData];
-    }
-  }
+  NSMutableDictionary *messageDataDic =_messageDic[JCHATMessage];
+  
+  JCHATChatModel *model = messageDataDic[message.messageId];
+  model.messageStatus = [message.status integerValue];
+  [self.messageTableView reloadData];
+
 }
 
 - (bool)checkDevice:(NSString *)name {
@@ -281,9 +285,21 @@
   return range.location != NSNotFound;
 }
 
+#pragma mark -- 清空消息缓存
+- (void)cleanMessageCache {
+  [_messageDic[JCHATMessage] removeAllObjects];
+  [_messageDic[JCHATMessageIdKey] removeAllObjects];
+}
+
+#pragma mark --添加message
+- (void)addMessage:(JCHATChatModel *)model {
+  [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
+  [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
+}
+
 - (void)getAllMessage {
-    __block NSMutableArray * arrList;
-    [_messageDataArr removeAllObjects];
+  __block NSMutableArray * arrList;
+  [self cleanMessageCache];
     [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
         arrList = resultObject;
         for (NSInteger i=0; i< [arrList count]; i++) {
@@ -337,11 +353,12 @@
             }
             model.messageTime = message.timestamp;
             [self compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
-            [_messageDataArr addObject:model];
+          [self addMessage:model];
         }
             [_messageTableView reloadData];
-        if ([_messageDataArr count] != 0) {
-            [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+      
+        if ([_messageDic[JCHATMessageIdKey] count] != 0) {
+            [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
     }];
 }
@@ -373,10 +390,11 @@
             DDLogWarn(@"It's single chat, but the targetId of the msg is not me. Throw away.");
             return;
           }
-        } else {
-          DDLogVerbose(@"It is a group chat.");
+        } else if (![_conversation.target_id isEqualToString:message.target_id]){
+          DDLogWarn(@"It's group chat, but the targetId of the msg is not group. Throw away.");
+          return;
         }
-
+      
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
         model.messageId = message.messageId;
         model.conversation = _conversation;
@@ -410,7 +428,7 @@
 
         model.messageTime = message.timestamp;
         [self compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
-        [_messageDataArr addObject:model];
+        [self addMessage:model];
         [self addCellToTabel];
         [self scrollToEnd];
     });
@@ -512,6 +530,7 @@
   NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(smallpImg, 1)];
 
   JCHATChatModel *model = [[JCHATChatModel alloc] init];
+  model.messageId = [self getTimeId];
   model.who = YES;
   model.sendFlag = NO;
   model.conversation = _conversation;
@@ -526,8 +545,7 @@
   model.messageTime = @(timeInterVal);
   [_imgDataArr addObject:model];
   model.photoIndex = [_imgDataArr count] - 1;
-
-  [_messageDataArr addObject:model];
+  [self addMessage:model];
   [self.messageTableView reloadData];
   [self dropToolBar];
   [self scrollToEnd];
@@ -566,7 +584,7 @@
                                                  name:kMessageChangeState
                                                object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(deleteAllMessage)
+                                           selector:@selector(cleanMessageCache)
                                                name:kDeleteAllMessage
                                              object:nil];
   
@@ -596,17 +614,12 @@
 - (void)addEventMessage:(JMSGEventMessage *)eventMessage {
   if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
     JCHATChatModel *model = [[JCHATChatModel alloc]init];
+    model.messageId = eventMessage.messageId;
     model.chatType = kJMSGGroup;
     model.type = kJMSGEventMessage;
     model.chatContent = eventMessage.contentText;
-    [_messageDataArr addObject:model];
+    [self addMessage:model];
   }
-}
-
-
-- (void)deleteAllMessage {
-  [_messageDataArr removeAllObjects];
-  [_messageTableView reloadData];
 }
 
 -(void)inputKeyboardWillShow:(NSNotification *)notification{
@@ -681,6 +694,7 @@
 
   [self addmessageShowTimeData];
   JCHATChatModel *model = [[JCHATChatModel alloc] init];
+  model.messageId = [self getTimeId];
   model.who = YES;
   model.conversation = _conversation;
   model.displayName = self.targetName;
@@ -693,8 +707,7 @@
   model.sendFlag = NO;
   model.type = kJMSGTextMessage;
   model.chatContent = text;
-
-  [_messageDataArr addObject:model];
+  [self addMessage:model];
   [self addCellToTabel];
   [self scrollToEnd];
 }
@@ -709,49 +722,59 @@
 
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
 - (void)addmessageShowTimeData {
-    JCHATChatModel *lastModel =[_messageDataArr lastObject];
+  NSString *messageId = [_messageDic[JCHATMessageIdKey] lastObject];
+    JCHATChatModel *lastModel =_messageDic[JCHATMessage][messageId];
     NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-    if ([_messageDataArr count]>0 && lastModel.type != kJMSGTimeMessage) {
+    if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.type != kJMSGTimeMessage) {
         NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
         NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
         NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
         if (fabs(timeBetween) > interval) {
             JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
+            timeModel.messageId = [self getTimeId];
             timeModel.type = kJMSGTimeMessage;
             timeModel.messageTime = @(timeInterVal);
-            [_messageDataArr addObject:timeModel];
+            [self addMessage:timeModel];
             [self addCellToTabel];
         }
     }
 }
 
+- (NSString *)getTimeId {
+  NSString *timeId = [NSString stringWithFormat:@"%d%d",(int)[self getCurrentTimeInterval],arc4random()%1000];
+  return timeId;
+}
+
 - (void)compareReceiveMessageTimeInterVal :(NSTimeInterval )timeInterVal {
-    JCHATChatModel *lastModel =[_messageDataArr lastObject];
-    if ([_messageDataArr count]>0 && lastModel.type != kJMSGTimeMessage) {
+  NSString *messageId =[_messageDic[JCHATMessageIdKey] lastObject];
+  JCHATChatModel *lastModel = _messageDic[JCHATMessage][messageId];
+    if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.type != kJMSGTimeMessage) {
         NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
         NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
         NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
         if (fabs(timeBetween) > interval) {
             JCHATChatModel *timeModel = [[JCHATChatModel alloc] init];
+            timeModel.messageId = [self getTimeId];
             timeModel.type = kJMSGTimeMessage;
             timeModel.messageTime = @(timeInterVal);
-//            [self getTimeDate:timeInterVal];
-            [_messageDataArr addObject:timeModel];
-            [self addCellToTabel];
+          [self addMessage:timeModel];
+          [self addCellToTabel];
         }
     }
 }
 
 #pragma mark --滑动至尾端
 - (void)scrollToEnd {
-    if ([_messageDataArr count] != 0) {
-        [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if ([_messageDic[JCHATMessageIdKey] count] != 0) {
+        [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
 
 - (CGFloat)   tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  JCHATChatModel *model = [_messageDataArr objectAtIndex:indexPath.row];
+  NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
+  
+  JCHATChatModel *model = _messageDic[JCHATMessage][messageId ];
   if (model.type == kJMSGTextMessage) {
     return model.getTextSize.height + 8;
   } else if (model.type == kJMSGImageMessage) {
@@ -790,7 +813,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
     self.user = nil;
-    [_messageDataArr removeAllObjects];
+    [self cleanMessageCache];
   }
   [self.messageTableView reloadData];
 }
@@ -817,13 +840,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_messageDataArr count];
+    return [_messageDic[JCHATMessageIdKey] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    JCHATChatModel *model = [_messageDataArr objectAtIndex:indexPath.row];
+     NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
+    JCHATChatModel *model = _messageDic[JCHATMessage][messageId];
     if (model.type == kJMSGTextMessage) {
         static NSString *cellIdentifier = @"textCell";
         JCHATTextTableViewCell *cell = (JCHATTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -833,7 +856,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         if (!model.sendFlag) {
             model.sendFlag = YES;
             // 消息展示出来时，调用发文本消息
-          [self sendTextMessage:model];
+          [self sendTextMessage:model index:indexPath.row];
         }
         [cell setCellData:model delegate:self];
         return cell;
@@ -875,24 +898,36 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark --发送消息
-- (void)sendTextMessage:(JCHATChatModel *)model {
+- (void)sendTextMessage:(JCHATChatModel *)model index:(NSInteger)index {
   DDLogDebug(@"Action - sendTextMessage");
   model.messageStatus = kJMSGStatusSending;
 
   JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
-  model.messageId = message.messageId;
+  [self setMessageIDWithMessage:message chatModel:&model index:index];
 
   if (self.conversation.chatType == kJMSGSingle) {
     message.sendMessageType = kJMSGSingle;
   }else {
     message.sendMessageType = kJMSGGroup;
   }
+  
   message.target_id = model.targetId;
   message.timestamp = model.messageTime;
   message.contentText = model.chatContent;
 
   DDLogVerbose(@"The message:%@", message);
   [JMSGMessage sendMessage:message];
+}
+
+- (void)setMessageIDWithMessage:(JMSGMessage *)message chatModel:(JCHATChatModel * __strong *)chatModel index:(NSInteger)index{
+  [_messageDic[JCHATMessage] removeObjectForKey:(*chatModel).messageId];
+  (*chatModel).messageId = message.messageId;
+  [_messageDic[JCHATMessage] setObject:*chatModel forKey:message.messageId];
+  if ([_messageDic[JCHATMessageIdKey] count] > index) {
+    [_messageDic[JCHATMessageIdKey] removeObjectAtIndex:index];
+    [_messageDic[JCHATMessageIdKey] insertObject:message.messageId atIndex:index];
+    
+  }
 }
 
 - (void)selectHeadView:(JCHATChatModel *)model {
@@ -938,8 +973,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark --获取所有发送消息图片
 - (NSArray *)getAllMessagePhotoImg {
     NSMutableArray *urlArr =[NSMutableArray array];
-    for (NSInteger i=0; i<[_messageDataArr count]; i++) {
-        JCHATChatModel *model = [_messageDataArr objectAtIndex:i];
+    for (NSInteger i=0; i<[_messageDic[JCHATMessageIdKey] count]; i++) {
+      NSString *messageId = _messageDic[JCHATMessageIdKey][i];
+        JCHATChatModel *model = _messageDic[JCHATMessage][messageId];
         if (model.type == kJMSGImageMessage) {
             [urlArr addObject:model.pictureImgPath];
         }
@@ -1025,6 +1061,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         return;
   }
   JCHATChatModel *model =[[JCHATChatModel alloc] init];
+  model.messageId = [self getTimeId];
   if ([voiceDuration integerValue] >= 60) {
       model.voiceTime = @"60''";
   }else{
@@ -1037,12 +1074,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.messageTime = @(timeInterVal);
   model.targetId = self.conversation.target_id;
   model.displayName = self.targetName;
-  model.readState=YES;
-  model.who=YES;
+  model.readState = YES;
+  model.who = YES;
   model.sendFlag = NO;
   model.mediaData = [NSData dataWithContentsOfFile:voicePath];
   [JCHATFileManager deleteFile:voicePath];
-  [_messageDataArr addObject:model];
+  [self addMessage:model];
   [self.messageTableView reloadData];
   [self scrollToEnd];
 }
@@ -1073,13 +1110,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-
 #pragma mark ---
 - (void)getContinuePlay:(UITableViewCell *)cell
               indexPath:(NSIndexPath *)indexPath {
   JCHATVoiceTableViewCell *tempCell = (JCHATVoiceTableViewCell *) cell;
-  if ([_messageDataArr count] - 1 > indexPath.row) {
-    JCHATChatModel *model = [_messageDataArr objectAtIndex:indexPath.row + 1];
+  if ([_messageDic[JCHATMessageIdKey] count] - 1 > indexPath.row) {
+    NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row+1];
+    JCHATChatModel *model = _messageDic[JCHATMessage][ messageId];
     if (model.type == kJMSGVoiceMessage && !model.readState) {
       tempCell.continuePlayer = YES;
     }
@@ -1088,8 +1125,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark --连续播放语音
 - (void)successionalPlayVoice:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
-    if ([_messageDataArr count]-1>indexPath.row) {
-        JCHATChatModel *model =[_messageDataArr objectAtIndex:indexPath.row+1];
+    if ([_messageDic[JCHATMessageIdKey] count]-1 > indexPath.row) {
+      NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row+1];
+      JCHATChatModel *model = _messageDic[JCHATMessage][ messageId];
         if (model.type==kJMSGVoiceMessage&& !model.readState) {
              JCHATVoiceTableViewCell *voiceCell =(JCHATVoiceTableViewCell *)[self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:0]];
             [voiceCell playVoice];

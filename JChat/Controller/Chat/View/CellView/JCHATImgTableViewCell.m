@@ -198,7 +198,9 @@
   self.model.messageStatus = kJMSGStatusSending;
   _message = [[JMSGImageMessage alloc] init];
   self.model.messageId = _message.messageId;
-
+  if (self.delegate && [self.delegate respondsToSelector:@selector(setMessageIDWithMessage:chatModel:index:)]) {
+    [self.delegate setMessageIDWithMessage:_message chatModel:&_model index:self.cellIndex.row];
+  }
   __weak typeof(self) weakSelf = self;
   _message.progressCallback = ^(float percent) {
     weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
