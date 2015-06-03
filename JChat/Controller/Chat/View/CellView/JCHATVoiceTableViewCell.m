@@ -358,7 +358,9 @@
 
   _message = [[JMSGVoiceMessage alloc] init];
   self.model.messageId = _message.messageId;
-
+  if (self.delegate && [self.delegate respondsToSelector:@selector(setMessageIDWithMessage:chatModel:index:)]) {
+    [self.delegate setMessageIDWithMessage:_message chatModel:&_model index:self.indexPath.row];
+  }
   if (self.conversation.chatType == kJMSGSingle) {
     _message.sendMessageType = kJMSGSingle;
   }else {

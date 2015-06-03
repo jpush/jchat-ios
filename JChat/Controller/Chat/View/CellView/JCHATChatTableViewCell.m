@@ -41,10 +41,10 @@
         [self addSubview:self.message];
         
         self.time = [[UILabel alloc] init];
-        self.time.font = [UIFont boldSystemFontOfSize:15];
-        self.time.textColor = [UIColor blackColor];
+        self.time.font = [UIFont systemFontOfSize:13];
+        self.time.textColor = [UIColor grayColor];
         self.time.textAlignment = NSTextAlignmentRight;
-        [self.time setFrame:CGRectMake(kApplicationWidth - 150 , height/2 - 40/2, 150, 40)];
+        [self.time setFrame:CGRectMake(kApplicationWidth - 150 , height/2 - 40/2 -10, 130, 40)];
         [self addSubview:self.time];
 
         self.nickName.textColor = UIColorFromRGB(0x3f80dd);
