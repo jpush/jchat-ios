@@ -112,7 +112,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   _imgDataArr =[[NSMutableArray alloc] init];
 
-  [self getAllMessage];
 
   self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)) style:UITableViewStylePlain];
   self.messageTableView.userInteractionEnabled = YES;
@@ -169,7 +168,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         _userArr = [NSMutableArray arrayWithArray:resultObject];
-        [weakSelf.messageTableView reloadData];
+        [weakSelf getAllMessage];
       }else {
         DDLogDebug(@"群聊成员获取失败");
       }
