@@ -44,9 +44,9 @@ extern NSInteger const JMESSAGE_API_VERSION;
 *
 *  @param clientTime  客户端时间指针
 *
-*  @return 纠正时间结果(没有服务器时间数据情况下会返回FALSE,请检察当前登陆状态是否正常
+*  @return 纠正时间结果
 */
-+ (BOOL)correctTimerWithServer:(NSTimeInterval *)clientTime;
++ (NSTimeInterval)currentServerTime;
 
 
 

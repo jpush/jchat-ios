@@ -6,31 +6,31 @@
 	<dict>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		Y4yOVSzn3yLOccqjPCI+/MpkxoA=
+		ADHY9rtjPfyt4NykFrKUMtO+V6U=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		FP7/ZurfoSVmhBMgwF/RBtT2kyc=
+		fjriyuVQuipZlQhLw6kiXxXrJ6k=
 		</data>
 		<key>Headers/JMSGGroup.h</key>
 		<data>
-		sGe6BP0pe0gDhbJ0R2dxLmSLTmY=
+		r+rDV/Eap/IDn0Odo27gk83ldpM=
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		3FNTVZsdw6hCXh0aDIc1pfdmi70=
+		o2GJEowXNGV5vPGtYOX8FBEJa8A=
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		YKJcDaSGeEf37Z1kZIWaSCB22lk=
+		AuGpXa6w4bLtQgi+XeejdmFQYhs=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		uHAwnL5A1fcCmgmobaN9Jq/yMbs=
+		TN1mOpWoHoHrEbP38vBIfKDOM4U=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>
-		JVICXgRlJqSE4GJFyaW9mypXuvM=
+		LMFYfsx9uTSlPtfjd3424PFTU78=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -45,31 +45,31 @@
 	<dict>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		Y4yOVSzn3yLOccqjPCI+/MpkxoA=
+		ADHY9rtjPfyt4NykFrKUMtO+V6U=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		FP7/ZurfoSVmhBMgwF/RBtT2kyc=
+		fjriyuVQuipZlQhLw6kiXxXrJ6k=
 		</data>
 		<key>Headers/JMSGGroup.h</key>
 		<data>
-		sGe6BP0pe0gDhbJ0R2dxLmSLTmY=
+		r+rDV/Eap/IDn0Odo27gk83ldpM=
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		3FNTVZsdw6hCXh0aDIc1pfdmi70=
+		o2GJEowXNGV5vPGtYOX8FBEJa8A=
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		YKJcDaSGeEf37Z1kZIWaSCB22lk=
+		AuGpXa6w4bLtQgi+XeejdmFQYhs=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		uHAwnL5A1fcCmgmobaN9Jq/yMbs=
+		TN1mOpWoHoHrEbP38vBIfKDOM4U=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>
-		JVICXgRlJqSE4GJFyaW9mypXuvM=
+		LMFYfsx9uTSlPtfjd3424PFTU78=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
