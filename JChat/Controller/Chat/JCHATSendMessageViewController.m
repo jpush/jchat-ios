@@ -692,7 +692,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.target_id longLongValue]) {
     [self addEventMessage:eventMessage];
-    [self addCellToTabel];
   }
 }
 
