@@ -154,11 +154,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
   }
   [self.view addSubview:self.moreView];
-
+  [self getGroupMemberList];
   [self addNotification];
   [self sendInfoRequest];
-  
-  [self getGroupMemberList];
 }
 
 
@@ -174,6 +172,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       }
     }];
   }else {
+    [self getAllMessage];
   }
 }
 
