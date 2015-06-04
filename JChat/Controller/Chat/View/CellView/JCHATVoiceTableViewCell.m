@@ -274,7 +274,7 @@
                 completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-        [JMSGMessage getVoiceFromMessage:resultObject
+        [JMSGMessage downloadVoice:resultObject
                             withProgress:progress
                        completionHandler:^(id resultObject, NSError *error) {
           JPIMMAINTHEAD(^{
