@@ -407,10 +407,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                 model.chatContent =@"";
             }
             model.messageTime = message.timestamp;
-          [weakSelf addmessageShowTimeData:message.timestamp];
+          [weakSelf DataMessageShowTimeData:message.timestamp];
           [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
           [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
-//          [self addMessage:model];
         }
       [_messageTableView reloadData];
         if ([_messageDic[JCHATMessageIdKey] count] != 0) {
@@ -845,6 +844,42 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       DDLogDebug(@"不用显示时间");
     }
 }
+
+
+#pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
+- (void)DataMessageShowTimeData:(NSNumber *)timeNumber{
+  NSString *messageId = [_messageDic[JCHATMessageIdKey] lastObject];
+  JCHATChatModel *lastModel =_messageDic[JCHATMessage][messageId];
+  NSTimeInterval timeInterVal = [timeNumber longLongValue];
+  if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.type != kJMSGTimeMessage) {
+    NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
+    NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
+    NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
+    if (fabs(timeBetween) > interval) {
+      JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
+      timeModel.messageId = [self getTimeId];
+      timeModel.type = kJMSGTimeMessage;
+      timeModel.messageTime = @(timeInterVal);
+      [_messageDic[JCHATMessage] setObject:timeModel forKey:timeModel.messageId];
+      [_messageDic[JCHATMessageIdKey] addObject:timeModel.messageId];
+    }
+  }else if ([_messageDic[JCHATMessageIdKey] count] ==0) {//首条消息显示时间
+    JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
+    timeModel.messageId = [self getTimeId];
+    timeModel.type = kJMSGTimeMessage;
+    timeModel.messageTime = @(timeInterVal);
+    [_messageDic[JCHATMessage] setObject:timeModel forKey:timeModel.messageId];
+    [_messageDic[JCHATMessageIdKey] addObject:timeModel.messageId];
+  }else {
+    DDLogDebug(@"不用显示时间");
+  }
+}
+
+
+
+
+
+
 
 - (void)addTimeData:(NSTimeInterval)timeInterVal {
   JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
