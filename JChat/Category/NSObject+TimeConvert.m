@@ -14,8 +14,8 @@
 #pragma mark --获取当前服务器纠正的时间戳
 - (NSTimeInterval)getCurrentTimeInterval {
   NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
-  [JMessage correctTimerWithServer:&timeInterval];
-  return timeInterval;
+  NSTimeInterval newTimer = [JMessage correctTimeFromServer:timeInterval];
+  return newTimer;
 }
 
 
