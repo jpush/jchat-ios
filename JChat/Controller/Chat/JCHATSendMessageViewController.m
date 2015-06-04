@@ -159,6 +159,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self addNotification];
   [self sendInfoRequest];
   
+  [self getGroupMemberList];
+}
+
+
+-(void)getGroupMemberList {
   if (self.conversation && self.conversation.chatType == kJMSGGroup) {
     __weak typeof(self) weakSelf = self;
     [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
@@ -347,6 +352,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
           }
             JCHATChatModel *model =[[JCHATChatModel alloc]init];
             model.messageId = message.messageId;
+            model.fromId = message.from_id;
             model.conversation = _conversation;
             model.messageStatus = [message.status integerValue];
             model.displayName = message.display_name;
@@ -458,6 +464,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
         model.avatar = [self getAvatarWithTargetId:message.from_id].avatarThumbPath;
         model.messageId = message.messageId;
+        model.fromId = message.from_id;
         model.conversation = _conversation;
         model.targetId = message.target_id;
         model.messageStatus = [message.status integerValue];
@@ -903,6 +910,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
     self.user = nil;
     [self cleanMessageCache];
+    [self getGroupMemberList];
     [_messageTableView reloadData];
   }
 }
@@ -1017,7 +1025,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
       if (self.conversation.chatType == kJMSGSingle) {
         friendCtl.userInfo = self.user;
       }else {
-        friendCtl.userInfo = [self getAvatarWithTargetId:model.targetId];
+        friendCtl.userInfo = [self getAvatarWithTargetId:model.fromId];
       }
         [self.navigationController pushViewController:friendCtl animated:YES];
     }
