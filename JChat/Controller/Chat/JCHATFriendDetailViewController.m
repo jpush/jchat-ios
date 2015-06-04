@@ -30,7 +30,6 @@
     [super viewDidLoad];
     DDLogDebug(@"Action - viewDidLoad");
     self.title = @"详细资料";
-    [self loadUserInfoData];
     UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
     [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
@@ -51,11 +50,7 @@
     _headView =[[UIImageView alloc] initWithFrame:CGRectMake((kApplicationWidth - 70)/2, (150-70)/2, 70, 70)];
     _headView.layer.cornerRadius = 35;
     [_headView.layer setMasksToBounds:YES];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:self.userInfo.avatarThumbPath]) {
-        [_headView setImage:[UIImage imageWithContentsOfFile:self.userInfo.avatarThumbPath]];
-    }else {
-        [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-    }
+
     [_headView setBackgroundColor:[UIColor clearColor]];
     [_headView setContentMode:UIViewContentModeScaleAspectFit];
     [_headView.layer setMasksToBounds:YES];
@@ -67,7 +62,8 @@
     _nameLabel.textAlignment =NSTextAlignmentCenter;
     [tableHeadView addSubview:_nameLabel];
     // Do any additional setup after loading the view from its nib.
- 
+    [self loadUserInfoData];
+
 }
 
 - (void)loadUserInfoData {
