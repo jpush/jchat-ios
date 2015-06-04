@@ -20,6 +20,8 @@
         }else {
             height = 80;
         }
+        NSInteger width = (NSInteger) kApplicationWidth;
+
         self.headView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"headDefalt_34"]];
         [self.headView setFrame:CGRectMake(5, height/2 - 46/2, 46, 46)];
         [self addSubview:self.headView];
@@ -27,16 +29,20 @@
         self.nickName = [[UILabel alloc] init];
         self.nickName.textColor = [UIColor grayColor];
         self.nickName.font = [UIFont boldSystemFontOfSize:15];
-        [self.nickName setFrame:CGRectMake(46 +10, height/2 -50/2, 100, 25)];
+        [self.nickName setFrame:CGRectMake(46 +10, height/2 -50/2, width/2, 25)];
         [self addSubview:self.nickName];
         
         self.message = [[UILabel alloc] init];
         self.message.textColor = [UIColor grayColor];
         self.message.font = [UIFont boldSystemFontOfSize:15];
         if (kScreenHeight >= 480) {
-            [self.message setFrame:CGRectMake(46 +10 , self.nickName.frame.origin.y + self.nickName.frame.size.height, 150, 25)];
+            [self.message setFrame:CGRectMake(46 +10 ,
+                self.nickName.frame.origin.y + self.nickName.frame.size.height,
+                width*3 / 4, 25)];
         }else {
-            [self.message setFrame:CGRectMake(46 +10, self.nickName.frame.origin.y + self.nickName.frame.size.height, 120, 25)];
+            [self.message setFrame:CGRectMake(46 +10,
+                self.nickName.frame.origin.y + self.nickName.frame.size.height,
+                width*3 / 4, 25)];
         }
         [self addSubview:self.message];
         
