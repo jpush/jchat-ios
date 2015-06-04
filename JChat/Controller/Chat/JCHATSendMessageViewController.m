@@ -408,7 +408,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
             }
             model.messageTime = message.timestamp;
           [weakSelf addmessageShowTimeData:message.timestamp];
-          [self addMessage:model];
+          [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
+          [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
+//          [self addMessage:model];
         }
       [_messageTableView reloadData];
         if ([_messageDic[JCHATMessageIdKey] count] != 0) {
