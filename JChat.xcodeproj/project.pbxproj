@@ -22,6 +22,7 @@
 		1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */; };
 		1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */; };
 		1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834E1AFC91C800AC8280 /* CoreTelephony.framework */; };
+		1855E6941B27DCEC0031EAD7 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1855E6931B27DCEC0031EAD7 /* JMessage.framework */; };
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
@@ -263,7 +264,6 @@
 		187184151AFB80C000FB3168 /* wutouxiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182E91AFB80C000FB3168 /* wutouxiang@2x.png */; };
 		187184161AFB80C000FB3168 /* yuyin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EA1AFB80C000FB3168 /* yuyin@2x.png */; };
 		187184171AFB80C000FB3168 /* zhaopian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EB1AFB80C000FB3168 /* zhaopian@2x.png */; };
-		187D432C1B1C923600B5E895 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187D432B1B1C923600B5E895 /* JMessage.framework */; };
 		6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */; };
 		6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */; };
 		6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */; };
@@ -344,6 +344,7 @@
 		1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1839834E1AFC91C800AC8280 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		1855E6931B27DCEC0031EAD7 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../JMessage/ios-im/build/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		187181901AFB80BF00FB3168 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		187181911AFB80BF00FB3168 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		187181931AFB80BF00FB3168 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -723,7 +724,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187D432C1B1C923600B5E895 /* JMessage.framework in Frameworks */,
+				1855E6941B27DCEC0031EAD7 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -1216,6 +1217,7 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1855E6931B27DCEC0031EAD7 /* JMessage.framework */,
 				187D432B1B1C923600B5E895 /* JMessage.framework */,
 				187D43211B1C277500B5E895 /* JMessage.framework */,
 				8F8840B01B15AB9200BDC126 /* libPods-极光IM.a */,
