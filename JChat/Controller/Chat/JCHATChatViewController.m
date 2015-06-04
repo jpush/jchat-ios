@@ -102,6 +102,7 @@
   searchDisplayController.searchResultsDataSource = self;
   // searchResultsDelegate 就是 UITableViewDelegate
   searchDisplayController.searchResultsDelegate = self;
+
   self.addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 65, 100, 100)];
   [self.addBgView setBackgroundColor:[UIColor clearColor]];
   [self.addBgView setUserInteractionEnabled:YES];
@@ -112,25 +113,18 @@
   [self.view bringSubviewToFront:self.addBgView];
   [self.addBgView setHidden:YES];
   [self addBtn];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotificationSkipToChatPageView:) name:KApnsNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getConversationList) name:JMSGNotification_ConversationInfoChanged object:nil];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(receiveNotificationSkipToChatPageView:)
+                                               name:KApnsNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(getConversationList)
+                                               name:JMSGNotification_ConversationInfoChanged
+                                             object:nil];
 
 }
 
-#pragma mark --会话信息改变
-- (void)conversatinInfoChange:(NSNotification *)notification {
-  NSDictionary *userInfo = [notification userInfo];
- __block NSString *targetId = [userInfo objectForKey:JMSGNotification_ConversationInfoChangedKey];
-  [JMSGConversation getConversation:targetId completionHandler:^(id resultObject, NSError *error) {
-    if (error == nil) {
-      JPIMMAINTHEAD(^{
-        [self reloadConversationInfo:resultObject];
-      });
-    }else {
-      
-    }
-  }];
-}
 
 - (void)reloadConversationInfo:(JMSGConversation *)conversation {
   for (NSInteger i=0; i<[_conversationArr count]; i++) {
@@ -375,7 +369,10 @@ NSInteger sortType(id object1,id object2,void *cha) {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   DDLogDebug(@"Action - tableView");
     JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
-    [JMSGConversation deleteConversation:conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    // FIXME 这里要考虑单聊、群聊
+    [JMSGConversation deleteConversation:conversation.target_id
+                                withType:kJMSGSingle
+                       completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
           DDLogDebug(@"delete conversation success");
         }else {
