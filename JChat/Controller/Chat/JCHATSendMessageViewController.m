@@ -356,7 +356,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
           if (_conversation.chatType == kJMSGGroup) {
             if (![message.from_id isEqualToString :user.username]) {
               model.who=NO;
-              model.avatar = [self getAvatarWithTargetId:message.from_id];
+              model.avatar = [self getAvatarWithTargetId:message.from_id].avatarThumbPath;
               model.targetId = _conversation.target_id;
             }else{
               model.who=YES;
@@ -413,11 +413,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }];
 }
 
-- (NSString *)getAvatarWithTargetId:(NSString *)targetId {
+- (JMSGUser *)getAvatarWithTargetId:(NSString *)targetId {
   for (NSInteger i=0; i<[_userArr count]; i++) {
     JMSGUser *user = [_userArr objectAtIndex:i];
     if ([user.username isEqualToString:targetId]) {
-      return user.avatarThumbPath;
+      return user;
     }
   }
   return nil;
@@ -456,7 +456,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         }
       
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
-        model.avatar = [self getAvatarWithTargetId:message.from_id];
+        model.avatar = [self getAvatarWithTargetId:message.from_id].avatarThumbPath;
         model.messageId = message.messageId;
         model.conversation = _conversation;
         model.targetId = message.target_id;
@@ -480,7 +480,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       if (_conversation.chatType == kJMSGGroup) {
         if (![message.from_id isEqualToString :user.username]) {
           model.who=NO;
-          model.avatar = [self getAvatarWithTargetId:message.from_id];
+          model.avatar = [self getAvatarWithTargetId:message.from_id].avatarThumbPath;
           model.targetId = _conversation.target_id;
         }else{
           model.who=YES;
@@ -1014,7 +1014,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         [self.navigationController pushViewController:personCtl animated:YES];
     }else {
         JCHATFriendDetailViewController *friendCtl = [[JCHATFriendDetailViewController alloc]initWithNibName:@"JCHATFriendDetailViewController" bundle:nil];
+      if (self.conversation.chatType == kJMSGSingle) {
         friendCtl.userInfo = self.user;
+      }else {
+        friendCtl.userInfo = [self getAvatarWithTargetId:model.targetId];
+      }
         [self.navigationController pushViewController:friendCtl animated:YES];
     }
 }
@@ -1150,8 +1154,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
   model.type=kJMSGVoiceMessage;
   model.conversation = _conversation;
-//  NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-//  model.messageTime = @(timeInterVal);
   model.targetId = self.conversation.target_id;
   model.displayName = self.targetName;
   model.readState = YES;
