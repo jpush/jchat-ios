@@ -230,7 +230,9 @@
         [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
             if (error == nil) {
                 NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-                [JMSGMessage getThumbImageFromMessage:resultObject withProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                [JMSGMessage downloadThumbImage:resultObject
+                                   withProgress:progress
+                              completionHandler:^(id resultObject, NSError *error) {
                     JPIMMAINTHEAD(^{
                         [self.downLoadIndicatorView stopAnimating];
                         if (error == nil) {

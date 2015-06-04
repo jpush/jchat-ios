@@ -195,7 +195,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
     return;
   }
-  [JMSGConversation getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
+
+  // FIXME 这个逻辑还未考虑群聊
+  [JMSGConversation getConversation:targetName
+                           withType:kJMSGSingle
+                  completionHandler:^(id resultObject, NSError *error) {
     if (error == nil) {
       _conversation = resultObject;
       [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
@@ -260,22 +264,34 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }
   
   model.messageStatus = (JMSGMessageStatusType) [message.status integerValue];
-
+  NSInteger cellIndex = [self getIndexWithMessageId:message.messageId];
   JPIMMAINTHEAD(^{
-    // TODO - 这一条是刷新整个的 View ？
-    [_messageTableView reloadData];
+    [self reloadCellDataWith:cellIndex];
   });
 }
 
-// FIXME - 现在的作法效率低，一条一条搜索。应该用个 HashMap 其 Key 是 messageID
+#pragma mark --获取对应消息的索引
+- (NSInteger )getIndexWithMessageId:(NSString *)messageID {
+  for (NSInteger i=0; i< [_messageDic[JCHATMessageIdKey] count]; i++) {
+    NSString *getMessageID = _messageDic[JCHATMessageIdKey][i];
+    if ([getMessageID isEqualToString:messageID]) {
+      return i;
+    }
+  }
+  return 0;
+}
+
 - (void)changeMessageState:(JMSGMessage *)message {
   DDLogDebug(@"Action - changeMessageState");
   NSMutableDictionary *messageDataDic =_messageDic[JCHATMessage];
   
   JCHATChatModel *model = messageDataDic[message.messageId];
   model.messageStatus = [message.status integerValue];
-  [self.messageTableView reloadData];
-
+  
+  NSInteger index = [self getIndexWithMessageId:message.messageId];
+  JPIMMAINTHEAD(^{
+    [self reloadCellDataWith:index];
+  });
 }
 
 - (bool)checkDevice:(NSString *)name {
@@ -434,7 +450,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     });
 }
 
-
 - (XHVoiceRecordHelper *)voiceRecordHelper {
     if (!_voiceRecordHelper) {
         WEAKSELF
@@ -546,7 +561,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [_imgDataArr addObject:model];
   model.photoIndex = [_imgDataArr count] - 1;
   [self addMessage:model];
-  [self.messageTableView reloadData];
+  [self addCellToTabel];
   [self dropToolBar];
   [self scrollToEnd];
 }
@@ -606,10 +621,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.target_id longLongValue]) {
     [self addEventMessage:eventMessage];
-    [_messageTableView reloadData];
+    [self addCellToTabel];
   }
 }
-
 
 - (void)addEventMessage:(JMSGEventMessage *)eventMessage {
   if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
@@ -654,15 +668,15 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
-    self.barBottomFlag=YES;
-    self.previousTextViewContentHeight = 31;
-    self.toolBar.addButton.selected = NO;
-    [self.messageTableView reloadData];
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-        [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
-      [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
-    }];
+  self.barBottomFlag=YES;
+  self.previousTextViewContentHeight = 31;
+  self.toolBar.addButton.selected = NO;
+  [_messageTableView reloadData];
+  [UIView animateWithDuration:0.3 animations:^{
+      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
+      [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
+    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
+  }];
 }
 
 #pragma mark --按下功能响应
@@ -712,12 +726,18 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self scrollToEnd];
 }
 
+#pragma mark -- 刷新对应的
+- (void)reloadCellDataWith:(NSInteger)Index {
+  [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 - (void)addCellToTabel {
-  [_messageTableView reloadData];
-//    NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDataArr count]-1 inSection:0];
-//    [self.messageTableView beginUpdates];
-//    [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-//    [self.messageTableView endUpdates];
+    NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
+    [self.messageTableView beginUpdates];
+    [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+    [self.messageTableView endUpdates];
+    [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self scrollToEnd];
 }
 
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
@@ -815,7 +835,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     self.user = nil;
     [self cleanMessageCache];
   }
-  [self.messageTableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -967,7 +986,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     browser.photos = photos; // 设置所有的图片
     browser.conversation =_conversation;
     [browser show];
-    [self.messageTableView reloadData];
 }
 
 #pragma mark --获取所有发送消息图片
@@ -1080,7 +1098,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.mediaData = [NSData dataWithContentsOfFile:voicePath];
   [JCHATFileManager deleteFile:voicePath];
   [self addMessage:model];
-  [self.messageTableView reloadData];
+  [self addCellToTabel];
   [self scrollToEnd];
 }
 
