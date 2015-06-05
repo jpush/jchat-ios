@@ -116,7 +116,7 @@
     return;
   }
 
-  if ([conversation.latest_type isEqualToString:@"text"]) {
+  if ([conversation.latest_type isEqualToString:@"text"]|| [conversation.latest_type isEqualToString:@"event"]) {
     self.message.text = conversation.latest_text;
   } else if ([conversation.latest_type isEqualToString:@"image"]) {
     self.message.text = @"[图片]";
