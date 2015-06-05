@@ -344,8 +344,19 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         arrList = resultObject;
         for (NSInteger i=0; i< [arrList count]; i++) {
             JMSGMessage *message =[arrList objectAtIndex:i];
+          [_JMSgMessageDic setObject:message forKey:message.messageId];
+
           if (message.messageType == kJMSGEventMessage) {
-            [weakSelf addEventMessage:(JMSGEventMessage *)message];
+            JMSGEventMessage *eventMessage = (JMSGEventMessage *)message;
+            if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
+              JCHATChatModel *model = [[JCHATChatModel alloc]init];
+              model.messageId = eventMessage.messageId;
+              model.chatType = kJMSGGroup;
+              model.type = kJMSGEventMessage;
+              model.chatContent = eventMessage.contentText;
+              [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
+              [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
+            }
             continue;
           }
             JCHATChatModel *model =[[JCHATChatModel alloc]init];
@@ -407,7 +418,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                 model.chatContent =@"";
             }
             model.messageTime = message.timestamp;
-          [weakSelf DataMessageShowTimeData:message.timestamp];
+          [weakSelf dataMessageShowTime:message.timestamp];
           [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
           [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
         }
@@ -443,6 +454,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
         NSDictionary *userInfo = [notification userInfo];
         JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
+      [_JMSgMessageDic setObject:message forKey:message.messageId];
+
         DDLogDebug(@"The received msg - %@", message);
         if (!message) {
           DDLogWarn(@"No message content in notification.");
@@ -845,9 +858,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
 }
 
-
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
-- (void)DataMessageShowTimeData:(NSNumber *)timeNumber{
+- (void)dataMessageShowTime:(NSNumber *)timeNumber{
   NSString *messageId = [_messageDic[JCHATMessageIdKey] lastObject];
   JCHATChatModel *lastModel =_messageDic[JCHATMessage][messageId];
   NSTimeInterval timeInterVal = [timeNumber longLongValue];
@@ -874,12 +886,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     DDLogDebug(@"不用显示时间");
   }
 }
-
-
-
-
-
-
 
 - (void)addTimeData:(NSTimeInterval)timeInterVal {
   JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
