@@ -142,8 +142,9 @@
                     weakSelf.sendFailImgMessage = resultObject;
                     weakSelf.message = resultObject;
                     weakSelf.sendFailImgMessage.progressCallback=^(float percent){
-                    weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
+                      weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
                     };
+                    self.sendFailImgMessage.sendMessageType = self.conversation.chatType;
                     [JMSGMessage sendMessage:self.sendFailImgMessage];
                 }else {
                     NSLog(@"获取消息失败!");
