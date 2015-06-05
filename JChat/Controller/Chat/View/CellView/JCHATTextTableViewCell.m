@@ -174,17 +174,20 @@
     
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+-(void)alertView:(UIAlertView *)alertView
+    clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         [self.sendFailView setHidden:YES];
         _model.messageStatus = kJMSGStatusSending;
         [self.stateView setHidden:NO];
         [self.stateView startAnimating];
         if (!_sendFailMessage) {
-            [self.conversation getMessage:_model.messageId completionHandler:^(id resultObject, NSError *error) {
+            [self.conversation getMessage:_model.messageId
+                        completionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
-                   _message = _sendFailMessage = resultObject;
+                  _message = _sendFailMessage = resultObject;
                   _message.target_id = self.conversation.target_id;
+                  _message.sendMessageType = self.conversation.chatType;
                   _sendFailMessage.target_id = self.conversation.target_id;
                    [JMSGMessage sendMessage:_sendFailMessage];
                 }else {
