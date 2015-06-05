@@ -522,7 +522,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         model.messageTime = message.timestamp;
         [self addmessageShowTimeData:message.timestamp];
         [self addMessage:model];
-        [self scrollToEnd];
     });
 }
 
@@ -654,7 +653,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [_JMSgMessageDic setObject:message forKey:message.messageId];
   [self addMessage:model];
   [self dropToolBar];
-  [self scrollToEnd];
 }
 
 #pragma mark --
@@ -825,19 +823,20 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   message.contentText = model.chatContent;
   [_JMSgMessageDic setObject:message forKey:message.messageId];
   [self addMessage:model];
-  [self scrollToEnd];
 }
 
 #pragma mark -- 刷新对应的
 - (void)reloadCellDataWith:(NSInteger)Index {
-  [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+  [self scrollToEnd];
 }
 
 - (void)addCellToTabel {
-    NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
-    [self.messageTableView beginUpdates];
-    [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-    [self.messageTableView endUpdates];
+  NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
+  [self.messageTableView beginUpdates];
+  [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+  [self.messageTableView endUpdates];
+  [self scrollToEnd];
 }
 
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
@@ -1226,7 +1225,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
   [JCHATFileManager deleteFile:voicePath];
   [self addMessage:model];
-  [self scrollToEnd];
 }
 
 #pragma mark - RecorderPath Helper Method
