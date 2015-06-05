@@ -121,8 +121,8 @@
 }
 
 - (void)holdDownButtonTouchUpInside {
-    if ([self.delegate respondsToSelector:@selector(didFinishRecoingVoiceAction)]) {
-        [self.delegate didFinishRecoingVoiceAction];
+    if ([self.delegate respondsToSelector:@selector(didFinishRecordingVoiceAction)]) {
+      [self.delegate didFinishRecordingVoiceAction];
     }
 }
 

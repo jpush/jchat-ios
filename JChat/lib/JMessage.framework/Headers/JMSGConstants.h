@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 
 
+
 /**
 * 接口调用回调 block
 *
@@ -26,15 +27,10 @@ typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
 
 
 /**
+* 消息下载回调block
 *
 */
-typedef void (^JMSGSpecificFailHandler)();
-
-
-/**
-* 消息下载回调block
-*/
-typedef void (^JMSGonProgressUpdate)(float percent);
+typedef void (^JMSGMediaDownloadProgressHandler)(float percent);
 
 
 #endif

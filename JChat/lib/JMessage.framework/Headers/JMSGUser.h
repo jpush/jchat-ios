@@ -30,7 +30,8 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender){
   kJMSGFemale,
 };
 
-@interface JMSGUser : NSObject <NSCopying>
+
+@interface JMSGUser : NSObject <NSCopying, NSCoding>
 
  @property (atomic,strong, readonly) NSString *address;
  @property (atomic,strong, readonly) NSString *avatarResourcePath;
@@ -95,14 +96,14 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender){
  + (JMSGUser *)getMyInfo;
 
 /**
- *  获取头像原始图片
- *
- *  @param  userInfo      需要获取头像的用户信息(通过getUserInfo接口获取)
- *  @param  handler       用户获取头像接口函数(resultObject为JMSGUser类型,通过avatarResourcePath属性获取下载图片位置)
- *
- */
- + (void)getOriginAvatarImage         : (JMSGUser *)userInfo
-         completionHandler            : (JMSGCompletionHandler)handler;
+*  获取头像原始图片
+*
+*  @param  userInfo      需要获取头像的用户信息(通过getUserInfo接口获取)
+*  @param  handler       用户获取头像接口函数(resultObject为JMSGUser类型,通过avatarResourcePath属性获取下载图片位置)
+*
+*/
++ (void)getOriginAvatarImage:(JMSGUser *)userInfo
+           completionHandler:(JMSGCompletionHandler)handler;
 
 /**
  *  更新用户信息接口
