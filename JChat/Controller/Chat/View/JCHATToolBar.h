@@ -56,7 +56,7 @@
 /**
  *  松开手指完成录音
  */
-- (void)didFinishRecoingVoiceAction;
+- (void)didFinishRecordingVoiceAction;
 /**
  *  当手指离开按钮的范围内时，主要为了通知外部的HUD
  */

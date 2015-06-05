@@ -175,10 +175,12 @@
     [self.stateView startAnimating];
     self.model.messageStatus = kJMSGStatusSending;
     if (!self.voiceFailMessage) {
-      [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
+      [self.conversation getMessage:self.model.messageId
+                  completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
           self.voiceFailMessage = resultObject;
           self.voiceFailMessage.resourcePath = self.model.voicePath;
+          self.voiceFailMessage.sendMessageType = self.conversation.chatType;
           self.message = resultObject;
           [JMSGMessage sendMessage:self.voiceFailMessage];
         } else {
