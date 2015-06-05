@@ -15,7 +15,6 @@
 #import "JCHATTextTableViewCell.h"
 #import "JCHATGroupSettingCtl.h"
 #import "AppDelegate.h"
-#import "NSObject+TimeConvert.h"
 #import "MBProgressHUD+Add.h"
 #import "UIImage+ResizeMagick.h"
 #import "JCHATPersonViewController.h"
@@ -335,6 +334,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 
 - (void)getAllMessage {
+  DDLogDebug(@"Action - getAllMessage");
+
   __block NSMutableArray * arrList;
   [self cleanMessageCache];
   
@@ -681,7 +682,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                                              object:nil];
   
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(receiveEeventMessageNotification:)
+                                           selector:@selector(receiveEventNotification:)
                                                name:JMSGNotification_EventMessage
                                              object:nil];
 //    [self.toolBar.textView addObserver:self
@@ -691,7 +692,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 
 #pragma mark --接收EventNotification
-- (void)receiveEeventMessageNotification:(NSNotification *)notification {
+- (void)receiveEventNotification:(NSNotification *)notification {
+  DDLogDebug(@"Event - receiveEventNotification");
   NSDictionary *infoDic = [notification userInfo];
   
   JMSGEventMessage *eventMessage = [infoDic objectForKey:JMSGNotification_EventKey];
@@ -785,8 +787,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   JMSGContentMessage *  message = [[JMSGContentMessage alloc] init];
 
   [self addmessageShowTimeData:message.timestamp];
-  
-  DDLogDebug(@"Action - sendTextMessage");
+
   JCHATChatModel *model = [[JCHATChatModel alloc] init];
   model.messageId = message.messageId;
   model.messageTime = message.timestamp;
@@ -877,10 +878,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 
 
-
-
-
-
 - (void)addTimeData:(NSTimeInterval)timeInterVal {
   JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
   timeModel.messageId = [self getTimeId];
@@ -927,6 +924,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  DDLogDebug(@"Event - viewWillAppear");
   [super viewWillAppear:NO];
   [self.toolBar drawRect:self.toolBar.frame];
   [self.navigationController setNavigationBarHidden:NO];
@@ -951,6 +949,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+  DDLogDebug(@"Event - viewWillAppear");
     [super viewWillAppear:YES];
     [[JCHATAudioPlayerHelper shareInstance] stopAudio];
     [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
@@ -1035,6 +1034,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark --发送消息
 - (void)sendTextMessage:(NSString *)messageId{
   DDLogDebug(@"Action - sendTextMessage");
+
   JMSGContentMessage *message = _JMSgMessageDic[messageId];
   DDLogVerbose(@"The message:%@", message);
   [JMSGMessage sendMessage:message];
@@ -1107,27 +1107,27 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)didStartRecordingVoiceAction {
-  DDLogDebug(@"Action - didStartRecordingVoice");
+  DDLogVerbose(@"Action - didStartRecordingVoice");
   [self startRecord];
 }
 
 - (void)didCancelRecordingVoiceAction {
-  DDLogDebug(@"Action - didCancelRecordingVoice");
+  DDLogVerbose(@"Action - didCancelRecordingVoice");
   [self cancelRecord];
 }
 
-- (void)didFinishRecoingVoiceAction {
-  DDLogDebug(@"Action - didFinishRecoingVoice");
+- (void)didFinishRecordingVoiceAction {
+  DDLogVerbose(@"Action - didFinishRecordingVoiceAction");
   [self finishRecorded];
 }
 
 - (void)didDragOutsideAction {
-  DDLogDebug(@"Actino - didDragOutsideAction");
+  DDLogVerbose(@"Actino - didDragOutsideAction");
   [self resumeRecord];
 }
 
 - (void)didDragInsideAction {
-  DDLogDebug(@"Action - didDragInsideAction");
+  DDLogVerbose(@"Action - didDragInsideAction");
   [self pauseRecord];
 }
 
