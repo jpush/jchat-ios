@@ -79,6 +79,26 @@ extern NSString *const JMSGNotification_EventKey;
                    toUsername:(NSString *)targetId;
 
 /**
+*   发送单聊图片消息
+*
+*   @param               消息图片内容
+*   @param               消息发送对象
+*
+*/
++ (void)sendSingleImageMessage:(NSData *)imageData
+                    toUsername:(NSString *)username;
+
+/**
+*   发送单聊声音消息
+*
+*   @param               消息声音内容
+*   @param               消息发送对象
+*
+*/
++ (void)sendSingleVoiceMessage:(NSData *)voiceData
+                    toUsername:(NSString *)username;
+
+/**
 *  获取消息大图接口
 *
 *  @param message       消息内容对象

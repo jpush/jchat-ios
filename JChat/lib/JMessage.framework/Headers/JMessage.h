@@ -20,7 +20,7 @@
 @interface JMessage : NSObject
 
 // Version
-#define JMESSAGE_VERSION @"1.0.1"
+#define JMESSAGE_VERSION @"1.0.2"
 
 extern NSInteger const JMESSAGE_API_VERSION;
 
