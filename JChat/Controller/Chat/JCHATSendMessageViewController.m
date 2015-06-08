@@ -288,6 +288,10 @@
         arrList = resultObject;
         for (NSInteger i=0; i< [arrList count]; i++) {
             JMSGMessage *message =[arrList objectAtIndex:i];
+          if (message.messageType == kJMSGEventMessage) {
+            [self addEventMessage:(JMSGEventMessage *)message];
+            continue;
+          }
             JCHATChatModel *model =[[JCHATChatModel alloc]init];
             model.messageId = message.messageId;
             model.conversation = _conversation;
@@ -583,26 +587,22 @@
   JMSGEventMessage *eventMessage = [infoDic objectForKey:JMSGNotification_EventKey];
   
   if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.target_id longLongValue]) {
-    JCHATChatModel *model = [[JCHATChatModel alloc]init];
-    model.chatType = kJMSGGroup;
-    model.type = kJMSGEventMessage;
-    NSString *memberStr = @"";
-    for (NSInteger i =0; i<[eventMessage.targetList count]; i++) {
-      
-      memberStr =[NSString stringWithFormat:@"%@ %@",memberStr,[eventMessage.targetList objectAtIndex:i]];
-    }
-    if (eventMessage.type == kJMSGDeleteGroupMemberEvent) {
-      model.chatContent = [memberStr stringByAppendingString:@"被踢出群聊"];
-    }else if (eventMessage.type == kJMSGExitGroupEvent) {
-      model.chatContent = [memberStr stringByAppendingString:@"退群了"];
-
-    }else if (eventMessage.type == kJMSGAddGroupMemberEvent) {
-      model.chatContent = [memberStr stringByAppendingString:@"加入群聊"];
-    }
-    [_messageDataArr addObject:model];
+    [self addEventMessage:eventMessage];
     [_messageTableView reloadData];
   }
 }
+
+
+- (void)addEventMessage:(JMSGEventMessage *)eventMessage {
+  if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
+    JCHATChatModel *model = [[JCHATChatModel alloc]init];
+    model.chatType = kJMSGGroup;
+    model.type = kJMSGEventMessage;
+    model.chatContent = eventMessage.contentText;
+    [_messageDataArr addObject:model];
+  }
+}
+
 
 - (void)deleteAllMessage {
   [_messageDataArr removeAllObjects];
