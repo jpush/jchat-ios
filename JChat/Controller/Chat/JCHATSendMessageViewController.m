@@ -20,7 +20,9 @@
 #import "JCHATPersonViewController.h"
 #import "JCHATFriendDetailViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
+#import <JMessage/JMSGConversation.h>
 #import "JCHATStringUtils.h"
+//#import "JMSGConversation+Inner.h"
 
 #define interval 60*2
 
@@ -51,7 +53,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
    self.targetName = self.user.username;
   [self setTitleWithUser:self.user];
   } else if (_conversation) {
-   self.title = self.targetName = _conversation.target_name;
+   self.title = self.targetName = _conversation.targetName;
   } else {
     DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
   }
@@ -65,7 +67,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                          completionHandler:^(id resultObject, NSError *error) {
                            _conversation = (JMSGConversation *) resultObject;
 
-                            weakSelf.title = _conversation.target_name;
+                            weakSelf.title = _conversation.targetName;
                            [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                              if (error == nil) {
                              } else {
@@ -82,11 +84,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }
 
   if (self.conversation && self.conversation.chatType == kJMSGGroup) {
-    self.title = _conversation.target_name;
+    self.title = _conversation.targetName;
   } else {
     __weak __typeof(self) weakSelf = self;
     if (!self.user) {
-      [JMSGUser getUserInfoWithUsername:_conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+      [JMSGUser getUserInfoWithUsername:_conversation.targetId completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
           JPIMMAINTHEAD(^{
             __strong __typeof(weakSelf) strongSelf = weakSelf;
@@ -96,7 +98,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         } else {
           __strong __typeof(weakSelf) strongSelf = weakSelf;
           JPIMMAINTHEAD(^{
-            strongSelf.title = _conversation.target_id;
+            strongSelf.title = _conversation.targetId;
             DDLogDebug(@"没有这个用户");
           });
         }
@@ -164,7 +166,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 -(void)getGroupMemberList {
   if (self.conversation && self.conversation.chatType == kJMSGGroup) {
     __weak typeof(self) weakSelf = self;
-    [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         _userArr = [NSMutableArray arrayWithArray:resultObject];
         [weakSelf getAllMessage];
@@ -202,10 +204,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       }
     }];
   }else if (self.conversation && self.conversation.chatType == kJMSGGroup) {
-    [JMSGGroup getGroupInfo:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    [JMSGGroup getGroupInfo:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
     }];
   }else if (self.conversation && self.conversation.chatType == kJMSGSingle) {
-    [JMSGUser getUserInfoWithUsername:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+    [JMSGUser getUserInfoWithUsername:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
       [self setTitleWithUser:resultObject];
     }];
   }
@@ -216,7 +218,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   NSDictionary *apnsDic = [notification object];
   NSString *targetNameStr = [apnsDic[@"aps"] objectForKey:@"alert"];
   NSString *targetName = [[targetNameStr componentsSeparatedByString:@":"] objectAtIndex:0];
-  if ([targetName isEqualToString:_conversation.target_id] || [targetName isEqualToString:_conversation.target_id]) {
+  if ([targetName isEqualToString:_conversation.targetId] || [targetName isEqualToString:_conversation.targetId]) {
     return;
   }
   if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
@@ -374,28 +376,28 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
           }
             JCHATChatModel *model =[[JCHATChatModel alloc]init];
             model.messageId = message.messageId;
-            model.fromId = message.from_id;
+            model.fromId = message.fromId;
             model.conversation = _conversation;
             model.messageStatus = [message.status integerValue];
-            model.displayName = message.display_name;
+            model.displayName = message.displayName;
             model.readState = YES;
             JMSGUser *user = [JMSGUser getMyInfo];
           
           if (_conversation.chatType == kJMSGGroup) {
-            if (![message.from_id isEqualToString :user.username]) {
+            if (![message.fromId isEqualToString :user.username]) {
               model.who=NO;
-              model.avatar = [self getAvatarWithTargetId:message.from_id].avatarThumbPath;
-              model.targetId = _conversation.target_id;
+              model.avatar = [self getAvatarWithTargetId:message.fromId].avatarThumbPath;
+              model.targetId = _conversation.targetId;
             }else{
               model.who=YES;
               model.avatar = user.avatarThumbPath;
               model.targetId = user.username;
             }
           }else {
-            if (![message.from_id isEqualToString :user.username]) {
+            if (![message.fromId isEqualToString :user.username]) {
               model.who=NO;
               model.avatar = _conversation.avatarThumb;
-              model.targetId = _conversation.target_id;
+              model.targetId = _conversation.targetId;
             }else{
               model.who=YES;
               model.avatar = user.avatarThumbPath;
@@ -476,22 +478,22 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         }
 
         if (_conversation.chatType == kJMSGSingle) {
-          if (![message.target_id isEqualToString:self.user.username]) {
+          if (![message.targetId isEqualToString:self.user.username]) {
             // FIXME - This condition should be done by SDK.
             DDLogWarn(@"It's single chat, but the targetId of the msg is not me. Throw away.");
             return;
           }
-        } else if (![_conversation.target_id isEqualToString:message.target_id]){
+        } else if (![_conversation.targetId isEqualToString:message.targetId]){
           DDLogWarn(@"It's group chat, but the targetId of the msg is not group. Throw away.");
           return;
         }
       
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
-        model.avatar = [self getAvatarWithTargetId:message.from_id].avatarThumbPath;
+        model.avatar = [self getAvatarWithTargetId:message.fromId].avatarThumbPath;
         model.messageId = message.messageId;
-        model.fromId = message.from_id;
+        model.fromId = message.fromId;
         model.conversation = _conversation;
-        model.targetId = message.target_id;
+        model.targetId = message.targetId;
         model.messageStatus = [message.status integerValue];
         if (message.messageType == kJMSGTextMessage) {
             model.type=kJMSGTextMessage;
@@ -510,20 +512,20 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         }
       
       if (_conversation.chatType == kJMSGGroup) {
-        if (![message.from_id isEqualToString :user.username]) {
+        if (![message.fromId isEqualToString :user.username]) {
           model.who=NO;
-          model.avatar = [self getAvatarWithTargetId:message.from_id].avatarThumbPath;
-          model.targetId = _conversation.target_id;
+          model.avatar = [self getAvatarWithTargetId:message.fromId].avatarThumbPath;
+          model.targetId = _conversation.targetId;
         }else{
           model.who=YES;
           model.avatar = user.avatarThumbPath;
           model.targetId = user.username;
         }
       }else {
-        if ([message.from_id isEqualToString :user.username]) {
+        if ([message.fromId isEqualToString :user.username]) {
           model.who=NO;
           model.avatar = _conversation.avatarThumb;
-          model.targetId = _conversation.target_id;
+          model.targetId = _conversation.targetId;
         }else{
           model.who=YES;
           model.avatar = user.avatarThumbPath;
@@ -628,8 +630,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   DDLogDebug(@"Action - prepareImageMessage");
   img = [img resizedImageByWidth:upLoadImgWidth];
   UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
-  NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(img, 1)];
-  NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.target_id andData:UIImageJPEGRepresentation(smallpImg, 1)];
+  NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetId andData:UIImageJPEGRepresentation(img, 1)];
+  NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetId andData:UIImageJPEGRepresentation(smallpImg, 1)];
   
   JMSGImageMessage* message = [[JMSGImageMessage alloc] init];
   [self addmessageShowTimeData:message.timestamp];
@@ -641,7 +643,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.who = YES;
   model.sendFlag = NO;
   model.conversation = _conversation;
-  model.targetId = self.conversation.target_id;
+  model.targetId = self.conversation.targetId;
   model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
   model.messageStatus = kJMSGStatusSending;
   model.type = kJMSGImageMessage;
@@ -654,7 +656,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }else {
     message.sendMessageType = kJMSGGroup;
   }
-  message.target_id = model.targetId;
+  message.targetId = model.targetId;
   message.timestamp = model.messageTime;
   ((JMSGImageMessage *)message).mediaData = model.mediaData;
   ((JMSGImageMessage *)message).thumbPath = model.pictureThumbImgPath;
@@ -712,6 +714,22 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 //                            forKeyPath:@"contentSize"
 //                               options:NSKeyValueObservingOptionNew
 //                               context:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(receiveConversationChange)
+                                               name:JMSGNotification_ConversationInfoChanged
+                                             object:nil];
+}
+
+#pragma mark - ConversationChanged
+- (void)receiveConversationChange{
+  [JMSGConversation getConversation:_conversation.targetId withType:kJMSGGroup completionHandler:^(id resultObject, NSError *error){
+    if(error == nil){
+      JMSGConversation *conversation = resultObject;
+      self.title = conversation.targetName;
+    } else{
+      DDLogError(@"get coneversation failed");
+    }
+  }];
 }
 
 #pragma mark --接收EventNotification
@@ -721,7 +739,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   JMSGEventMessage *eventMessage = [infoDic objectForKey:JMSGNotification_EventKey];
   
-  if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.target_id longLongValue]) {
+  if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.targetId longLongValue]) {
     if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
       _eixtGroupFlag = YES;
       [self hidenDetailBtn:_eixtGroupFlag];
@@ -823,7 +841,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.displayName = self.targetName;
   JMSGUser *user = [JMSGUser getMyInfo];
   model.avatar = user.avatarThumbPath;
-  model.targetId = _conversation.target_id;
+  model.targetId = _conversation.targetId;
   model.messageStatus = kJMSGStatusSending;
 
   model.sendFlag = NO;
@@ -835,7 +853,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }else {
     message.sendMessageType = kJMSGGroup;
   }
-  message.target_id = model.targetId;
+  message.targetId = model.targetId;
   message.contentText = model.chatContent;
   [_JMSgMessageDic setObject:message forKey:message.messageId];
   [self addMessage:model];
@@ -1222,7 +1240,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
   model.type=kJMSGVoiceMessage;
   model.conversation = _conversation;
-  model.targetId = self.conversation.target_id;
+  model.targetId = self.conversation.targetId;
   model.displayName = self.targetName;
   model.readState = YES;
   model.who = YES;
@@ -1234,7 +1252,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }else {
     voiceMessage.sendMessageType = kJMSGGroup;
   }
-  voiceMessage.target_id = model.targetId;
+  voiceMessage.targetId = model.targetId;
   voiceMessage.duration = model.voiceTime;
   voiceMessage.timestamp = model.messageTime;
   voiceMessage.mediaData = model.mediaData;

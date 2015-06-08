@@ -91,36 +91,36 @@
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
   }
 
-  if (conversation.target_name != nil) {
-    self.nickName.text = conversation.target_name;
+  if (conversation.targetName != nil) {
+    self.nickName.text = conversation.targetName;
   } else {
-    self.nickName.text = conversation.target_id;
+    self.nickName.text = conversation.targetId;
   }
 
-  if ([conversation.unread_cnt integerValue] > 0) {
+  if ([conversation.unreadCount integerValue] > 0) {
     [self.messageNumberLabel setHidden:NO];
-    self.messageNumberLabel.text = [NSString stringWithFormat:@"%@", conversation.unread_cnt];
+    self.messageNumberLabel.text = [NSString stringWithFormat:@"%@", conversation.unreadCount];
   } else {
     [self.messageNumberLabel setHidden:YES];
   }
 
-  if (conversation.latest_date != nil && ![conversation.latest_date isEqualToString:@"(null)"]) {
-    double time = [conversation.latest_date longLongValue];
+  if (conversation.latestDate != nil && ![conversation.latestDate isEqualToString:@"(null)"]) {
+    double time = [conversation.latestDate longLongValue];
     self.time.text = [JCHATStringUtils getFriendlyDateString:time forConversation:YES];
   } else {
     self.time.text = @"";
   }
 
-  if (conversation.latest_type == nil) {
+  if (conversation.latestType == nil) {
     self.message.text = @"";
     return;
   }
 
-  if ([conversation.latest_type isEqualToString:@"text"]|| [conversation.latest_type isEqualToString:@"event"]) {
-    self.message.text = conversation.latest_text;
-  } else if ([conversation.latest_type isEqualToString:@"image"]) {
+  if ([conversation.latestType isEqualToString:@"text"]|| [conversation.latestType isEqualToString:@"event"]) {
+    self.message.text = conversation.latestText;
+  } else if ([conversation.latestType isEqualToString:@"image"]) {
     self.message.text = @"[图片]";
-  } else if ([conversation.latest_type isEqualToString:@"voice"]) {
+  } else if ([conversation.latestType isEqualToString:@"voice"]) {
     self.message.text = @"[语音]";
   }
 }
