@@ -134,7 +134,7 @@
 
 #pragma mark -- 语音时长算法
 - (float)getLengthWithDuration:(NSInteger)duration {
-  if (duration <= 5) {
+  if (duration <= 2) {
     chatBgViewWidth = 60;
   } else {
     chatBgViewWidth = (-(12 / 115)) * duration * duration + 12.5217 * duration;
