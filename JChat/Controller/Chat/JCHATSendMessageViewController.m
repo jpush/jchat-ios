@@ -35,6 +35,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   NSMutableDictionary *_messageDic;
   __block NSMutableArray *_userArr;
   NSMutableDictionary *_JMSgMessageDic;
+ __block BOOL _eixtGroupFlag;
+  UIButton *_rightBtn;
 }
 
 @end
@@ -130,12 +132,12 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self.view addSubview:self.toolBar];
 
   [self.view setBackgroundColor:[UIColor whiteColor]];
-  UIButton *rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
-  [rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
-  [rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];//为导航栏添加右侧按钮
-
+  _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [_rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
+  [_rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
+  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
+  
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
   [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
@@ -166,13 +168,19 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       if (error == nil) {
         _userArr = [NSMutableArray arrayWithArray:resultObject];
         [weakSelf getAllMessage];
+        [weakSelf hidenDetailBtn:_eixtGroupFlag];
       }else {
         DDLogDebug(@"群聊成员获取失败");
       }
     }];
   }else {
     [self getAllMessage];
+    [self hidenDetailBtn:_eixtGroupFlag];
   }
+}
+
+- (void)hidenDetailBtn:(BOOL)flag {
+  [_rightBtn setHidden:flag];
 }
 
 
@@ -350,6 +358,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
           if (message.messageType == kJMSGEventMessage) {
             JMSGEventMessage *eventMessage = (JMSGEventMessage *)message;
             if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
+              if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
+                _eixtGroupFlag = YES;
+                [weakSelf hidenDetailBtn:_eixtGroupFlag];
+              }
               JCHATChatModel *model = [[JCHATChatModel alloc]init];
               model.messageId = eventMessage.messageId;
               model.chatType = kJMSGGroup;
@@ -710,6 +722,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   JMSGEventMessage *eventMessage = [infoDic objectForKey:JMSGNotification_EventKey];
   
   if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.target_id longLongValue]) {
+    if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
+      _eixtGroupFlag = YES;
+      [self hidenDetailBtn:_eixtGroupFlag];
+    }
     [self addEventMessage:eventMessage];
   }
 }
