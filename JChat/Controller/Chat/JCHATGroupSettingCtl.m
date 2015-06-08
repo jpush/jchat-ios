@@ -96,20 +96,26 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (void)getGroupMemberList {
    typeof(self) __weak weakSelf = self;
   [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
     typeof(weakSelf) __strong strongSelf = weakSelf;
     if (error == nil) {
       _groupData = [NSMutableArray arrayWithArray:resultObject];
-      [strongSelf reloadHeadViewData];
+      JPIMMAINTHEAD(^{
+          [strongSelf reloadHeadViewData];
+      });
     }else {
     }
   }];
 }
 
 - (void)reloadHeadViewData {
+  for (UIView *v in _headView.subviews) {
+    if ([v isKindOfClass:[JCHATGroupPersonView class]]) {
+      [v removeFromSuperview];
+    }
+  }
     _groupBtnArr = [[NSMutableArray alloc]init];
     NSInteger n = 0;
     if ([_groupData count] ==1) {
@@ -221,26 +227,28 @@
   [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
   JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
   [JMSGGroup deleteGroupMember:self.conversation.targetId members:user.username completionHandler:^(id resultObject, NSError *error) {
-  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    if (error == nil) {
-      [MBProgressHUD showMessage:@"删除好友成功！" view:self.view];
-      [personView removeFromSuperview];
-      [_groupBtnArr removeObjectAtIndex:personView.headViewBtn.tag - 1000];
-      [_groupData removeObjectAtIndex:personView.headViewBtn.tag - 1000];
-      [self reloadGroupPersonViewFrame];
-      if ([_groupData count] == 1) {
-        JCHATGroupPersonView *personView = [_groupBtnArr lastObject];
-        if (personView.headViewBtn.tag == 20000) {
-          [personView removeFromSuperview];
-          [_groupBtnArr removeLastObject];
-          [self showDeleteMemberIcon:NO];
+    JPIMMAINTHEAD(^{
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      if (error == nil) {
+        [MBProgressHUD showMessage:@"删除好友成功！" view:self.view];
+        [personView removeFromSuperview];
+        [_groupBtnArr removeObjectAtIndex:personView.headViewBtn.tag - 1000];
+        [_groupData removeObjectAtIndex:personView.headViewBtn.tag - 1000];
+        [self reloadGroupPersonViewFrame];
+        if ([_groupData count] == 1) {
+          JCHATGroupPersonView *personView = [_groupBtnArr lastObject];
+          if (personView.headViewBtn.tag == 20000) {
+            [personView removeFromSuperview];
+            [_groupBtnArr removeLastObject];
+            [self showDeleteMemberIcon:NO];
+          }
+          return;
         }
-        return;
+      }else {
+        [MBProgressHUD showMessage:@"删除好友失败！" view:self.view];
       }
-    }else {
-      [MBProgressHUD showMessage:@"删除好友失败！" view:self.view];
-    }
-  }];
+    });
+    }];
 }
 
 - (void)reloadGroupPersonViewFrame {
