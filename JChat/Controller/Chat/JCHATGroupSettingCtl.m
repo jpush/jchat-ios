@@ -370,6 +370,7 @@
           [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];
           [self.navigationController popToRootViewControllerAnimated:YES];
         }else {
+          DDLogDebug(@"exit group error :%@",error);
           [MBProgressHUD showMessage:@"退出群组失败！" view:self.view];
         }
       }];
