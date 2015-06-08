@@ -207,21 +207,17 @@
 }
 
 - (void)netWorkConnectSetup {
-    titleLabel.text =@"正在连接...";
+    titleLabel.text =@"收取中...";
 }
 
 - (void)connectSucceed {
-    titleLabel.text =@"连接成功";
-    [self performSelector:@selector(showName) withObject:nil afterDelay:1];
+    titleLabel.text =@"会话";
 }
 
 - (void)isConnecting {
-  titleLabel.text =@"正在连接...";
+  titleLabel.text =@"连接中...";
 }
 
-- (void)showName {
-    titleLabel.text =@"会话";
-}
 
 #pragma mark --收到消息
 - (void)reveiveMessageNotifi :(NSNotification *)notifi {
