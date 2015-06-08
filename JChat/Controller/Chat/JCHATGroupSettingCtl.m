@@ -99,7 +99,7 @@
 
 - (void)getGroupMemberList {
    typeof(self) __weak weakSelf = self;
-  [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+  [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
     typeof(weakSelf) __strong strongSelf = weakSelf;
     if (error == nil) {
       _groupData = [NSMutableArray arrayWithArray:resultObject];
@@ -161,15 +161,15 @@
   
   [MBProgressHUD showMessage:@"更新群组名称" toView:self.view];
   typeof(self) __weak weakSelf = self;
-  [JMSGGroup getGroupInfo:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+  [JMSGGroup getGroupInfo:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
     typeof(weakSelf) __strong strongSelf = weakSelf;
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error == nil) {
       JMSGGroup *group = (JMSGGroup *)resultObject;
-      group.group_name = textField.text;
+      group.groupName = textField.text;
       [JMSGGroup updateGroupInfo:group completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
-          strongSelf.conversation.target_name = textField.text;
+          strongSelf.conversation.targetName = textField.text;
           strongSelf.sendMessageCtl.title = textField.text;
           JPIMMAINTHEAD(^{
             [strongSelf.groupTab reloadData];
@@ -220,7 +220,7 @@
   
   [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
   JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
-  [JMSGGroup deleteGroupMember:self.conversation.target_id members:user.username completionHandler:^(id resultObject, NSError *error) {
+  [JMSGGroup deleteGroupMember:self.conversation.targetId members:user.username completionHandler:^(id resultObject, NSError *error) {
   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error == nil) {
       [MBProgressHUD showMessage:@"删除好友成功！" view:self.view];
@@ -309,7 +309,7 @@
         cell.groupTitle.text = [_groupTitleData objectAtIndex:indexPath.row];
       if (indexPath.row == 0) {
         cell.groupName.delegate = self;
-        cell.groupName.text = self.conversation.target_name;
+        cell.groupName.text = self.conversation.targetName;
       }
         if (indexPath.row == 1) {
             [cell.groupName setHidden:YES];
@@ -351,7 +351,7 @@
           return;
     }
     [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
-    [JMSGGroup addMembers:self.conversation.target_id members:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+    [JMSGGroup addMembers:self.conversation.targetId members:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       if (error == nil) {
         for (NSInteger i=0; i<[(NSMutableArray *)resultObject count]; i++) {
@@ -364,7 +364,7 @@
   }else if (alertView.tag !=100) {
     if (buttonIndex ==1) {
       [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
-      [JMSGGroup exitGoup:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+      [JMSGGroup exitGoup:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (error == nil) {
           [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];

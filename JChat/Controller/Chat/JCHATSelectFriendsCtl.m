@@ -91,7 +91,7 @@
   [_groupTextField resignFirstResponder];
   [MBProgressHUD showMessage:@"正在创建群组！" toView:self.view];
   JMSGGroup *group = [[JMSGGroup alloc]init];
-  group.group_name = _groupTextField.text;
+  group.groupName = _groupTextField.text;
   [JMSGGroup createGroup:group completionHandler:^(id resultObject, NSError *error) {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error ==nil) {

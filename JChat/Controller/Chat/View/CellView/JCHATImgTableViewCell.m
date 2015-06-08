@@ -207,7 +207,7 @@
   }else {
     _message.sendMessageType = kJMSGGroup;
   }
-  _message.target_id = self.model.targetId;
+  _message.targetId = self.model.targetId;
   _message.timestamp = self.model.messageTime;
   _message.mediaData = self.model.mediaData;
   _message.thumbPath = self.model.pictureThumbImgPath;
