@@ -95,7 +95,7 @@
   }else {
     [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
     JMSGGroup *group = [[JMSGGroup alloc]init];
-    group.group_name =[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser getMyInfo].username,self.chatUser.username,[alertView textFieldAtIndex:0].text];
+    group.groupName =[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser getMyInfo].username,self.chatUser.username,[alertView textFieldAtIndex:0].text];
     group.group_members = [NSString stringWithFormat:@"%@,%@",self.chatUser.username,[alertView textFieldAtIndex:0].text];
     // block self
     typeof(self) __weak weakSelf = self;
@@ -105,8 +105,8 @@
       if (error == nil) {
         [MBProgressHUD showMessage:@"创建群成功" view:self.view];
         strongSelf.sendMessageCtl.conversation = resultObject;
-        strongSelf.sendMessageCtl.targetName = group.group_name;
-        strongSelf.sendMessageCtl.title = group.group_name;
+        strongSelf.sendMessageCtl.targetName = group.groupName;
+        strongSelf.sendMessageCtl.title = group.groupName;
         [strongSelf.navigationController popViewControllerAnimated:YES];
       }else {
         [MBProgressHUD showMessage:@"创建群失败" view:self.view];

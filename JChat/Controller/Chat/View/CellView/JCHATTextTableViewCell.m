@@ -186,9 +186,9 @@
                         completionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
                   _message = _sendFailMessage = resultObject;
-                  _message.target_id = self.conversation.target_id;
+                  _message.targetId = self.conversation.targetId;
                   _message.sendMessageType = self.conversation.chatType;
-                  _sendFailMessage.target_id = self.conversation.target_id;
+                  _sendFailMessage.targetId = self.conversation.targetId;
                    [JMSGMessage sendMessage:_sendFailMessage];
                 }else {
                     NSLog(@"获取消息失败!");

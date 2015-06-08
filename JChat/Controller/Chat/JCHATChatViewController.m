@@ -167,7 +167,7 @@
    __block JMSGConversation *conversation;
     for (NSInteger i =0; i<[_conversationArr count]; i++) {
         JMSGConversation *getConversation = [_conversationArr objectAtIndex:i];
-        if ([getConversation.target_id isEqualToString:[[targetName componentsSeparatedByString:@":"] objectAtIndex:0]]) {
+        if ([getConversation.targetId isEqualToString:[[targetName componentsSeparatedByString:@":"] objectAtIndex:0]]) {
             conversation = getConversation;
         }
     }
@@ -178,7 +178,7 @@
                 sendMessageCtl.conversation = conversation;
                 [self.navigationController pushViewController:sendMessageCtl animated:YES];
             });
-            NSInteger badge = _unreadCount - [conversation.unread_cnt integerValue];
+            NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
             [self saveBadge:badge];
             [conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
                 if (error == nil) {
@@ -192,7 +192,7 @@
     }
     sendMessageCtl.conversation = conversation;
     [self.navigationController pushViewController:sendMessageCtl animated:YES];
-    NSInteger badge = _unreadCount - [conversation.unread_cnt integerValue];
+    NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
     [self saveBadge:badge];
 }
 
@@ -237,7 +237,7 @@
                 _unreadCount = 0;
                 for (NSInteger i=0; i < [_conversationArr count]; i++) {
                     JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
-                    _unreadCount = _unreadCount + [conversation.unread_cnt integerValue];
+                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
                 }
                 [self saveBadge:_unreadCount];
         }else {
@@ -251,9 +251,9 @@
 NSInteger sortType(id object1,id object2,void *cha) {
     JMSGConversation *model1 = (JMSGConversation *)object1;
     JMSGConversation *model2 = (JMSGConversation *)object2;
-    if([model1.latest_date integerValue] > [model2.latest_date integerValue]) {
+    if([model1.latestDate integerValue] > [model2.latestDate integerValue]) {
         return NSOrderedAscending;
-    }else if([model1.latest_date integerValue] < [model2.latest_date integerValue]) {
+    }else if([model1.latestDate integerValue] < [model2.latestDate integerValue]) {
         return NSOrderedDescending;
     }
     return NSOrderedSame;
@@ -370,7 +370,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
   DDLogDebug(@"Action - tableView");
     JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
     // FIXME 这里要考虑单聊、群聊
-    [JMSGConversation deleteConversation:conversation.target_id
+    [JMSGConversation deleteConversation:conversation.targetId
                                 withType:kJMSGSingle
                        completionHandler:^(id resultObject, NSError *error) {
         if (error == nil) {
@@ -438,7 +438,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
     sendMessageCtl.conversation = conversation;
     [self.navigationController pushViewController:sendMessageCtl animated:YES];
-    NSInteger badge = _unreadCount - [conversation.unread_cnt integerValue];
+    NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
     [self saveBadge:badge];
 }
 
