@@ -205,6 +205,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }];
   }else if (self.conversation && self.conversation.chatType == kJMSGGroup) {
     [JMSGGroup getGroupInfo:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
+      if (error == nil) {
+        _groupInfo = resultObject;
+      }else {
+        DDLogDebug(@"获取groupInfo fail");
+      }
     }];
   }else if (self.conversation && self.conversation.chatType == kJMSGSingle) {
     [JMSGUser getUserInfoWithUsername:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
