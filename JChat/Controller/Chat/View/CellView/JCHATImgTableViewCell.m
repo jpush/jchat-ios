@@ -144,7 +144,7 @@
                     weakSelf.sendFailImgMessage.progressCallback=^(float percent){
                       weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
                     };
-                    self.sendFailImgMessage.sendMessageType = self.conversation.chatType;
+                    self.sendFailImgMessage.conversationType = self.conversation.chatType;
                     [JMSGMessage sendMessage:self.sendFailImgMessage];
                 }else {
                     NSLog(@"获取消息失败!");
@@ -203,9 +203,9 @@
     weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
   };
   if (self.conversation.chatType == kJMSGSingle) {
-    _message.sendMessageType = kJMSGSingle;
+    _message.conversationType = kJMSGSingle;
   }else {
-    _message.sendMessageType = kJMSGGroup;
+    _message.conversationType = kJMSGGroup;
   }
   _message.targetId = self.model.targetId;
   _message.timestamp = self.model.messageTime;
