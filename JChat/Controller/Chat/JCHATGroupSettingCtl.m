@@ -88,10 +88,28 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 - (void)gropMemberChange:(NSNotification *)notificationObject {
   NSDictionary *userInfo = [notificationObject userInfo];
   NSMutableArray *userList = [userInfo objectForKey:JMSGNotification_GroupMemberKey];
+  typeof(self) __weak weakSelf = self;
   JPIMMAINTHEAD(^{
-    _groupData = [[(NSArray *)userList sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
+    typeof(weakSelf) __strong strongSelf = weakSelf;
+    [strongSelf sorteUserArr:userList];
     [self reloadHeadViewData];
   });
+}
+
+-  (void)sorteUserArr:(NSArray *)arr {
+  JMSGUser *userInfo;
+  _groupData = [[(NSArray *)arr sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
+  for (NSInteger i=0; i< [_groupData count]; i++) {
+
+    userInfo = [_groupData objectAtIndex:i];
+    if ([self.sendMessageCtl.groupInfo.groupOwner longLongValue] == userInfo.uid ) {
+      [_groupData removeObjectAtIndex:i];
+      break;
+    }
+  }
+  if (userInfo) {
+    [_groupData insertObject:userInfo atIndex:0];
+  }
 }
 
 - (void)tableView:(UITableView *)tableView touchesBegan:(NSSet *)touches
@@ -107,10 +125,12 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 
 - (void)getGroupMemberList {
    typeof(self) __weak weakSelf = self;
+  
+  
   [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
     typeof(weakSelf) __strong strongSelf = weakSelf;
     if (error == nil) {
-      _groupData = [[(NSArray *)resultObject sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
+      [strongSelf sorteUserArr:resultObject];
       JPIMMAINTHEAD(^{
           [strongSelf reloadHeadViewData];
       });
