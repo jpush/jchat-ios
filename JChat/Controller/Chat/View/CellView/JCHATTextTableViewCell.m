@@ -187,7 +187,7 @@
                 if (error == nil) {
                   _message = _sendFailMessage = resultObject;
                   _message.targetId = self.conversation.targetId;
-                  _message.sendMessageType = self.conversation.chatType;
+                  _message.conversationType = self.conversation.chatType;
                   _sendFailMessage.targetId = self.conversation.targetId;
                    [JMSGMessage sendMessage:_sendFailMessage];
                 }else {

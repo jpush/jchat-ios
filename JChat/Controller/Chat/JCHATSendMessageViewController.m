@@ -284,10 +284,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if (!model) {
     return;
   }
-  if (message.messageType == kJMSGVoiceMessage) {
+  if (message.contentType == kJMSGVoiceMessage) {
     JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *) message;
     model.voicePath = voiceMessage.resourcePath;
-  } else if (message.messageType == kJMSGImageMessage) {
+  } else if (message.contentType == kJMSGImageMessage) {
     JMSGImageMessage *imgMessage = (JMSGImageMessage *) message;
     model.pictureImgPath = imgMessage.resourcePath;
   }
@@ -357,7 +357,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
             JMSGMessage *message =[arrList objectAtIndex:i];
           [_JMSgMessageDic setObject:message forKey:message.messageId];
 
-          if (message.messageType == kJMSGEventMessage) {
+          if (message.contentType == kJMSGEventMessage) {
             JMSGEventMessage *eventMessage = (JMSGEventMessage *)message;
             if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
               if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
@@ -405,11 +405,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
             }
 
           }
-            if (message.messageType == kJMSGTextMessage) {
+            if (message.contentType == kJMSGTextMessage) {
                 model.type=kJMSGTextMessage;
                 JMSGContentMessage *contentMessage = (JMSGContentMessage *)message;
                 model.chatContent = contentMessage.contentText;
-            }else if (message.messageType == kJMSGImageMessage)
+            }else if (message.contentType == kJMSGImageMessage)
             {
                 model.type= kJMSGImageMessage;
                 JMSGImageMessage *imageMessage = (JMSGImageMessage *)message;
@@ -424,7 +424,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                     [_imgDataArr addObject:model];
                 }
                 model.photoIndex = [_imgDataArr count] -1;
-            }else if (message.messageType == kJMSGVoiceMessage)
+            }else if (message.contentType == kJMSGVoiceMessage)
             {
                 model.type = kJMSGVoiceMessage;
                 JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *)message;
@@ -495,16 +495,16 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         model.conversation = _conversation;
         model.targetId = message.targetId;
         model.messageStatus = [message.status integerValue];
-        if (message.messageType == kJMSGTextMessage) {
+        if (message.contentType == kJMSGTextMessage) {
             model.type=kJMSGTextMessage;
             JMSGContentMessage *contentMessage =  (JMSGContentMessage *)message;
             model.chatContent = contentMessage.contentText;
-        } else if (message.messageType == kJMSGImageMessage) {
+        } else if (message.contentType == kJMSGImageMessage) {
             model.type=kJMSGImageMessage;
             model.pictureThumbImgPath = ((JMSGImageMessage *)message).thumbPath;
             [_imgDataArr addObject:model];
             model.photoIndex = [_imgDataArr count] -1;
-        } else if (message.messageType == kJMSGVoiceMessage){
+        } else if (message.contentType == kJMSGVoiceMessage){
             model.type = kJMSGVoiceMessage;
             model.voicePath =((JMSGVoiceMessage *)message).resourcePath;
             model.voiceTime = [((JMSGVoiceMessage *)message).duration stringByAppendingString:@"''"];
@@ -652,9 +652,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.pictureThumbImgPath = smallImgPath;
   
   if (self.conversation.chatType == kJMSGSingle) {
-    message.sendMessageType = kJMSGSingle;
+    message.conversationType = kJMSGSingle;
   }else {
-    message.sendMessageType = kJMSGGroup;
+    message.conversationType = kJMSGGroup;
   }
   message.targetId = model.targetId;
   message.timestamp = model.messageTime;
@@ -849,9 +849,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.chatContent = text;
   
   if (self.conversation.chatType == kJMSGSingle) {
-    message.sendMessageType = kJMSGSingle;
+    message.conversationType = kJMSGSingle;
   }else {
-    message.sendMessageType = kJMSGGroup;
+    message.conversationType = kJMSGGroup;
   }
   message.targetId = model.targetId;
   message.contentText = model.chatContent;
@@ -1248,9 +1248,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.mediaData = [NSData dataWithContentsOfFile:voicePath];
   
   if (self.conversation.chatType == kJMSGSingle) {
-    voiceMessage.sendMessageType = kJMSGSingle;
+    voiceMessage.conversationType = kJMSGSingle;
   }else {
-    voiceMessage.sendMessageType = kJMSGGroup;
+    voiceMessage.conversationType = kJMSGGroup;
   }
   voiceMessage.targetId = model.targetId;
   voiceMessage.duration = model.voiceTime;
