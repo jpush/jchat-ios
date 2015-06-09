@@ -76,11 +76,20 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
+NSInteger userNameSortGroup(id user1, id user2, void *context) {
+  JMSGUser *u1,*u2;
+  //类型转换
+  u1 = (JMSGUser*)user1;
+  u2 = (JMSGUser*)user2;
+  return (NSComparisonResult)[u1.username compare:u2.username options:NSNumericSearch];
+}
+
 - (void)gropMemberChange:(NSNotification *)notificationObject {
   NSDictionary *userInfo = [notificationObject userInfo];
   NSMutableArray *userList = [userInfo objectForKey:JMSGNotification_GroupMemberKey];
   JPIMMAINTHEAD(^{
-    _groupData = [NSMutableArray arrayWithArray:userList];
+    _groupData = [[(NSArray *)userList sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
     [self reloadHeadViewData];
   });
 }
@@ -101,7 +110,7 @@
   [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
     typeof(weakSelf) __strong strongSelf = weakSelf;
     if (error == nil) {
-      _groupData = [NSMutableArray arrayWithArray:resultObject];
+      _groupData = [[(NSArray *)resultObject sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
       JPIMMAINTHEAD(^{
           [strongSelf reloadHeadViewData];
       });
