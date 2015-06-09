@@ -180,7 +180,7 @@
         if (error == nil) {
           self.voiceFailMessage = resultObject;
           self.voiceFailMessage.resourcePath = self.model.voicePath;
-          self.voiceFailMessage.sendMessageType = self.conversation.chatType;
+          self.voiceFailMessage.conversationType = self.conversation.chatType;
           self.message = resultObject;
           [JMSGMessage sendMessage:self.voiceFailMessage];
         } else {
