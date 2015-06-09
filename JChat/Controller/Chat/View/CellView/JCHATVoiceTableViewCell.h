@@ -18,6 +18,10 @@
 - (void)getContinuePlay:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath;
 
 - (void)selectHeadView:(JCHATChatModel *)model;
+
+- (void)setMessageIDWithMessage:(JMSGMessage *)message
+                      chatModel:(JCHATChatModel * __strong *)chatModel
+                          index:(NSInteger)index;
 @end
 
 @interface JCHATVoiceTableViewCell : UITableViewCell <
