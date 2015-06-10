@@ -11,8 +11,13 @@
 @implementation JCHATGroupPersonView
 
 - (void)awakeFromNib {
-    [self bringSubviewToFront:self.deletePersonBtn];
-    self.deletePersonBtn.layer.cornerRadius = 10;
+  [self setFrame:CGRectMake(0, 0, 56, 75)];
+  [self bringSubviewToFront:self.deletePersonBtn];
+  self.deletePersonBtn.layer.cornerRadius = 10;
+  [self.headViewBtn setFrame:CGRectMake(0, 0, 46, 46)];
+  [self.headViewBtn.layer setMasksToBounds:YES];
+  [self.headViewBtn.layer setCornerRadius:23];
+  [self.headViewBtn setBackgroundColor:[UIColor redColor]];
 }
 
 /*

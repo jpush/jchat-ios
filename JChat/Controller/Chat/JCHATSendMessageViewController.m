@@ -34,6 +34,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   NSMutableArray *_imgDataArr;
   __block JMSGConversation *_conversation;
   NSMutableDictionary *_messageDic;
+  __block NSMutableArray *_userArr;
+
 }
 
 @end
@@ -108,6 +110,18 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   _imgDataArr =[[NSMutableArray alloc] init];
 
+//  if (self.conversation && self.conversation.chatType == kJMSGGroup) {
+//    __weak typeof(self) weakSelf = self;
+//    [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+//      if (error == nil) {
+//        _userArr = [NSMutableArray arrayWithObject:resultObject];
+//        [weakSelf getAllMessage];
+//      }else {
+//        DDLogDebug(@"群聊成员获取失败");
+//      }
+//    }];
+//  }else {
+//  }
   [self getAllMessage];
 
   self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)) style:UITableViewStylePlain];
@@ -316,16 +330,20 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 - (void)getAllMessage {
   __block NSMutableArray * arrList;
   [self cleanMessageCache];
+  
+  __weak typeof(self) weakSelf = self;
+
     [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
         arrList = resultObject;
         for (NSInteger i=0; i< [arrList count]; i++) {
             JMSGMessage *message =[arrList objectAtIndex:i];
           if (message.messageType == kJMSGEventMessage) {
-            [self addEventMessage:(JMSGEventMessage *)message];
+            [weakSelf addEventMessage:(JMSGEventMessage *)message];
             continue;
           }
             JCHATChatModel *model =[[JCHATChatModel alloc]init];
             model.messageId = message.messageId;
+            model.avatar = [self getAvatarWithTargetId:message.target_id];
             model.conversation = _conversation;
             model.messageStatus = [message.status integerValue];
             model.displayName = message.display_name;
@@ -368,15 +386,25 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                 model.chatContent =@"";
             }
             model.messageTime = message.timestamp;
-            [self compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
+            [weakSelf compareReceiveMessageTimeInterVal:[model.messageTime doubleValue]];
           [self addMessage:model];
         }
             [_messageTableView reloadData];
       
         if ([_messageDic[JCHATMessageIdKey] count] != 0) {
-            [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [weakSelf.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
     }];
+}
+
+- (NSString *)getAvatarWithTargetId:(NSString *)targetId {
+  for (NSInteger i=0; i<[_userArr count]; i++) {
+    JMSGUser *user = [_userArr objectAtIndex:i];
+    if ([user.username isEqualToString:targetId]) {
+      return user.avatarThumbPath;
+    }
+  }
+  return nil;
 }
 
 #pragma mark --收到消息
@@ -412,6 +440,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         }
       
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
+        model.avatar = [self getAvatarWithTargetId:message.target_id];
         model.messageId = message.messageId;
         model.conversation = _conversation;
         model.targetId = message.target_id;
@@ -705,7 +734,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if ([text isEqualToString:@""] || text == nil) {
     return;
   }
-
   [self addmessageShowTimeData];
   JCHATChatModel *model = [[JCHATChatModel alloc] init];
   model.messageId = [self getTimeId];
