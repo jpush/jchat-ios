@@ -951,7 +951,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
   
   JCHATChatModel *model = _messageDic[JCHATMessage][messageId ];
-  if (model.type == kJMSGTextMessage) {
+  if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
     return model.getTextSize.height + 8;
   } else if (model.type == kJMSGImageMessage) {
     if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
@@ -997,7 +997,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-  DDLogDebug(@"Event - viewWillAppear");
+  DDLogDebug(@"Event - viewWillDisappear");
     [super viewWillAppear:YES];
     [[JCHATAudioPlayerHelper shareInstance] stopAudio];
     [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
@@ -1025,7 +1025,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
+  if (!messageId) {
+    DDLogDebug(@"messageId is nill%@",messageId);
+    return nil;
+  }
     JCHATChatModel *model = _messageDic[JCHATMessage][messageId];
+  if (!model) {
+    DDLogDebug(@"JCHATChatModel is nill%@",messageId);
+    return nil;
+  }
     if (model.type == kJMSGTextMessage) {
         static NSString *cellIdentifier = @"textCell";
         JCHATTextTableViewCell *cell = (JCHATTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -1069,6 +1077,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         }
       if (model.type == kJMSGEventMessage) {
         cell.messageTimeLabel.text = model.chatContent;
+//        [cell setCellData:model];
       }else {
         cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
       }
