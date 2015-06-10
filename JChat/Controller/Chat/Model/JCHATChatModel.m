@@ -23,7 +23,7 @@
 
 -(CGSize )getTextSize
 {
-    if (self.type == kJMSGTextMessage) {
+    if (self.type == kJMSGTextMessage || self.type == kJMSGEventMessage || self.type == kJMSGTimeMessage) {
         UIFont *font =[UIFont systemFontOfSize:18];
         CGSize maxSize = CGSizeMake(200, 2000);
         
