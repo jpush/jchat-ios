@@ -163,7 +163,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     __weak typeof(self) weakSelf = self;
     [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
-        _userArr = [NSMutableArray arrayWithObject:resultObject];
+        _userArr = [NSMutableArray arrayWithArray:resultObject];
         [weakSelf.messageTableView reloadData];
       }else {
         DDLogDebug(@"群聊成员获取失败");
@@ -347,21 +347,34 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
           }
             JCHATChatModel *model =[[JCHATChatModel alloc]init];
             model.messageId = message.messageId;
-            model.avatar = [self getAvatarWithTargetId:message.target_id];
             model.conversation = _conversation;
             model.messageStatus = [message.status integerValue];
             model.displayName = message.display_name;
             model.readState = YES;
             JMSGUser *user = [JMSGUser getMyInfo];
-            if ([message.target_id isEqualToString :user.username]) {
-                model.who=NO;
-                model.avatar = _conversation.avatarThumb;
-                model.targetId = _conversation.target_id;
+          
+          if (_conversation.chatType == kJMSGGroup) {
+            if (![message.from_id isEqualToString :user.username]) {
+              model.who=NO;
+              model.avatar = [self getAvatarWithTargetId:message.from_id];
+              model.targetId = _conversation.target_id;
             }else{
-                model.who=YES;
-                model.avatar = user.avatarThumbPath;
-                model.targetId = user.username;
+              model.who=YES;
+              model.avatar = user.avatarThumbPath;
+              model.targetId = user.username;
             }
+          }else {
+            if (![message.from_id isEqualToString :user.username]) {
+              model.who=NO;
+              model.avatar = _conversation.avatarThumb;
+              model.targetId = _conversation.target_id;
+            }else{
+              model.who=YES;
+              model.avatar = user.avatarThumbPath;
+              model.targetId = user.username;
+            }
+
+          }
             if (message.messageType == kJMSGTextMessage) {
                 model.type=kJMSGTextMessage;
                 JMSGContentMessage *contentMessage = (JMSGContentMessage *)message;
@@ -443,7 +456,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         }
       
         JCHATChatModel *model =[[JCHATChatModel alloc] init];
-        model.avatar = [self getAvatarWithTargetId:message.target_id];
+        model.avatar = [self getAvatarWithTargetId:message.from_id];
         model.messageId = message.messageId;
         model.conversation = _conversation;
         model.targetId = message.target_id;
@@ -463,17 +476,29 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
             model.voiceTime = [((JMSGVoiceMessage *)message).duration stringByAppendingString:@"''"];
             model.readState = NO;
         }
-
-        if ([user.username isEqualToString:message.target_id]) {
-            model.who = YES;
-            model.avatar = user.avatarThumbPath;
-            model.targetId = [JMSGUser getMyInfo].username;
-        }else {
-            model.who = NO;
-            model.avatar = _conversation.avatarThumb;
-            model.targetId = _conversation.target_id;
+      
+      if (_conversation.chatType == kJMSGGroup) {
+        if (![message.from_id isEqualToString :user.username]) {
+          model.who=NO;
+          model.avatar = [self getAvatarWithTargetId:message.from_id];
+          model.targetId = _conversation.target_id;
+        }else{
+          model.who=YES;
+          model.avatar = user.avatarThumbPath;
+          model.targetId = user.username;
         }
-
+      }else {
+        if ([message.from_id isEqualToString :user.username]) {
+          model.who=NO;
+          model.avatar = _conversation.avatarThumb;
+          model.targetId = _conversation.target_id;
+        }else{
+          model.who=YES;
+          model.avatar = user.avatarThumbPath;
+          model.targetId = user.username;
+        }
+        
+      }
         model.messageTime = message.timestamp;
         [self addmessageShowTimeData:message.timestamp];
         [self addMessage:model];
