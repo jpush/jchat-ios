@@ -13,6 +13,7 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="73S-EI-iRM">
                     <rect key="frame" x="4" y="0.0" width="46" height="46"/>
+                    <color key="backgroundColor" red="0.93045691289999999" green="0.26005291940000003" blue="0.086192203310000007" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="0IF-yc-H47"/>
                     </constraints>
