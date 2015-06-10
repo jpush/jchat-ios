@@ -731,6 +731,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if(error == nil){
       JMSGConversation *conversation = resultObject;
       self.title = conversation.targetName;
+      [self getGroupMemberList];
     } else{
       DDLogError(@"get coneversation failed");
     }
