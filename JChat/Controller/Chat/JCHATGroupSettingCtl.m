@@ -122,6 +122,7 @@
        JCHATGroupPersonView * personView = [personXib objectAtIndex:0];
         [personView setFrame:CGRectMake(10+(i * (56 + 10)), 10, 56, 75)];
         [personView.headViewBtn setFrame:CGRectMake(0, 0, 46, 46)];
+        [personView.headViewBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         [_groupBtnArr addObject:personView];
         personView.delegate = self;
         [personView.deletePersonBtn setHidden:YES];
@@ -141,7 +142,11 @@
           personView.headViewBtn.tag = 1000+i;
           JMSGUser *user = [_groupData objectAtIndex:i];
           [personView.headViewBtn setBackgroundColor:[UIColor redColor]];
-          [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+          if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
+            [personView.headViewBtn setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
+          }else {
+            [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+          }
           if (user.nickname && ![user.nickname isEqualToString:@"(null)"]) {
             personView.memberLable.text = user.nickname;
           }else {
@@ -398,8 +403,6 @@
               }else {
                 [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
               }
-              [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
-
             }else {
                 personView.headViewBtn.tag =20000;//删除按钮标示
                 [_groupBtnArr addObject:personView];
@@ -422,7 +425,6 @@
         }else {
           [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
         }
-      [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
         [personView setFrame:CGRectMake(10+([_groupData count]-1 * (56 + 10)), 10, 56, 75)];
         [_headView addSubview:personView];
         [_groupBtnArr insertObject:personView atIndex:[_groupData count]-1];

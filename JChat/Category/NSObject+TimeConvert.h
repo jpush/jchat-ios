@@ -10,7 +10,7 @@
 
 @interface NSObject (TimeConvert)
 
-- (NSTimeInterval)getCurrentTimeInterval;
+//- (NSTimeInterval)getCurrentTimeInterval;
 
 
 @end
