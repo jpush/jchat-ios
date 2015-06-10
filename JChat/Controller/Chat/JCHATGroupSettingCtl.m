@@ -121,25 +121,27 @@
         NSArray *personXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATGroupPersonView"owner:self options:nil];
        JCHATGroupPersonView * personView = [personXib objectAtIndex:0];
         [personView setFrame:CGRectMake(10+(i * (56 + 10)), 10, 56, 75)];
+        [personView.headViewBtn setFrame:CGRectMake(0, 0, 46, 46)];
         [_groupBtnArr addObject:personView];
         personView.delegate = self;
         [personView.deletePersonBtn setHidden:YES];
         [_headView addSubview:personView];
         if (i == [_groupData count]) {
-            [personView.headViewBtn setImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
-            personView.headViewBtn.tag = 10000;
-            [personView.deletePersonBtn setHidden:YES];
-            personView.memberLable.text = @"";
+        [personView.headViewBtn setImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
+        personView.headViewBtn.tag = 10000;
+        [personView.deletePersonBtn setHidden:YES];
+        personView.memberLable.text = @"";
         }else if (i == [_groupData count] + 1) {
-            _deleteBtn = personView.headViewBtn;
-            [personView.deletePersonBtn setHidden:YES];
-            [personView.headViewBtn setImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
-            personView.headViewBtn.tag = 20000;
-            personView.memberLable.text = @"";
+        _deleteBtn = personView.headViewBtn;
+        [personView.deletePersonBtn setHidden:YES];
+        [personView.headViewBtn setImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
+        personView.headViewBtn.tag = 20000;
+        personView.memberLable.text = @"";
         }else {
-            [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
-            personView.headViewBtn.tag = 1000+i;
+          personView.headViewBtn.tag = 1000+i;
           JMSGUser *user = [_groupData objectAtIndex:i];
+          [personView.headViewBtn setBackgroundColor:[UIColor redColor]];
+          [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
           if (user.nickname && ![user.nickname isEqualToString:@"(null)"]) {
             personView.memberLable.text = user.nickname;
           }else {
@@ -391,12 +393,18 @@
                 personView.headViewBtn.tag =1000 +i;
                 [_groupBtnArr insertObject:personView atIndex:1];
                 personView.delegate = self;
+              if ([[NSFileManager defaultManager] fileExistsAtPath:member.avatarThumbPath]) {
+                [personView.headViewBtn setImage:[UIImage imageWithContentsOfFile:member.avatarThumbPath] forState:UIControlStateNormal];
+              }else {
                 [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+              }
+              [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+
             }else {
                 personView.headViewBtn.tag =20000;//删除按钮标示
                 [_groupBtnArr addObject:personView];
                 personView.delegate = self;
-                _deleteBtn =personView.headViewBtn;
+                _deleteBtn = personView.headViewBtn;
                 [personView.headViewBtn setImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
             }
             [personView setFrame:CGRectMake(10+([_groupData count]-1 * (56 + 10)), 10, 56, 75)];
@@ -409,7 +417,12 @@
         [personView.deletePersonBtn setHidden:YES];
         personView.headViewBtn.tag = 1000+[_groupData count]-1;
         personView.delegate = self;
-        [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:member.avatarThumbPath]) {
+          [personView.headViewBtn setImage:[UIImage imageWithContentsOfFile:member.avatarThumbPath] forState:UIControlStateNormal];
+        }else {
+          [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+        }
+      [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
         [personView setFrame:CGRectMake(10+([_groupData count]-1 * (56 + 10)), 10, 56, 75)];
         [_headView addSubview:personView];
         [_groupBtnArr insertObject:personView atIndex:[_groupData count]-1];
