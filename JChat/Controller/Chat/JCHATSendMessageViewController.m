@@ -104,24 +104,14 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }
   _JMSgMessageDic = [[NSMutableDictionary alloc]init];
   _messageDic = [[NSMutableDictionary alloc]init];
+  
+  _messageDic = [[NSMutableDictionary alloc]init];
   NSMutableArray *messageIdArr = [[NSMutableArray alloc]init];
   NSMutableDictionary *messageDic = [[NSMutableDictionary alloc]initWithCapacity:10];
   _messageDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:messageDic,JCHATMessage,messageIdArr,JCHATMessageIdKey,nil];
   
   _imgDataArr =[[NSMutableArray alloc] init];
 
-//  if (self.conversation && self.conversation.chatType == kJMSGGroup) {
-//    __weak typeof(self) weakSelf = self;
-//    [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
-//      if (error == nil) {
-//        _userArr = [NSMutableArray arrayWithObject:resultObject];
-//        [weakSelf getAllMessage];
-//      }else {
-//        DDLogDebug(@"群聊成员获取失败");
-//      }
-//    }];
-//  }else {
-//  }
   [self getAllMessage];
 
   self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)) style:UITableViewStylePlain];
@@ -167,9 +157,22 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self.view addSubview:self.moreView];
 
   [self addNotification];
-  
   [self sendInfoRequest];
+  
+  if (self.conversation && self.conversation.chatType == kJMSGGroup) {
+    __weak typeof(self) weakSelf = self;
+    [JMSGGroup getGroupMemberList:self.conversation.target_id completionHandler:^(id resultObject, NSError *error) {
+      if (error == nil) {
+        _userArr = [NSMutableArray arrayWithObject:resultObject];
+        [weakSelf.messageTableView reloadData];
+      }else {
+        DDLogDebug(@"群聊成员获取失败");
+      }
+    }];
+  }else {
+  }
 }
+
 
 - (void)setTitleWithUser:(JMSGUser *)user {
   if (user.noteName != nil && ![user.noteName isEqualToString:KNull]) {
@@ -388,8 +391,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
             model.messageTime = message.timestamp;
           [weakSelf addmessageShowTimeData:message.timestamp];
           [self addMessage:model];
-          [self addCellToTabel];
         }
+      [_messageTableView reloadData];
         if ([_messageDic[JCHATMessageIdKey] count] != 0) {
             [weakSelf.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
