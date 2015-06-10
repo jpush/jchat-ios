@@ -229,9 +229,11 @@
 
 - (void)setCellData:(JCHATChatModel *)model
            delegate:(id)delegate
+            message:(JMSGVoiceMessage *)message
           indexPath:(NSIndexPath *)indexPath {
   self.conversation = model.conversation;
   self.delegate = delegate;
+  _message = message;
   [self.stateView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
   self.model = model;
   if ([[NSFileManager defaultManager] fileExistsAtPath:model.avatar]) {
@@ -355,22 +357,6 @@
   [self.stateView setHidden:NO];
   [self.stateView startAnimating];
   self.model.messageStatus = kJMSGStatusSending;
-
-  _message = [[JMSGVoiceMessage alloc] init];
-  self.model.messageId = _message.messageId;
-  if (self.delegate && [self.delegate respondsToSelector:@selector(setMessageIDWithMessage:chatModel:index:)]) {
-    [self.delegate setMessageIDWithMessage:_message chatModel:&_model index:self.indexPath.row];
-  }
-  if (self.conversation.chatType == kJMSGSingle) {
-    _message.sendMessageType = kJMSGSingle;
-  }else {
-    _message.sendMessageType = kJMSGGroup;
-  }
-  _message.target_id = self.model.targetId;
-  _message.duration = self.model.voiceTime;
-  _message.timestamp = self.model.messageTime;
-  _message.mediaData = self.model.mediaData;
-
   DDLogVerbose(@"The voiceMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
 }
