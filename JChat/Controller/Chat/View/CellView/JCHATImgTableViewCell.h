@@ -18,9 +18,9 @@
 
 -(void)selectHeadView:(JCHATChatModel *)model;
 
-- (void)setMessageIDWithMessage:(JMSGMessage *)message
-                      chatModel:(JCHATChatModel * __strong *)chatModel
-                          index:(NSInteger)index;
+//- (void)setMessageIDWithMessage:(JMSGMessage *)message
+//                      chatModel:(JCHATChatModel * __strong *)chatModel
+//                          index:(NSInteger)index;
 @end
 
 @interface JCHATImgTableViewCell : UITableViewCell<UIAlertViewDelegate>
@@ -42,6 +42,7 @@
 
 -(void)setCellData :(UIViewController *)controler
          chatModel :(JCHATChatModel *)chatModel
+            message:(JMSGImageMessage *)message
          indexPath :(NSIndexPath *)indexPath;
 
 

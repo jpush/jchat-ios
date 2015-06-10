@@ -49,6 +49,7 @@
 
 - (void)setCellData:(JCHATChatModel *)model
            delegate:(id <playVoiceDelegate>)delegate
+            message:(JMSGVoiceMessage *)message
           indexPath:(NSIndexPath *)indexPath;
 
 - (void)sendVoiceMessage;

@@ -164,10 +164,11 @@
     }
 }
 
-- (void)setCellData :(UIViewController *)controler chatModel :(JCHATChatModel *)chatModel indexPath :(NSIndexPath *)indexPath
+- (void)setCellData :(UIViewController *)controler chatModel :(JCHATChatModel *)chatModel message:(JMSGImageMessage *)message indexPath :(NSIndexPath *)indexPath
 {
     self.conversation = chatModel.conversation;
     self.model = chatModel;
+     _message= message;
      [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
         [self.contentImgView setImage:[UIImage imageNamed:@"receiveFailed.png"]];
@@ -194,18 +195,12 @@
   [self.circleView setHidden:NO];
   [self.circleView startAnimating];
   self.contentImgView.alpha = 0.5;
-
   self.model.messageStatus = kJMSGStatusSending;
-  _message = [[JMSGImageMessage alloc] init];
   self.model.messageId = _message.messageId;
-  if (self.delegate && [self.delegate respondsToSelector:@selector(setMessageIDWithMessage:chatModel:index:)]) {
-    [self.delegate setMessageIDWithMessage:_message chatModel:&_model index:self.cellIndex.row];
-  }
   __weak typeof(self) weakSelf = self;
   _message.progressCallback = ^(float percent) {
     weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
   };
-
   if (self.conversation.chatType == kJMSGSingle) {
     _message.sendMessageType = kJMSGSingle;
   }else {
