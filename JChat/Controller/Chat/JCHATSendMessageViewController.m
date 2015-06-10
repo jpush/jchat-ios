@@ -195,7 +195,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
     return;
   }
-  [JMSGConversation getConversation:targetName completionHandler:^(id resultObject, NSError *error) {
+
+  // FIXME 这个逻辑还未考虑群聊
+  [JMSGConversation getConversation:targetName
+                           withType:kJMSGSingle
+                  completionHandler:^(id resultObject, NSError *error) {
     if (error == nil) {
       _conversation = resultObject;
       [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
