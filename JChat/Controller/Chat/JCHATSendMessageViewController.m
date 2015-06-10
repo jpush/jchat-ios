@@ -48,6 +48,24 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
+  self.toolBar = [nib objectAtIndex:0];
+  self.toolBar.contentMode = UIViewContentModeRedraw;
+  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 45, self.view.bounds.size.width, 45)];
+  self.toolBar.delegate = self;
+  [self.toolBar setUserInteractionEnabled:YES];
+
+  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight)) style:UITableViewStylePlain];
+  self.messageTableView.userInteractionEnabled = YES;
+  self.messageTableView.showsVerticalScrollIndicator = NO;
+  self.messageTableView.delegate = self;
+  self.messageTableView.dataSource = self;
+  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
+  [self.view addSubview:self.messageTableView];
+  [self.view addSubview:self.toolBar];
+
   DDLogDebug(@"Action - viewDidLoad");
   if (self.user) {
    self.targetName = self.user.username;
@@ -114,24 +132,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   _messageDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:messageDic,JCHATMessage,messageIdArr,JCHATMessageIdKey,nil];
   
   _imgDataArr =[[NSMutableArray alloc] init];
+  
 
 
-  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)) style:UITableViewStylePlain];
-  self.messageTableView.userInteractionEnabled = YES;
-  self.messageTableView.showsVerticalScrollIndicator=NO;
-  self.messageTableView.delegate = self;
-  self.messageTableView.dataSource = self;
-  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
-
-  [self.view addSubview:self.messageTableView];
-  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
-  self.toolBar = [nib objectAtIndex:0];
-  self.toolBar.contentMode = UIViewContentModeRedraw;
-  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height-45, self.view.bounds.size.width, 45)];
-  self.toolBar.delegate = self;
-  [self.toolBar setUserInteractionEnabled:YES];
-  [self.view addSubview:self.toolBar];
 
   [self.view setBackgroundColor:[UIColor whiteColor]];
   _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -716,7 +719,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                                                name:JMSGNotification_EventMessage
                                              object:nil];
 //    [self.toolBar.textView addObserver:self
-//                            forKeyPath:@"contentSize"
+//                            forKeyPath:@"contentSize1"
 //                               options:NSKeyValueObservingOptionNew
 //                               context:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1298,7 +1301,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.barBottomFlag) {
         return;
     }
-    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize"]) {
+    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize1"]) {
         [self layoutAndAnimateMessageInputTextView:object];
     }
 }
