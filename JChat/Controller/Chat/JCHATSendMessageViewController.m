@@ -585,8 +585,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.pictureImgPath = bigPath;
   model.mediaData = UIImageJPEGRepresentation(smallpImg, 1);
   model.pictureThumbImgPath = smallImgPath;
-  NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-  model.messageTime = @(timeInterVal);
+
   [_imgDataArr addObject:model];
   model.photoIndex = [_imgDataArr count] - 1;
   [self addMessage:model];
@@ -734,7 +733,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if ([text isEqualToString:@""] || text == nil) {
     return;
   }
-  [self addmessageShowTimeData];
+//  [self addmessageShowTimeData];
   JCHATChatModel *model = [[JCHATChatModel alloc] init];
   model.messageId = [self getTimeId];
   model.who = YES;
@@ -744,8 +743,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.avatar = user.avatarThumbPath;
   model.targetId = _conversation.target_id;
   model.messageStatus = kJMSGStatusSending;
-  NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-  model.messageTime = @(timeInterVal);
+
   model.sendFlag = NO;
   model.type = kJMSGTextMessage;
   model.chatContent = text;
@@ -768,27 +766,27 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
-- (void)addmessageShowTimeData {
-  NSString *messageId = [_messageDic[JCHATMessageIdKey] lastObject];
-    JCHATChatModel *lastModel =_messageDic[JCHATMessage][messageId];
-    NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-    if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.type != kJMSGTimeMessage) {
-        NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
-        NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
-        NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
-        if (fabs(timeBetween) > interval) {
-            JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
-            timeModel.messageId = [self getTimeId];
-            timeModel.type = kJMSGTimeMessage;
-            timeModel.messageTime = @(timeInterVal);
-            [self addMessage:timeModel];
-            [self addCellToTabel];
-        }
-    }
-}
+//- (void)addmessageShowTimeData {
+//  NSString *messageId = [_messageDic[JCHATMessageIdKey] lastObject];
+//    JCHATChatModel *lastModel =_messageDic[JCHATMessage][messageId];
+//    NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
+//    if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.type != kJMSGTimeMessage) {
+//        NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
+//        NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
+//        NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
+//        if (fabs(timeBetween) > interval) {
+//            JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
+//            timeModel.messageId = [self getTimeId];
+//            timeModel.type = kJMSGTimeMessage;
+//            timeModel.messageTime = @(timeInterVal);
+//            [self addMessage:timeModel];
+//            [self addCellToTabel];
+//        }
+//    }
+//}
 
 - (NSString *)getTimeId {
-  NSString *timeId = [NSString stringWithFormat:@"%d%d",(int)[self getCurrentTimeInterval],arc4random()%1000];
+  NSString *timeId = [NSString stringWithFormat:@"%d",arc4random()%1000000];
   return timeId;
 }
 
@@ -1116,8 +1114,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
   model.type=kJMSGVoiceMessage;
   model.conversation = _conversation;
-  NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
-  model.messageTime = @(timeInterVal);
+//  NSTimeInterval timeInterVal = [self getCurrentTimeInterval];
+//  model.messageTime = @(timeInterVal);
   model.targetId = self.conversation.target_id;
   model.displayName = self.targetName;
   model.readState = YES;
