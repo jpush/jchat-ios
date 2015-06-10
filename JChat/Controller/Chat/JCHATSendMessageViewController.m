@@ -626,8 +626,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
   [self prepareImageMessage:image];
-  [self dismissViewControllerAnimated:YES completion:nil];
   [self dropToolBar];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark --发送图片
@@ -797,14 +797,15 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
-  self.barBottomFlag=YES;
+  self.barBottomFlag =YES;
   self.previousTextViewContentHeight = 31;
   self.toolBar.addButton.selected = NO;
   [_messageTableView reloadData];
   [UIView animateWithDuration:0.3 animations:^{
       [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
       [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
+    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight))];
+    NSLog(@"self.messageTableView height %f   real height %f",self.messageTableView.frame.size.height,kScreenSize.height - 20 -45-(kNavigationBarHeight));
   }];
 }
 
