@@ -328,6 +328,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 - (void)addMessage:(JCHATChatModel *)model {
   [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
   [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
+  [self addCellToTabel];
 }
 
 - (void)getAllMessage {
@@ -476,7 +477,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         model.messageTime = message.timestamp;
         [self addmessageShowTimeData:message.timestamp];
         [self addMessage:model];
-        [self addCellToTabel];
         [self scrollToEnd];
     });
 }
@@ -608,7 +608,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.photoIndex = [_imgDataArr count] - 1;
   [_JMSgMessageDic setObject:message forKey:message.messageId];
   [self addMessage:model];
-  [self addCellToTabel];
   [self dropToolBar];
   [self scrollToEnd];
 }
@@ -782,7 +781,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   message.contentText = model.chatContent;
   [_JMSgMessageDic setObject:message forKey:message.messageId];
   [self addMessage:model];
-  [self addCellToTabel];
   [self scrollToEnd];
 }
 
@@ -823,7 +821,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   timeModel.type = kJMSGTimeMessage;
   timeModel.messageTime = @(timeInterVal);
   [self addMessage:timeModel];
-  [self addCellToTabel];
 }
 
 - (NSString *)getTimeId {
@@ -1150,7 +1147,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
   [JCHATFileManager deleteFile:voicePath];
   [self addMessage:model];
-  [self addCellToTabel];
   [self scrollToEnd];
 }
 
