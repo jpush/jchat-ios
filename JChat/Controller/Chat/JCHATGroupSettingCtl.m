@@ -183,7 +183,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
             [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
           }
           
-          if (user.nickname && ![user.nickname isEqualToString:@"(null)"]) {
+          if (user.nickname && ![user.nickname isEqualToString:@"(null)"] && ![user.nickname isEqualToString:@""]) {
             personView.memberLable.text = user.nickname;
           }else {
             personView.memberLable.text = user.username;
