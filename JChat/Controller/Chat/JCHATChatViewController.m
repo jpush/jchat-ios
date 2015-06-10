@@ -127,6 +127,7 @@
 
 
 - (void)reloadConversationInfo:(JMSGConversation *)conversation {
+  DDLogDebug(@"Action - creatGroupSuccessToPushView - %@", conversation);
   for (NSInteger i=0; i<[_conversationArr count]; i++) {
     JMSGConversation *conversationObject = [_conversationArr objectAtIndex:i];
     if ([conversationObject.Id isEqualToString:conversation.Id]) {
@@ -140,6 +141,7 @@
 
 #pragma mark --创建群成功Push group viewctl
 - (void)creatGroupSuccessToPushView:(NSNotification *)object{
+  DDLogDebug(@"Action - creatGroupSuccessToPushView - %@", object);
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
   sendMessageCtl.hidesBottomBarWhenPushed=YES;
   sendMessageCtl.conversation = (JMSGConversation *)[object object];
@@ -197,18 +199,22 @@
 }
 
 - (void)netWorkConnectClose {
+  DDLogDebug(@"Action - netWorkConnectClose");
     titleLabel.text =@"未连接";
 }
 
 - (void)netWorkConnectSetup {
+  DDLogDebug(@"Action - netWorkConnectSetup");
     titleLabel.text =@"收取中...";
 }
 
 - (void)connectSucceed {
+  DDLogDebug(@"Action - connectSucceed");
     titleLabel.text =@"会话";
 }
 
 - (void)isConnecting {
+  DDLogDebug(@"Action - isConnecting");
   titleLabel.text =@"连接中...";
 }
 
@@ -219,12 +225,14 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:YES];
-    [self getConversationList];
+  DDLogDebug(@"Action - viewDidAppear");
+  [super viewDidAppear:YES];
+  [self getConversationList];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:YES];
+  DDLogDebug(@"Action - viewDidDisappear");
+  [super viewDidDisappear:YES];
 }
 
 - (void)getConversationList {

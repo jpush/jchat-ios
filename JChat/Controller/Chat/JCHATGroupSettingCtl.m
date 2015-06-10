@@ -147,7 +147,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   }
     _groupBtnArr = [[NSMutableArray alloc]init];
     NSInteger n = 0;
-    if ([_groupData count] ==1) {
+    if ([_groupData count] ==1 || [self.sendMessageCtl.groupInfo.groupOwner longLongValue] != [JMSGUser getMyInfo].uid) {
         n = 1;
     }else {
         n = 2;
