@@ -736,7 +736,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [self.messageTableView beginUpdates];
     [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
     [self.messageTableView endUpdates];
-    [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self scrollToEnd];
 }
 
@@ -834,6 +833,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
     self.user = nil;
     [self cleanMessageCache];
+    [_messageTableView reloadData];
   }
 }
 
