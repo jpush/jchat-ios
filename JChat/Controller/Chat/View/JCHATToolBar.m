@@ -35,7 +35,7 @@
 - (IBAction)addBtnClick:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(noPressmoreBtnClick:)]) {
         if (self.addButton.selected) {
-            self.addButton.selected=NO;
+            self.addButton.selected = NO;
             [self.delegate noPressmoreBtnClick:sender];
         }else if (self.delegate && [self.delegate respondsToSelector:@selector(pressMoreBtnClick:)]){
             [self.delegate pressMoreBtnClick:sender];
@@ -45,8 +45,8 @@
 }
 
 - (IBAction)voiceBtnClick:(id)sender {
-    if (self.voiceButton.selected==NO) {
-        self.voiceButton.selected=YES;
+    if (self.voiceButton.selected == NO) {
+        self.voiceButton.selected = YES;
         [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03"] forState:UIControlStateNormal];
         [self.textView setHidden:YES];
         [self.startRecordButton setHidden:NO];
@@ -65,7 +65,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.voiceButton.selected==NO) {
+    if (self.voiceButton.selected == NO) {
         [self.voiceButton setImage:[UIImage imageNamed:@"voice_02.png"] forState:UIControlStateNormal];
     }else{
         [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03"] forState:UIControlStateNormal];
@@ -75,19 +75,19 @@
 
 - (void)drawRect:(CGRect)rect {
     if (self.startRecordButton){
-        self.startRecordButton.frame =CGRectMake(self.voiceButton.frame.origin.x+self.voiceButton.frame.size.width+5, 7.5, self.textView.bounds.size.width+5, 30);
+        self.startRecordButton.frame = CGRectMake(self.voiceButton.frame.origin.x+self.voiceButton.frame.size.width+5, 7.5, self.textView.bounds.size.width+5, 30);
         return;
     }
     self.voiceButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.voiceButton setImage:[UIImage imageNamed:@"voice_02.png"] forState:UIControlStateNormal];
-    self.textView.text = @"";
-    self.textView.delegate=self;
+    self.textView.delegate = self;
+
     self.textView.returnKeyType = UIReturnKeySend;
-    UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
     [self addGestureRecognizer:gesture];
     [self setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.bounds.size.width, 45)];
 
-    self.startRecordButton= [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.startRecordButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.startRecordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.startRecordButton setTitleColor: [UIColor whiteColor] forState:UIControlStateHighlighted];
     [self.startRecordButton setTitle:@"按住 说话" forState:UIControlStateNormal];
