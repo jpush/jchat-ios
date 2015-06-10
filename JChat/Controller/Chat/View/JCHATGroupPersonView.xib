@@ -15,7 +15,8 @@
                     <rect key="frame" x="4" y="0.0" width="46" height="46"/>
                     <color key="backgroundColor" red="0.93045691289999999" green="0.26005291940000003" blue="0.086192203310000007" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="46" id="0IF-yc-H47"/>
+                        <constraint firstAttribute="height" constant="46" id="V8L-kz-gHT"/>
+                        <constraint firstAttribute="width" constant="46" id="aGf-Wd-yff"/>
                     </constraints>
                     <state key="normal" image="addMan_13.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -27,8 +28,8 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6d7-tY-UO6">
                     <rect key="frame" x="0.0" y="54" width="56" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="56" id="Hoa-1C-szd"/>
-                        <constraint firstAttribute="height" constant="21" id="R73-lD-42e"/>
+                        <constraint firstAttribute="height" constant="21" id="HHI-nu-mQz"/>
+                        <constraint firstAttribute="width" constant="56" id="ZAA-tq-DaN"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -38,8 +39,8 @@
                     <rect key="frame" x="36" y="0.0" width="20" height="20"/>
                     <color key="backgroundColor" red="0.93045691289999999" green="0.26005291935733998" blue="0.086192203313621041" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="20" id="3O8-OL-hi2"/>
-                        <constraint firstAttribute="width" constant="20" id="CAZ-dO-O2B"/>
+                        <constraint firstAttribute="height" constant="20" id="Dsu-8P-569"/>
+                        <constraint firstAttribute="width" constant="20" id="Egg-4L-Hdk"/>
                     </constraints>
                     <state key="normal" title="--">
                         <color key="titleColor" red="0.89152115070000004" green="0.63602897570000005" blue="0.93045691289999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -49,16 +50,14 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="6d7-tY-UO6" firstAttribute="trailing" secondItem="t0q-dv-nx0" secondAttribute="trailing" id="Azh-Ao-K9x"/>
-                <constraint firstItem="t0q-dv-nx0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DJt-d6-gqb"/>
-                <constraint firstAttribute="trailing" secondItem="t0q-dv-nx0" secondAttribute="trailing" id="HIS-r0-MsW"/>
-                <constraint firstItem="6d7-tY-UO6" firstAttribute="top" secondItem="73S-EI-iRM" secondAttribute="bottom" constant="8" id="MQa-fO-lBN"/>
-                <constraint firstItem="t0q-dv-nx0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="36" id="PQY-fz-eXZ"/>
-                <constraint firstItem="6d7-tY-UO6" firstAttribute="top" secondItem="t0q-dv-nx0" secondAttribute="bottom" constant="34" id="XEo-es-rWM"/>
-                <constraint firstItem="6d7-tY-UO6" firstAttribute="top" secondItem="73S-EI-iRM" secondAttribute="bottom" constant="8" id="gIF-pK-pH3"/>
-                <constraint firstAttribute="bottom" secondItem="6d7-tY-UO6" secondAttribute="bottom" id="htB-J0-fuQ"/>
-                <constraint firstItem="73S-EI-iRM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jie-OB-BkC"/>
-                <constraint firstItem="73S-EI-iRM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="k46-sT-AZ0"/>
+                <constraint firstItem="73S-EI-iRM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Bj2-iJ-yko"/>
+                <constraint firstAttribute="trailing" secondItem="73S-EI-iRM" secondAttribute="trailing" constant="6" id="EPX-NM-a8K"/>
+                <constraint firstItem="73S-EI-iRM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="Zvx-kp-dOt"/>
+                <constraint firstItem="6d7-tY-UO6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="b9S-HK-kOR"/>
+                <constraint firstAttribute="bottom" secondItem="6d7-tY-UO6" secondAttribute="bottom" id="izM-b2-m0f"/>
+                <constraint firstAttribute="trailing" secondItem="t0q-dv-nx0" secondAttribute="trailing" id="kCG-gu-Zgb"/>
+                <constraint firstItem="t0q-dv-nx0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kpe-uZ-8G8"/>
+                <constraint firstAttribute="trailing" secondItem="6d7-tY-UO6" secondAttribute="trailing" id="mdh-Gx-j5g"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
