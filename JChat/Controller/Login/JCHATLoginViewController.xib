@@ -78,21 +78,6 @@
                     <color key="textColor" red="0.23695269660000001" green="0.43671051020000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4D-e8-53R">
-                    <rect key="frame" x="16" y="276" width="289" height="42"/>
-                    <color key="backgroundColor" red="0.4409837265881052" green="0.93045691287878785" blue="0.43744186847874283" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="42" id="lfW-nd-Y8Z"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" title="登录">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="qpe-aT-15R"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekc-px-7IA">
                     <rect key="frame" x="55" y="485" width="236" height="75"/>
                     <constraints>
@@ -107,6 +92,21 @@
                     </state>
                     <connections>
                         <action selector="registerBtnClick:" destination="-1" eventType="touchUpInside" id="0eh-89-a5O"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4D-e8-53R">
+                    <rect key="frame" x="16" y="276" width="289" height="42"/>
+                    <color key="backgroundColor" red="0.32804255062202858" green="0.68854561237373735" blue="0.32908512565472914" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="lfW-nd-Y8Z"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="登录">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="qpe-aT-15R"/>
                     </connections>
                 </button>
             </subviews>

@@ -152,7 +152,12 @@
 - (void)skipToSendMessage {
     for (UIViewController *ctl in self.navigationController.childViewControllers) {
         if ([ctl isKindOfClass:[JCHATSendMessageViewController class]]) {
+          if (self.isGroupFlag) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSkipToSingleChatViewState object:_userInfo];
+          }else {
             [self.navigationController popToViewController:ctl animated:YES];
+          }
         }
     }
 }
@@ -165,7 +170,8 @@
 }
 
 - (void)backClick {
-    [self.navigationController popViewControllerAnimated:YES];
+  [self.navigationController popViewControllerAnimated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {

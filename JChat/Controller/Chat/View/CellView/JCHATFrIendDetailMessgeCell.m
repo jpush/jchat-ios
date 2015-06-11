@@ -14,7 +14,6 @@
     // Initialization code
     [self.skipBtn.layer setMasksToBounds:YES];
     self.skipBtn.layer.cornerRadius = 4;
-    [self.skipBtn setBackgroundColor:[UIColor greenColor]];
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
 }
 
