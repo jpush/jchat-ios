@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupMemberChange object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupChange object:nil];
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
   self.navigationController.navigationBar.alpha=0.8;
   
@@ -401,7 +401,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   }else if (alertView.tag !=100) {
     if (buttonIndex ==1) {
       [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
-      [JMSGGroup exitGoup:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
+      [JMSGGroup exitGroup:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (error == nil) {
           [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];
