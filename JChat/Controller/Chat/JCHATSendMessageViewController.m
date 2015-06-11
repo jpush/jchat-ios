@@ -48,6 +48,24 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
+  self.toolBar = [nib objectAtIndex:0];
+  self.toolBar.contentMode = UIViewContentModeRedraw;
+  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 45, self.view.bounds.size.width, 45)];
+  self.toolBar.delegate = self;
+  [self.toolBar setUserInteractionEnabled:YES];
+
+  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight)) style:UITableViewStylePlain];
+  self.messageTableView.userInteractionEnabled = YES;
+  self.messageTableView.showsVerticalScrollIndicator = NO;
+  self.messageTableView.delegate = self;
+  self.messageTableView.dataSource = self;
+  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
+  [self.view addSubview:self.messageTableView];
+  [self.view addSubview:self.toolBar];
+
   DDLogDebug(@"Action - viewDidLoad");
   if (self.user) {
    self.targetName = self.user.username;
@@ -114,24 +132,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   _messageDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:messageDic,JCHATMessage,messageIdArr,JCHATMessageIdKey,nil];
   
   _imgDataArr =[[NSMutableArray alloc] init];
+  
 
 
-  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)) style:UITableViewStylePlain];
-  self.messageTableView.userInteractionEnabled = YES;
-  self.messageTableView.showsVerticalScrollIndicator=NO;
-  self.messageTableView.delegate = self;
-  self.messageTableView.dataSource = self;
-  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
-
-  [self.view addSubview:self.messageTableView];
-  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
-  self.toolBar = [nib objectAtIndex:0];
-  self.toolBar.contentMode = UIViewContentModeRedraw;
-  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height-45, self.view.bounds.size.width, 45)];
-  self.toolBar.delegate = self;
-  [self.toolBar setUserInteractionEnabled:YES];
-  [self.view addSubview:self.toolBar];
 
   [self.view setBackgroundColor:[UIColor whiteColor]];
   _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -626,8 +629,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
   [self prepareImageMessage:image];
-  [self dismissViewControllerAnimated:YES completion:nil];
   [self dropToolBar];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark --发送图片
@@ -716,7 +719,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                                                name:JMSGNotification_EventMessage
                                              object:nil];
 //    [self.toolBar.textView addObserver:self
-//                            forKeyPath:@"contentSize"
+//                            forKeyPath:@"contentSize1"
 //                               options:NSKeyValueObservingOptionNew
 //                               context:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -812,14 +815,15 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
-  self.barBottomFlag=YES;
+  self.barBottomFlag =YES;
   self.previousTextViewContentHeight = 31;
   self.toolBar.addButton.selected = NO;
   [_messageTableView reloadData];
   [UIView animateWithDuration:0.3 animations:^{
       [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
       [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
+    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight))];
+    NSLog(@"self.messageTableView height %f   real height %f",self.messageTableView.frame.size.height,kScreenSize.height - 20 -45-(kNavigationBarHeight));
   }];
 }
 
@@ -967,7 +971,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
   
   JCHATChatModel *model = _messageDic[JCHATMessage][messageId ];
-  if (model.type == kJMSGTextMessage) {
+  if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
     return model.getTextSize.height + 8;
   } else if (model.type == kJMSGImageMessage) {
     if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
@@ -1013,7 +1017,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-  DDLogDebug(@"Event - viewWillAppear");
+  DDLogDebug(@"Event - viewWillDisappear");
     [super viewWillAppear:YES];
     [[JCHATAudioPlayerHelper shareInstance] stopAudio];
     [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
@@ -1041,7 +1045,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
+  if (!messageId) {
+    DDLogDebug(@"messageId is nill%@",messageId);
+    return nil;
+  }
     JCHATChatModel *model = _messageDic[JCHATMessage][messageId];
+  if (!model) {
+    DDLogDebug(@"JCHATChatModel is nill%@",messageId);
+    return nil;
+  }
     if (model.type == kJMSGTextMessage) {
         static NSString *cellIdentifier = @"textCell";
         JCHATTextTableViewCell *cell = (JCHATTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -1085,6 +1097,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         }
       if (model.type == kJMSGEventMessage) {
         cell.messageTimeLabel.text = model.chatContent;
+//        [cell setCellData:model];
       }else {
         cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
       }
@@ -1303,7 +1316,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.barBottomFlag) {
         return;
     }
-    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize"]) {
+    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize1"]) {
         [self layoutAndAnimateMessageInputTextView:object];
     }
 }
