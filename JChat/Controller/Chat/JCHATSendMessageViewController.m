@@ -723,15 +723,30 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
                                            selector:@selector(receiveConversationChange)
                                                name:JMSGNotification_ConversationInfoChanged
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(receiveGroupChange)
+                                               name:JMSGNotification_GroupChange
+                                             object:nil];
 }
 
 #pragma mark - ConversationChanged
-- (void)receiveConversationChange{
+- (void)receiveGroupChange{
   [JMSGConversation getConversation:_conversation.targetId withType:kJMSGGroup completionHandler:^(id resultObject, NSError *error){
     if(error == nil){
       JMSGConversation *conversation = resultObject;
       self.title = conversation.targetName;
       [self getGroupMemberList];
+    } else{
+      DDLogError(@"get coneversation failed");
+    }
+  }];
+}
+
+- (void)receiveConversationChange{
+  [JMSGConversation getConversation:_conversation.targetId withType:kJMSGGroup completionHandler:^(id resultObject, NSError *error){
+    if(error == nil){
+      JMSGConversation *conversation = resultObject;
+      self.title = conversation.targetName;
     } else{
       DDLogError(@"get coneversation failed");
     }
