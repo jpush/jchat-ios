@@ -105,6 +105,7 @@
           [self.navigationController popViewControllerAnimated:YES];
         } else {
           [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
+          [appDelegate.tabBarCtl setSelectedIndex:0];
           pushFlag = NO;
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
