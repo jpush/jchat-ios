@@ -331,7 +331,7 @@
   } else if (buttonIndex == 1) {
     [MBProgressHUD showMessage:@"正在退出登录！" view:self.view];
     DDLogDebug(@"Logout anyway.");
-
+    
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
     if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
       [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
@@ -343,7 +343,7 @@
 
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-
+    [appDelegate.tabBarCtl setSelectedIndex:0];
     [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
       DDLogDebug(@"Logout callback with - %@", error);
     }];
