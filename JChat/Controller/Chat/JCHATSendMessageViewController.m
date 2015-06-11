@@ -1044,6 +1044,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//  if ([_messageDic[JCHATMessageIdKey] count] <=0) {
+//    DDLogDebug(@"JCHATMessageIdKey count 0");
+//    return nil;
+//  }
      NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
   if (!messageId) {
     DDLogDebug(@"messageId is nill%@",messageId);
@@ -1136,8 +1140,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         JCHATFriendDetailViewController *friendCtl = [[JCHATFriendDetailViewController alloc]initWithNibName:@"JCHATFriendDetailViewController" bundle:nil];
       if (self.conversation.chatType == kJMSGSingle) {
         friendCtl.userInfo = self.user;
+        friendCtl.isGroupFlag = NO;
       }else {
         friendCtl.userInfo = [self getAvatarWithTargetId:model.fromId];
+        friendCtl.isGroupFlag = YES;
       }
         [self.navigationController pushViewController:friendCtl animated:YES];
     }
