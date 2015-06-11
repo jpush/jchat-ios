@@ -85,6 +85,8 @@
 #pragma mark --登录按钮响应
 - (IBAction)loginBtnClick:(id)sender {
   DDLogDebug(@"Action - loginBtnClick");
+  [self.passwordField resignFirstResponder];
+  [self.accountField resignFirstResponder];
 
   [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
 

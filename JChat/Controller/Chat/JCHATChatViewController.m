@@ -57,6 +57,12 @@
                                            selector:@selector(creatGroupSuccessToPushView:)
                                              name:kCreatGroupState
                                            object:nil];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(skipToSingleChatView:)
+                                               name:kSkipToSingleChatViewState
+                                             object:nil];
+  
 
   self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
   self.navigationController.navigationBar.alpha=0.8;
@@ -123,6 +129,14 @@
                                                name:JMSGNotification_ConversationInfoChanged
                                              object:nil];
 
+}
+
+- (void)skipToSingleChatView :(NSNotification *)notification {
+  JMSGUser *user = [[notification object] copy];
+  JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
+  sendMessageCtl.user = user;
+  sendMessageCtl.hidesBottomBarWhenPushed=YES;
+  [self.navigationController pushViewController:sendMessageCtl animated:YES];
 }
 
 
