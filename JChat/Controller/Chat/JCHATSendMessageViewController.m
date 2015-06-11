@@ -343,6 +343,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 - (void)cleanMessageCache {
   [_messageDic[JCHATMessage] removeAllObjects];
   [_messageDic[JCHATMessageIdKey] removeAllObjects];
+  [self.messageTableView reloadData];
 }
 
 #pragma mark --添加message
