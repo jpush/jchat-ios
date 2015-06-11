@@ -66,64 +66,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self.view addSubview:self.messageTableView];
   [self.view addSubview:self.toolBar];
 
-  DDLogDebug(@"Action - viewDidLoad");
-  if (self.user) {
-   self.targetName = self.user.username;
-  [self setTitleWithUser:self.user];
-  } else if (_conversation) {
-   self.title = self.targetName = _conversation.targetName;
-  } else {
-    DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
-  }
-
-  if (!_conversation) {
-    if (self.user) {
-      DDLogDebug(@"No conversation - to create single");
-        __weak typeof(self) weakSelf = self;
-      [JMSGConversation createConversation:self.user.username
-                                  withType:kJMSGSingle
-                         completionHandler:^(id resultObject, NSError *error) {
-                           _conversation = (JMSGConversation *) resultObject;
-
-                            weakSelf.title = _conversation.targetName;
-                           [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-                             if (error == nil) {
-                             } else {
-                               DDLogWarn(@"消息计数清零失败");
-                             }
-                           }];
-
-                         }];
-    } else {
-      DDLogWarn(@"No conversation - no create group yet.");
-    }
-  } else {
-    DDLogDebug(@"Conversation existed.");
-  }
-
-  if (self.conversation && self.conversation.chatType == kJMSGGroup) {
-    self.title = _conversation.targetName;
-  } else {
-    __weak __typeof(self) weakSelf = self;
-    if (!self.user) {
-      [JMSGUser getUserInfoWithUsername:_conversation.targetId completionHandler:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          JPIMMAINTHEAD(^{
-            __strong __typeof(weakSelf) strongSelf = weakSelf;
-            strongSelf.user = ((JMSGUser *) resultObject);
-            [self setTitleWithUser:strongSelf.user];
-          });
-        } else {
-          __strong __typeof(weakSelf) strongSelf = weakSelf;
-          JPIMMAINTHEAD(^{
-            strongSelf.title = _conversation.targetId;
-            DDLogDebug(@"没有这个用户");
-          });
-        }
-      }];
-    }
-  }
-  _JMSgMessageDic = [[NSMutableDictionary alloc]init];
+   _JMSgMessageDic = [[NSMutableDictionary alloc]init];
   _messageDic = [[NSMutableDictionary alloc]init];
   
   _messageDic = [[NSMutableDictionary alloc]init];
@@ -133,9 +76,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   _imgDataArr =[[NSMutableArray alloc] init];
   
-
-
-
   [self.view setBackgroundColor:[UIColor whiteColor]];
   _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [_rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
@@ -160,6 +100,67 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
   }
   [self.view addSubview:self.moreView];
+  DDLogDebug(@"Action - viewDidLoad");
+  if (self.user) {
+    self.targetName = self.user.username;
+    [self setTitleWithUser:self.user];
+  } else if (_conversation) {
+    self.title = self.targetName = _conversation.targetName;
+  } else {
+    DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
+  }
+  
+  
+  
+  if (!_conversation) {
+    if (self.user) {
+      DDLogDebug(@"No conversation - to create single");
+      __weak typeof(self) weakSelf = self;
+      [JMSGConversation createConversation:self.user.username
+                                  withType:kJMSGSingle
+                         completionHandler:^(id resultObject, NSError *error) {
+                           _conversation = (JMSGConversation *) resultObject;
+                           
+                           weakSelf.title = _conversation.targetName;
+                           [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
+                             if (error == nil) {
+                             } else {
+                               DDLogWarn(@"消息计数清零失败");
+                             }
+                           }];
+                           
+                         }];
+    } else {
+      DDLogWarn(@"No conversation - no create group yet.");
+    }
+  } else {
+    DDLogDebug(@"Conversation existed.");
+  }
+  
+  if (self.conversation && self.conversation.chatType == kJMSGGroup) {
+    self.title = _conversation.targetName;
+  } else {
+    __weak __typeof(self) weakSelf = self;
+    if (!self.user) {
+      [JMSGUser getUserInfoWithUsername:_conversation.targetId completionHandler:^(id resultObject, NSError *error) {
+        if (error == nil) {
+          JPIMMAINTHEAD(^{
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            strongSelf.user = ((JMSGUser *) resultObject);
+            [self setTitleWithUser:strongSelf.user];
+          });
+        } else {
+          __strong __typeof(weakSelf) strongSelf = weakSelf;
+          JPIMMAINTHEAD(^{
+            strongSelf.title = _conversation.targetId;
+            DDLogDebug(@"没有这个用户");
+          });
+        }
+      }];
+    }else {
+    }
+  }
+
   [self getGroupMemberList];
   [self addNotification];
   [self sendInfoRequest];
