@@ -229,9 +229,13 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
   JMSGUser *user = [JMSGUser getMyInfo];
   if (buttonIndex == 1) {
+    if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
+      [MBProgressHUD showMessage:@"请输入" view:self.view];
+      return;
+    }
     [[alertView textFieldAtIndex:0] resignFirstResponder];
-    [MBProgressHUD showMessage:@"正在修改" toView:self.view];
     if (![[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
+      [MBProgressHUD showMessage:@"正在修改" toView:self.view];
       if (alertView.tag == 0) {
         [JMSGUser updateMyInfoWithParameter:[alertView textFieldAtIndex:0].text withType:kJMSGNickname completionHandler:^(id resultObject, NSError *error) {
           [MBProgressHUD hideHUDForView:self.view animated:YES];

@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCHATChatModel.h"
 
 @interface JCHATShowTimeCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *messageTimeLabel;
+@property (strong, nonatomic)  JCHATChatModel *model;
+
+- (void)setCellData :(JCHATChatModel *)model;
 
 @end
