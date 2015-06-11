@@ -134,11 +134,24 @@
 - (void)skipToSingleChatView :(NSNotification *)notification {
   JMSGUser *user = [[notification object] copy];
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-  sendMessageCtl.user = user;
-  sendMessageCtl.hidesBottomBarWhenPushed=YES;
+  if ([self getConversationWithTargetId:user.username]) {
+    sendMessageCtl.conversation = [self getConversationWithTargetId:user.username];
+  }else {
+    sendMessageCtl.user = user;
+  }
+  sendMessageCtl.hidesBottomBarWhenPushed = YES;
   [self.navigationController pushViewController:sendMessageCtl animated:YES];
 }
 
+- (JMSGConversation *)getConversationWithTargetId:(NSString *)targetId {
+  for (NSInteger i=0; i< [_conversationArr count]; i++) {
+    JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
+    if ([conversation.targetId isEqual:targetId]) {
+      return conversation;
+    }
+  }
+  return nil;
+}
 
 - (void)reloadConversationInfo:(JMSGConversation *)conversation {
   DDLogDebug(@"Action - creatGroupSuccessToPushView - %@", conversation);
