@@ -136,12 +136,16 @@
 - (float)getLengthWithDuration:(NSInteger)duration {
   if (duration <= 2) {
     chatBgViewWidth = 60;
-  } else {
-    chatBgViewWidth = (-(12 / 115)) * duration * duration + 12.5217 * duration;
-    if (chatBgViewWidth >= 150) {
-      chatBgViewWidth = 150;
-    }
+  } else if (duration >2 && duration <=20) {
+    chatBgViewWidth = 60 + 4 * duration;
+  }else if (duration > 20 && duration < 30){
+    chatBgViewWidth = 130 + 2 * duration;
+  }else if (duration >30  && duration < 60) {
+    chatBgViewWidth = 160 + 1.3 * duration;
+  }else {
+    chatBgViewWidth = 300;
   }
+  
   return chatBgViewWidth;
 }
 
