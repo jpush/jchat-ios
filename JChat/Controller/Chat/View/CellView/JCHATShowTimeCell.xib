@@ -18,7 +18,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-01-19 12:33:2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sZ-xC-Dn1">
                         <rect key="frame" x="21" y="8" width="278" height="27"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="27" id="jce-n9-qOw"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="278" id="IUd-TU-s0H"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -26,10 +26,10 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="2sZ-xC-Dn1" secondAttribute="trailing" constant="13" id="8EK-Im-6Ld"/>
-                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="13" id="Chh-6v-YyZ"/>
-                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="OJI-dy-Hch"/>
-                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="r2x-bb-7pq"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="2sZ-xC-Dn1" secondAttribute="trailing" constant="13" id="7ji-i0-N85"/>
+                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="UaQ-3p-veK"/>
+                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="13" id="W9v-4y-cyL"/>
+                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Yda-Q7-Yzv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
