@@ -43,16 +43,23 @@ extern NSString *const JMSGNotification_EventKey;
 
 @interface JMSGMessage : NSObject <NSCopying>
 
-@property(atomic, strong, readonly) NSString *messageId;                //聊天ID
-@property(atomic, strong) NSString *target_id;
-@property(nonatomic, strong, readonly) NSString *display_name;
-@property(atomic, strong) NSString *target_name;
-@property(atomic, strong) NSString *from_id;
-@property(atomic, strong, getter=display_name) NSString *from_name;
 
-@property(atomic, strong) NSDictionary *extra;
-@property(atomic, assign) JMSGConversationType sendMessageType; //发送消息是群聊还是单聊
-@property(assign, readonly) JMSGMessageContentType messageType;
+
+@property(atomic, strong, readonly) NSString *messageId;                //聊天ID
+@property(atomic, strong) NSString *targetId;
+@property(atomic, strong) NSString *targetName;
+@property(atomic, strong) NSString *fromId;
+@property(atomic, strong, getter=displayName) NSString *fromName;
+@property(nonatomic, strong, readonly) NSString *displayName;
+
+@property(atomic, strong) NSDictionary *extras;
+
+//发送消息是群聊还是单聊
+@property(atomic, assign) JMSGConversationType conversationType;
+
+
+@property(assign, readonly) JMSGMessageContentType contentType;
+
 @property(atomic, strong) NSNumber *timestamp;  //消息时间戳
 @property(strong, readonly) NSNumber *status;     //消息的状态
 
