@@ -23,6 +23,7 @@
    __block NSMutableArray *_groupData;
     UIButton *_deleteBtn;
     NSMutableArray *_groupBtnArr;
+  UIView *_headLine;
 }
 @end
 
@@ -62,9 +63,9 @@
   
   _headView = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 0, kApplicationWidth, kheadViewHeight)];
   [_headView setBackgroundColor:[UIColor whiteColor]];
-  UIView *headLine = [[UIView alloc]initWithFrame:CGRectMake(0, kheadViewHeight-1, kApplicationWidth, 1)];
-  [headLine setBackgroundColor:[UIColor colorWithRed:197/255.0 green:197/255.0 blue:197/255.0 alpha:197/255.0]];
-  [_headView addSubview:headLine];
+  _headLine = [[UIView alloc]initWithFrame:CGRectMake(0, kheadViewHeight-1, kApplicationWidth, 1)];
+  [_headLine setBackgroundColor:[UIColor colorWithRed:197/255.0 green:197/255.0 blue:197/255.0 alpha:197/255.0]];
+  [_headView addSubview:_headLine];
   _headView.showsHorizontalScrollIndicator =NO;
   _headView.showsVerticalScrollIndicator =NO;
   self.groupTab.tableHeaderView = _headView;
@@ -222,7 +223,8 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 }
 
 - (void)reloadHeadScrollViewContentSize {
-    [_headView setContentSize:CGSizeMake(10 +((56+10) *[_groupBtnArr count]), _headView.bounds.size.height)];
+  [_headView setContentSize:CGSizeMake(10 +((56+10) *[_groupBtnArr count]), _headView.bounds.size.height)];
+  [_headLine setFrame:CGRectMake(0, kheadViewHeight-1, 10 +((56+10) *[_groupBtnArr count]), 1)];
 }
 
 - (void)groupPersonBtnClick:(JCHATGroupPersonView *)personView
