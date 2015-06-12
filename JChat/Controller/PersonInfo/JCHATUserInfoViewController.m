@@ -340,7 +340,6 @@
       loginCtl.hidesBottomBarWhenPushed = YES;
       [self.navigationController pushViewController:loginCtl animated:YES];
     }
-
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
