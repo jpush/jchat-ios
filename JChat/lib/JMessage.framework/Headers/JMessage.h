@@ -17,6 +17,7 @@
 #import <JMessage/JMSGUser.h>
 #import <JMessage/JMSGGroup.h>
 
+
 @interface JMessage : NSObject
 
 // Version

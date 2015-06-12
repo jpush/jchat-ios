@@ -11,8 +11,6 @@
 
 #import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
-#import "JMSGConversation.h"
-#import "JMSGConstants.h"
 
 @class JMSGMessage;
 

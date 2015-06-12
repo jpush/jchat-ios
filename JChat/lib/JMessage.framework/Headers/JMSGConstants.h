@@ -9,11 +9,10 @@
  * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
  */
 
-#ifndef JMessage_JMSGConstants____FILEEXTENSION___
-#define JMessage_JMSGConstants____FILEEXTENSION___
-
 #import <Foundation/Foundation.h>
 
+#ifndef JMessage_JMSGConstants____FILEEXTENSION___
+#define JMessage_JMSGConstants____FILEEXTENSION___
 
 
 /**
