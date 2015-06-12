@@ -108,7 +108,6 @@
           pushFlag = NO;
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-
         [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
         [self userLoginSave];
       } else {
