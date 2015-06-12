@@ -224,7 +224,9 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 
 - (void)reloadHeadScrollViewContentSize {
   [_headView setContentSize:CGSizeMake(10 +((56+10) *[_groupBtnArr count]), _headView.bounds.size.height)];
-  [_headLine setFrame:CGRectMake(0, kheadViewHeight-1, 10 +((56+10) *[_groupBtnArr count]), 1)];
+  if (10 +((56+10) *[_groupBtnArr count]) >= self.view.bounds.size.width) {
+    [_headLine setFrame:CGRectMake(0, kheadViewHeight-1, 10 +((56+10) *[_groupBtnArr count]), 1)];
+  }
 }
 
 - (void)groupPersonBtnClick:(JCHATGroupPersonView *)personView
