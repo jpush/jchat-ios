@@ -1296,7 +1296,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   voiceMessage.targetId = model.targetId;
   voiceMessage.duration = model.voiceTime;
-  voiceMessage.timestamp = model.messageTime;
+  model.messageTime = voiceMessage.timestamp;
   voiceMessage.mediaData = model.mediaData;
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
   [JCHATFileManager deleteFile:voicePath];
