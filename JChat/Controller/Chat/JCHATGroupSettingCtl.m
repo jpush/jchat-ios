@@ -13,6 +13,9 @@
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"
 #import <JMessage/JMessage.h>
+#import "JCHATPersonViewController.h"
+#import "JCHATFriendDetailViewController.h"
+#import "JCHATDetailsInfoViewController.h"
 
 #define kheadViewHeight 100
 
@@ -216,12 +219,24 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         [self showDeleteMemberIcon:NO];
         UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"添加好友进群" message:@"输入好友用户名!"
                                                          delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        alerView.alertViewStyle =UIAlertViewStylePlainTextInput;
+        alerView.alertViewStyle = UIAlertViewStylePlainTextInput;
         alerView.tag =300;
         [alerView show];
     }else {
         if (_deleteBtn.selected == YES) {
             [self deleteMemberWithPersonView:personView];
+        }else {
+          JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
+          if ([user.username isEqualToString:[JMSGUser getMyInfo].username]) {
+            JCHATPersonViewController *personCtl =[[JCHATPersonViewController alloc] init];
+            personCtl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:personCtl animated:YES];
+          }else {
+            JCHATFriendDetailViewController *friendCtl = [[JCHATFriendDetailViewController alloc]initWithNibName:@"JCHATFriendDetailViewController" bundle:nil];
+              friendCtl.userInfo = user;
+              friendCtl.isGroupFlag = YES;
+            [self.navigationController pushViewController:friendCtl animated:YES];
+          }
         }
     }
 }
