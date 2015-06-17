@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JCHATChatTable.h"
-@interface JCHATChatViewController : UIViewController<UISearchBarDelegate,UISearchControllerDelegate,UISearchControllerDelegate,UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,TouchTableViewDelegate>
+@interface JCHATChatViewController : UIViewController<UISearchBarDelegate,UISearchControllerDelegate,UISearchControllerDelegate,UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,TouchTableViewDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIImageView *addBgView;
 @property (weak, nonatomic) IBOutlet JCHATChatTable *chatTableView;
 

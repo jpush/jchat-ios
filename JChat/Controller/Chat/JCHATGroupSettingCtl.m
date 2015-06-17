@@ -32,19 +32,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupChange object:nil];
-  self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha=0.8;
-  
-  NSShadow *shadow = [[NSShadow alloc]init];
-  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0,-1);
-  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                                   shadow,NSShadowAttributeName,
-                                                                   [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
-                                                                   nil]];
+  [self.view setBackgroundColor:[UIColor clearColor]];
+
   DDLogDebug(@"Action - viewDidLoad");
   self.title=@"聊天详情";
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -54,7 +43,7 @@
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
   _groupTitleData =@[@"群聊名称",@"清空聊天记录",@"删除并退出"];
 
-  self.groupTab = [[JCHATChatTable alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight)];
+  self.groupTab = [[JCHATChatTable alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth,self.view.frame.size.height)];
   self.groupTab.dataSource = self;
   self.groupTab.delegate = self;
   self.groupTab.touchDelegate = self;
@@ -63,7 +52,7 @@
   [self.view addSubview:self.groupTab];
   
   _headView = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 0, kApplicationWidth, kheadViewHeight)];
-  [_headView setBackgroundColor:[UIColor whiteColor]];
+  [_headView setBackgroundColor:[UIColor clearColor]];
   _headLine = [[UIView alloc]initWithFrame:CGRectMake(0, kheadViewHeight-1, kApplicationWidth, 1)];
   [_headLine setBackgroundColor:[UIColor colorWithRed:197/255.0 green:197/255.0 blue:197/255.0 alpha:197/255.0]];
   [_headView addSubview:_headLine];
@@ -72,6 +61,20 @@
   self.groupTab.tableHeaderView = _headView;
   
   [self getGroupMemberList];
+  
+  NSShadow *shadow = [[NSShadow alloc]init];
+  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+  shadow.shadowOffset = CGSizeMake(0,-1);
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupChange object:nil];
+  self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
+  self.navigationController.navigationBar.alpha=0.8;
+  
+  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                   shadow,NSShadowAttributeName,
+                                                                   [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
+                                                                   nil]];
 }
 
 - (void)dealloc {
@@ -484,7 +487,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 #pragma mark --计算row的行数
 - (NSInteger)getRowFromGroupData {
   NSInteger n = 0;
-  if ([_groupData count] == 1) {
+  if ([_groupData count] == 1 ||[self.sendMessageCtl.groupInfo.groupOwner longLongValue] != [JMSGUser getMyInfo].uid ) {
     n = 1;
   }else {
     n = 2;
