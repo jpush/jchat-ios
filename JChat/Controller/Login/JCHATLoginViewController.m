@@ -102,13 +102,13 @@
 
         // 显示登录状态？
         if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kHaveLogin]) {
+          [appDelegate.tabBarCtl setSelectedIndex:0];
           [self.navigationController popViewControllerAnimated:YES];
         } else {
           [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
           pushFlag = NO;
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-
         [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
         [self userLoginSave];
       } else {
