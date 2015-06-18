@@ -70,6 +70,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
+  _accountField.text = @"";
+  _passwordField.text = @"";
   [self.navigationController.navigationBar setHidden:NO];
 }
 
