@@ -33,4 +33,9 @@
     }
 }
 
+- (IBAction)deleteBtnClick:(id)sender {
+  if (self.delegate && [self.delegate respondsToSelector:@selector(groupPersonBtnClick:)]) {
+    [self.delegate groupPersonBtnClick:self];
+  }
+}
 @end

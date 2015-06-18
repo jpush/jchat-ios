@@ -46,6 +46,9 @@
                         <color key="titleColor" red="0.89152115070000004" green="0.63602897570000005" blue="0.93045691289999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="deleteBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="do5-Jx-PdK"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

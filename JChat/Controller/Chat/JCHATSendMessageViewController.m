@@ -48,7 +48,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+  [self.view setBackgroundColor:[UIColor clearColor]];
   NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
   self.toolBar = [nib objectAtIndex:0];
   self.toolBar.contentMode = UIViewContentModeRedraw;
@@ -109,8 +109,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   } else {
     DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
   }
-  
-  
   
   if (!_conversation) {
     if (self.user) {
@@ -589,9 +587,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
     detailsInfoCtl.chatUser = self.user;
     detailsInfoCtl.sendMessageCtl = self;
+    detailsInfoCtl.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:detailsInfoCtl animated:YES];
   }else{
     JCHATGroupSettingCtl *groupSettingCtl = [[JCHATGroupSettingCtl alloc] init];
+    groupSettingCtl.hidesBottomBarWhenPushed=YES;
     groupSettingCtl.conversation = self.conversation;
     groupSettingCtl.sendMessageCtl = self;
     [self.navigationController pushViewController:groupSettingCtl animated:YES];
@@ -740,7 +740,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if(error == nil){
       JMSGConversation *conversation = resultObject;
       self.title = conversation.targetName;
-      [self getGroupMemberList];
     } else{
       DDLogError(@"get coneversation failed");
     }
@@ -1296,7 +1295,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   voiceMessage.targetId = model.targetId;
   voiceMessage.duration = model.voiceTime;
-  voiceMessage.timestamp = model.messageTime;
+  model.messageTime = voiceMessage.timestamp;
   voiceMessage.mediaData = model.mediaData;
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
   [JCHATFileManager deleteFile:voicePath];
