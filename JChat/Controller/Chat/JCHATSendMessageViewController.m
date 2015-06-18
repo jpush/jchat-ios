@@ -351,6 +351,23 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self addCellToTabel];
 }
 
+NSInteger sortMessageType(id object1,id object2,void *cha) {
+  JMSGMessage *message1 = (JMSGMessage *)object1;
+  JMSGMessage *message2 = (JMSGMessage *)object2;
+  if([message1.timestamp integerValue] > [message2.timestamp integerValue]) {
+    return NSOrderedDescending;
+  }else if([message1.timestamp integerValue] < [message2.timestamp integerValue]) {
+    return NSOrderedAscending;
+  }
+  return NSOrderedSame;
+}
+
+#pragma mark --排序conversation
+- (NSMutableArray *)sortMessage:(NSMutableArray *)messageArr {
+  NSArray *sortResultArr = [messageArr sortedArrayUsingFunction:sortMessageType context:nil];
+  return [NSMutableArray arrayWithArray:sortResultArr];
+}
+
 - (void)getAllMessage {
   DDLogDebug(@"Action - getAllMessage");
 
@@ -358,11 +375,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self cleanMessageCache];
   
   __weak typeof(self) weakSelf = self;
-
     [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-        arrList = resultObject;
+      arrList = [self sortMessage:resultObject];
         for (NSInteger i=0; i< [arrList count]; i++) {
-            JMSGMessage *message =[arrList objectAtIndex:i];
+            JMSGMessage *message = [arrList objectAtIndex:i];
           [_JMSgMessageDic setObject:message forKey:message.messageId];
 
           if (message.contentType == kJMSGEventMessage) {
