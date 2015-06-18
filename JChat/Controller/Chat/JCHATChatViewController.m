@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-  
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(netWorkConnectClose)
@@ -223,6 +223,13 @@
     [self.navigationController pushViewController:sendMessageCtl animated:YES];
     NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
     [self saveBadge:badge];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:YES];
+  if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+  }
 }
 
 - (void)netWorkConnectClose {

@@ -22,6 +22,7 @@
 		1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */; };
 		1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */; };
 		1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834E1AFC91C800AC8280 /* CoreTelephony.framework */; };
+		184271521B2E9C1A008A0C79 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184271511B2E9C1A008A0C79 /* JMessage.framework */; };
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
@@ -300,7 +301,6 @@
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
-		AAE59B481B299180004FBE07 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039B59635D76265AE189A08 /* JMessage.framework */; };
 		CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */; };
 /* End PBXBuildFile section */
 
@@ -344,6 +344,7 @@
 		1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1839834E1AFC91C800AC8280 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		184271511B2E9C1A008A0C79 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		187181901AFB80BF00FB3168 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		187181911AFB80BF00FB3168 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		187181931AFB80BF00FB3168 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -661,7 +662,6 @@
 		6039B4EC6E0F5181F92A2AA2 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
 		6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage +ResizeMagick.m"; sourceTree = "<group>"; };
-		6039B59635D76265AE189A08 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = JChat/lib/JMessage.framework; sourceTree = "<group>"; };
 		6039B5CB4EAB97AB0096BBDA /* SDWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageOperation.h; sourceTree = "<group>"; };
 		6039B5CD3A2AEA7D09ABF7ED /* JCHATCustomFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATCustomFormatter.h; sourceTree = "<group>"; };
 		6039B609C61F92E43FE096BB /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
@@ -718,7 +718,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAE59B481B299180004FBE07 /* JMessage.framework in Frameworks */,
+				184271521B2E9C1A008A0C79 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -1211,6 +1211,7 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				184271511B2E9C1A008A0C79 /* JMessage.framework */,
 				1839834E1AFC91C800AC8280 /* CoreTelephony.framework */,
 				1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */,
 				1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */,
@@ -1225,7 +1226,6 @@
 				183983381AFC915C00AC8280 /* CoreAudio.framework */,
 				183983361AFC914900AC8280 /* Security.framework */,
 				183983341AFC914100AC8280 /* libz.dylib */,
-				6039B59635D76265AE189A08 /* JMessage.framework */,
 				FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */,
 			);
 			name = Frameworks;
@@ -1438,7 +1438,6 @@
 				TargetAttributes = {
 					18AB9C8B1A43BCB7007B2A04 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 8X2A38Q9VD;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -1860,8 +1859,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1881,7 +1880,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2b6d3ea6-fe6e-4d09-90cd-6a3007d44214";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1903,8 +1902,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1917,7 +1916,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "2b6d3ea6-fe6e-4d09-90cd-6a3007d44214";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1937,6 +1936,7 @@
 					"/Users/xiaomeng/JPUSHIM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1977,6 +1977,7 @@
 					"/Users/xiaomeng/JPUSHIM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
 					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
