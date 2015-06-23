@@ -102,15 +102,14 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   _groupData = [[(NSArray *)arr sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
   for (NSInteger i=0; i< [_groupData count]; i++) {
 
-    userInfo = [_groupData objectAtIndex:i];
+    userInfo = [[_groupData objectAtIndex:i] copy];
     if ([self.sendMessageCtl.groupInfo.groupOwner longLongValue] == userInfo.uid ) {
       [_groupData removeObjectAtIndex:i];
+      [_groupData insertObject:userInfo atIndex:0];
       break;
     }
   }
-  if (userInfo) {
-    [_groupData insertObject:userInfo atIndex:0];
-  }
+
 }
 
 - (void)tableView:(UITableView *)tableView touchesBegan:(NSSet *)touches
