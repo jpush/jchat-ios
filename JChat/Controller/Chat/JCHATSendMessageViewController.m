@@ -351,6 +351,23 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self addCellToTabel];
 }
 
+NSInteger sortMessageType(id object1,id object2,void *cha) {
+  JMSGMessage *message1 = (JMSGMessage *)object1;
+  JMSGMessage *message2 = (JMSGMessage *)object2;
+  if([message1.timestamp integerValue] > [message2.timestamp integerValue]) {
+    return NSOrderedDescending;
+  }else if([message1.timestamp integerValue] < [message2.timestamp integerValue]) {
+    return NSOrderedAscending;
+  }
+  return NSOrderedSame;
+}
+
+#pragma mark --排序conversation
+- (NSMutableArray *)sortMessage:(NSMutableArray *)messageArr {
+  NSArray *sortResultArr = [messageArr sortedArrayUsingFunction:sortMessageType context:nil];
+  return [NSMutableArray arrayWithArray:sortResultArr];
+}
+
 - (void)getAllMessage {
   DDLogDebug(@"Action - getAllMessage");
 
@@ -358,11 +375,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self cleanMessageCache];
   
   __weak typeof(self) weakSelf = self;
-
     [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-        arrList = resultObject;
+      arrList = [self sortMessage:resultObject];
         for (NSInteger i=0; i< [arrList count]; i++) {
-            JMSGMessage *message =[arrList objectAtIndex:i];
+            JMSGMessage *message = [arrList objectAtIndex:i];
           [_JMSgMessageDic setObject:message forKey:message.messageId];
 
           if (message.contentType == kJMSGEventMessage) {
@@ -628,6 +644,12 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 #pragma mark - UIImagePickerController Delegate
 //相机,相册Finish的代理
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+  if ([mediaType isEqualToString:@"public.movie"]) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [MBProgressHUD showMessage:@"不支持视频发送" view:self.view];
+    return;
+  }
   UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
   [self prepareImageMessage:image];
@@ -640,8 +662,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   DDLogDebug(@"Action - prepareImageMessage");
   img = [img resizedImageByWidth:upLoadImgWidth];
   UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
-  NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetId andData:UIImageJPEGRepresentation(img, 1)];
-  NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetId andData:UIImageJPEGRepresentation(smallpImg, 1)];
   
   JMSGImageMessage* message = [[JMSGImageMessage alloc] init];
   [self addmessageShowTimeData:message.timestamp];
@@ -657,9 +677,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
   model.messageStatus = kJMSGStatusSending;
   model.type = kJMSGImageMessage;
-  model.pictureImgPath = bigPath;
   model.mediaData = UIImageJPEGRepresentation(smallpImg, 1);
-  model.pictureThumbImgPath = smallImgPath;
   
   if (self.conversation.chatType == kJMSGSingle) {
     message.conversationType = kJMSGSingle;
@@ -669,9 +687,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   message.targetId = model.targetId;
   message.timestamp = model.messageTime;
   ((JMSGImageMessage *)message).mediaData = model.mediaData;
-  ((JMSGImageMessage *)message).thumbPath = model.pictureThumbImgPath;
   
-
   [_imgDataArr addObject:model];
   model.photoIndex = [_imgDataArr count] - 1;
   [_JMSgMessageDic setObject:message forKey:message.messageId];
@@ -978,7 +994,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
       return 150;
     } else {
-      UIImage *img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
+      UIImage *img;
+      if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
+      img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
+      }else {
+      img = [UIImage imageWithData:model.mediaData];
+      }
       if (kScreenWidth > 320) {
         return img.size.height / 3;
       } else {
