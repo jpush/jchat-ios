@@ -104,7 +104,7 @@
             [self.sendFailView setHidden:NO];
             [self.circleView stopAnimating];
             [self.circleView setHidden:YES];
-            _sendFailImgMessage = message;
+            _sendFailImgMessage = [message copy];
         }
         [self updateFrame];
     });
@@ -173,8 +173,10 @@
      [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
         [self.contentImgView setImage:[UIImage imageNamed:@"receiveFailed.png"]];
-    } else {
+    } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
         [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
+    }else {
+      [self.contentImgView setImage:[UIImage imageWithData:message.mediaData]];
     }
     self.delegate = (id)controler;
     self.cellIndex = indexPath;
@@ -210,8 +212,7 @@
   _message.targetId = self.model.targetId;
   _message.timestamp = self.model.messageTime;
   _message.mediaData = self.model.mediaData;
-  _message.thumbPath = self.model.pictureThumbImgPath;
-
+  
   DDLogVerbose(@"The imageMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
 }
@@ -274,7 +275,12 @@
         [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
     }else {
         [self.downLoadIndicatorView setHidden:YES];
-        UIImage *showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
+      UIImage *showImg;
+      if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
+       showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
+      }else {
+        showImg = [UIImage imageWithData:self.message.mediaData];
+      }
         if (kScreenWidth > 320 ) {
             imgHeight = showImg.size.height/3;
             imgWidth  = showImg.size.width/3;
