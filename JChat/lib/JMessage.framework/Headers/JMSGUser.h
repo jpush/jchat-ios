@@ -108,7 +108,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender){
 /**
  *  更新用户信息接口
  *
- *  @param parameter     新的属性值
+ *  @param parameter     新的属性值(性别需要传入JMSGUserGender包装成NSNumber的对象,其他类型传NSString类型的对象)
  *  @param type          更新属性类型
  *  @param handler       用户注册回调接口函数
  */
