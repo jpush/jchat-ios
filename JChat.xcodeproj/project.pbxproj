@@ -22,7 +22,6 @@
 		1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */; };
 		1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */; };
 		1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834E1AFC91C800AC8280 /* CoreTelephony.framework */; };
-		184271521B2E9C1A008A0C79 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184271511B2E9C1A008A0C79 /* JMessage.framework */; };
 		187183121AFB80C000FB3168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181911AFB80BF00FB3168 /* AppDelegate.m */; };
 		187183131AFB80C000FB3168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181921AFB80BF00FB3168 /* LaunchScreen.xib */; };
 		187183141AFB80C000FB3168 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187181941AFB80BF00FB3168 /* Main.storyboard */; };
@@ -264,6 +263,7 @@
 		187184151AFB80C000FB3168 /* wutouxiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182E91AFB80C000FB3168 /* wutouxiang@2x.png */; };
 		187184161AFB80C000FB3168 /* yuyin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EA1AFB80C000FB3168 /* yuyin@2x.png */; };
 		187184171AFB80C000FB3168 /* zhaopian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EB1AFB80C000FB3168 /* zhaopian@2x.png */; };
+		18A742401B32B0FC0059B413 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184271511B2E9C1A008A0C79 /* JMessage.framework */; };
 		6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */; };
 		6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */; };
 		6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */; };
@@ -718,7 +718,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				184271521B2E9C1A008A0C79 /* JMessage.framework in Frameworks */,
+				18A742401B32B0FC0059B413 /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,

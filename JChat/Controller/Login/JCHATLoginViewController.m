@@ -43,6 +43,7 @@
 
   [self.view setBackgroundColor:[UIColor colorWithRed:72 / 255.0 green:62 / 255.0 blue:39 / 255.0 alpha:1.0]];
   self.passwordField.secureTextEntry = YES;
+  self.passwordField.keyboardType = UIKeyboardTypeDefault;
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
   self.navigationController.navigationBar.alpha = 0.8;
   self.title = @"极光IM";
@@ -70,6 +71,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
+  _accountField.text = @"";
+  _passwordField.text = @"";
   [self.navigationController.navigationBar setHidden:NO];
 }
 

@@ -31,7 +31,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
-  [self setSelectedIndex:0];
 //     禁用 iOS7 返回手势
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
       self.navigationController.interactivePopGestureRecognizer.enabled = NO;

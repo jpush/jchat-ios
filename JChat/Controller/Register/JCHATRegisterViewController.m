@@ -30,6 +30,7 @@
   self.navigationController.navigationBar.alpha = 0.8;
   self.title = @"极光IM";
   self.passwordField.secureTextEntry = YES;
+  self.passwordField.keyboardType = UIKeyboardTypeDefault;
 
   NSShadow *shadow = [[NSShadow alloc] init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
