@@ -644,6 +644,12 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 #pragma mark - UIImagePickerController Delegate
 //相机,相册Finish的代理
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+  if ([mediaType isEqualToString:@"public.movie"]) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [MBProgressHUD showMessage:@"不支持视频发送" view:self.view];
+    return;
+  }
   UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
   [self prepareImageMessage:image];
