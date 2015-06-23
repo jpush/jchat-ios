@@ -662,8 +662,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   DDLogDebug(@"Action - prepareImageMessage");
   img = [img resizedImageByWidth:upLoadImgWidth];
   UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
-  NSString *bigPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetId andData:UIImageJPEGRepresentation(img, 1)];
-  NSString *smallImgPath = [JCHATFileManager saveImageWithConversationID:_conversation.targetId andData:UIImageJPEGRepresentation(smallpImg, 1)];
   
   JMSGImageMessage* message = [[JMSGImageMessage alloc] init];
   [self addmessageShowTimeData:message.timestamp];
@@ -679,9 +677,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
   model.messageStatus = kJMSGStatusSending;
   model.type = kJMSGImageMessage;
-  model.pictureImgPath = bigPath;
   model.mediaData = UIImageJPEGRepresentation(smallpImg, 1);
-  model.pictureThumbImgPath = smallImgPath;
   
   if (self.conversation.chatType == kJMSGSingle) {
     message.conversationType = kJMSGSingle;
@@ -691,9 +687,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   message.targetId = model.targetId;
   message.timestamp = model.messageTime;
   ((JMSGImageMessage *)message).mediaData = model.mediaData;
-  ((JMSGImageMessage *)message).thumbPath = model.pictureThumbImgPath;
   
-
   [_imgDataArr addObject:model];
   model.photoIndex = [_imgDataArr count] - 1;
   [_JMSgMessageDic setObject:message forKey:message.messageId];
@@ -1000,7 +994,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
       return 150;
     } else {
-      UIImage *img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
+      UIImage *img;
+      if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
+      img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
+      }else {
+      img = [UIImage imageWithData:model.mediaData];
+      }
       if (kScreenWidth > 320) {
         return img.size.height / 3;
       } else {
