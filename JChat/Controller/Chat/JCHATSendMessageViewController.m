@@ -685,7 +685,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     message.conversationType = kJMSGGroup;
   }
   message.targetId = model.targetId;
-  message.timestamp = model.messageTime;
   ((JMSGImageMessage *)message).mediaData = model.mediaData;
   
   [_imgDataArr addObject:model];
