@@ -144,11 +144,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 }
 
 // notification from JPush
-- (void)networkDidReceiveMessage:(NSNotification *)notification {
-  DDLogDebug(@"Event - networkDidReceiveMessage");
-}
-
-// notification from JPush
 - (void)receivePushMessage:(NSNotification *)notification {
   DDLogDebug(@"Event - receivePushMessage");
 
