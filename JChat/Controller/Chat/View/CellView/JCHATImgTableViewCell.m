@@ -210,7 +210,6 @@
     _message.conversationType = kJMSGGroup;
   }
   _message.targetId = self.model.targetId;
-  _message.timestamp = self.model.messageTime;
   _message.mediaData = self.model.mediaData;
   
   DDLogVerbose(@"The imageMessage - %@", _message);
