@@ -1029,11 +1029,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
       self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   }
-  if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
-    self.user = nil;
-    [self cleanMessageCache];
+  
+  if (self.conversation.chatType == kJMSGGroup) {
     [self getGroupMemberList];
-    [_messageTableView reloadData];
+    if (self.user != nil) {
+      self.user = nil;
+      [self cleanMessageCache];
+      [_messageTableView reloadData];
+    }
   }
 }
 
