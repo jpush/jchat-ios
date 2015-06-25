@@ -160,26 +160,30 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
   }
 
-  [self getGroupMemberList];
+  [self getGroupMemberListWithGetMessageFlag:YES];
   [self addNotification];
   [self sendInfoRequest];
 }
 
 
--(void)getGroupMemberList {
+-(void)getGroupMemberListWithGetMessageFlag:(BOOL)getMesageFlag {
   if (self.conversation && self.conversation.chatType == kJMSGGroup) {
     __weak typeof(self) weakSelf = self;
     [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         _userArr = [NSMutableArray arrayWithArray:resultObject];
-        [weakSelf getAllMessage];
+        if (getMesageFlag) {
+          [weakSelf getAllMessage];
+        }
         [weakSelf hidenDetailBtn:_eixtGroupFlag];
       }else {
         DDLogDebug(@"群聊成员获取失败");
       }
     }];
   }else {
-    [self getAllMessage];
+    if (getMesageFlag) {
+      [self getAllMessage];
+    }
     [self hidenDetailBtn:_eixtGroupFlag];
   }
 }
@@ -785,7 +789,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
       _eixtGroupFlag = YES;
       [self hidenDetailBtn:_eixtGroupFlag];
     }else if(eventMessage.type == kJMSGAddGroupMemberEvent) {
-      [self getGroupMemberList];
+      [self getGroupMemberListWithGetMessageFlag:NO];
     }
     [self addEventMessage:eventMessage];
   }
@@ -1034,7 +1038,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   
   if (self.conversation.chatType == kJMSGGroup) {
-    [self getGroupMemberList];
+    [self getGroupMemberListWithGetMessageFlag:NO];
     if (self.user != nil) {
       self.user = nil;
       [self cleanMessageCache];
