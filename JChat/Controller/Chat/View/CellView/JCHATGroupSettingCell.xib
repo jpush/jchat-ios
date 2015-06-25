@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,38 +15,57 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群聊名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ubg-6y-wsh">
-                        <rect key="frame" x="8" y="12" width="124" height="30"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jiantou.png" translatesAutoresizingMaskIntoConstraints="NO" id="94i-wa-sCg">
+                        <rect key="frame" x="304" y="20" width="8" height="13"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="6fT-hG-lZY"/>
-                            <constraint firstAttribute="width" constant="124" id="X7g-6e-uVA"/>
+                            <constraint firstAttribute="height" constant="13" id="Izt-wn-4wo"/>
+                            <constraint firstAttribute="width" constant="8" id="kVP-Ff-sFv"/>
+                        </constraints>
+                    </imageView>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="justified" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qEA-yz-awV">
+                        <rect key="frame" x="116" y="11" width="171" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="196" id="rXw-oz-H8x"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="rXw-oz-H8x"/>
+                            </mask>
+                        </variation>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群聊名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ubg-6y-wsh">
+                        <rect key="frame" x="1" y="14" width="107" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="107" id="dbp-er-AwV"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jiantou.png" translatesAutoresizingMaskIntoConstraints="NO" id="94i-wa-sCg">
-                        <rect key="frame" x="297" y="20" width="8" height="13"/>
-                    </imageView>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="justified" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qEA-yz-awV">
-                        <rect key="frame" x="156" y="13" width="133" height="32"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="94i-wa-sCg" firstAttribute="leading" secondItem="qEA-yz-awV" secondAttribute="trailing" constant="8" id="4wz-pP-KL6"/>
-                    <constraint firstItem="94i-wa-sCg" firstAttribute="leading" secondItem="qEA-yz-awV" secondAttribute="trailing" constant="8" id="D60-Fo-JWO"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="94i-wa-sCg" secondAttribute="bottom" constant="12" id="Ehl-JG-car"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="94i-wa-sCg" secondAttribute="trailing" constant="10" id="FL6-9t-PmJ"/>
-                    <constraint firstItem="94i-wa-sCg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="Hhc-2h-9B4"/>
-                    <constraint firstItem="Ubg-6y-wsh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="HuS-T1-apt"/>
-                    <constraint firstItem="Ubg-6y-wsh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="Sgq-Si-SNw"/>
-                    <constraint firstItem="qEA-yz-awV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="W7C-vA-FF7"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Ubg-6y-wsh" secondAttribute="bottom" constant="3" id="eop-je-yha"/>
-                    <constraint firstItem="qEA-yz-awV" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="gOL-Bv-o8U"/>
-                    <constraint firstItem="qEA-yz-awV" firstAttribute="leading" secondItem="Ubg-6y-wsh" secondAttribute="trailing" constant="24" id="lEX-ka-eH9"/>
+                    <constraint firstItem="94i-wa-sCg" firstAttribute="leading" secondItem="qEA-yz-awV" secondAttribute="trailing" constant="17" id="3HG-Bh-WdM"/>
+                    <constraint firstItem="Ubg-6y-wsh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-7" id="8jM-KC-ekq"/>
+                    <constraint firstItem="Ubg-6y-wsh" firstAttribute="centerY" secondItem="qEA-yz-awV" secondAttribute="centerY" constant="1.5" id="E6K-8P-KXq"/>
+                    <constraint firstItem="94i-wa-sCg" firstAttribute="leading" secondItem="qEA-yz-awV" secondAttribute="trailing" constant="17" id="Ere-cy-G2k"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="94i-wa-sCg" secondAttribute="trailing" constant="10" id="K4o-vB-3Cf"/>
+                    <constraint firstItem="94i-wa-sCg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KUQ-On-z4g"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="94i-wa-sCg" secondAttribute="trailing" constant="3" id="ZGz-ys-io8"/>
+                    <constraint firstItem="qEA-yz-awV" firstAttribute="leading" secondItem="Ubg-6y-wsh" secondAttribute="trailing" constant="8" id="a1c-w2-OqU"/>
+                    <constraint firstItem="qEA-yz-awV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="84" id="bJY-Jk-MuP"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Ubg-6y-wsh" secondAttribute="bottom" id="jqn-KM-Z9Z"/>
+                    <constraint firstItem="Ubg-6y-wsh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="tcU-bc-b1I"/>
+                    <constraint firstItem="qEA-yz-awV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="xMl-FT-VRO"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="bJY-Jk-MuP"/>
+                        <exclude reference="3HG-Bh-WdM"/>
+                        <exclude reference="K4o-vB-3Cf"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="groupName" destination="qEA-yz-awV" id="vhE-Ip-1LA"/>

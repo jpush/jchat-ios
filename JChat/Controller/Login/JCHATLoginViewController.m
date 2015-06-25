@@ -102,10 +102,9 @@
               completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-
+        [appDelegate.tabBarCtl setSelectedIndex:0];
         // 显示登录状态？
         if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kHaveLogin]) {
-          [appDelegate.tabBarCtl setSelectedIndex:0];
           [self.navigationController popViewControllerAnimated:YES];
         } else {
           [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
