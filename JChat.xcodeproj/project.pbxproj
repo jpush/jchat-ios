@@ -276,7 +276,6 @@
 		6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */; };
 		6039B6E00846B07D21E72217 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8EEF63EB1C41A17F0E0 /* UIImage+WebP.m */; };
 		6039B71E0D68F5E9379ABED9 /* SDWebImageDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B63C75BC675F321AB980 /* SDWebImageDownloaderOperation.m */; };
-		6039B75FB1CF5450CD0787E8 /* JCHATBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B356C2B9C193CA4CAE06 /* JCHATBaseViewController.m */; };
 		6039B7CBAC2D4E53092C0575 /* UIImageView+MJWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1B2E519803CA76428C1 /* UIImageView+MJWebCache.m */; };
 		6039B7FE80FB2DB789B210B9 /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1FDE6A48DEDC098D770 /* SDWebImageManager+MJ.m */; };
 		6039B83F418699AFF8E2823A /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B470206AC46AE63B8D30 /* UIImage+GIF.m */; };
@@ -651,7 +650,6 @@
 		6039B3421035D22A550F39AA /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
 		6039B3504A7D0ED5C71405FD /* JChatConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JChatConstants.h; sourceTree = "<group>"; };
 		6039B354054776BB4419272C /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
-		6039B356C2B9C193CA4CAE06 /* JCHATBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATBaseViewController.m; sourceTree = "<group>"; };
 		6039B36C65D718CFBA51882E /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		6039B38611C311283A8B123C /* JCHATStringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATStringUtils.m; sourceTree = "<group>"; };
 		6039B3A691520DE6766F79DB /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
@@ -684,7 +682,6 @@
 		6039B8D7CF4591D39ECC24C0 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		6039B8EEF63EB1C41A17F0E0 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
 		6039B8F661AF2A135B10045D /* NSObject+TimeConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TimeConvert.h"; sourceTree = "<group>"; };
-		6039B98212E1FC3AD18E09D4 /* JCHATBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATBaseViewController.h; sourceTree = "<group>"; };
 		6039BB2A0EFF4230235771DD /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
 		6039BB2B5ADBF93F1A4EBA2C /* JCHATFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATFileManager.m; sourceTree = "<group>"; };
 		6039BB3CB298D420BC511221 /* NSObject+TimeConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TimeConvert.m"; sourceTree = "<group>"; };
@@ -780,8 +777,6 @@
 				187181FF1AFB80BF00FB3168 /* Login */,
 				187182061AFB80BF00FB3168 /* PersonInfo */,
 				1871821F1AFB80BF00FB3168 /* Register */,
-				6039B98212E1FC3AD18E09D4 /* JCHATBaseViewController.h */,
-				6039B356C2B9C193CA4CAE06 /* JCHATBaseViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1796,7 +1791,6 @@
 				6039BB20C8E8F0ECFF502423 /* NSObject+TimeConvert.m in Sources */,
 				6039B9D106B00CBB96BF9458 /* NSString+MessageInputView.m in Sources */,
 				6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */,
-				6039B75FB1CF5450CD0787E8 /* JCHATBaseViewController.m in Sources */,
 				6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */,
 				6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */,
 				6039B40AE179D5BE54BA7580 /* JCHATStringUtils.m in Sources */,
