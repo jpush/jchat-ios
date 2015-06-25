@@ -783,6 +783,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
       _eixtGroupFlag = YES;
       [self hidenDetailBtn:_eixtGroupFlag];
+    }else if(eventMessage.type == kJMSGAddGroupMemberEvent) {
+      [self getGroupMemberList];
     }
     [self addEventMessage:eventMessage];
   }
