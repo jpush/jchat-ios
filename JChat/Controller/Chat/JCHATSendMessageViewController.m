@@ -713,7 +713,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                              selector:@selector(inputKeyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-
+  
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(sendMessageResponse:)
                                                  name:JMSGNotification_SendMessageResult object:nil];
@@ -736,10 +736,10 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                            selector:@selector(receiveEventNotification:)
                                                name:JMSGNotification_EventMessage
                                              object:nil];
-//    [self.toolBar.textView addObserver:self
-//                            forKeyPath:@"contentSize1"
-//                               options:NSKeyValueObservingOptionNew
-//                               context:nil];
+  [self.toolBar.textView addObserver:self
+                            forKeyPath:@"contentSize"
+                               options:NSKeyValueObservingOptionNew
+                               context:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(receiveConversationChange)
                                                name:JMSGNotification_ConversationInfoChanged
@@ -1053,7 +1053,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark --释放内存
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [self.toolBar.textView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (void)tapClick:(UIGestureRecognizer *)gesture {
@@ -1349,7 +1350,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.barBottomFlag) {
         return;
     }
-    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize1"]) {
+    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize"]) {
         [self layoutAndAnimateMessageInputTextView:object];
     }
 }
