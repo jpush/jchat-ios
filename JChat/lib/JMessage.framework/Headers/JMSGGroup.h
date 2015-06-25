@@ -12,9 +12,8 @@
 #import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
 
-
 /**
- * 收取收到群成员变更通知和key
+ * 收取收到群成员变更通知和key,用以更新当前会话展示的群组信息
  */
 extern NSString * const JMSGNotification_GroupChange;
 extern NSString * const JMSGNotification_GroupMemberKey;
@@ -22,20 +21,48 @@ extern NSString * const JMSGNotification_GroupMemberKey;
 
 @interface JMSGGroup : NSObject
 
+/**
+*  群组的gid,为long型的NSString包装
+*/
 @property (atomic,strong,readonly) NSString *gid;
-@property (atomic,strong,readonly) NSString *groupOwner;
-@property (atomic,strong) NSString *groupName;
-@property (atomic,strong) NSString *groupDescription;
-@property (atomic,strong) NSNumber *group_level;
-@property (atomic,strong) NSNumber *group_flag;
-@property (atomic,strong) NSString *group_members;
 
+/**
+*  群组的拥有者
+*/
+@property (atomic,strong,readonly) NSString *groupOwner;
+
+/**
+*  群组的名称
+*/
+@property (atomic,strong) NSString *groupName;
+
+/**
+*  群组的描述
+*/
+@property (atomic,strong) NSString *groupDescription;
+
+/**
+*  群组的等级
+*/
+@property (atomic,strong, readonly) NSNumber *group_level;
+
+/**
+*  群组的flag(暂时未使用,保留属性)
+*/
+@property (atomic,strong) NSNumber *group_flag;
+
+/**
+*  群组成员,由每个成员的username,通过,(逗号)来分隔组成
+*/
+@property (atomic,strong) NSString *group_members;
 
 /**
 *  创建一个群组
+*  group对象可填写信息为:groupName,groupDescription,group_flag(暂时无用处)
+*  创建群组SDK自动会被自己加入group_members中,不需要自己做处理
 *
-*  @param grounpName    群组名称
-*  @param completionHandler 请求返回的block
+*  @param group             待创建的群组
+*  @param completionHandler 结果回调。resultObject值不需要关心,始终为nil
 */
 + (void)createGroup:(JMSGGroup *)group
   completionHandler:(JMSGCompletionHandler)handler;
@@ -43,19 +70,20 @@ extern NSString * const JMSGNotification_GroupMemberKey;
 /**
 *  向群组中添加成员
 *
-*  @param grounpID      群组ID
-*  @param userIds       添加群组的成员的集合
-*  @param callbackBlock 添加成员回调接口
+*  @param groupId       群组ID
+*  @param members       需要加入的群组成员(username)。多个成员时使用,(逗号)隔开。
+*  @param callbackBlock 结果回调。resultObject值不需要关心,始终为nil
 */
 + (void)addMembers:(NSString *)groupId
            members:(NSString *)members
  completionHandler:(JMSGCompletionHandler)handler;
 
 /**
-*  解散群组
+* 群组删除成员
 *
-*  @param groupID       解散群组的ID
-*  @param callbackBlock 解散群组回调接口
+*  @param groupID       群组的ID
+*  @param members       需要删除的群组成员(username)。多个成员时使用,(逗号)隔开。
+*  @param callbackBlock 结果回调。resultObject值不需要关心,始终为nil
 */
 + (void)deleteGroupMember:(NSString *)groupId
                   members:(NSString *)members
@@ -64,18 +92,17 @@ extern NSString * const JMSGNotification_GroupMemberKey;
 /**
 *  用户退出群组
 *
-*  @param groupId       群组ID
-*  @param userId        用户ID
-*  @param callbackBlock 用户退出群组回调接口
+*  @param groupId       待退出的群组ID
+*  @param callbackBlock 结果回调。resultObject值不需要关心,始终为nil
 */
 + (void)exitGroup:(NSString *)groupId
-    completionHandler:(JMSGCompletionHandler)handler;
+completionHandler:(JMSGCompletionHandler)handler;
 
 /**
 *  更新群组信息
 *
-*  @param handler       异步回调 Block。
-*         Handler 里 resultObject 是更新后的群组信息，其内容类型是 JMSGGroup。
+*  @param group         待更新的群组,目前支持的变更支持groupName,groupDescription,group_flag(暂时无用处)
+*  @param handler       结果回调。resultObject值不需要关心,始终为nil
 */
 + (void)updateGroupInfo:(JMSGGroup *)group
       completionHandler:(JMSGCompletionHandler)handler;
@@ -83,8 +110,7 @@ extern NSString * const JMSGNotification_GroupMemberKey;
 /**
 *  获取一个群的所有组成员列表
 *
-*  @param handler       异步回调 Block。
-*
+*  @param handler       结果回调。正常返回时resultObject对象类型为NSArray,成员为JMSGUser类型。
 */
 + (void)getGroupMemberList:(NSString *)groupId
          completionHandler:(JMSGCompletionHandler)handler;
@@ -92,7 +118,7 @@ extern NSString * const JMSGNotification_GroupMemberKey;
 /**
 *  获取当前登录用户（我）的所有群组列表
 *
-*  @param handler       异步回调 Block。
+*  @param handler       结果回调。正常返回时resultObject对象类型为NSArray,成员为JMSGGroup类型。
 *
 */
 + (void)getGroupListWithCompletionHandler:(JMSGCompletionHandler)handler;
@@ -100,9 +126,9 @@ extern NSString * const JMSGNotification_GroupMemberKey;
 /**
 * 获取群组信息
 *
-* @param gid 群组ID。
-* @param handler 异步回调 Block。
-*        handler 里 resultObject 是更新后的群组信息，其内容类型是 JMSGGroup。
+* @param groupId        群组ID。
+* @param handler        结果回调。正常返回时resultObject对象类型为JMSGGroup。
+*
 */
 + (void)getGroupInfo:(NSString *)groupId
    completionHandler:(JMSGCompletionHandler)handler;
