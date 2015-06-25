@@ -48,6 +48,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.automaticallyAdjustsScrollViewInsets = NO;
   [self.view setBackgroundColor:[UIColor clearColor]];
   NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
   self.toolBar = [nib objectAtIndex:0];
