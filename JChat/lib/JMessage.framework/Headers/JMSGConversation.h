@@ -15,7 +15,7 @@
 @class JMSGMessage;
 
 /**
-* 会话变更通知
+* 会话变更通知(用来当SDK后台更新会话信息时刷新界面使用)
 */
 extern NSString *const JMSGNotification_ConversationInfoChanged;
 extern NSString *const JMSGNotification_ConversationInfoChangedKey;
@@ -25,12 +25,12 @@ extern NSString *const JMSGNotification_ConversationInfoChangedKey;
 *  会话类型
 */
 typedef NS_ENUM(NSInteger, JMSGConversationType) {
-  kJMSGSingle = 0,
-  kJMSGGroup,
+  kJMSGSingle = 0,//单聊
+  kJMSGGroup,     //群聊
 };
 
 /**
-*  消息内容
+*  消息的所有种类
 */
 typedef NS_ENUM(NSInteger, JMSGMessageContentType) {
   kJMSGTextMessage = 0, // 文本消息
@@ -57,26 +57,6 @@ typedef NS_ENUM(NSInteger, JMSGMessageStatusType) {
   kJMSGStatusReceiveDownloadFailed,
 };
 
-/**
-*  消息方向
-*/
-typedef NS_ENUM(NSInteger, JMSGMessageMetaType) {
-  kJMSGMetaSendType,
-  kJMSGMetaReceiveType,
-  kJMSGMetaAvatarType,
-};
-
-
-/**
-* 上传文件类型
-*/
-typedef NS_ENUM(NSInteger, JMSGFileType) {
-  kJMSGTextFileType,
-  kJMSGImageFileType,
-  kJMSGVoiceFileType
-};
-
-
 @interface JMSGConversation : NSObject
 
 ///----------------------------------------------------
@@ -99,7 +79,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 @property(nonatomic, strong) NSString *targetId;
 
 /**
-* 会话对象昵称。单聊时是用户的 nickName，群聊时是 groupName。
+* 会话对象昵称。单聊时是用户的displayName，群聊时是groupName。
 */
 @property(atomic, strong) NSString *targetName;
 
@@ -114,22 +94,22 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 ///----------------------------------------------------
 
 /**
-* 最后消息的类型：文本、语音、图片
+* 最后消息的类型："text"、"voice"、"image"、"event"
 */
 @property(nonatomic, strong) NSString *latestType;
 
 /**
-* 最后消息的文本描述
+* 最后消息的文本描述:文本消息内容、"语音"、"图片"、Event事件内容
 */
 @property(nonatomic, strong) NSString *latestText;
 
 /**
-* 最后消息的时间
+* 最后消息的时间(时间戳格式)
 */
 @property(nonatomic, strong) NSString *latestDate;
 
 /**
-* 最后消息发言人
+* 最后消息发送者
 */
 @property(nonatomic, strong) NSString *latestDisplayName;
 
@@ -145,16 +125,8 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 
 /**
 * 最后一条消息发送状态
-* FIXME - 这个最好不必暴露。但是 JMSGConversation.m 里有用到。
 */
 @property(atomic, assign) JMSGMessageStatusType latestMessageStatus;
-
-
-/**
-* 该会话的表名。
-*/
-@property(nonatomic, strong) NSString *messageTableName;
-
 
 ///----------------------------------------------------
 /// @name Message Operations 消息相关操作
@@ -163,8 +135,8 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 /**
 *  获取指定消息id的消息
 *
-*  @param messageId  消息ID
-*  @param handler    用户获取消息回调接口(resultObject为JMSGMessage类型)
+*  @param messageId  消息唯一识别Id
+*  @param handler    结果回调。resultObject对象类型为JMSGMessage
 *
 */
 - (void)getMessage:(NSString *)messageId
@@ -172,8 +144,8 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 
 /**
 *  获取会话所有消息
-*
-*  @param handler    用户获取所有消息回调接口(resultObject为JMSGMessage类型的数组)
+
+*  @param handler    结果回调。resultObject对象类型为NSArray,使用时需要将NSArray的成员转换为JMSGMessage类型,再通过contentType属性判断消息的种类分别转换为JMSGImageMessage、JMSGVoiceMessage、JMSGContentMessage、JMSGEventMessage)
 */
 - (void)getAllMessageWithCompletionHandler:(JMSGCompletionHandler)handler;
 
@@ -181,7 +153,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 /**
 *  删除会话所有消息
 *
-*  @param handler    删除所有消息回调接口
+*  @param handler    结果回调。resultObject值不需要关心,始终为nil
 *
 */
 - (void)deleteAllMessageWithCompletionHandler:(JMSGCompletionHandler)handler;
@@ -195,7 +167,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 /**
 *  将会话中的未读消息数清零
 *
-*  @param handler    清空未读消息回调接口
+*  @param handler    结果回调。resultObject值不需要关心,始终为nil
 *
 */
 - (void)resetUnreadMessageCountWithCompletionHandler:(JMSGCompletionHandler)handle;
@@ -208,19 +180,18 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 /**
 *  获取所有会话列表
 *
-*  @param handler          用户获取所有会话回调接口 (resultObject为JMSGConversation类型数组)
+*  @param handler          结果回调。resultObject对象类型为NSArray(数组成员为JMSGConversation类型)
 *
 */
 + (void)getConversationListWithCompletionHandler:(JMSGCompletionHandler)handler;
 
 /**
 *  获取已知的会话
-*  FIXME 获取会话，需要传 conversationType 参数
 *
-*  @param targetUsername   会话名称(单聊为对方username，群聊为群gid)
-*  @param handler          用户获取会话回调接口(resultObject为JMSGConversation类型)
+*  @param targetId         会话对象Id(会话targetId属性)
+*  @param conversationType 会话类型(单聊还是群聊)
+*  @param handler          结果回调。resultObject对象类型为JMSGConversation
 *
-*  @return 会话实体
 */
 + (void)getConversation:(NSString *)targetId
                withType:(JMSGConversationType)conversationType
@@ -229,9 +200,9 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 /**
 *  创建新会话
 *
-*  @param targetUsername   会话对方(单聊为对方username，群聊为群gid)
-*  @param handler          用户创建会话回调接口(resultObject为JMSGConversation类型)
-*  @param conversationType 会话类型
+*  @param targetId         会话对象Id(会话targetId属性)
+*  @param conversationType 会话类型(单聊还是群聊)
+*  @param handler          结果回调。resultObject对象类型为JMSGConversation
 *
 */
 + (void)createConversation:(NSString *)targetId
@@ -241,10 +212,10 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 /**
 *  删除会话
 *
-*  @param targetUsername   会话对方(单聊为对方username，群聊为群gid)
-*  @param handler          用户删除会话回调接口
+*  @param targetId         会话对象Id(会话targetId属性)
+*  @param conversationType 会话类型(单聊还是群聊)
+*  @param handler          结果回调。resultObject对象类型为JMSGConversation
 *
-*  @return 删除结果
 */
 + (void)deleteConversation:(NSString *)targetId
                   withType:(JMSGConversationType)conversationType
