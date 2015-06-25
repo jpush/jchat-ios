@@ -484,12 +484,12 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
     JPIMMAINTHEAD(^{
         JMSGUser *user = [JMSGUser getMyInfo];
-        [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-            if (error == nil) {
-            }else {
-                DDLogDebug(@"消息未读数清空失败");
-            }
-        }];
+//        [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
+//            if (error == nil) {
+//            }else {
+//                DDLogDebug(@"消息未读数清空失败");
+//            }
+//        }];
 
         NSDictionary *userInfo = [notification userInfo];
         JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
@@ -634,7 +634,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
         NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
         [picker setMediaTypes:arrMediaTypes];
         picker.showsCameraControls = YES;
-        picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        picker.modalTransitionStyle = UIModalTransitionStylePartialCurl;
         picker.editing = YES;
         picker.delegate = self;
         [self presentViewController:picker animated:YES completion:nil];
@@ -685,7 +685,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     message.conversationType = kJMSGGroup;
   }
   message.targetId = model.targetId;
-  message.timestamp = model.messageTime;
   ((JMSGImageMessage *)message).mediaData = model.mediaData;
   
   [_imgDataArr addObject:model];
@@ -784,6 +783,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
       _eixtGroupFlag = YES;
       [self hidenDetailBtn:_eixtGroupFlag];
+    }else if(eventMessage.type == kJMSGAddGroupMemberEvent) {
+      [self getGroupMemberList];
     }
     [self addEventMessage:eventMessage];
   }
@@ -1030,11 +1031,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
       self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   }
-  if (self.user != nil && self.conversation.chatType == kJMSGGroup) {
-    self.user = nil;
-    [self cleanMessageCache];
+  
+  if (self.conversation.chatType == kJMSGGroup) {
     [self getGroupMemberList];
-    [_messageTableView reloadData];
+    if (self.user != nil) {
+      self.user = nil;
+      [self cleanMessageCache];
+      [_messageTableView reloadData];
+    }
   }
 }
 
