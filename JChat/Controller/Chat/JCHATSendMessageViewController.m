@@ -484,12 +484,12 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
     JPIMMAINTHEAD(^{
         JMSGUser *user = [JMSGUser getMyInfo];
-        [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-            if (error == nil) {
-            }else {
-                DDLogDebug(@"消息未读数清空失败");
-            }
-        }];
+//        [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
+//            if (error == nil) {
+//            }else {
+//                DDLogDebug(@"消息未读数清空失败");
+//            }
+//        }];
 
         NSDictionary *userInfo = [notification userInfo];
         JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
@@ -685,7 +685,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     message.conversationType = kJMSGGroup;
   }
   message.targetId = model.targetId;
-  message.timestamp = model.messageTime;
   ((JMSGImageMessage *)message).mediaData = model.mediaData;
   
   [_imgDataArr addObject:model];
