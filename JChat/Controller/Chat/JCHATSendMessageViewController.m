@@ -1004,6 +1004,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
       img = [UIImage imageWithData:model.mediaData];
       }else {
         img = [UIImage imageNamed:@"receiveFail.png"];
+        return img.size.height;
       }
       if (IS_IPHONE_6P) {
         return img.size.height / 3;
