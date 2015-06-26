@@ -175,8 +175,10 @@
         [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
     } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
         [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
-    }else {
+    }else if (message.mediaData){
       [self.contentImgView setImage:[UIImage imageWithData:message.mediaData]];
+    }else {
+      [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
     }
     self.delegate = (id)controler;
     self.cellIndex = indexPath;
@@ -282,8 +284,10 @@
       UIImage *showImg;
       if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
        showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
-      }else {
+      }else if (self.message.mediaData) {
         showImg = [UIImage imageWithData:self.message.mediaData];
+      } else {
+        showImg = [UIImage imageNamed:@"receiveFail"];
       }
         if (IS_IPHONE_6P) {
             imgHeight = showImg.size.height/3;

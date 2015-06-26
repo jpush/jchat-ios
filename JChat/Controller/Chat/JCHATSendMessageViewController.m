@@ -997,26 +997,19 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
     return model.getTextSize.height + 8;
   } else if (model.type == kJMSGImageMessage) {
-    if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-     UIImage *img = [UIImage imageNamed:@"receiveFail"];
-      if (IS_IPHONE_6P) {
-        return img.size.height / 3;
-      } else {
-        return img.size.height / 2;
-      }
-    } else {
       UIImage *img;
       if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
       img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
-      }else {
+      }else if (model.mediaData) {
       img = [UIImage imageWithData:model.mediaData];
+      }else {
+        img = [UIImage imageNamed:@"receiveFail.png"];
       }
       if (IS_IPHONE_6P) {
         return img.size.height / 3;
       } else {
         return img.size.height / 2;
       }
-    }
   } else if (model.type == kJMSGVoiceMessage) {
     return 60;
   } else {
