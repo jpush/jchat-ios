@@ -998,7 +998,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return model.getTextSize.height + 8;
   } else if (model.type == kJMSGImageMessage) {
     if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-      return 150;
+      NSInteger imgHeight;
+      if (kScreenWidth > 320 ) {
+        imgHeight = 123/3;
+      }else {
+        imgHeight = 82/2;
+      }
+      return imgHeight;
     } else {
       UIImage *img;
       if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
