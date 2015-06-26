@@ -269,12 +269,12 @@
     NSInteger imgWidth;
     [self.percentLabel setHidden:NO];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-      if (kScreenWidth > 320 ) {
-        imgHeight = 123/3;
-        imgWidth  = 168/3;
+      if (IS_IPHONE_6P) {
+        imgHeight = 171/3;
+        imgWidth  = 231/3;
       }else {
-        imgHeight = 82/2;
-        imgWidth  = 112/2;
+        imgHeight = 114/2;
+        imgWidth  = 154/2;
       }
         [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
     }else {
@@ -285,7 +285,7 @@
       }else {
         showImg = [UIImage imageWithData:self.message.mediaData];
       }
-        if (kScreenWidth > 320 ) {
+        if (IS_IPHONE_6P) {
             imgHeight = showImg.size.height/3;
             imgWidth  = showImg.size.width/3;
         }else {
