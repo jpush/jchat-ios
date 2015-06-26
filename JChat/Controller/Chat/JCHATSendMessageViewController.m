@@ -1024,13 +1024,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   [super viewWillAppear:NO];
   [self.toolBar drawRect:self.toolBar.frame];
   [self.navigationController setNavigationBarHidden:NO];
-  [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        DDLogDebug(@"清零成功");
-      }else {
-        DDLogDebug(@"清零失败");
-      }
-  }];
+
   
 //    // 禁用 iOS7 返回手势
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -1050,6 +1044,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)viewWillDisappear:(BOOL)animated {
   DDLogDebug(@"Event - viewWillDisappear");
     [super viewWillAppear:YES];
+  [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      DDLogDebug(@"清零成功");
+    }else {
+      DDLogDebug(@"清零失败");
+    }
+  }];
     [[JCHATAudioPlayerHelper shareInstance] stopAudio];
     [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
 }
