@@ -172,7 +172,7 @@
      _message= message;
      [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-        [self.contentImgView setImage:[UIImage imageNamed:@"receiveFailed.png"]];
+        [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
     } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
         [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
     }else {
@@ -269,8 +269,13 @@
     NSInteger imgWidth;
     [self.percentLabel setHidden:NO];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-        imgHeight = 200;
-        imgWidth  = 150;
+      if (kScreenWidth > 320 ) {
+        imgHeight = 123/3;
+        imgWidth  = 168/3;
+      }else {
+        imgHeight = 82/2;
+        imgWidth  = 112/2;
+      }
         [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
     }else {
         [self.downLoadIndicatorView setHidden:YES];
@@ -296,7 +301,7 @@
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:YES];
         [self.percentLabel setHidden:YES];
-    }else if (self.model.messageStatus == kJMSGStatusSendFail || self.model.messageStatus == kJMSGStatusReceiveDownloadFailed)
+    }else if (self.model.messageStatus == kJMSGStatusSendFail)
     {
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:NO];
