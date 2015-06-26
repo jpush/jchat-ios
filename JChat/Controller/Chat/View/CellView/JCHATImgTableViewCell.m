@@ -271,14 +271,9 @@
     NSInteger imgWidth;
     [self.percentLabel setHidden:NO];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-      if (IS_IPHONE_6P) {
-        imgHeight = 171/3;
-        imgWidth  = 231/3;
-      }else {
-        imgHeight = 114/2;
-        imgWidth  = 154/2;
-      }
-        [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
+      imgHeight = [UIImage imageNamed:@"receiveFail"].size.height;
+      imgWidth = [UIImage imageNamed:@"receiveFail"].size.width;
+      [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
     }else {
         [self.downLoadIndicatorView setHidden:YES];
       UIImage *showImg;
