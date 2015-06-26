@@ -998,13 +998,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return model.getTextSize.height + 8;
   } else if (model.type == kJMSGImageMessage) {
     if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-      NSInteger imgHeight;
-      if (kScreenWidth > 320 ) {
-        imgHeight = 123/3;
-      }else {
-        imgHeight = 82/2;
+     UIImage *img = [UIImage imageNamed:@"receiveFail"];
+      if (IS_IPHONE_6P) {
+        return img.size.height / 3;
+      } else {
+        return img.size.height / 2;
       }
-      return imgHeight;
     } else {
       UIImage *img;
       if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
@@ -1012,7 +1011,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
       }else {
       img = [UIImage imageWithData:model.mediaData];
       }
-      if (kScreenWidth > 320) {
+      if (IS_IPHONE_6P) {
         return img.size.height / 3;
       } else {
         return img.size.height / 2;
