@@ -48,6 +48,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.automaticallyAdjustsScrollViewInsets = NO;
   [self.view setBackgroundColor:[UIColor clearColor]];
   NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
   self.toolBar = [nib objectAtIndex:0];
@@ -159,26 +160,30 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
   }
 
-  [self getGroupMemberList];
+  [self getGroupMemberListWithGetMessageFlag:YES];
   [self addNotification];
   [self sendInfoRequest];
 }
 
 
--(void)getGroupMemberList {
+-(void)getGroupMemberListWithGetMessageFlag:(BOOL)getMesageFlag {
   if (self.conversation && self.conversation.chatType == kJMSGGroup) {
     __weak typeof(self) weakSelf = self;
     [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         _userArr = [NSMutableArray arrayWithArray:resultObject];
-        [weakSelf getAllMessage];
+        if (getMesageFlag) {
+          [weakSelf getAllMessage];
+        }
         [weakSelf hidenDetailBtn:_eixtGroupFlag];
       }else {
         DDLogDebug(@"群聊成员获取失败");
       }
     }];
   }else {
-    [self getAllMessage];
+    if (getMesageFlag) {
+      [self getAllMessage];
+    }
     [self hidenDetailBtn:_eixtGroupFlag];
   }
 }
@@ -712,7 +717,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                              selector:@selector(inputKeyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-
+  
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(sendMessageResponse:)
                                                  name:JMSGNotification_SendMessageResult object:nil];
@@ -735,10 +740,10 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                            selector:@selector(receiveEventNotification:)
                                                name:JMSGNotification_EventMessage
                                              object:nil];
-//    [self.toolBar.textView addObserver:self
-//                            forKeyPath:@"contentSize1"
-//                               options:NSKeyValueObservingOptionNew
-//                               context:nil];
+  [self.toolBar.textView addObserver:self
+                            forKeyPath:@"contentSize"
+                               options:NSKeyValueObservingOptionNew
+                               context:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(receiveConversationChange)
                                                name:JMSGNotification_ConversationInfoChanged
@@ -784,7 +789,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
       _eixtGroupFlag = YES;
       [self hidenDetailBtn:_eixtGroupFlag];
     }else if(eventMessage.type == kJMSGAddGroupMemberEvent) {
-      [self getGroupMemberList];
+      [self getGroupMemberListWithGetMessageFlag:NO];
     }
     [self addEventMessage:eventMessage];
   }
@@ -992,21 +997,20 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
     return model.getTextSize.height + 8;
   } else if (model.type == kJMSGImageMessage) {
-    if (model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-      return 150;
-    } else {
       UIImage *img;
       if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
       img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
-      }else {
+      }else if (model.mediaData) {
       img = [UIImage imageWithData:model.mediaData];
+      }else {
+        img = [UIImage imageNamed:@"receiveFail.png"];
+        return img.size.height;
       }
-      if (kScreenWidth > 320) {
+      if (IS_IPHONE_6P) {
         return img.size.height / 3;
       } else {
         return img.size.height / 2;
       }
-    }
   } else if (model.type == kJMSGVoiceMessage) {
     return 60;
   } else {
@@ -1019,13 +1023,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   [super viewWillAppear:NO];
   [self.toolBar drawRect:self.toolBar.frame];
   [self.navigationController setNavigationBarHidden:NO];
-  [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        DDLogDebug(@"清零成功");
-      }else {
-        DDLogDebug(@"清零失败");
-      }
-  }];
+
   
 //    // 禁用 iOS7 返回手势
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -1033,7 +1031,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
   
   if (self.conversation.chatType == kJMSGGroup) {
-    [self getGroupMemberList];
+    [self getGroupMemberListWithGetMessageFlag:NO];
     if (self.user != nil) {
       self.user = nil;
       [self cleanMessageCache];
@@ -1045,6 +1043,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)viewWillDisappear:(BOOL)animated {
   DDLogDebug(@"Event - viewWillDisappear");
     [super viewWillAppear:YES];
+  [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      DDLogDebug(@"清零成功");
+    }else {
+      DDLogDebug(@"清零失败");
+    }
+  }];
     [[JCHATAudioPlayerHelper shareInstance] stopAudio];
     [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
 }
@@ -1052,7 +1057,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark --释放内存
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [self.toolBar.textView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (void)tapClick:(UIGestureRecognizer *)gesture {
@@ -1348,7 +1354,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.barBottomFlag) {
         return;
     }
-    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize1"]) {
+    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize"]) {
         [self layoutAndAnimateMessageInputTextView:object];
     }
 }
