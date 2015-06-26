@@ -172,11 +172,13 @@
      _message= message;
      [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-        [self.contentImgView setImage:[UIImage imageNamed:@"receiveFailed.png"]];
+        [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
     } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
         [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
-    }else {
+    }else if (message.mediaData){
       [self.contentImgView setImage:[UIImage imageWithData:message.mediaData]];
+    }else {
+      [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
     }
     self.delegate = (id)controler;
     self.cellIndex = indexPath;
@@ -269,18 +271,20 @@
     NSInteger imgWidth;
     [self.percentLabel setHidden:NO];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-        imgHeight = 200;
-        imgWidth  = 150;
-        [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
+      imgHeight = [UIImage imageNamed:@"receiveFail"].size.height;
+      imgWidth = [UIImage imageNamed:@"receiveFail"].size.width;
+      [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
     }else {
         [self.downLoadIndicatorView setHidden:YES];
       UIImage *showImg;
       if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
        showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
-      }else {
+      }else if (self.message.mediaData) {
         showImg = [UIImage imageWithData:self.message.mediaData];
+      } else {
+        showImg = [UIImage imageNamed:@"receiveFail"];
       }
-        if (kScreenWidth > 320 ) {
+        if (IS_IPHONE_6P) {
             imgHeight = showImg.size.height/3;
             imgWidth  = showImg.size.width/3;
         }else {
@@ -296,7 +300,7 @@
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:YES];
         [self.percentLabel setHidden:YES];
-    }else if (self.model.messageStatus == kJMSGStatusSendFail || self.model.messageStatus == kJMSGStatusReceiveDownloadFailed)
+    }else if (self.model.messageStatus == kJMSGStatusSendFail)
     {
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:NO];
