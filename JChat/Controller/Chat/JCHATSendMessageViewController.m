@@ -37,7 +37,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   NSMutableDictionary *_messageDic;
   __block NSMutableArray *_userArr;
   NSMutableDictionary *_JMSgMessageDic;
- __block BOOL _eixtGroupFlag;
   UIButton *_rightBtn;
 }
 
@@ -172,10 +171,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         _userArr = [NSMutableArray arrayWithArray:resultObject];
+        [self isContantMeWithUserArr:_userArr];
         if (getMesageFlag) {
           [weakSelf getAllMessage];
         }
-        [weakSelf hidenDetailBtn:_eixtGroupFlag];
       }else {
         DDLogDebug(@"群聊成员获取失败");
       }
@@ -184,8 +183,23 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (getMesageFlag) {
       [self getAllMessage];
     }
-    [self hidenDetailBtn:_eixtGroupFlag];
+    [self hidenDetailBtn:NO];
   }
+}
+
+
+- (void)isContantMeWithUserArr:(NSMutableArray *)userArr {
+  BOOL hideFlag = YES;
+  for (NSInteger i =0; i< [userArr count]; i++) {
+    JMSGUser *user = [userArr objectAtIndex:i];
+    if ([user.username isEqualToString:[JMSGUser getMyInfo].username]) {
+      hideFlag = NO;
+      break;
+    }
+  }
+  
+  [self hidenDetailBtn:hideFlag];
+
 }
 
 - (void)hidenDetailBtn:(BOOL)flag {
@@ -389,10 +403,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
           if (message.contentType == kJMSGEventMessage) {
             JMSGEventMessage *eventMessage = (JMSGEventMessage *)message;
             if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
-              if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
-                _eixtGroupFlag = YES;
-                [weakSelf hidenDetailBtn:_eixtGroupFlag];
-              }
               JCHATChatModel *model = [[JCHATChatModel alloc]init];
               model.messageId = eventMessage.messageId;
               model.chatType = kJMSGGroup;
@@ -489,13 +499,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
     JPIMMAINTHEAD(^{
         JMSGUser *user = [JMSGUser getMyInfo];
-//        [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-//            if (error == nil) {
-//            }else {
-//                DDLogDebug(@"消息未读数清空失败");
-//            }
-//        }];
-
         NSDictionary *userInfo = [notification userInfo];
         JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
       [_JMSgMessageDic setObject:message forKey:message.messageId];
@@ -525,7 +528,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
         model.targetId = message.targetId;
         model.messageStatus = [message.status integerValue];
         if (message.contentType == kJMSGTextMessage) {
-            model.type=kJMSGTextMessage;
+            model.type = kJMSGTextMessage;
             JMSGContentMessage *contentMessage =  (JMSGContentMessage *)message;
             model.chatContent = contentMessage.contentText;
         } else if (message.contentType == kJMSGImageMessage) {
@@ -786,8 +789,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   
   if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.targetId longLongValue]) {
     if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
-      _eixtGroupFlag = YES;
-      [self hidenDetailBtn:_eixtGroupFlag];
+      [self hidenDetailBtn:YES];
     }else if(eventMessage.type == kJMSGAddGroupMemberEvent) {
       [self getGroupMemberListWithGetMessageFlag:NO];
     }
