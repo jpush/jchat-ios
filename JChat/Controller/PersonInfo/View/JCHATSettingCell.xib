@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,7 +15,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setting_22.png" translatesAutoresizingMaskIntoConstraints="NO" id="qRA-2y-d8L">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="setting_22.png" translatesAutoresizingMaskIntoConstraints="NO" id="qRA-2y-d8L">
                         <rect key="frame" x="17" y="18" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="1QR-9I-SWF"/>
@@ -82,7 +82,7 @@
                 <outlet property="headImgView" destination="qRA-2y-d8L" id="XEX-xq-Xb9"/>
                 <outlet property="nickNameBtn" destination="LAv-rh-teC" id="GlK-gp-qYG"/>
             </connections>
-            <point key="canvasLocation" x="580.5" y="433"/>
+            <point key="canvasLocation" x="185.5" y="242"/>
         </tableViewCell>
     </objects>
     <resources>

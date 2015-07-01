@@ -296,6 +296,8 @@
 		8FE536821B3AAD6200EFC8CE /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE536811B3AAD6200EFC8CE /* JMessage.framework */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
+		AA4D05A91B43917B007D7B78 /* JCHATAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */; };
+		AA4D05AA1B43917B007D7B78 /* JCHATAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */; };
 		CFFD38013C5ECF23F7D70E3D /* libPods-极光IM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */; };
 /* End PBXBuildFile section */
 
@@ -698,6 +700,9 @@
 		8FF149F91AFBA11800D13F2E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		A056DB7F60403D001CAFC0D2 /* Pods-极光IM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-极光IM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-极光IM/Pods-极光IM.debug.xcconfig"; sourceTree = "<group>"; };
+		AA4D05A61B43917B007D7B78 /* JCHATAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAboutViewController.h; sourceTree = "<group>"; };
+		AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAboutViewController.m; sourceTree = "<group>"; };
+		AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATAboutViewController.xib; sourceTree = "<group>"; };
 		F972D5A42DC451DE90C0BF66 /* Pods-极光IM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-极光IM.release.xcconfig"; path = "Pods/Target Support Files/Pods-极光IM/Pods-极光IM.release.xcconfig"; sourceTree = "<group>"; };
 		FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-极光IM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -935,6 +940,9 @@
 				187182131AFB80BF00FB3168 /* JCHATUserInfoViewController.m */,
 				187182141AFB80BF00FB3168 /* JCHATUserInfoViewController.xib */,
 				187182151AFB80BF00FB3168 /* View */,
+				AA4D05A61B43917B007D7B78 /* JCHATAboutViewController.h */,
+				AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */,
+				AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */,
 			);
 			path = PersonInfo;
 			sourceTree = "<group>";
@@ -1510,6 +1518,7 @@
 				187183F71AFB80C000FB3168 /* RecordingSignal005@2x.png in Resources */,
 				187183611AFB80C000FB3168 /* JCHATRegisterViewController.xib in Resources */,
 				187183DE1AFB80C000FB3168 /* menu_16@3x in Resources */,
+				AA4D05AA1B43917B007D7B78 /* JCHATAboutViewController.xib in Resources */,
 				187183CA1AFB80C000FB3168 /* login_15.@2x.png in Resources */,
 				187183591AFB80C000FB3168 /* JCHATPersonInfoCell.xib in Resources */,
 				187183F01AFB80C000FB3168 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
@@ -1765,6 +1774,7 @@
 				6039B3C6A038F78066188F61 /* SDWebImageManager.m in Sources */,
 				6039B251796A2C46155BB6FA /* SDWebImagePrefetcher.m in Sources */,
 				6039BBEC10AE59FB8E1D4EC8 /* UIButton+WebCache.m in Sources */,
+				AA4D05A91B43917B007D7B78 /* JCHATAboutViewController.m in Sources */,
 				6039B83F418699AFF8E2823A /* UIImage+GIF.m in Sources */,
 				6039BD2C1B5F6CDFD9BB5291 /* UIImage+MultiFormat.m in Sources */,
 				6039B6E00846B07D21E72217 /* UIImage+WebP.m in Sources */,
