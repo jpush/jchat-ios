@@ -22,6 +22,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <JMessage/JMSGConversation.h>
 #import "JCHATStringUtils.h"
+#import "JCHATLoginViewController.h"
 //#import "JMSGConversation+Inner.h"
 
 #define interval 60*2
@@ -110,12 +111,13 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   } else {
     DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
   }
-  
+
   if (!_conversation) {
     if (self.user) {
       DDLogDebug(@"No conversation - to create single");
       __weak typeof(self) weakSelf = self;
-      [JMSGConversation createConversation:self.user.username
+
+      [JMSGConversation createConversation:self.user.username//这个地方  如果是groud 的话就是null 不然的话就是用户名
                                   withType:kJMSGSingle
                          completionHandler:^(id resultObject, NSError *error) {
                            _conversation = (JMSGConversation *) resultObject;
@@ -275,7 +277,15 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
       alert = @"本用户登出了。可能在其他设备上做了登录。";
     } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
-      alert = @"本用户从未登录。（有可能是客户端BUG？）";
+//      alert = @"本用户从未登录。（有可能是客户端BUG？）";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"该用户已退出"
+                                                        message:@"请重新登录"
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"退出",nil];
+        [alert show];
+        return;
+
     } else if (error.code == JCHAT_ERROR_MSG_TARGET_NOT_EXIST) {
       alert = @"发送消息的目标用户不存在。";
     } else if (error.code == JCHAT_ERROR_MSG_GROUP_NOT_EXIST) {
@@ -310,7 +320,31 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [self reloadCellDataWith:cellIndex];
   });
 }
-
+#pragma marks -- UIAlertViewDelegate --
+//根据被点击按钮的索引处理点击事件
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        
+        [self.navigationController popViewControllerAnimated:NO];//目的回到根视图
+        [MBProgressHUD showMessage:@"正在退出登录！" view:self.view];
+        DDLogDebug(@"Logout anyway.");
+        
+        AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+        if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
+            [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
+        }
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
+            DDLogDebug(@"Logout callback with - %@", error);
+        }];
+        JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] init];
+        loginCtl.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+        appDelegate.window.rootViewController = navLogin;
+    }
+}
 #pragma mark --获取对应消息的索引
 - (NSInteger )getIndexWithMessageId:(NSString *)messageID {
   for (NSInteger i=0; i< [_messageDic[JCHATMessageIdKey] count]; i++) {
