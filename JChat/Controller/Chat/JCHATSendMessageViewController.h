@@ -26,7 +26,8 @@
     UINavigationControllerDelegate,
     PictureDelegate,
     playVoiceDelegate,
-    UIGestureRecognizerDelegate>
+    UIGestureRecognizerDelegate,
+    UIAlertViewDelegate>
 
 @property(strong, nonatomic) JCHATToolBar *toolBar;
 @property(strong, nonatomic) UITableView *messageTableView;
