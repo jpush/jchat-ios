@@ -276,7 +276,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
       alert = @"本用户登出了。可能在其他设备上做了登录。";
     } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"本用户登出了"
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"用户在其他地方登录了"
                                                       message:@"可能在其他设备上做了登录"
                                                      delegate:self
                                             cancelButtonTitle:nil
