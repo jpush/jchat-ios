@@ -266,7 +266,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 #pragma mark --发送消息响应
 - (void)sendMessageResponse:(NSNotification *)response {
   DDLogDebug(@"Event - sendMessageResponse");
-
   NSDictionary *responseDic = [response userInfo];
   JMSGMessage *message = responseDic[JMSGSendMessageObject];
   NSError *error = responseDic[JMSGSendMessageError];
@@ -277,14 +276,13 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
       alert = @"本用户登出了。可能在其他设备上做了登录。";
     } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
-//      alert = @"本用户从未登录。（有可能是客户端BUG？）";
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"该用户已退出"
-                                                        message:@"请重新登录"
-                                                       delegate:self
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:@"退出",nil];
-        [alert show];
-        return;
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"本用户登出了"
+                                                      message:@"可能在其他设备上做了登录"
+                                                     delegate:self
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"退出",nil];
+      [alert show];
+      return;
 
     } else if (error.code == JCHAT_ERROR_MSG_TARGET_NOT_EXIST) {
       alert = @"发送消息的目标用户不存在。";
@@ -324,26 +322,26 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 //根据被点击按钮的索引处理点击事件
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0) {
-        
-        [self.navigationController popViewControllerAnimated:NO];//目的回到根视图
-        [MBProgressHUD showMessage:@"正在退出登录！" view:self.view];
-        DDLogDebug(@"Logout anyway.");
-        
-        AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-        if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
-            [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
-        }
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
-            DDLogDebug(@"Logout callback with - %@", error);
-        }];
-        JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] init];
-        loginCtl.hidesBottomBarWhenPushed = YES;
-        UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
-        appDelegate.window.rootViewController = navLogin;
+  if (buttonIndex == 0) {
+    
+    [self.navigationController popViewControllerAnimated:NO];//目的回到根视图
+    [MBProgressHUD showMessage:@"正在退出登录！" view:self.view];
+    DDLogDebug(@"Logout anyway.");
+    
+    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+    if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
+      [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
     }
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
+      DDLogDebug(@"Logout callback with - %@", error);
+    }];
+    JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] init];
+    loginCtl.hidesBottomBarWhenPushed = YES;
+    UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+    appDelegate.window.rootViewController = navLogin;
+  }
 }
 #pragma mark --获取对应消息的索引
 - (NSInteger )getIndexWithMessageId:(NSString *)messageID {
