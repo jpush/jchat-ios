@@ -105,7 +105,7 @@
         [appDelegate.tabBarCtl setSelectedIndex:0];
         // 显示登录状态？
         if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kHaveLogin]) {
-          [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
         } else {
           [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
           pushFlag = NO;
