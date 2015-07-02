@@ -328,50 +328,56 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 -(void)btnClick :(UIButton *)btn {
-    [self.addBgView setHidden:YES];
-    if (btn.tag == 100) {
+  [self.addBgView setHidden:YES];
+  if (btn.tag == 100) {
     //
     JCHATSelectFriendsCtl *selectCtl =[[JCHATSelectFriendsCtl alloc] init];
     UINavigationController *selectNav =[[UINavigationController alloc] initWithRootViewController:selectCtl];
     [self.navigationController presentViewController:selectNav animated:YES completion:nil];
-    }else if (btn.tag == 101) {
+  }else if (btn.tag == 101) {
     UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"添加好友" message:@"输入好友用户名!"
                                                      delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alerView.alertViewStyle =UIAlertViewStylePlainTextInput;
     [alerView show];
-    }
+  }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-    }else if (buttonIndex == 1)
-    {
-        [MBProgressHUD showMessage:@"正在获取好友信息" view:self.view];
-        if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
-            return;
-        }
-        JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-        sendMessageCtl.hidesBottomBarWhenPushed=YES;
-        [[alertView textFieldAtIndex:0] resignFirstResponder];
-        __weak __typeof(self)weakSelf = self;
-        [JMSGUser getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if (error == nil) {
-                __strong __typeof(weakSelf) strongSelf = weakSelf;
-                sendMessageCtl.user = ((JMSGUser *) resultObject);
-                NSLog(@"username :%@", sendMessageCtl.user.username);
-                if (![sendMessageCtl.user.username isEqualToString:[JMSGUser getMyInfo].username]) {
-                    [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
-                } else {
-                    [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
-                }
-                NSLog(@"getuserinfo success");
-            } else {
-                NSLog(@"没有这个用户!");
-                [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
-            }
-        }];
+  if (buttonIndex == 0) {
+  }else if (buttonIndex == 1)
+  {
+    [MBProgressHUD showMessage:@"正在获取好友信息" view:self.view];
+    if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
+      return;
     }
+    JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
+    sendMessageCtl.hidesBottomBarWhenPushed=YES;
+    [[alertView textFieldAtIndex:0] resignFirstResponder];
+    __weak __typeof(self)weakSelf = self;
+    [JMSGUser getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      if (error == nil) {
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        sendMessageCtl.user = ((JMSGUser *) resultObject);
+        NSLog(@"username :%@", sendMessageCtl.user.username);
+        if (![sendMessageCtl.user.username isEqualToString:[JMSGUser getMyInfo].username]) {
+          for (JMSGConversation *conversation in _conversationArr) {
+            if ([conversation.targetName isEqualToString:sendMessageCtl.user.username] && conversation.chatType == kJMSGSingle) {
+              sendMessageCtl.conversation = conversation;
+              break;
+            }
+          }
+          [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];//!
+        } else {
+          [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
+        }
+        NSLog(@"getuserinfo success");
+      } else {
+        NSLog(@"没有这个用户!");
+        [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
+      }
+    }];
+  }
 }
 
 -(void)addBtnClick:(UIButton *)btn {
