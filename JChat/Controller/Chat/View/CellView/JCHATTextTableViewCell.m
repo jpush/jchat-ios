@@ -23,30 +23,31 @@
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self setBackgroundColor:[UIColor clearColor]];
-        self.chatView =[[UIImageView alloc]init];
-        self.chatbgView =[[UIImageView alloc]init];
-        self.contentLabel =[[UILabel alloc]init];
-        self.headImgView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
-        self.stateView =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        [self.stateView setHidden:NO];
-        [self.stateView startAnimating];
-        self.stateView.hidesWhenStopped=YES;
-        self.sendFailView =[[UIImageView alloc]init];
-        [self.sendFailView setBackgroundColor:[UIColor clearColor]];
-        [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
-        [self.sendFailView setUserInteractionEnabled:YES];
-        [self addSubview:self.stateView];
-        [self addSubview:self.sendFailView];
-        [self.chatbgView addSubview:self.chatView];
-        [self.chatView addSubview:self.contentLabel];
-        [self.chatbgView addSubview:self.headImgView];
-        [self addSubview:self.chatbgView];
-        [self headAddGesture];
-    }
-    return self;
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+  if (self) {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setBackgroundColor:[UIColor clearColor]];
+    self.chatView =[[UIImageView alloc]init];
+    self.chatbgView =[[UIImageView alloc]init];
+    self.contentLabel =[[UILabel alloc]init];
+    self.headImgView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
+    self.stateView =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.stateView setHidden:NO];
+    [self.stateView startAnimating];
+    self.stateView.hidesWhenStopped=YES;
+    self.sendFailView =[[UIImageView alloc]init];
+    [self.sendFailView setBackgroundColor:[UIColor clearColor]];
+    [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
+    [self.sendFailView setUserInteractionEnabled:YES];
+    [self addSubview:self.stateView];
+    [self addSubview:self.sendFailView];
+    [self.chatbgView addSubview:self.chatView];
+    [self.chatView addSubview:self.contentLabel];
+    [self.chatbgView addSubview:self.headImgView];
+    [self addSubview:self.chatbgView];
+    [self headAddGesture];
+  }
+  return self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
