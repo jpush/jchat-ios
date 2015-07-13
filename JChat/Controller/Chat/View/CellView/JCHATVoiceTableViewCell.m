@@ -31,6 +31,7 @@
     reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     chatBgViewWidth = 60;
     [self setBackgroundColor:[UIColor clearColor]];
     self.voiceTimeLable = [[UILabel alloc] init];

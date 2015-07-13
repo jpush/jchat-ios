@@ -200,7 +200,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 // ---------------------- JPUSH
 // 通常会调用 JPUSHService 方法去完成 Push 相关的功能
 
-- (void)                             application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   DDLogInfo(@"Action - didRegisterForRemoteNotificationsWithDeviceToken");
 
@@ -214,14 +214,14 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [JPUSHService registerDeviceToken:deviceToken];
 }
 
-- (void)                             application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   DDLogVerbose(@"Action - didFailToRegisterForRemoteNotificationsWithError - %@", error);
 }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
 
-- (void)                application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
   DDLogInfo(@"Action - didRegisterUserNotificationSettings");
 }
@@ -231,7 +231,7 @@ didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSe
 // A nil action identifier indicates the default action.
 // You should call the completion handler as soon as you've finished handling
 // the action.
-- (void)       application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 handleActionWithIdentifier:(NSString *)identifier
       forLocalNotification:(UILocalNotification *)notification
          completionHandler:(void (^)())completionHandler {
@@ -243,7 +243,7 @@ handleActionWithIdentifier:(NSString *)identifier
 // A nil action identifier indicates the default action.
 // You should call the completion handler as soon as you've finished handling
 // the action.
-- (void)       application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 handleActionWithIdentifier:(NSString *)identifier
      forRemoteNotification:(NSDictionary *)userInfo
          completionHandler:(void (^)())completionHandler {
@@ -252,7 +252,7 @@ handleActionWithIdentifier:(NSString *)identifier
 
 #endif // end of - > __IPHONE_7_1
 
-- (void)         application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
   DDLogDebug(@"Action - didReceiveRemoteNotification");
 
@@ -261,7 +261,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
   DDLogVerbose(@"收到通知 - %@", [JCHATStringUtils dictionary2String:userInfo]);
 }
 
-- (void)         application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo
       fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
   DDLogDebug(@"Action - didReceiveRemoteNotification:fetchCompletionHandler");
@@ -273,7 +273,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
   completionHandler(UIBackgroundFetchResultNewData);
 }
 
-- (void)        application:(UIApplication *)application
+- (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
   DDLogDebug(@"Action - didReceiveLocalNotification");
 
