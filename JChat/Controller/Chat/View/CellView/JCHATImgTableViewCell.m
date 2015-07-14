@@ -17,64 +17,65 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-        [self setBackgroundColor:[UIColor clearColor]];
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-
-        self.headView  = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
-        [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
-        [self addSubview:self.headView];
-        self.headView.layer.cornerRadius = 23;
-        [self.headView.layer setMasksToBounds:YES];
-        
-        self.pictureImgView = [[UIImageView alloc]init];
-        [self addSubview:self.pictureImgView];
-        self.pictureImgView.layer.cornerRadius=6;
-        [self.pictureImgView.layer setMasksToBounds:YES];
-        [self setUserInteractionEnabled:YES];
-        [self.pictureImgView setUserInteractionEnabled:YES];
-        UIImage *img=nil;
-        img =[UIImage imageNamed:@"mychatBg"];
-        UIImage *newImg =[img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
-        [self.pictureImgView setImage:newImg];
-        [self.pictureImgView setBackgroundColor:[UIColor clearColor]];
-        
-        self.contentImgView  =[[UIImageView alloc] init];
-        [self.contentImgView setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
-        [self.contentImgView addGestureRecognizer:gesture];
-        [self.contentImgView setFrame:CGRectMake(5, 5, self.pictureImgView.bounds.size.width-2*8-2, self.pictureImgView.bounds.size.height)];
-        
-        self.percentLabel =[[UILabel alloc]init];
-        self.percentLabel.font =[UIFont systemFontOfSize:18];
-        self.percentLabel.textAlignment=NSTextAlignmentCenter;
-        self.percentLabel.textColor=[UIColor whiteColor];
-        [self.percentLabel setBackgroundColor:[UIColor clearColor]];
-        [self.contentImgView addSubview:self.percentLabel];
-        [self.pictureImgView addSubview:self.contentImgView];
-        
-        self.circleView =[[UIActivityIndicatorView alloc] init];
-        [self addSubview:self.circleView];
-        [self.circleView setBackgroundColor:[UIColor clearColor]];
-        [self.circleView setHidden:NO];
-        self.circleView.hidesWhenStopped=YES;
-        
-        self.downLoadIndicatorView =[[UIActivityIndicatorView alloc] init];
-        [self.contentImgView addSubview:self.downLoadIndicatorView];
-        [self.downLoadIndicatorView setBackgroundColor:[UIColor clearColor]];
-        [self.downLoadIndicatorView setHidden:NO];
-        self.downLoadIndicatorView.hidesWhenStopped=YES;
-        
-        self.sendFailView =[[UIImageView alloc] init];
-        [self.sendFailView setUserInteractionEnabled:YES];
-        [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
-        [self addSubview:self.sendFailView];
-        [self headAddGesture];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGNotification_SendMessageResult object:nil];
-    }
-    return self;
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+  if (self) {
+    // Initialization code
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setBackgroundColor:[UIColor clearColor]];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    self.headView  = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
+    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
+    [self addSubview:self.headView];
+    self.headView.layer.cornerRadius = 23;
+    [self.headView.layer setMasksToBounds:YES];
+    
+    self.pictureImgView = [[UIImageView alloc]init];
+    [self addSubview:self.pictureImgView];
+    self.pictureImgView.layer.cornerRadius=6;
+    [self.pictureImgView.layer setMasksToBounds:YES];
+    [self setUserInteractionEnabled:YES];
+    [self.pictureImgView setUserInteractionEnabled:YES];
+    UIImage *img=nil;
+    img =[UIImage imageNamed:@"mychatBg"];
+    UIImage *newImg =[img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
+    [self.pictureImgView setImage:newImg];
+    [self.pictureImgView setBackgroundColor:[UIColor clearColor]];
+    
+    self.contentImgView  =[[UIImageView alloc] init];
+    [self.contentImgView setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
+    [self.contentImgView addGestureRecognizer:gesture];
+    [self.contentImgView setFrame:CGRectMake(5, 5, self.pictureImgView.bounds.size.width-2*8-2, self.pictureImgView.bounds.size.height)];
+    
+    self.percentLabel =[[UILabel alloc]init];
+    self.percentLabel.font =[UIFont systemFontOfSize:18];
+    self.percentLabel.textAlignment=NSTextAlignmentCenter;
+    self.percentLabel.textColor=[UIColor whiteColor];
+    [self.percentLabel setBackgroundColor:[UIColor clearColor]];
+    [self.contentImgView addSubview:self.percentLabel];
+    [self.pictureImgView addSubview:self.contentImgView];
+    
+    self.circleView =[[UIActivityIndicatorView alloc] init];
+    [self addSubview:self.circleView];
+    [self.circleView setBackgroundColor:[UIColor clearColor]];
+    [self.circleView setHidden:NO];
+    self.circleView.hidesWhenStopped=YES;
+    
+    self.downLoadIndicatorView =[[UIActivityIndicatorView alloc] init];
+    [self.contentImgView addSubview:self.downLoadIndicatorView];
+    [self.downLoadIndicatorView setBackgroundColor:[UIColor clearColor]];
+    [self.downLoadIndicatorView setHidden:NO];
+    self.downLoadIndicatorView.hidesWhenStopped=YES;
+    
+    self.sendFailView =[[UIImageView alloc] init];
+    [self.sendFailView setUserInteractionEnabled:YES];
+    [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
+    [self addSubview:self.sendFailView];
+    [self headAddGesture];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGNotification_SendMessageResult object:nil];
+  }
+  return self;
 }
 
 #pragma mark --发送消息响应
