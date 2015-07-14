@@ -259,6 +259,9 @@
 		187184171AFB80C000FB3168 /* zhaopian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187182EB1AFB80C000FB3168 /* zhaopian@2x.png */; };
 		18B8FDA91B3D23DB00538C00 /* receiveFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B8FDA81B3D23DB00538C00 /* receiveFail@2x.png */; };
 		18B8FDAB1B3D240500538C00 /* receiveFail@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B8FDAA1B3D240500538C00 /* receiveFail@3x.png */; };
+		443E40F31B53BD2A00F46651 /* JCHATMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */; };
+		443E40F41B53BD2A00F46651 /* JCHATMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */; };
+		443E40F71B53BD6C00F46651 /* JCHATMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */; };
 		6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */; };
 		6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */; };
 		6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */; };
@@ -624,6 +627,11 @@
 		18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "极光IM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B8FDA81B3D23DB00538C00 /* receiveFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "receiveFail@2x.png"; sourceTree = "<group>"; };
 		18B8FDAA1B3D240500538C00 /* receiveFail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "receiveFail@3x.png"; sourceTree = "<group>"; };
+		443E40F01B53BD2900F46651 /* JCHATMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageViewController.h; sourceTree = "<group>"; };
+		443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageViewController.m; sourceTree = "<group>"; };
+		443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATMessageViewController.xib; sourceTree = "<group>"; };
+		443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageTableViewCell.h; sourceTree = "<group>"; };
+		443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageTableViewCell.m; sourceTree = "<group>"; };
 		6039B01E3B7B47BDC0C01ECC /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
 		6039B022FAE23DE6605B7836 /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
 		6039B06DB77B2635035FB63D /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
@@ -798,6 +806,9 @@
 				187181AD1AFB80BF00FB3168 /* JCHATSendMessageViewController.h */,
 				187181AE1AFB80BF00FB3168 /* JCHATSendMessageViewController.m */,
 				187181AF1AFB80BF00FB3168 /* JCHATSendMessageViewController.xib */,
+				443E40F01B53BD2900F46651 /* JCHATMessageViewController.h */,
+				443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */,
+				443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */,
 				187181B01AFB80BF00FB3168 /* Model */,
 				187181B51AFB80BF00FB3168 /* View */,
 			);
@@ -868,6 +879,8 @@
 				187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */,
 				187181CD1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.h */,
 				187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */,
+				443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */,
+				443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */,
 			);
 			path = CellView;
 			sourceTree = "<group>";
@@ -1578,6 +1591,7 @@
 				187183CD1AFB80C000FB3168 /* login_16.@2x.png in Resources */,
 				187183FA1AFB80C000FB3168 /* RecordingSignal008@2x.png in Resources */,
 				187183CC1AFB80C000FB3168 /* login_15@3x.png in Resources */,
+				443E40F41B53BD2A00F46651 /* JCHATMessageViewController.xib in Resources */,
 				1871840A1AFB80C000FB3168 /* loginOut_17@3x.png in Resources */,
 				187183B81AFB80C000FB3168 /* login_04.@2x.png in Resources */,
 				1871840E1AFB80C000FB3168 /* signature@3x.png in Resources */,
@@ -1749,6 +1763,7 @@
 				1871833E1AFB80C000FB3168 /* JCHATRecordAnimationView.m in Sources */,
 				187183651AFB80C000FB3168 /* main.m in Sources */,
 				1871832B1AFB80C000FB3168 /* JCHATGroupSettingCell.m in Sources */,
+				443E40F71B53BD6C00F46651 /* JCHATMessageTableViewCell.m in Sources */,
 				187183541AFB80C000FB3168 /* JCHATUpdatePasswordCtl.m in Sources */,
 				1871831E1AFB80C000FB3168 /* JCHATGroupSettingCtl.m in Sources */,
 				187183301AFB80C000FB3168 /* JCHATShowTimeCell.m in Sources */,
@@ -1784,6 +1799,7 @@
 				6039BA26BAC5EB168B9D4259 /* JCHATCustomFormatter.m in Sources */,
 				6039BB20C8E8F0ECFF502423 /* NSObject+TimeConvert.m in Sources */,
 				6039B9D106B00CBB96BF9458 /* NSString+MessageInputView.m in Sources */,
+				443E40F31B53BD2A00F46651 /* JCHATMessageViewController.m in Sources */,
 				6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */,
 				6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */,
 				6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */,
