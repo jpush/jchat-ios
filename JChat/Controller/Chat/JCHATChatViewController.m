@@ -455,7 +455,6 @@ NSInteger sortType(id object1,id object2,void *cha) {
     JCHATChatTableViewCell *cell = (JCHATChatTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         cell = [[JCHATChatTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
   [cell setCellDataWithConversation:conversation];
