@@ -945,6 +945,10 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 - (void)reloadCellDataWith:(NSInteger)Index {
   [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
   [self scrollToEnd];
+  UITableViewCell *tableCell = [self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Index inSection:0]];
+  [tableCell setHighlighted:YES animated:NO];
+  [tableCell setHighlighted:NO animated:NO];
+
 }
 
 - (void)addCellToTabel {
