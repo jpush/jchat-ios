@@ -89,6 +89,7 @@
 
 
 #define kuserName @"userName"
+#define klastLoginUserName @"lastUserName"
 #define kBADGE @"badge"
 
 #define kPassword @"password"
