@@ -49,23 +49,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.automaticallyAdjustsScrollViewInsets = NO;
-  [self.view setBackgroundColor:[UIColor clearColor]];
-  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
-  self.toolBar = [nib objectAtIndex:0];
-  self.toolBar.contentMode = UIViewContentModeRedraw;
-  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 45, self.view.bounds.size.width, 45)];
-  self.toolBar.delegate = self;
-  [self.toolBar setUserInteractionEnabled:YES];
 
-  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight)) style:UITableViewStylePlain];
-  self.messageTableView.userInteractionEnabled = YES;
-  self.messageTableView.showsVerticalScrollIndicator = NO;
-  self.messageTableView.delegate = self;
-  self.messageTableView.dataSource = self;
-  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
-  [self.view addSubview:self.messageTableView];
-  [self.view addSubview:self.toolBar];
 
    _JMSgMessageDic = [[NSMutableDictionary alloc]init];
   _messageDic = [[NSMutableDictionary alloc]init];
@@ -77,30 +61,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   _imgDataArr =[[NSMutableArray alloc] init];
   
-  [self.view setBackgroundColor:[UIColor whiteColor]];
-  _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [_rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
-  [_rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
-  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
-  
-  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-  self.navigationController.interactivePopGestureRecognizer.delegate = self;
-  UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-  [self.view addGestureRecognizer:gesture];
-  NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
-  self.moreView = [temXib objectAtIndex:0];
-  self.moreView.delegate = self;
-  if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
-      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
-  }else {
-      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
-  }
-  [self.view addSubview:self.moreView];
+
+
   DDLogDebug(@"Action - viewDidLoad");
   if (self.user) {
     self.targetName = self.user.username;
@@ -160,12 +122,69 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }else {
     }
   }
-
+  [self initView];
   [self getGroupMemberListWithGetMessageFlag:YES];
   [self addNotification];
   [self sendInfoRequest];
+
+  
 }
 
+-(void)initView {
+  [self initNavigation];
+  [self initComponentView];
+}
+
+-(void)initComponentView {
+
+  UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+  [self.view addGestureRecognizer:gesture];
+  
+  [self.view setBackgroundColor:[UIColor clearColor]];
+  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
+  self.toolBar = [nib objectAtIndex:0];
+  self.toolBar.contentMode = UIViewContentModeRedraw;
+  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 45, self.view.bounds.size.width, 45)];
+  self.toolBar.delegate = self;
+  [self.toolBar setUserInteractionEnabled:YES];
+  
+  
+  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight)) style:UITableViewStylePlain];
+  self.messageTableView.userInteractionEnabled = YES;
+  self.messageTableView.showsVerticalScrollIndicator = NO;
+  self.messageTableView.delegate = self;
+  self.messageTableView.dataSource = self;
+  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
+  [self.view addSubview:self.messageTableView];
+  [self.view addSubview:self.toolBar];
+  
+  NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
+  self.moreView = [temXib objectAtIndex:0];
+  self.moreView.delegate = self;
+  if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
+    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
+  }else {
+    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
+  }
+  [self.view addSubview:self.moreView];
+
+}
+-(void)initNavigation {
+  _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [_rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
+  [_rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
+  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
+  
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
+  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
+
+}
 
 -(void)getGroupMemberListWithGetMessageFlag:(BOOL)getMesageFlag {
   if (self.conversation && self.conversation.chatType == kJMSGGroup) {
