@@ -20,8 +20,7 @@
     }else {
       height = 80;
     }
-//    self.selectionStyle = UITableViewCellSelectionStyleGray;
-    
+
     NSInteger width = (NSInteger) kApplicationWidth;
     self.headView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"headDefalt_34"]];
     [self.headView setFrame:CGRectMake(5, height/2 - 46/2, 46, 46)];
