@@ -7,6 +7,7 @@
 #import "MobClick.h"
 #import "JCHATCustomFormatter.h"
 #import "JCHATStringUtils.h"
+#import "JCHATAlreadyLoginViewController.h"
 
 #import <JMessage/JMessage.h>
 
@@ -41,19 +42,28 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [self.window makeKeyAndVisible];
 
   [self initTheMainGTablebar];
+  [self initRootView];
+  [JCHATFileManager initWithFilePath];//demo 初始化存储路径
+  TOCK(@"App init");
+  return YES;
+}
 
+- (void)initRootView {
   if ([[NSUserDefaults standardUserDefaults] objectForKey:kuserName]) {
     self.tabBarCtl.loginIdentify = kHaveLogin;
     self.window.rootViewController = self.tabBarCtl;
   } else {
-    JCHATLoginViewController *rootCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
-    UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:rootCtl];
-    self.window.rootViewController = navLogin;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]) {
+      JCHATAlreadyLoginViewController *rLoginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+      UINavigationController *nvrLoginCtl = [[UINavigationController alloc] initWithRootViewController:rLoginCtl];
+      self.window.rootViewController = nvrLoginCtl;
+    }else {
+      JCHATLoginViewController *rootCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
+      UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:rootCtl];
+      self.window.rootViewController = navLogin;
+      
+    }
   }
-
-  [JCHATFileManager initWithFilePath];//demo 初始化存储路径
-  TOCK(@"App init");
-  return YES;
 }
 
 - (void)registerJPushStatusNotification {

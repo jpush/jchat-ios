@@ -262,6 +262,12 @@
 		443E40F31B53BD2A00F46651 /* JCHATMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */; };
 		443E40F41B53BD2A00F46651 /* JCHATMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */; };
 		443E40F71B53BD6C00F46651 /* JCHATMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */; };
+		44D3DBBC1B550AB80051B3E2 /* JCHATSetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */; };
+		44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */; };
+		44D3DBC21B550E770051B3E2 /* login_20_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBE1B550E770051B3E2 /* login_20_pre@3x.png */; };
+		44D3DBC31B550E770051B3E2 /* login_20@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBF1B550E770051B3E2 /* login_20@3x.png */; };
+		44D3DBC41B550E770051B3E2 /* login_20_pre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBC01B550E770051B3E2 /* login_20_pre@2x.png */; };
+		44D3DBC51B550E770051B3E2 /* login_20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBC11B550E770051B3E2 /* login_20@2x.png */; };
 		6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFA8ABC00BBC8BAB526 /* MJPhoto.m */; };
 		6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B571FEA2EF27EF2C123B /* UIImage +ResizeMagick.m */; };
 		6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBFB944EE81C0603CCB8 /* NSData+GIF.m */; };
@@ -632,6 +638,13 @@
 		443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATMessageViewController.xib; sourceTree = "<group>"; };
 		443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageTableViewCell.h; sourceTree = "<group>"; };
 		443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageTableViewCell.m; sourceTree = "<group>"; };
+		44D3DBB91B550AB80051B3E2 /* JCHATSetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSetDetailViewController.h; sourceTree = "<group>"; };
+		44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSetDetailViewController.m; sourceTree = "<group>"; };
+		44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSetDetailViewController.xib; sourceTree = "<group>"; };
+		44D3DBBE1B550E770051B3E2 /* login_20_pre@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_20_pre@3x.png"; sourceTree = "<group>"; };
+		44D3DBBF1B550E770051B3E2 /* login_20@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_20@3x.png"; sourceTree = "<group>"; };
+		44D3DBC01B550E770051B3E2 /* login_20_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_20_pre@2x.png"; sourceTree = "<group>"; };
+		44D3DBC11B550E770051B3E2 /* login_20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_20@2x.png"; sourceTree = "<group>"; };
 		6039B01E3B7B47BDC0C01ECC /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
 		6039B022FAE23DE6605B7836 /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
 		6039B06DB77B2635035FB63D /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
@@ -985,6 +998,9 @@
 				187182231AFB80BF00FB3168 /* JCHATRegisterViewController.h */,
 				187182241AFB80BF00FB3168 /* JCHATRegisterViewController.m */,
 				187182251AFB80BF00FB3168 /* JCHATRegisterViewController.xib */,
+				44D3DBB91B550AB80051B3E2 /* JCHATSetDetailViewController.h */,
+				44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */,
+				44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -1140,6 +1156,10 @@
 				187182A51AFB80C000FB3168 /* login_19.@2x.png */,
 				187182A61AFB80C000FB3168 /* login_19@2x.png */,
 				187182A71AFB80C000FB3168 /* login_19@3x.png */,
+				44D3DBBE1B550E770051B3E2 /* login_20_pre@3x.png */,
+				44D3DBBF1B550E770051B3E2 /* login_20@3x.png */,
+				44D3DBC01B550E770051B3E2 /* login_20_pre@2x.png */,
+				44D3DBC11B550E770051B3E2 /* login_20@2x.png */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -1480,6 +1500,7 @@
 			files = (
 				1871837C1AFB80C000FB3168 /* card_39@2x.png in Resources */,
 				187183981AFB80C000FB3168 /* search_47@2x.png in Resources */,
+				44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */,
 				187183D91AFB80C000FB3168 /* menu_13@2x.png in Resources */,
 				187183F41AFB80C000FB3168 /* RecordingSignal002@2x.png in Resources */,
 				1871837F1AFB80C000FB3168 /* delete_49@3x.png in Resources */,
@@ -1497,6 +1518,7 @@
 				187183951AFB80C000FB3168 /* point_41@3x.png in Resources */,
 				18B8FDAB1B3D240500538C00 /* receiveFail@3x.png in Resources */,
 				187183871AFB80C000FB3168 /* frame@3x.png in Resources */,
+				44D3DBC41B550E770051B3E2 /* login_20_pre@2x.png in Resources */,
 				187183C31AFB80C000FB3168 /* login_11@3x.png in Resources */,
 				187183191AFB80C000FB3168 /* JCHATChatViewController.xib in Resources */,
 				187183841AFB80C000FB3168 /* fail05@2x.png in Resources */,
@@ -1534,6 +1556,7 @@
 				AA4D05AA1B43917B007D7B78 /* JCHATAboutViewController.xib in Resources */,
 				187183CA1AFB80C000FB3168 /* login_15.@2x.png in Resources */,
 				187183591AFB80C000FB3168 /* JCHATPersonInfoCell.xib in Resources */,
+				44D3DBC31B550E770051B3E2 /* login_20@3x.png in Resources */,
 				187183F01AFB80C000FB3168 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
 				1871835F1AFB80C000FB3168 /* JCHATRegisterDetailViewController.xib in Resources */,
 				187183B61AFB80C000FB3168 /* login_03@2x.png in Resources */,
@@ -1599,6 +1622,7 @@
 				187183991AFB80C000FB3168 /* search_47@3x.png in Resources */,
 				1871834A1AFB80C000FB3168 /* JCHATTabBarViewController.xib in Resources */,
 				1871837E1AFB80C000FB3168 /* delete_49@2x.png in Resources */,
+				44D3DBC21B550E770051B3E2 /* login_20_pre@3x.png in Resources */,
 				187183CE1AFB80C000FB3168 /* login_16@2x.png in Resources */,
 				187183CB1AFB80C000FB3168 /* login_15@2x.png in Resources */,
 				187184031AFB80C000FB3168 /* voice_delete@2x.png in Resources */,
@@ -1656,6 +1680,7 @@
 				187183A11AFB80C000FB3168 /* video_40@3x.png in Resources */,
 				1871837D1AFB80C000FB3168 /* card_39@3x.png in Resources */,
 				187183711AFB80C000FB3168 /* bar_anxia@2x.png in Resources */,
+				44D3DBC51B550E770051B3E2 /* login_20@2x.png in Resources */,
 				187183721AFB80C000FB3168 /* bar_nor@2x.png in Resources */,
 				187183B71AFB80C000FB3168 /* login_03@3x.png in Resources */,
 				187183E21AFB80C000FB3168 /* menu_22@3x in Resources */,
@@ -1771,6 +1796,7 @@
 				187183561AFB80C000FB3168 /* JCHATUserInfoViewController.m in Sources */,
 				1871834F1AFB80C000FB3168 /* JCHATNewsReminderCtl.m in Sources */,
 				187183491AFB80C000FB3168 /* JCHATTabBarViewController.m in Sources */,
+				44D3DBBC1B550AB80051B3E2 /* JCHATSetDetailViewController.m in Sources */,
 				6039B00B9548799FB9053AD9 /* MJPhoto.m in Sources */,
 				6039BF2B12872ADB34A48CDD /* MJPhotoBrowser.m in Sources */,
 				6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */,
