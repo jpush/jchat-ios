@@ -17,6 +17,7 @@
 #import "UIImage+ResizeMagick.h"
 #import <JMessage/JMessage.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "JCHATAlreadyLoginViewController.h"
 
 @interface JCHATUserInfoViewController ()
 
@@ -333,18 +334,25 @@
     DDLogDebug(@"Logout anyway.");
     
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-    if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
-      [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
-    } else {
-      JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
-      loginCtl.hidesBottomBarWhenPushed = YES;
-      [self.navigationController pushViewController:loginCtl animated:YES];
-    }
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+//    if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
+//      [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
+//    } else {
+//      JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
+//      loginCtl.hidesBottomBarWhenPushed = YES;
+//      [self.navigationController pushViewController:loginCtl animated:YES];
+//    }
+    [appDelegate.tabBarCtl setSelectedIndex:0];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
       DDLogDebug(@"Logout callback with - %@", error);
     }];
+    JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+    UINavigationController *nvLoginCtl = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+    appDelegate.window.rootViewController = nvLoginCtl;
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+
+
   }
 }
 
