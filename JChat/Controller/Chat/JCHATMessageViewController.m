@@ -12,6 +12,7 @@
 
 @end
 
+
 @implementation JCHATMessageViewController
 
 - (void)viewDidLoad {

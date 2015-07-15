@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <JMessage/JMSGUser.h>
 @interface JCHATAlreadyLoginViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
