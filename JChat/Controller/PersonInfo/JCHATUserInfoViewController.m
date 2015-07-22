@@ -18,7 +18,7 @@
 #import <JMessage/JMessage.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "JCHATAlreadyLoginViewController.h"
-
+#import "CExpandHeader.h"
 @interface JCHATUserInfoViewController ()
 
 @property(strong, nonatomic) UITableView *settingTableView;
@@ -34,7 +34,9 @@
 * 2. 大头像如果存在，则变更为大头像；
 * 3. 大头像如果不存在，则尝试去获取，后续再设置上来。
 */
-@implementation JCHATUserInfoViewController
+@implementation JCHATUserInfoViewController {
+  CExpandHeader *_header;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -45,8 +47,10 @@
   //设置背景图片
   _bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, (kApplicationHeight) / 2)];
   [_bgView setUserInteractionEnabled:YES];
-  [_bgView setBackgroundColor:[UIColor clearColor]];
+  [_bgView setBackgroundColor:[UIColor yellowColor]];
   [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+
+  
   JMSGUser *user = [JMSGUser getMyInfo];
 
   [JMSGUser getOriginAvatarImage:user
@@ -78,10 +82,10 @@
   [self.settingTableView setBackgroundColor:[UIColor colorWithRed:235 / 255.0 green:235 / 255.0 blue:243 / 255.0 alpha:1]];
   self.settingTableView.dataSource = self;
   self.settingTableView.delegate = self;
-  self.settingTableView.scrollEnabled = NO;
+  self.settingTableView.scrollEnabled = YES;
   self.settingTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.settingTableView.separatorColor = [UIColor clearColor];
-  self.settingTableView.tableHeaderView = _bgView;
+//  self.settingTableView.tableHeaderView = _bgView;
 
   if ([JMSGUser getMyInfo].nickname) {
     self.titleArr = @[[JMSGUser getMyInfo].nickname, @"设置", @"退出登录"];
@@ -96,6 +100,8 @@
                                            selector:@selector(updateAvatar)
                                                name:kupdateUserInfo
                                              object:nil];
+
+  _header = [CExpandHeader expandWithScrollView:_settingTableView expandView:_bgView];
 }
 
 - (void)updateAvatar {
@@ -119,10 +125,10 @@
           UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
           [_bgView setImage:img];
         } else {
-          [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+          _bgView.image = [UIImage imageNamed:@"wo"];
         }
       } else {
-        [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+        _bgView.image = [UIImage imageNamed:@"wo"];
       }
     }];
   }
@@ -196,6 +202,7 @@
           DDLogDebug(@"update headView success %@", user);
           UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
           UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
+          
           [_bgView setImage:img];
         } else {
           [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
