@@ -13,7 +13,7 @@
 #import "NSString+MessageInputView.h"
 #import "JCHATSetDetailViewController.h"
 #import <JMessage/JMessage.h>
-
+#import "ViewUtil.h"
 
 @interface JCHATRegisterViewController ()
 
@@ -27,6 +27,8 @@
 
   self.registerBtn.layer.cornerRadius = 4;
   [self.registerBtn.layer setMasksToBounds:YES];
+  self.registerBtn.backgroundColor = UIColorFromRGB(0x3f80de);
+  [self.registerBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x346fc3) frame:self.registerBtn.frame] forState:UIControlStateHighlighted];
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
   self.navigationController.navigationBar.alpha = 0.8;
   self.title = @"极光IM";
