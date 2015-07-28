@@ -303,75 +303,76 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 -(void)initTheMainGTablebar {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated"
-    self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
-    self.tabBarCtl.loginIdentify = kFirstLogin;
-    NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"],
-            [UIImage imageNamed:@"menu_18.png"], [UIImage imageNamed:@"menu_13.png"], nil];
-
-    JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController"
+  self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
+  self.tabBarCtl.loginIdentify = kFirstLogin;
+  NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"],
+                               [UIImage imageNamed:@"menu_18.png"], [UIImage imageNamed:@"menu_13.png"], nil];
+  
+  JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController"
                                                                                           bundle:nil];
-    UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewController];
-
-    /**
-     *  聊天
-     */
-    chatViewController.navigationItem.title = @"会话";
-    UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:@"会话"
-                                                          image:[normalImageArray objectAtIndex:0]
-                                                            tag:10];
-    [chatTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_25.png"]
-          withFinishedUnselectedImage:[UIImage imageNamed:@"menu_23.jpg"]];
-    chatNav.tabBarItem = chatTab;
-
-    /**
-     * 联系人
-     */
-    JCHATContactsViewController *contactsViewController = [[JCHATContactsViewController alloc]
-            initWithNibName:@"JCHATContactsViewController" bundle:nil];
-    UINavigationController *contactsNav = [[UINavigationController alloc]
-            initWithRootViewController:contactsViewController];
-
-    contactsViewController.navigationItem.title=@"通信录";
-    UITabBarItem *contractsTab = [[UITabBarItem alloc] initWithTitle:@"通信录"
-                                                               image:[normalImageArray objectAtIndex:1]
-                                                                 tag:11];
-    [contractsTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_18.png"]
-               withFinishedUnselectedImage:[UIImage imageNamed:@"menu_16.jpg"]];
-    contactsNav.tabBarItem = contractsTab;
-
-    /**
-     * 设置
-     */
-    JCHATUserInfoViewController *settingViewController = [[JCHATUserInfoViewController alloc]
-            initWithNibName:@"JCHATUserInfoViewController" bundle:nil];
-    UINavigationController *settingNav = [[UINavigationController alloc]
-            initWithRootViewController:settingViewController];
-
-    settingViewController.navigationItem.title=@"我";
-    UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:@"我"
-                                                             image:[normalImageArray objectAtIndex:2]
-                                                               tag:12];
-    [settingTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_13.png"]
-             withFinishedUnselectedImage:[UIImage imageNamed:@"menu_12.jpg"]];
-    settingNav.tabBarItem = settingTab;
-
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0], NSForegroundColorAttributeName,
-                                                       nil] forState:UIControlStateNormal];
-    UIColor *titleHighlightedColor = [UIColor whiteColor];
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       titleHighlightedColor, NSForegroundColorAttributeName,
-                                                       nil] forState:UIControlStateSelected];
-    UIImage* tabBarBackground = [UIImage imageNamed:@"bar"];
-    [[UITabBar appearance] setBackgroundImage:[tabBarBackground resizableImageWithCapInsets:UIEdgeInsetsZero]];
-    //    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selectItem"]];
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [UIColor grayColor], NSForegroundColorAttributeName,
-                                                       nil] forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       titleHighlightedColor, NSForegroundColorAttributeName,
-                                                       nil] forState:UIControlStateHighlighted];
-    self.tabBarCtl.viewControllers = [NSArray arrayWithObjects:chatNav,contactsNav,settingNav,nil];
+  UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewController];
+  
+  /**
+   *  聊天
+   */
+  chatViewController.navigationItem.title = @"会话";
+  UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:@"会话"
+                                                        image:[normalImageArray objectAtIndex:0]
+                                                          tag:10];
+  [chatTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_25.png"]
+        withFinishedUnselectedImage:[UIImage imageNamed:@"menu_23.jpg"]];
+  chatNav.tabBarItem = chatTab;
+  
+  /**
+   * 联系人
+   */
+  JCHATContactsViewController *contactsViewController = [[JCHATContactsViewController alloc]
+                                                         initWithNibName:@"JCHATContactsViewController" bundle:nil];
+  UINavigationController *contactsNav = [[UINavigationController alloc]
+                                         initWithRootViewController:contactsViewController];
+  
+  contactsViewController.navigationItem.title=@"通信录";
+  UITabBarItem *contractsTab = [[UITabBarItem alloc] initWithTitle:@"通信录"
+                                                             image:[normalImageArray objectAtIndex:1]
+                                                               tag:11];
+  [contractsTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_18.png"]
+             withFinishedUnselectedImage:[UIImage imageNamed:@"menu_16.jpg"]];
+  contactsNav.tabBarItem = contractsTab;
+  
+  /**
+   * 设置
+   */
+  JCHATUserInfoViewController *settingViewController = [[JCHATUserInfoViewController alloc]
+                                                        initWithNibName:@"JCHATUserInfoViewController" bundle:nil];
+  UINavigationController *settingNav = [[UINavigationController alloc]
+                                        initWithRootViewController:settingViewController];
+  
+  settingViewController.navigationItem.title=@"我";
+  UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:@"我"
+                                                           image:[normalImageArray objectAtIndex:2]
+                                                             tag:12];
+  [settingTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_13.png"]
+           withFinishedUnselectedImage:[UIImage imageNamed:@"menu_12.jpg"]];
+  settingNav.tabBarItem = settingTab;
+  
+  [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                     [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0], NSForegroundColorAttributeName,
+                                                     nil] forState:UIControlStateNormal];
+  UIColor *titleHighlightedColor = UIColorFromRGB(0x3f80de);
+  [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                     titleHighlightedColor, NSForegroundColorAttributeName,
+                                                     nil] forState:UIControlStateSelected];
+  UIImage* tabBarBackground = [UIImage imageNamed:@"bar"];
+  [[UITabBar appearance] setBackgroundImage:[tabBarBackground resizableImageWithCapInsets:UIEdgeInsetsZero]];
+  //    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selectItem"]];
+  [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                     [UIColor grayColor], NSForegroundColorAttributeName,
+                                                     nil] forState:UIControlStateNormal];
+  [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                     titleHighlightedColor, NSForegroundColorAttributeName,
+                                                     nil] forState:UIControlStateHighlighted];
+  self.tabBarCtl.viewControllers = [NSArray arrayWithObjects:chatNav,contactsNav,settingNav,nil];
+  self.tabBarCtl.navigationController.navigationItem.hidesBackButton = YES;
 #pragma clang diagnostic pop
 }
 
