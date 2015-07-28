@@ -127,8 +127,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self addNotification];
   [self sendInfoRequest];
 
-  
 }
+
 
 -(void)initView {
   [self initNavigation];
