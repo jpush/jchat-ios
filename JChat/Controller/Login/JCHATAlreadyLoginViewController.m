@@ -13,7 +13,7 @@
 #import "JCHATLoginViewController.h"
 #import <JMessage/JMessage.h>
 #import "NSString+MessageInputView.h"
-
+#import "ViewUtil.h"
 @interface JCHATAlreadyLoginViewController ()
 
 @end
@@ -26,6 +26,10 @@
     // Do any additional setup after loading the view from its nib.
     self.loginBtn.layer.cornerRadius=4;
     [self.loginBtn.layer setMasksToBounds:YES];
+  [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  self.loginBtn.backgroundColor = UIColorFromRGB(0x6fd66b);
+  [self.loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x498d47) frame:self.loginBtn.frame] forState:UIControlStateHighlighted];
+  
     NSString *userName =[[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName];
   
     [self.userName setTitle:userName forState:UIControlStateNormal];
@@ -80,6 +84,7 @@
                 completionHandler:^(id resultObject, NSError *error) {
                   if (error == nil) {
                     [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                    [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
                     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
 
                     JPIMMAINTHEAD(^{
