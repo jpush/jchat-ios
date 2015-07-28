@@ -263,6 +263,9 @@
 		443E40F31B53BD2A00F46651 /* JCHATMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */; };
 		443E40F41B53BD2A00F46651 /* JCHATMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */; };
 		443E40F71B53BD6C00F46651 /* JCHATMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */; };
+		445048EC1B660C8A0005D818 /* ViewUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048EB1B660C8A0005D818 /* ViewUtil.m */; };
+		445048F61B671D680005D818 /* JCHATAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048F51B671D680005D818 /* JCHATAvatarView.m */; };
+		445048FF1B67583C0005D818 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */; };
 		44D3DBBC1B550AB80051B3E2 /* JCHATSetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */; };
 		44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */; };
 		44D3DBC21B550E770051B3E2 /* login_20_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBE1B550E770051B3E2 /* login_20_pre@3x.png */; };
@@ -641,6 +644,12 @@
 		443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATMessageViewController.xib; sourceTree = "<group>"; };
 		443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageTableViewCell.h; sourceTree = "<group>"; };
 		443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageTableViewCell.m; sourceTree = "<group>"; };
+		445048EA1B660C8A0005D818 /* ViewUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewUtil.h; sourceTree = "<group>"; };
+		445048EB1B660C8A0005D818 /* ViewUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewUtil.m; sourceTree = "<group>"; };
+		445048F41B671D680005D818 /* JCHATAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAvatarView.h; sourceTree = "<group>"; };
+		445048F51B671D680005D818 /* JCHATAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAvatarView.m; sourceTree = "<group>"; };
+		445048FD1B67583C0005D818 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
+		445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
 		44D3DBB91B550AB80051B3E2 /* JCHATSetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSetDetailViewController.h; sourceTree = "<group>"; };
 		44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSetDetailViewController.m; sourceTree = "<group>"; };
 		44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSetDetailViewController.xib; sourceTree = "<group>"; };
@@ -776,6 +785,7 @@
 				187182261AFB80BF00FB3168 /* Images.xcassets */,
 				187181921AFB80BF00FB3168 /* LaunchScreen.xib */,
 				187181941AFB80BF00FB3168 /* Main.storyboard */,
+				445048E91B660C8A0005D818 /* Utils */,
 				187181961AFB80BF00FB3168 /* Controller */,
 				1871823F1AFB80C000FB3168 /* Resources */,
 				6039B5CC50E06EAFD3390E5B /* External */,
@@ -990,6 +1000,10 @@
 				1871821C1AFB80BF00FB3168 /* JCHATSettingCell.h */,
 				1871821D1AFB80BF00FB3168 /* JCHATSettingCell.m */,
 				1871821E1AFB80BF00FB3168 /* JCHATSettingCell.xib */,
+				445048F41B671D680005D818 /* JCHATAvatarView.h */,
+				445048F51B671D680005D818 /* JCHATAvatarView.m */,
+				445048FD1B67583C0005D818 /* UIImageView+LBBlurredImage.h */,
+				445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1258,6 +1272,15 @@
 				FBC050F078C59B0D558CBA1F /* libPods-极光IM.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		445048E91B660C8A0005D818 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				445048EA1B660C8A0005D818 /* ViewUtil.h */,
+				445048EB1B660C8A0005D818 /* ViewUtil.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		6039B43A49478616C846695C /* SDWebImage */ = {
@@ -1785,9 +1808,11 @@
 				1871835A1AFB80C000FB3168 /* JCHATSetting_Cell.m in Sources */,
 				1871832E1AFB80C000FB3168 /* JCHATSelectFriendCell.m in Sources */,
 				187183501AFB80C000FB3168 /* JCHATPersonViewController.m in Sources */,
+				445048FF1B67583C0005D818 /* UIImageView+LBBlurredImage.m in Sources */,
 				187183331AFB80C000FB3168 /* JCHATVoiceTableViewCell.m in Sources */,
 				187183271AFB80C000FB3168 /* JCHATDetailTableViewCell.m in Sources */,
 				187183291AFB80C000FB3168 /* JCHATFrIendDetailMessgeCell.m in Sources */,
+				445048EC1B660C8A0005D818 /* ViewUtil.m in Sources */,
 				1871835E1AFB80C000FB3168 /* JCHATRegisterDetailViewController.m in Sources */,
 				187183451AFB80C000FB3168 /* JCHATAddViewController.m in Sources */,
 				1871833E1AFB80C000FB3168 /* JCHATRecordAnimationView.m in Sources */,
@@ -1808,6 +1833,7 @@
 				6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */,
 				6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */,
 				6039B4AB434F2120F6431270 /* MJPhotoToolbar.m in Sources */,
+				445048F61B671D680005D818 /* JCHATAvatarView.m in Sources */,
 				6039BEB5A028137372C528B5 /* MJPhotoView.m in Sources */,
 				6039B9FEC9C8FBFEFE2CF747 /* MBProgressHUD+Add.m in Sources */,
 				6039B7FE80FB2DB789B210B9 /* SDWebImageManager+MJ.m in Sources */,
@@ -1994,6 +2020,7 @@
 				PRODUCT_NAME = "极光IM";
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
 			};
@@ -2034,6 +2061,7 @@
 				PRODUCT_NAME = "极光IM";
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
 			};
