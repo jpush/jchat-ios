@@ -32,4 +32,19 @@
   
   return imageCache[cache_key];
 }
+
+
++ (UIView *)nib:(char *)nib {
+  NSArray *nibs=[[NSBundle mainBundle] loadNibNamed:[NSString stringWithUTF8String:nib]
+                                              owner:self
+                                            options:nil];
+  return [nibs objectAtIndex:0];
+}
+
++ (UIView *)nib:(char *)nib owner:(id)owner{
+  NSArray *nibs=[[NSBundle mainBundle] loadNibNamed:[NSString stringWithUTF8String:nib]
+                                              owner:owner
+                                            options:nil];
+  return [nibs objectAtIndex:0];
+}
 @end

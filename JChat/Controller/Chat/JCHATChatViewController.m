@@ -64,8 +64,8 @@
                                              object:nil];
   
 
-  self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80de);
-//  self.navigationController.navigationBar.alpha=0.8;
+  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  self.navigationController.navigationBar.translucent = NO;
 
   NSShadow *shadow = [[NSShadow alloc]init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];

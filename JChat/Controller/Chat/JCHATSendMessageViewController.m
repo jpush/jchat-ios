@@ -24,6 +24,7 @@
 #import "JCHATStringUtils.h"
 #import "JCHATLoginViewController.h"
 //#import "JMSGConversation+Inner.h"
+#import "ViewUtil.h"
 
 #define interval 60*2
 
@@ -45,6 +46,52 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 
 @implementation JCHATSendMessageViewController
+- (IBAction)click_to_change:(id)sender {
+  
+//  self.toolBarToBottomConstrait.constant = 0;
+//  self.moreViewHeight.constant = 227;
+//  [self.view addSubview:self.toolBarContainer.toolbar];
+//
+//  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, 320, 45);
+//  [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
+
+  
+//  if ([voiceDuration integerValue] >= 60) {
+//    model.voiceTime = @"60''";
+//  }else{
+//    model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
+//  }
+//  JCHATChatModel *model =[[JCHATChatModel alloc] init];
+//  model.messageId = voiceMessage.messageId;
+//  model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
+//  model.type=kJMSGVoiceMessage;
+//  model.conversation = _conversation;
+//  model.targetId = self.conversation.targetId;
+//  model.displayName = self.targetName;
+//  model.readState = YES;
+//  model.who = YES;
+//  model.sendFlag = NO;
+//  model.mediaData = [NSData dataWithContentsOfFile:voicePath];
+//  
+//  if (self.conversation.chatType == kJMSGSingle) {
+//    voiceMessage.conversationType = kJMSGSingle;
+//  }else {
+//    voiceMessage.conversationType = kJMSGGroup;
+//  }
+
+  JMSGVoiceMessage *voiceMessage = [[JMSGVoiceMessage alloc] init];
+
+  voiceMessage.conversationType = kJMSGSingle;
+  
+  voiceMessage.targetId = self.conversation.targetId;
+  voiceMessage.duration = @"15''";//time;
+  NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"sendmusic" ofType:@"mp3"];
+  voiceMessage.mediaData = [NSData dataWithContentsOfFile:musicFilePath];//
+  [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
+  [JMSGMessage sendMessage:voiceMessage];
+
+
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -135,39 +182,34 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self initComponentView];
 }
 
+
+- (void)addtoolbar {
+  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, 320, 45);
+  
+  [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
+
+}
 -(void)initComponentView {
+
+
+  [self performSelector:@selector(addtoolbar) withObject:nil afterDelay:0.1];
 
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
   [self.view addGestureRecognizer:gesture];
   
   [self.view setBackgroundColor:[UIColor clearColor]];
-  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
-  self.toolBar = [nib objectAtIndex:0];
-  self.toolBar.contentMode = UIViewContentModeRedraw;
-  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 45, self.view.bounds.size.width, 45)];
-  self.toolBar.delegate = self;
-  [self.toolBar setUserInteractionEnabled:YES];
+  self.toolBarContainer.toolbar.delegate = self;
+  [self.toolBarContainer.toolbar setUserInteractionEnabled:YES];
   
   
-  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight)) style:UITableViewStylePlain];
   self.messageTableView.userInteractionEnabled = YES;
   self.messageTableView.showsVerticalScrollIndicator = NO;
   self.messageTableView.delegate = self;
   self.messageTableView.dataSource = self;
   self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
-  [self.view addSubview:self.messageTableView];
-  [self.view addSubview:self.toolBar];
-  
-  NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
-  self.moreView = [temXib objectAtIndex:0];
-  self.moreView.delegate = self;
-  if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
-    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
-  }else {
-    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
-  }
-  [self.view addSubview:self.moreView];
+
+  self.moreViewContainer.moreView.delegate = self;
 
 }
 -(void)initNavigation {
@@ -651,7 +693,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 - (void)pressVoiceBtnToHideKeyBoard
 {
-    [self.toolBar.textView resignFirstResponder];
+    [self.toolBarContainer.toolbar.textView resignFirstResponder];
     [self dropToolBar];
 }
 
@@ -794,7 +836,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                            selector:@selector(receiveEventNotification:)
                                                name:JMSGNotification_EventMessage
                                              object:nil];
-  [self.toolBar.textView addObserver:self
+  [self.toolBarContainer.toolbar.textView addObserver:self
                             forKeyPath:@"contentSize"
                                options:NSKeyValueObservingOptionNew
                                context:nil];
@@ -863,20 +905,44 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     self.barBottomFlag=NO;
     CGRect keyBoardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)-keyBoardFrame.size.height)];
+  
+
+  
+  [self.messageTableView setNeedsLayout];
+    [self.toolBarContainer setNeedsLayout];
+  [self.moreViewContainer setNeedsLayout];
+  [UIView animateWithDuration:animationTime animations:^{
+
+    self.moreViewHeight.constant = keyBoardFrame.size.height;
+    
     [self scrollToEnd];
-    [UIView animateWithDuration:animationTime animations:^{
-        [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45-keyBoardFrame.size.height, self.view.bounds.size.width, 45)];
-    }];
-    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
+    [self.toolBarContainer layoutIfNeeded];
+    [self.messageTableView layoutIfNeeded];
+    [self.moreViewContainer layoutIfNeeded];
+  }];
+  
+  [self scrollToBottomAnimated:NO];
+  
+  
+  
 }
 
 - (void)inputKeyboardWillHide:(NSNotification *)notification {
     CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
-        [UIView animateWithDuration:animationTime animations:^{
-            [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.view.bounds.size.width, 45)];
-        }];
+
+  
+  
+  [self.messageTableView setNeedsLayout];
+  [self.toolBarContainer setNeedsLayout];
+  [self.moreViewContainer setNeedsLayout];
+
+  [UIView animateWithDuration:animationTime animations:^{
+    self.moreViewHeight.constant = 0;
+    [self.toolBarContainer layoutIfNeeded];
+    [self.messageTableView layoutIfNeeded];
+    [self.moreViewContainer layoutIfNeeded];
+  }];
+    [self scrollToBottomAnimated:NO];
 }
 
 #pragma mark --发送文本
@@ -885,42 +951,42 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 - (void)perform {
-    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-    [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.view.bounds.size.width, 45)];
+
+  self.moreViewHeight.constant = 0;
+  self.toolBarToBottomConstrait.constant = 0;
+  
 }
 
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
   self.barBottomFlag =YES;
   self.previousTextViewContentHeight = 31;
-  self.toolBar.addButton.selected = NO;
+  self.toolBarContainer.toolbar.addButton.selected = NO;
   [_messageTableView reloadData];
   [UIView animateWithDuration:0.3 animations:^{
-      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-      [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight))];
-    NSLog(@"self.messageTableView height %f   real height %f",self.messageTableView.frame.size.height,kScreenSize.height - 20 -45-(kNavigationBarHeight));
+    self.toolBarToBottomConstrait.constant = 0;
+    self.moreViewHeight.constant = 0;
+    
   }];
 }
 
 #pragma mark --按下功能响应
 - (void)pressMoreBtnClick:(UIButton *)btn {
   self.barBottomFlag=NO;
-  [self.toolBar.textView resignFirstResponder];
-  [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.moreView.bounds.size.width, self.moreView.bounds.size.height)];
-  [UIView animateWithDuration:0.3 animations:^{
-  [self.toolBar setFrame:CGRectMake(0, kScreenHeight-45-self.moreView.bounds.size.height, self.view.bounds.size.width, 45)];
-  [self.moreView setFrame:CGRectMake(0, kScreenHeight-self.moreView.bounds.size.height, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-  }];
+  [self.toolBarContainer.toolbar.textView resignFirstResponder];
+
+  self.toolBarToBottomConstrait.constant = 0;
+  self.moreViewHeight.constant = 227;
+  
   
   [UIView animateWithDuration:0.3 animations:^{
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenHeight-45-(kNavigationBarHeight+kStatusBarHeight) - self.moreView.bounds.size.height)];
+
     [self scrollToEnd];
   }];
 }
 
 -(void)noPressmoreBtnClick:(UIButton *)btn {
-    [self.toolBar.textView becomeFirstResponder];
+    [self.toolBarContainer.toolbar.textView becomeFirstResponder];
 }
 
 #pragma mark ----发送文本消息
@@ -1078,11 +1144,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)viewWillAppear:(BOOL)animated {
   DDLogDebug(@"Event - viewWillAppear");
   [super viewWillAppear:NO];
-  [self.toolBar drawRect:self.toolBar.frame];
+  [self.toolBarContainer.toolbar drawRect:self.toolBarContainer.toolbar.frame];
+//  NSLog(@"huangmin    rect  w %f  h %f ",self.toolBar.frame.size.width,self.toolBar.frame.size.height);
   [self.navigationController setNavigationBarHidden:NO];
 
   
-//    // 禁用 iOS7 返回手势
+// 禁用 iOS7 返回手势
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
       self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   }
@@ -1115,11 +1182,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark --释放内存
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [self.toolBar.textView removeObserver:self forKeyPath:@"contentSize"];
+  [self.toolBarContainer.toolbar.textView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (void)tapClick:(UIGestureRecognizer *)gesture {
-    [self.toolBar.textView resignFirstResponder];
+    [self.toolBarContainer.toolbar.textView resignFirstResponder];
     [self dropToolBar];
 }
 
@@ -1384,7 +1451,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   voiceMessage.targetId = model.targetId;
   voiceMessage.duration = model.voiceTime;
   model.messageTime = voiceMessage.timestamp;
-  voiceMessage.mediaData = model.mediaData;
+  voiceMessage.mediaData = model.mediaData;//!!
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
   [JCHATFileManager deleteFile:voicePath];
   [self addMessage:model];
@@ -1411,7 +1478,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.barBottomFlag) {
         return;
     }
-    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize"]) {
+    if (object == self.toolBarContainer.toolbar.textView && [keyPath isEqualToString:@"contentSize"]) {
         [self layoutAndAnimateMessageInputTextView:object];
     }
 }
@@ -1479,20 +1546,20 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                                      self.previousTextViewContentHeight = MIN(contentH, maxHeight);
                                  }
                                  // if shrinking the view, animate text view frame BEFORE input view frame
-                                 [self.toolBar adjustTextViewHeightBy:changeInHeight];
+                                 [self.toolBarContainer.toolbar adjustTextViewHeightBy:changeInHeight];
                              }
 
-                             CGRect inputViewFrame = self.toolBar.frame;
-                             self.toolBar.frame = CGRectMake(0.0f,
-                                                                      inputViewFrame.origin.y - changeInHeight,
-                                                                      inputViewFrame.size.width,
-                                                                      inputViewFrame.size.height + changeInHeight);
+//                             CGRect inputViewFrame = self.toolBarContainer.toolbar.frame;
+//                             self.toolBarContainer.toolbar.frame = CGRectMake(0.0f,
+//                                                                      inputViewFrame.origin.y - changeInHeight,
+//                                                                      inputViewFrame.size.width,
+//                                                                      inputViewFrame.size.height + changeInHeight);
                              if (!isShrinking) {
                                  if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
                                      self.previousTextViewContentHeight = MIN(contentH, maxHeight);
                                  }
                                  // growing the view, animate the text view frame AFTER input view frame
-                                 [self.toolBar adjustTextViewHeightBy:changeInHeight];
+                                 [self.toolBarContainer.toolbar adjustTextViewHeightBy:changeInHeight];
                              }
                          }
                          completion:^(BOOL finished) {
