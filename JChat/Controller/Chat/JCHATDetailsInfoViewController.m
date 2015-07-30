@@ -31,7 +31,7 @@
   [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-  
+
   [self.view setBackgroundColor:[UIColor orangeColor]];
   [self.detailTableView setBackgroundColor:[UIColor whiteColor]];
   UIView *tableHeadView =[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
