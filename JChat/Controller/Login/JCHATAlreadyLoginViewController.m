@@ -31,10 +31,10 @@
   [self.loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x498d47) frame:self.loginBtn.frame] forState:UIControlStateHighlighted];
   
     NSString *userName =[[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName];
-  
+  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  self.navigationController.navigationBar.translucent = NO;
+
     [self.userName setTitle:userName forState:UIControlStateNormal];
-    self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-    self.navigationController.navigationBar.alpha=0.8;
     self.title=@"极光IM";
     [self.passwordField setSecureTextEntry:YES];
     

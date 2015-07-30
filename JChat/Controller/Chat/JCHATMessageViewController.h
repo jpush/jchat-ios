@@ -29,7 +29,7 @@
   UIGestureRecognizerDelegate>
 
 
-@property(strong, nonatomic) JCHATToolBar *toolBar;
+//@property(strong, nonatomic) JCHATToolBar *toolBar;
 @property(strong, nonatomic) UITableView *messageTableView;
 @property(strong, nonatomic) JCHATMoreView *moreView;
 @property(nonatomic, assign) JPIMInputViewType textViewInputViewType;
