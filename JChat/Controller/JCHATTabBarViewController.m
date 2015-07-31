@@ -21,6 +21,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  self.navigationController.navigationBar.translucent = NO;
+
   if ([self getLoginInfoValue:kuserName]) {
   }
 }

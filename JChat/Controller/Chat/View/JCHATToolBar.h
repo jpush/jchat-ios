@@ -151,3 +151,11 @@
  */
 + (CGFloat)maxHeight;
 @end
+
+
+
+
+@interface JCHATToolBarContainer : UIView
+@property (strong, nonatomic) JCHATToolBar *toolbar;
+
+@end
