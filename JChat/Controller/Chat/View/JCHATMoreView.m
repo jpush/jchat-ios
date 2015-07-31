@@ -8,6 +8,7 @@
 
 #import "JCHATMoreView.h"
 #import "JChatConstants.h"
+#import "ViewUtil.h"
 @implementation JCHATMoreView
 
 /*
@@ -33,3 +34,30 @@
     }
 }
 @end
+
+
+@implementation JCHATMoreViewContainer
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+  }
+  return self;
+}
+
+- (void)awakeFromNib {
+  [super awakeFromNib];
+  
+  _moreView = NIB(JCHATMoreView);
+  
+  _moreView.frame =CGRectMake(0, 0, 320, 227);
+  
+  
+  //  [_toolbar drawRect:_toolbar.frame];
+  
+  //  _toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self addSubview:_moreView];
+}
+
+@end
+

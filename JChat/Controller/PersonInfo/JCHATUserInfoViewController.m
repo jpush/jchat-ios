@@ -238,8 +238,9 @@
   [super viewWillAppear:YES];
   [self.navigationController.navigationBar setHidden:NO];
   [self.navigationController setNavigationBarHidden:NO];
-  self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha = 0.8;
+  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  self.navigationController.navigationBar.translucent = NO;
+
   self.title = @"我";
   [_bgView updataNameLable];
   NSShadow *shadow = [[NSShadow alloc] init];

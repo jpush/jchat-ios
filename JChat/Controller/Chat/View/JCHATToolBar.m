@@ -13,7 +13,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "NSString+MessageInputView.h"
 #import "JCHATFileManager.h"
-
+#import "ViewUtil.h"
 @implementation JCHATToolBar
 
 - (instancetype)init
@@ -291,8 +291,36 @@
 
 - (void)awakeFromNib {
   [super awakeFromNib];
-    
-    
+  self.backgroundColor = [UIColor yellowColor];
+  NSLog(@"huangminawakefromnib");
 }
+
+@end
+
+
+@implementation JCHATToolBarContainer
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+  }
+  return self;
+}
+
+- (void)awakeFromNib {
+  [super awakeFromNib];
+  
+  _toolbar = NIB(JCHATToolBar);
+
+  _toolbar.frame =CGRectMake(0, 0, 320, 45);
+
+
+//  [_toolbar drawRect:_toolbar.frame];
+
+//  _toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self addSubview:_toolbar];
+
+}
+
 
 @end

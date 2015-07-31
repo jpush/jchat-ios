@@ -56,14 +56,19 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]) {
       JCHATAlreadyLoginViewController *rLoginCtl = [[JCHATAlreadyLoginViewController alloc] init];
       UINavigationController *nvrLoginCtl = [[UINavigationController alloc] initWithRootViewController:rLoginCtl];
+      nvrLoginCtl.navigationBar.tintColor = kNavigationBarColor;
+      
+      
       self.window.rootViewController = nvrLoginCtl;
     }else {
       JCHATLoginViewController *rootCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
       UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:rootCtl];
+      navLogin.navigationBar.tintColor = kNavigationBarColor;
       self.window.rootViewController = navLogin;
       
     }
   }
+  [[UINavigationBar appearance] setBarTintColor:[UIColor yellowColor]/*UIColorFromRGB(0x3f80de)*/];
 }
 
 - (void)registerJPushStatusNotification {
@@ -311,6 +316,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
   JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController"
                                                                                           bundle:nil];
   UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewController];
+
   
   /**
    *  聊天

@@ -266,6 +266,7 @@
 		445048EC1B660C8A0005D818 /* ViewUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048EB1B660C8A0005D818 /* ViewUtil.m */; };
 		445048F61B671D680005D818 /* JCHATAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048F51B671D680005D818 /* JCHATAvatarView.m */; };
 		445048FF1B67583C0005D818 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */; };
+		44C3E7E61B6A24B200D3D825 /* sendmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */; };
 		44D3DBBC1B550AB80051B3E2 /* JCHATSetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */; };
 		44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */; };
 		44D3DBC21B550E770051B3E2 /* login_20_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBE1B550E770051B3E2 /* login_20_pre@3x.png */; };
@@ -650,6 +651,7 @@
 		445048F51B671D680005D818 /* JCHATAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAvatarView.m; sourceTree = "<group>"; };
 		445048FD1B67583C0005D818 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
 		445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
+		44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sendmusic.mp3; sourceTree = "<group>"; };
 		44D3DBB91B550AB80051B3E2 /* JCHATSetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSetDetailViewController.h; sourceTree = "<group>"; };
 		44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSetDetailViewController.m; sourceTree = "<group>"; };
 		44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSetDetailViewController.xib; sourceTree = "<group>"; };
@@ -1027,6 +1029,7 @@
 		1871823F1AFB80C000FB3168 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */,
 				18B8FDA81B3D23DB00538C00 /* receiveFail@2x.png */,
 				18B8FDAA1B3D240500538C00 /* receiveFail@3x.png */,
 				187182411AFB80C000FB3168 /* bar_anxia@2x.png */,
@@ -1526,6 +1529,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C3E7E61B6A24B200D3D825 /* sendmusic.mp3 in Resources */,
 				1871837C1AFB80C000FB3168 /* card_39@2x.png in Resources */,
 				187183981AFB80C000FB3168 /* search_47@2x.png in Resources */,
 				44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */,

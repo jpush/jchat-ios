@@ -18,3 +18,9 @@
 @property (assign, nonatomic)  id<AddBtnDelegate>delegate;
 
 @end
+
+
+@interface JCHATMoreViewContainer : UIView
+@property (strong, nonatomic) JCHATMoreView *moreView;
+
+@end
