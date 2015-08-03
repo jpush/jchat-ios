@@ -46,7 +46,7 @@
     [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-    titleArr = @[@"密码修改",@"关于"];
+    titleArr = @[@"新消息提醒",@"密码修改"];
     settingTabl =[[UITableView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight-kNavigationBarHeight-kStatusBarHeight)];
     [settingTabl setBackgroundColor:[UIColor whiteColor]];
     settingTabl.scrollEnabled=NO;
@@ -86,14 +86,15 @@
 //        [self.navigationController pushViewController:newsReminderCtl animated:YES];
 //    }
   if (indexPath.row==0) {
-    UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"修改密码前请输入原密码" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alerView.alertViewStyle=UIAlertViewStyleSecureTextInput;
-    [alerView show];
+    
   }
   
   if (indexPath.row == 1) {
-    JCHATAboutViewController *about = [[JCHATAboutViewController alloc]initWithNibName:@"JCHATAboutViewController" bundle:nil];
-    [self.navigationController pushViewController:about animated:YES];
+//    JCHATAboutViewController *about = [[JCHATAboutViewController alloc]initWithNibName:@"JCHATAboutViewController" bundle:nil];
+//    [self.navigationController pushViewController:about animated:YES];
+    UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"修改密码前请输入原密码" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alerView.alertViewStyle=UIAlertViewStyleSecureTextInput;
+    [alerView show];
   }
 }
 
