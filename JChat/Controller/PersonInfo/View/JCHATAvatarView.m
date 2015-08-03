@@ -19,6 +19,22 @@
 }
 */
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    
+  }
+  
+  return self;
+}
+
+
+- (void)awakeFromNib {
+  [super awakeFromNib];
+  
+  
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -27,12 +43,12 @@
     self.centeraverter = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
     self.centeraverter.layer.cornerRadius = 35;
     self.centeraverter.layer.masksToBounds = YES;
-    self.centeraverter.center = CGPointMake(self.center.x, self.center.y+20);
+    self.centeraverter.center = CGPointMake(self.center.x, self.center.y-15);
     self.centeraverter.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:self.centeraverter];
     
     _nameLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 18)];
-    _nameLable.center = CGPointMake(self.center.x, self.center.y+75);
+    _nameLable.center = CGPointMake(self.center.x, self.center.y+40);
     _nameLable.backgroundColor = [UIColor clearColor];
     _nameLable.font = [UIFont fontWithName:@"helvetica" size:16];
 //    _nameLable.text = @"小歪";

@@ -267,6 +267,37 @@
 		445048F61B671D680005D818 /* JCHATAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048F51B671D680005D818 /* JCHATAvatarView.m */; };
 		445048FF1B67583C0005D818 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */; };
 		44C3E7E61B6A24B200D3D825 /* sendmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */; };
+		44C3E9141B6B7A1E00D3D825 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E8FA1B6B7A1D00D3D825 /* Info.plist */; };
+		44C3E9151B6B7A1E00D3D825 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E8FC1B6B7A1D00D3D825 /* MASCompositeConstraint.m */; };
+		44C3E9161B6B7A1E00D3D825 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E8FF1B6B7A1D00D3D825 /* MASConstraint.m */; };
+		44C3E9171B6B7A1E00D3D825 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9011B6B7A1E00D3D825 /* MASConstraintMaker.m */; };
+		44C3E9181B6B7A1E00D3D825 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9031B6B7A1E00D3D825 /* MASLayoutConstraint.m */; };
+		44C3E9191B6B7A1E00D3D825 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9071B6B7A1E00D3D825 /* MASViewAttribute.m */; };
+		44C3E91A1B6B7A1E00D3D825 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9091B6B7A1E00D3D825 /* MASViewConstraint.m */; };
+		44C3E91B1B6B7A1E00D3D825 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E90B1B6B7A1E00D3D825 /* NSArray+MASAdditions.m */; };
+		44C3E91C1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E90E1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		44C3E91D1B6B7A1E00D3D825 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9101B6B7A1E00D3D825 /* View+MASAdditions.m */; };
+		44C3E91E1B6B7A1E00D3D825 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9131B6B7A1E00D3D825 /* ViewController+MASAdditions.m */; };
+		44C3E9211B6DE90D00D3D825 /* JCHATVoiceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9201B6DE90D00D3D825 /* JCHATVoiceTableCell.m */; };
+		44C3E9331B6F03E600D3D825 /* JCHATMessageAlertSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9321B6F03E600D3D825 /* JCHATMessageAlertSettingViewController.m */; };
+		44C3E9371B6F059400D3D825 /* JCHATMsgAlertSoundTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9351B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.m */; };
+		44C3E9381B6F059400D3D825 /* JCHATMsgAlertSoundTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9361B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.xib */; };
+		44C3E93E1B6F073100D3D825 /* set_btn_off_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E93A1B6F073100D3D825 /* set_btn_off_@2x.png */; };
+		44C3E93F1B6F073100D3D825 /* set_btn_off_@3x in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E93B1B6F073100D3D825 /* set_btn_off_@3x */; };
+		44C3E9401B6F073100D3D825 /* set_btn_on_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E93C1B6F073100D3D825 /* set_btn_on_@2x.png */; };
+		44C3E9411B6F073100D3D825 /* set_btn_on_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E93D1B6F073100D3D825 /* set_btn_on_@3x.png */; };
+		44C3E9451B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9431B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.m */; };
+		44C3E9461B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9441B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.xib */; };
+		44C3E94A1B6F0D8700D3D825 /* JCHATChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E9481B6F0D8700D3D825 /* JCHATChangeNameViewController.m */; };
+		44C3E94B1B6F0D8700D3D825 /* JCHATChangeNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9491B6F0D8700D3D825 /* JCHATChangeNameViewController.xib */; };
+		44C3E9501B6F416E00D3D825 /* set_btn_del_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E94C1B6F416E00D3D825 /* set_btn_del_@2x.png */; };
+		44C3E9511B6F416E00D3D825 /* set_btn_del_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E94D1B6F416E00D3D825 /* set_btn_del_@3x.png */; };
+		44C3E9531B6F416E00D3D825 /* set_btn_del_pre_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E94F1B6F416E00D3D825 /* set_btn_del_pre_@3x.png */; };
+		44C3E9551B6F47E300D3D825 /* set_btn_del_pre_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9541B6F47E300D3D825 /* set_btn_del_pre_@2x.png */; };
+		44C3E95A1B6F64F300D3D825 /* dialogue_nav_a_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9561B6F64F200D3D825 /* dialogue_nav_a_@2x.png */; };
+		44C3E95B1B6F64F300D3D825 /* dialogue_nav_a_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9571B6F64F200D3D825 /* dialogue_nav_a_@3x.png */; };
+		44C3E95C1B6F64F300D3D825 /* dialogue_nav_b_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9581B6F64F200D3D825 /* dialogue_nav_b_@2x.png */; };
+		44C3E95D1B6F64F300D3D825 /* dialogue_nav_b_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9591B6F64F300D3D825 /* dialogue_nav_b_@3x.png */; };
 		44D3DBBC1B550AB80051B3E2 /* JCHATSetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */; };
 		44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */; };
 		44D3DBC21B550E770051B3E2 /* login_20_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBE1B550E770051B3E2 /* login_20_pre@3x.png */; };
@@ -652,6 +683,57 @@
 		445048FD1B67583C0005D818 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
 		445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
 		44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sendmusic.mp3; sourceTree = "<group>"; };
+		44C3E8FA1B6B7A1D00D3D825 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44C3E8FB1B6B7A1D00D3D825 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
+		44C3E8FC1B6B7A1D00D3D825 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
+		44C3E8FD1B6B7A1D00D3D825 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
+		44C3E8FE1B6B7A1D00D3D825 /* MASConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraint.h; sourceTree = "<group>"; };
+		44C3E8FF1B6B7A1D00D3D825 /* MASConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraint.m; sourceTree = "<group>"; };
+		44C3E9001B6B7A1D00D3D825 /* MASConstraintMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraintMaker.h; sourceTree = "<group>"; };
+		44C3E9011B6B7A1E00D3D825 /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
+		44C3E9021B6B7A1E00D3D825 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASLayoutConstraint.h; sourceTree = "<group>"; };
+		44C3E9031B6B7A1E00D3D825 /* MASLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASLayoutConstraint.m; sourceTree = "<group>"; };
+		44C3E9041B6B7A1E00D3D825 /* Masonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Masonry.h; sourceTree = "<group>"; };
+		44C3E9051B6B7A1E00D3D825 /* MASUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASUtilities.h; sourceTree = "<group>"; };
+		44C3E9061B6B7A1E00D3D825 /* MASViewAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewAttribute.h; sourceTree = "<group>"; };
+		44C3E9071B6B7A1E00D3D825 /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		44C3E9081B6B7A1E00D3D825 /* MASViewConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewConstraint.h; sourceTree = "<group>"; };
+		44C3E9091B6B7A1E00D3D825 /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
+		44C3E90A1B6B7A1E00D3D825 /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASAdditions.h"; sourceTree = "<group>"; };
+		44C3E90B1B6B7A1E00D3D825 /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MASAdditions.m"; sourceTree = "<group>"; };
+		44C3E90C1B6B7A1E00D3D825 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		44C3E90D1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
+		44C3E90E1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
+		44C3E90F1B6B7A1E00D3D825 /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
+		44C3E9101B6B7A1E00D3D825 /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
+		44C3E9111B6B7A1E00D3D825 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		44C3E9121B6B7A1E00D3D825 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
+		44C3E9131B6B7A1E00D3D825 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
+		44C3E91F1B6DE90D00D3D825 /* JCHATVoiceTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATVoiceTableCell.h; sourceTree = "<group>"; };
+		44C3E9201B6DE90D00D3D825 /* JCHATVoiceTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATVoiceTableCell.m; sourceTree = "<group>"; };
+		44C3E9311B6F03E600D3D825 /* JCHATMessageAlertSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageAlertSettingViewController.h; sourceTree = "<group>"; };
+		44C3E9321B6F03E600D3D825 /* JCHATMessageAlertSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageAlertSettingViewController.m; sourceTree = "<group>"; };
+		44C3E9341B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMsgAlertSoundTableViewCell.h; sourceTree = "<group>"; };
+		44C3E9351B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMsgAlertSoundTableViewCell.m; sourceTree = "<group>"; };
+		44C3E9361B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATMsgAlertSoundTableViewCell.xib; sourceTree = "<group>"; };
+		44C3E93A1B6F073100D3D825 /* set_btn_off_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_btn_off_@2x.png"; sourceTree = "<group>"; };
+		44C3E93B1B6F073100D3D825 /* set_btn_off_@3x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "set_btn_off_@3x"; sourceTree = "<group>"; };
+		44C3E93C1B6F073100D3D825 /* set_btn_on_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_btn_on_@2x.png"; sourceTree = "<group>"; };
+		44C3E93D1B6F073100D3D825 /* set_btn_on_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_btn_on_@3x.png"; sourceTree = "<group>"; };
+		44C3E9421B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMsgAlertStateTableViewCell.h; sourceTree = "<group>"; };
+		44C3E9431B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMsgAlertStateTableViewCell.m; sourceTree = "<group>"; };
+		44C3E9441B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATMsgAlertStateTableViewCell.xib; sourceTree = "<group>"; };
+		44C3E9471B6F0D8700D3D825 /* JCHATChangeNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATChangeNameViewController.h; sourceTree = "<group>"; };
+		44C3E9481B6F0D8700D3D825 /* JCHATChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATChangeNameViewController.m; sourceTree = "<group>"; };
+		44C3E9491B6F0D8700D3D825 /* JCHATChangeNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATChangeNameViewController.xib; sourceTree = "<group>"; };
+		44C3E94C1B6F416E00D3D825 /* set_btn_del_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_btn_del_@2x.png"; sourceTree = "<group>"; };
+		44C3E94D1B6F416E00D3D825 /* set_btn_del_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_btn_del_@3x.png"; sourceTree = "<group>"; };
+		44C3E94F1B6F416E00D3D825 /* set_btn_del_pre_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_btn_del_pre_@3x.png"; sourceTree = "<group>"; };
+		44C3E9541B6F47E300D3D825 /* set_btn_del_pre_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_btn_del_pre_@2x.png"; sourceTree = "<group>"; };
+		44C3E9561B6F64F200D3D825 /* dialogue_nav_a_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dialogue_nav_a_@2x.png"; sourceTree = "<group>"; };
+		44C3E9571B6F64F200D3D825 /* dialogue_nav_a_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dialogue_nav_a_@3x.png"; sourceTree = "<group>"; };
+		44C3E9581B6F64F200D3D825 /* dialogue_nav_b_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dialogue_nav_b_@2x.png"; sourceTree = "<group>"; };
+		44C3E9591B6F64F300D3D825 /* dialogue_nav_b_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dialogue_nav_b_@3x.png"; sourceTree = "<group>"; };
 		44D3DBB91B550AB80051B3E2 /* JCHATSetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSetDetailViewController.h; sourceTree = "<group>"; };
 		44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSetDetailViewController.m; sourceTree = "<group>"; };
 		44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSetDetailViewController.xib; sourceTree = "<group>"; };
@@ -808,8 +890,8 @@
 				187181FD1AFB80BF00FB3168 /* JCHATTabBarViewController.m */,
 				187181FE1AFB80BF00FB3168 /* JCHATTabBarViewController.xib */,
 				187181FF1AFB80BF00FB3168 /* Login */,
-				187182061AFB80BF00FB3168 /* PersonInfo */,
 				1871821F1AFB80BF00FB3168 /* Register */,
+				187182061AFB80BF00FB3168 /* PersonInfo */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -907,6 +989,8 @@
 				187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */,
 				187181CD1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.h */,
 				187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */,
+				44C3E91F1B6DE90D00D3D825 /* JCHATVoiceTableCell.h */,
+				44C3E9201B6DE90D00D3D825 /* JCHATVoiceTableCell.m */,
 				443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */,
 				443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */,
 			);
@@ -974,12 +1058,17 @@
 				1871820C1AFB80BF00FB3168 /* JCHATSettingViewController.h */,
 				1871820D1AFB80BF00FB3168 /* JCHATSettingViewController.m */,
 				1871820E1AFB80BF00FB3168 /* JCHATSettingViewController.xib */,
+				44C3E9311B6F03E600D3D825 /* JCHATMessageAlertSettingViewController.h */,
+				44C3E9321B6F03E600D3D825 /* JCHATMessageAlertSettingViewController.m */,
 				1871820F1AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.h */,
 				187182101AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.m */,
 				187182111AFB80BF00FB3168 /* JCHATUpdatePasswordCtl.xib */,
 				187182121AFB80BF00FB3168 /* JCHATUserInfoViewController.h */,
 				187182131AFB80BF00FB3168 /* JCHATUserInfoViewController.m */,
 				187182141AFB80BF00FB3168 /* JCHATUserInfoViewController.xib */,
+				44C3E9471B6F0D8700D3D825 /* JCHATChangeNameViewController.h */,
+				44C3E9481B6F0D8700D3D825 /* JCHATChangeNameViewController.m */,
+				44C3E9491B6F0D8700D3D825 /* JCHATChangeNameViewController.xib */,
 				187182151AFB80BF00FB3168 /* View */,
 				AA4D05A61B43917B007D7B78 /* JCHATAboutViewController.h */,
 				AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */,
@@ -1006,6 +1095,12 @@
 				445048F51B671D680005D818 /* JCHATAvatarView.m */,
 				445048FD1B67583C0005D818 /* UIImageView+LBBlurredImage.h */,
 				445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */,
+				44C3E9341B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.h */,
+				44C3E9351B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.m */,
+				44C3E9361B6F059300D3D825 /* JCHATMsgAlertSoundTableViewCell.xib */,
+				44C3E9421B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.h */,
+				44C3E9431B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.m */,
+				44C3E9441B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1040,6 +1135,7 @@
 				1871827D1AFB80C000FB3168 /* face@2x.png */,
 				1871827E1AFB80C000FB3168 /* jianpan@2x.png */,
 				1871827F1AFB80C000FB3168 /* jiantou@2x.png */,
+				44C3E9391B6F073100D3D825 /* setting */,
 				187182801AFB80C000FB3168 /* login */,
 				187182A81AFB80C000FB3168 /* menu */,
 				187182BB1AFB80C000FB3168 /* menu_bar_bg@2x.png */,
@@ -1079,6 +1175,10 @@
 		187182431AFB80C000FB3168 /* chat */ = {
 			isa = PBXGroup;
 			children = (
+				44C3E9561B6F64F200D3D825 /* dialogue_nav_a_@2x.png */,
+				44C3E9571B6F64F200D3D825 /* dialogue_nav_a_@3x.png */,
+				44C3E9581B6F64F200D3D825 /* dialogue_nav_b_@2x.png */,
+				44C3E9591B6F64F300D3D825 /* dialogue_nav_b_@3x.png */,
 				187182441AFB80C000FB3168 /* add01@2x.png */,
 				187182451AFB80C000FB3168 /* add01@3x.png */,
 				187182461AFB80C000FB3168 /* add_37@2x.png */,
@@ -1286,6 +1386,54 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		44C3E8F91B6B7A1D00D3D825 /* Masonry */ = {
+			isa = PBXGroup;
+			children = (
+				44C3E8FA1B6B7A1D00D3D825 /* Info.plist */,
+				44C3E8FB1B6B7A1D00D3D825 /* MASCompositeConstraint.h */,
+				44C3E8FC1B6B7A1D00D3D825 /* MASCompositeConstraint.m */,
+				44C3E8FD1B6B7A1D00D3D825 /* MASConstraint+Private.h */,
+				44C3E8FE1B6B7A1D00D3D825 /* MASConstraint.h */,
+				44C3E8FF1B6B7A1D00D3D825 /* MASConstraint.m */,
+				44C3E9001B6B7A1D00D3D825 /* MASConstraintMaker.h */,
+				44C3E9011B6B7A1E00D3D825 /* MASConstraintMaker.m */,
+				44C3E9021B6B7A1E00D3D825 /* MASLayoutConstraint.h */,
+				44C3E9031B6B7A1E00D3D825 /* MASLayoutConstraint.m */,
+				44C3E9041B6B7A1E00D3D825 /* Masonry.h */,
+				44C3E9051B6B7A1E00D3D825 /* MASUtilities.h */,
+				44C3E9061B6B7A1E00D3D825 /* MASViewAttribute.h */,
+				44C3E9071B6B7A1E00D3D825 /* MASViewAttribute.m */,
+				44C3E9081B6B7A1E00D3D825 /* MASViewConstraint.h */,
+				44C3E9091B6B7A1E00D3D825 /* MASViewConstraint.m */,
+				44C3E90A1B6B7A1E00D3D825 /* NSArray+MASAdditions.h */,
+				44C3E90B1B6B7A1E00D3D825 /* NSArray+MASAdditions.m */,
+				44C3E90C1B6B7A1E00D3D825 /* NSArray+MASShorthandAdditions.h */,
+				44C3E90D1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.h */,
+				44C3E90E1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.m */,
+				44C3E90F1B6B7A1E00D3D825 /* View+MASAdditions.h */,
+				44C3E9101B6B7A1E00D3D825 /* View+MASAdditions.m */,
+				44C3E9111B6B7A1E00D3D825 /* View+MASShorthandAdditions.h */,
+				44C3E9121B6B7A1E00D3D825 /* ViewController+MASAdditions.h */,
+				44C3E9131B6B7A1E00D3D825 /* ViewController+MASAdditions.m */,
+			);
+			path = Masonry;
+			sourceTree = "<group>";
+		};
+		44C3E9391B6F073100D3D825 /* setting */ = {
+			isa = PBXGroup;
+			children = (
+				44C3E93A1B6F073100D3D825 /* set_btn_off_@2x.png */,
+				44C3E93B1B6F073100D3D825 /* set_btn_off_@3x */,
+				44C3E93C1B6F073100D3D825 /* set_btn_on_@2x.png */,
+				44C3E93D1B6F073100D3D825 /* set_btn_on_@3x.png */,
+				44C3E94C1B6F416E00D3D825 /* set_btn_del_@2x.png */,
+				44C3E94D1B6F416E00D3D825 /* set_btn_del_@3x.png */,
+				44C3E9541B6F47E300D3D825 /* set_btn_del_pre_@2x.png */,
+				44C3E94F1B6F416E00D3D825 /* set_btn_del_pre_@3x.png */,
+			);
+			path = setting;
+			sourceTree = "<group>";
+		};
 		6039B43A49478616C846695C /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1350,6 +1498,7 @@
 		6039B5CC50E06EAFD3390E5B /* External */ = {
 			isa = PBXGroup;
 			children = (
+				44C3E8F91B6B7A1D00D3D825 /* Masonry */,
 				6039BFD78E9C07C5645BE76E /* PreviewPicture */,
 				6039BCC351BDBF0E3134CC6D /* MBProgressHUD */,
 				6039B43A49478616C846695C /* SDWebImage */,
@@ -1534,8 +1683,11 @@
 				187183981AFB80C000FB3168 /* search_47@2x.png in Resources */,
 				44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */,
 				187183D91AFB80C000FB3168 /* menu_13@2x.png in Resources */,
+				44C3E94B1B6F0D8700D3D825 /* JCHATChangeNameViewController.xib in Resources */,
 				187183F41AFB80C000FB3168 /* RecordingSignal002@2x.png in Resources */,
+				44C3E9511B6F416E00D3D825 /* set_btn_del_@3x.png in Resources */,
 				1871837F1AFB80C000FB3168 /* delete_49@3x.png in Resources */,
+				44C3E95B1B6F64F300D3D825 /* dialogue_nav_a_@3x.png in Resources */,
 				1871838C1AFB80C000FB3168 /* keyboard_03@2x.png in Resources */,
 				187184121AFB80C000FB3168 /* wo_05@3x.png in Resources */,
 				187183911AFB80C000FB3168 /* otherChatBg@2x.png in Resources */,
@@ -1543,6 +1695,7 @@
 				187183B41AFB80C000FB3168 /* login_02@3x.png in Resources */,
 				1871840B1AFB80C000FB3168 /* setting_22@2x.png in Resources */,
 				1871838D1AFB80C000FB3168 /* keyboard_03@3x.png in Resources */,
+				44C3E95A1B6F64F300D3D825 /* dialogue_nav_a_@2x.png in Resources */,
 				187183A31AFB80C000FB3168 /* voice_02@3x.png in Resources */,
 				187183D51AFB80C000FB3168 /* login_19@3x.png in Resources */,
 				187184111AFB80C000FB3168 /* wo_05@2x.png in Resources */,
@@ -1560,6 +1713,7 @@
 				187183AF1AFB80C000FB3168 /* login_01.@2x.png in Resources */,
 				187183FD1AFB80C000FB3168 /* SenderVoiceNodePlaying001@2x.png in Resources */,
 				187183DA1AFB80C000FB3168 /* menu_13@3x in Resources */,
+				44C3E95D1B6F64F300D3D825 /* dialogue_nav_b_@3x.png in Resources */,
 				187183FB1AFB80C000FB3168 /* saoyisao@2x.png in Resources */,
 				187183F81AFB80C000FB3168 /* RecordingSignal006@2x.png in Resources */,
 				187183BE1AFB80C000FB3168 /* login_10.@2x.png in Resources */,
@@ -1567,6 +1721,7 @@
 				187184141AFB80C000FB3168 /* wo_20@3x.png in Resources */,
 				187183B91AFB80C000FB3168 /* login_04@2x.png in Resources */,
 				187183751AFB80C000FB3168 /* add_37@2x.png in Resources */,
+				44C3E9551B6F47E300D3D825 /* set_btn_del_pre_@2x.png in Resources */,
 				187183621AFB80C000FB3168 /* Images.xcassets in Resources */,
 				187183EF1AFB80C000FB3168 /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
 				187183221AFB80C000FB3168 /* JCHATSendMessageViewController.xib in Resources */,
@@ -1574,6 +1729,7 @@
 				187183BF1AFB80C000FB3168 /* login_10@2x.png in Resources */,
 				187183821AFB80C000FB3168 /* face_16@2x.png in Resources */,
 				1871839B1AFB80C000FB3168 /* select@3x.png in Resources */,
+				44C3E9401B6F073100D3D825 /* set_btn_on_@2x.png in Resources */,
 				187183E81AFB80C000FB3168 /* menu_bar_bg@2x.png in Resources */,
 				187184081AFB80C000FB3168 /* location_21@3x.png in Resources */,
 				187184171AFB80C000FB3168 /* zhaopian@2x.png in Resources */,
@@ -1585,6 +1741,7 @@
 				187183F71AFB80C000FB3168 /* RecordingSignal005@2x.png in Resources */,
 				187183611AFB80C000FB3168 /* JCHATRegisterViewController.xib in Resources */,
 				187183DE1AFB80C000FB3168 /* menu_16@3x in Resources */,
+				44C3E9141B6B7A1E00D3D825 /* Info.plist in Resources */,
 				AA4D05AA1B43917B007D7B78 /* JCHATAboutViewController.xib in Resources */,
 				187183CA1AFB80C000FB3168 /* login_15.@2x.png in Resources */,
 				187183591AFB80C000FB3168 /* JCHATPersonInfoCell.xib in Resources */,
@@ -1593,6 +1750,7 @@
 				1871835F1AFB80C000FB3168 /* JCHATRegisterDetailViewController.xib in Resources */,
 				187183B61AFB80C000FB3168 /* login_03@2x.png in Resources */,
 				187183801AFB80C000FB3168 /* deleteMan@2x.png in Resources */,
+				44C3E9411B6F073100D3D825 /* set_btn_on_@3x.png in Resources */,
 				187183E01AFB80C000FB3168 /* menu_18@3x in Resources */,
 				187183A91AFB80C000FB3168 /* chat_voice_03@2x.png in Resources */,
 				187184061AFB80C000FB3168 /* gender@3x.png in Resources */,
@@ -1600,6 +1758,7 @@
 				187183C71AFB80C000FB3168 /* login_14.@2x.png in Resources */,
 				1871838F1AFB80C000FB3168 /* location_31@3x.png in Resources */,
 				1871831D1AFB80C000FB3168 /* JCHATFriendDetailViewController.xib in Resources */,
+				44C3E93E1B6F073100D3D825 /* set_btn_off_@2x.png in Resources */,
 				187183AE1AFB80C000FB3168 /* jiantou@2x.png in Resources */,
 				187183901AFB80C000FB3168 /* mychatBg@2x.png in Resources */,
 				187183EE1AFB80C000FB3168 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
@@ -1621,6 +1780,7 @@
 				187183881AFB80C000FB3168 /* group_33@2x.png in Resources */,
 				187184011AFB80C000FB3168 /* shezhi@2x.png in Resources */,
 				187183D21AFB80C000FB3168 /* login_17@3x.png in Resources */,
+				44C3E9531B6F416E00D3D825 /* set_btn_del_pre_@3x.png in Resources */,
 				187184131AFB80C000FB3168 /* wo_20@2x.png in Resources */,
 				187183961AFB80C000FB3168 /* RecordingBkg@2x.png in Resources */,
 				187183281AFB80C000FB3168 /* JCHATDetailTableViewCell.xib in Resources */,
@@ -1653,6 +1813,7 @@
 				187183C21AFB80C000FB3168 /* login_11@2x.png in Resources */,
 				187183991AFB80C000FB3168 /* search_47@3x.png in Resources */,
 				1871834A1AFB80C000FB3168 /* JCHATTabBarViewController.xib in Resources */,
+				44C3E93F1B6F073100D3D825 /* set_btn_off_@3x in Resources */,
 				1871837E1AFB80C000FB3168 /* delete_49@2x.png in Resources */,
 				44D3DBC21B550E770051B3E2 /* login_20_pre@3x.png in Resources */,
 				187183CE1AFB80C000FB3168 /* login_16@2x.png in Resources */,
@@ -1675,6 +1836,7 @@
 				187183F61AFB80C000FB3168 /* RecordingSignal004@2x.png in Resources */,
 				187183C61AFB80C000FB3168 /* login_13@3x.png in Resources */,
 				18B8FDA91B3D23DB00538C00 /* receiveFail@2x.png in Resources */,
+				44C3E9501B6F416E00D3D825 /* set_btn_del_@2x.png in Resources */,
 				1871832C1AFB80C000FB3168 /* JCHATGroupSettingCell.xib in Resources */,
 				187183BD1AFB80C000FB3168 /* login_09@3x.png in Resources */,
 				187184161AFB80C000FB3168 /* yuyin@2x.png in Resources */,
@@ -1714,12 +1876,15 @@
 				187183711AFB80C000FB3168 /* bar_anxia@2x.png in Resources */,
 				44D3DBC51B550E770051B3E2 /* login_20@2x.png in Resources */,
 				187183721AFB80C000FB3168 /* bar_nor@2x.png in Resources */,
+				44C3E95C1B6F64F300D3D825 /* dialogue_nav_b_@2x.png in Resources */,
 				187183B71AFB80C000FB3168 /* login_03@3x.png in Resources */,
 				187183E21AFB80C000FB3168 /* menu_22@3x in Resources */,
 				1871838A1AFB80C000FB3168 /* headDefalt_34@2x.png in Resources */,
 				187183C81AFB80C000FB3168 /* login_14@2x.png in Resources */,
+				44C3E9381B6F059400D3D825 /* JCHATMsgAlertSoundTableViewCell.xib in Resources */,
 				1871840C1AFB80C000FB3168 /* setting_22@3x.png in Resources */,
 				1871837A1AFB80C000FB3168 /* camera_35@2x.png in Resources */,
+				44C3E9461B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.xib in Resources */,
 				187183C41AFB80C000FB3168 /* login_13.@2x.png in Resources */,
 				187183481AFB80C000FB3168 /* JCHATContactsViewController.xib in Resources */,
 				187183F11AFB80C000FB3168 /* RecordCancel@2x.png in Resources */,
@@ -1786,14 +1951,18 @@
 			files = (
 				187183521AFB80C000FB3168 /* JCHATSettingViewController.m in Sources */,
 				1871834D1AFB80C000FB3168 /* JCHATLoginViewController.m in Sources */,
+				44C3E91D1B6B7A1E00D3D825 /* View+MASAdditions.m in Sources */,
 				187183241AFB80C000FB3168 /* JCHATRawAudioDataPlayer.m in Sources */,
 				187183211AFB80C000FB3168 /* JCHATSendMessageViewController.m in Sources */,
 				187183601AFB80C000FB3168 /* JCHATRegisterViewController.m in Sources */,
 				1871831F1AFB80C000FB3168 /* JCHATSelectFriendsCtl.m in Sources */,
 				187183351AFB80C000FB3168 /* JCHATGroupPersonView.m in Sources */,
+				44C3E91C1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				187183121AFB80C000FB3168 /* AppDelegate.m in Sources */,
 				1871833A1AFB80C000FB3168 /* JCHATToolBar.m in Sources */,
 				1871834B1AFB80C000FB3168 /* JCHATAlreadyLoginViewController.m in Sources */,
+				44C3E9161B6B7A1E00D3D825 /* MASConstraint.m in Sources */,
+				44C3E9171B6B7A1E00D3D825 /* MASConstraintMaker.m in Sources */,
 				1871831A1AFB80C000FB3168 /* JCHATDetailsInfoViewController.m in Sources */,
 				1871832D1AFB80C000FB3168 /* JCHATImgTableViewCell.m in Sources */,
 				1871835C1AFB80C000FB3168 /* JCHATSettingCell.m in Sources */,
@@ -1804,11 +1973,15 @@
 				187183411AFB80C000FB3168 /* JCHATAudioPlayerHelper.m in Sources */,
 				1871833F1AFB80C000FB3168 /* XHVoiceRecordHelper.m in Sources */,
 				187183581AFB80C000FB3168 /* JCHATPersonInfoCell.m in Sources */,
+				44C3E9191B6B7A1E00D3D825 /* MASViewAttribute.m in Sources */,
+				44C3E9331B6F03E600D3D825 /* JCHATMessageAlertSettingViewController.m in Sources */,
 				187183401AFB80C000FB3168 /* XHVoiceRecordHUD.m in Sources */,
 				187183231AFB80C000FB3168 /* JCHATChatModel.m in Sources */,
 				187183471AFB80C000FB3168 /* JCHATContactsViewController.m in Sources */,
 				187183381AFB80C000FB3168 /* JCHATMoreView.m in Sources */,
 				187183371AFB80C000FB3168 /* JCHATMessageTextView.m in Sources */,
+				44C3E9211B6DE90D00D3D825 /* JCHATVoiceTableCell.m in Sources */,
+				44C3E91B1B6B7A1E00D3D825 /* NSArray+MASAdditions.m in Sources */,
 				1871835A1AFB80C000FB3168 /* JCHATSetting_Cell.m in Sources */,
 				1871832E1AFB80C000FB3168 /* JCHATSelectFriendCell.m in Sources */,
 				187183501AFB80C000FB3168 /* JCHATPersonViewController.m in Sources */,
@@ -1826,8 +1999,11 @@
 				187183541AFB80C000FB3168 /* JCHATUpdatePasswordCtl.m in Sources */,
 				443304AA1B5F37A500430840 /* CExpandHeader.m in Sources */,
 				1871831E1AFB80C000FB3168 /* JCHATGroupSettingCtl.m in Sources */,
+				44C3E91A1B6B7A1E00D3D825 /* MASViewConstraint.m in Sources */,
+				44C3E9371B6F059400D3D825 /* JCHATMsgAlertSoundTableViewCell.m in Sources */,
 				187183301AFB80C000FB3168 /* JCHATShowTimeCell.m in Sources */,
 				187183181AFB80C000FB3168 /* JCHATChatViewController.m in Sources */,
+				44C3E9151B6B7A1E00D3D825 /* MASCompositeConstraint.m in Sources */,
 				187183561AFB80C000FB3168 /* JCHATUserInfoViewController.m in Sources */,
 				1871834F1AFB80C000FB3168 /* JCHATNewsReminderCtl.m in Sources */,
 				187183491AFB80C000FB3168 /* JCHATTabBarViewController.m in Sources */,
@@ -1864,7 +2040,11 @@
 				443E40F31B53BD2A00F46651 /* JCHATMessageViewController.m in Sources */,
 				6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */,
 				6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */,
+				44C3E9181B6B7A1E00D3D825 /* MASLayoutConstraint.m in Sources */,
+				44C3E91E1B6B7A1E00D3D825 /* ViewController+MASAdditions.m in Sources */,
 				6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */,
+				44C3E94A1B6F0D8700D3D825 /* JCHATChangeNameViewController.m in Sources */,
+				44C3E9451B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.m in Sources */,
 				6039B40AE179D5BE54BA7580 /* JCHATStringUtils.m in Sources */,
 				6039B1E9989D1A1D82C2D934 /* NSDate+Utilities.m in Sources */,
 			);
@@ -2017,6 +2197,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
+					"$(PROJECT_DIR)/build/Release-iphoneos",
+					"$(PROJECT_DIR)/Pods",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -2058,6 +2240,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
+					"$(PROJECT_DIR)/build/Release-iphoneos",
+					"$(PROJECT_DIR)/Pods",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -2070,6 +2254,119 @@
 				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
 			};
 			name = Release;
+		};
+		44C3E9221B6E768900D3D825 /* ad-hoc Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "ad-hoc Profile";
+		};
+		44C3E9231B6E768900D3D825 /* ad-hoc Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F972D5A42DC451DE90C0BF66 /* Pods-极光IM.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JChat/lib",
+					"/Users/xiaomeng/JPUSHIM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
+					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
+				);
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/JChat/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
+					"$(PROJECT_DIR)/build/Release-iphoneos",
+					"$(PROJECT_DIR)/Pods",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "$(inherited)";
+				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "极光IM";
+				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
+				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
+				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
+			};
+			name = "ad-hoc Profile";
+		};
+		44C3E9241B6E768900D3D825 /* ad-hoc Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/JChat/lib",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "JChat Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
+			};
+			name = "ad-hoc Profile";
 		};
 		8F8840AC1B159E7500BDC126 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2148,6 +2445,7 @@
 			buildConfigurations = (
 				18AB9CAD1A43BCB7007B2A04 /* Debug */,
 				18AB9CAE1A43BCB7007B2A04 /* Release */,
+				44C3E9221B6E768900D3D825 /* ad-hoc Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2157,6 +2455,7 @@
 			buildConfigurations = (
 				18AB9CB01A43BCB7007B2A04 /* Debug */,
 				18AB9CB11A43BCB7007B2A04 /* Release */,
+				44C3E9231B6E768900D3D825 /* ad-hoc Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2166,6 +2465,7 @@
 			buildConfigurations = (
 				8F8840AC1B159E7500BDC126 /* Debug */,
 				8F8840AD1B159E7500BDC126 /* Release */,
+				44C3E9241B6E768900D3D825 /* ad-hoc Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

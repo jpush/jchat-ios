@@ -103,7 +103,6 @@
               completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
-        
         AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
         [appDelegate.tabBarCtl setSelectedIndex:0];
         // 显示登录状态？
@@ -113,7 +112,8 @@
 //          [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
 //          pushFlag = NO;
 //        }
-        [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
+//        [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
+        appDelegate.window.rootViewController = appDelegate.tabBarCtl;
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];

@@ -53,9 +53,8 @@
   self.settingTableView.dataSource = self;
   self.settingTableView.delegate = self;
 
-  self.settingTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.settingTableView.separatorColor = [UIColor clearColor];
-//  self.settingTableView.tableHeaderView = _bgView;
+  self.settingTableView.tableFooterView = [[UIView alloc] init];
+
   [self setAvatar];
   
   if ([JMSGUser getMyInfo].nickname) {
@@ -80,7 +79,7 @@
 - (void)setAvatar {
   
   //设置背景图片
-  _bgView = [[JCHATAvatarView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, 240)/*(kApplicationHeight) / 2)*/];
+  _bgView = [[JCHATAvatarView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, 176)/*(kApplicationHeight) / 2)*/];
   [_bgView setUserInteractionEnabled:YES];
 
 
@@ -236,6 +235,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
+  [self.settingTableView reloadData];
   [self.navigationController.navigationBar setHidden:NO];
   [self.navigationController setNavigationBarHidden:NO];
   self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
@@ -316,7 +316,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 56, kApplicationWidth, 0.5)];
     [line setBackgroundColor:UIColorFromRGB(0xd0d0cf)];
-    [cell addSubview:line];
+
   }
   cell.nickNameBtn.text = self.titleArr[indexPath.row];
   cell.headImgView.image = [UIImage imageNamed:self.imgArr[indexPath.row]];
