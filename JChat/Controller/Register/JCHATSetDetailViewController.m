@@ -21,9 +21,8 @@
 @implementation JCHATSetDetailViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
+  [super viewDidLoad];
+  // Do any additional setup after loading the view from its nib.
   self.navigationItem.hidesBackButton = YES;
   _doneBtn.backgroundColor = UIColorFromRGB(0xb9ebb8);
   _doneBtn.layer.cornerRadius = 5;
@@ -33,14 +32,11 @@
   _setAvatarBtn.layer.masksToBounds = YES;
 }
 
-
-
 - (IBAction)clickToFinish:(id)sender {
   [JMSGUser updateMyInfoWithParameter:_nameTextF.text withType:kJMSGNickname completionHandler:^(id resultObject, NSError *error) {
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
     appDelegate.window.rootViewController = appDelegate.tabBarCtl;
     
-
   }];
   
 }

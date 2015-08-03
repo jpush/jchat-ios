@@ -8,7 +8,6 @@
 #import "JCHATCustomFormatter.h"
 #import "JCHATStringUtils.h"
 #import "JCHATAlreadyLoginViewController.h"
-
 #import <JMessage/JMessage.h>
 
 @implementation AppDelegate
