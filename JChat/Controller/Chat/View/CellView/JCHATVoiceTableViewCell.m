@@ -50,7 +50,7 @@
     [self.voiceImgView setBackgroundColor:[UIColor clearColor]];
     [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying.png"]];
     [self addSubview:self.voiceTimeLable];
-    [self.voiceImgView setFrame:CGRectMake(30, 5, 20, 30)];
+    [self.voiceImgView setFrame:CGRectMake(30, 5, 9, 30)];
 
     [self.voiceTimeLable setBackgroundColor:[UIColor clearColor]];
     [self.voiceTimeLable setFrame:CGRectMake(5, 5, 45, 30)];

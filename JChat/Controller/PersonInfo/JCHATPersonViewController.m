@@ -12,7 +12,7 @@
 #import "MBProgressHUD+Add.h"
 #import "JCHATChatTable.h"
 #import <JMessage/JMessage.h>
-
+#import "JCHATChangeNameViewController.h"
 
 @interface JCHATPersonViewController () <
     TouchTableViewDelegate,
@@ -205,12 +205,21 @@
     _selectFlagGender = YES;
     [self showSelectGenderView:YES];
   }else {
-    NSArray *titleArr = @[@"输入昵称", @"输入性别", @"输入地区", @"个性签名"];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[titleArr objectAtIndex:indexPath.row] message:nil
-                                                       delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alertView.tag = indexPath.row;
-    [alertView show];
+//    NSArray *titleArr = @[@"输入昵称", @"输入性别", @"输入地区", @"个性签名"];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[titleArr objectAtIndex:indexPath.row] message:nil
+//                                                       delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    alertView.tag = indexPath.row;
+//    [alertView show];
+    JCHATChangeNameViewController *changeNameVC = [[JCHATChangeNameViewController alloc] init];
+    if (indexPath.row == 0) {
+      changeNameVC.updateType = kJMSGNickname;
+    }else if(indexPath.row == 2) {
+      changeNameVC.updateType = kJMSGRegion;
+    }else if(indexPath.row == 3) {
+      changeNameVC.updateType = kJMSGSignature;
+    }
+    [self.navigationController pushViewController:changeNameVC animated:YES];
   }
 }
 
@@ -309,6 +318,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
+  [self loadUserInfoData];
+  [_personTabl reloadData];
   [self.navigationController setNavigationBarHidden:NO];
   // 禁用 iOS7 返回手势
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
