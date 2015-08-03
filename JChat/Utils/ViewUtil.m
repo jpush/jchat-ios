@@ -47,4 +47,20 @@
                                             options:nil];
   return [nibs objectAtIndex:0];
 }
+
+
++ (UITableViewCell *)table:(UITableView *)table nib:(char *)nib {
+  UITableViewCell *cell = (UITableViewCell *)[table dequeueReusableCellWithIdentifier:[NSString stringWithUTF8String:nib]];
+  if (cell == nil) {
+    cell = (UITableViewCell *)[self nib:nib];
+  }
+  return cell;
+}
+
++ (void)table:(UITableView *)table registerNib:(char *)nib {
+  [table registerNib:[UINib nibWithNibName:[NSString stringWithUTF8String:nib] bundle:nil] forCellReuseIdentifier:[NSString stringWithUTF8String:nib]];
+}
+
+
+
 @end

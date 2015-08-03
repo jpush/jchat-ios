@@ -24,13 +24,22 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-
+  UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+  backBtn.frame = CGRectMake(0, 0, 44, 44);
+  
+  [backBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [backBtn addTarget:self action:@selector(doBack:) forControlEvents:UIControlEventTouchUpInside];
+  
+  UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+  self.navigationItem.leftBarButtonItem = backItem;
+  
   self.registerBtn.layer.cornerRadius = 4;
   [self.registerBtn.layer setMasksToBounds:YES];
   self.registerBtn.backgroundColor = UIColorFromRGB(0x3f80de);
   [self.registerBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x346fc3) frame:self.registerBtn.frame] forState:UIControlStateHighlighted];
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha = 0.8;
+  self.navigationController.navigationBar.translucent = NO;
+  
   self.title = @"极光IM";
   self.passwordField.secureTextEntry = YES;
   self.passwordField.keyboardType = UIKeyboardTypeDefault;
@@ -47,6 +56,13 @@
 
   [self.navigationController.navigationBar setTitleTextAttributes:dic];
 }
+
+
+-(void)doBack:(id)sender
+{
+  [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
@@ -81,6 +97,8 @@
                   completionHandler:^(id resultObject, NSError *error) {
                     if (error == nil) {
                       [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
+                      [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                      
                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                       JCHATSetDetailViewController *detailVC = [[JCHATSetDetailViewController alloc] init];
                       [self.navigationController pushViewController:detailVC animated:YES];
