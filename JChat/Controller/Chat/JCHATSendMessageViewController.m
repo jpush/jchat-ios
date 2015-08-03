@@ -25,6 +25,7 @@
 #import "JCHATLoginViewController.h"
 //#import "JMSGConversation+Inner.h"
 #import "ViewUtil.h"
+#import "JCHATVoiceTableCell.h"
 
 #define interval 60*2
 
@@ -214,8 +215,13 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 -(void)initNavigation {
   _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [_rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
-  [_rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
+  [_rightBtn setFrame:CGRectMake(0, 0, 14, 17)];
+  if (self.conversation.chatType == kJMSGSingle) {
+    [_rightBtn setImage:[UIImage imageNamed:@"dialogue_nav_b_"] forState:UIControlStateNormal];
+   }else {
+    [_rightBtn setImage:[UIImage imageNamed:@"dialogue_nav_a_"] forState:UIControlStateNormal];
+   }
+//  _rightBtn.backgroundColor = [UIColor greenColor];
   [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
   
@@ -906,8 +912,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     CGRect keyBoardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
   
-
-  
   [self.messageTableView setNeedsLayout];
     [self.toolBarContainer setNeedsLayout];
   [self.moreViewContainer setNeedsLayout];
@@ -977,12 +981,17 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
   self.toolBarToBottomConstrait.constant = 0;
   self.moreViewHeight.constant = 227;
-  
-  
-  [UIView animateWithDuration:0.3 animations:^{
-
-    [self scrollToEnd];
+  [self.messageTableView setNeedsDisplay];
+  [self.moreViewContainer setNeedsLayout];
+  [self.toolBarContainer setNeedsLayout];
+  [UIView animateWithDuration:0.25 animations:^{
+  self.toolBarToBottomConstrait.constant = 0;
+  self.moreViewHeight.constant = 227;
+  [self.messageTableView layoutIfNeeded];
+  [self.toolBarContainer layoutIfNeeded];
+  [self.moreViewContainer layoutIfNeeded];
   }];
+  [self scrollToBottomAnimated:NO];
 }
 
 -(void)noPressmoreBtnClick:(UIButton *)btn {
@@ -1240,10 +1249,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     }else if (model.type == kJMSGVoiceMessage)
     {
         static NSString *cellIdentifier = @"voiceCell";
-        JCHATVoiceTableViewCell *cell = (JCHATVoiceTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        JCHATVoiceTableCell *cell = (JCHATVoiceTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
-            cell = [[JCHATVoiceTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell = [[JCHATVoiceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
+//      JCHATVoiceTableCell *cell = CELL(tableView, JCHATVoiceTableCell);
       
       JMSGVoiceMessage *voiceMessage = _JMSgMessageDic[model.messageId];
       [cell setCellData:model delegate:self message:voiceMessage indexPath:indexPath];

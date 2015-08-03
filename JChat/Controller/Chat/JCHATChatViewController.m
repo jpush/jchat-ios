@@ -271,6 +271,7 @@
 
 - (void)getConversationList {
     [self.addBgView setHidden:YES];
+
     [JMSGConversation getConversationListWithCompletionHandler:^(id resultObject, NSError *error) {
       JPIMMAINTHEAD(^{
 
