@@ -67,7 +67,7 @@
   
   NSShadow *shadow = [[NSShadow alloc]init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0,-1);
+  shadow.shadowOffset = CGSizeMake(0,0);
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupChange object:nil];
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);

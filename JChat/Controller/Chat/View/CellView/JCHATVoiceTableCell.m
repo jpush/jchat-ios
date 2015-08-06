@@ -53,14 +53,15 @@
 //    self.voiceImgView = [[UIImageView alloc] init];
     self.voiceImgView = [UIImageView new];
     [self.voiceImgView setBackgroundColor:[UIColor clearColor]];
-    [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying.png"]];
+    [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
     [self addSubview:self.voiceTimeLable];
 //    [self.voiceImgView setFrame:CGRectMake(30, 5, 9, 30)];//!
 
     
     [self.voiceTimeLable setBackgroundColor:[UIColor clearColor]];
 //    [self.voiceTimeLable setFrame:CGRectMake(5, 5, 45, 30)];
-    self.voiceTimeLable.textAlignment = NSTextAlignmentCenter;
+    [self.voiceTimeLable setTextColor:UIColorFromRGB(0x636363)];
+    self.voiceTimeLable.textAlignment = NSTextAlignmentLeft;
     self.voiceTimeLable.font = [UIFont systemFontOfSize:18];
     self.voiceTimeLable.text = @"60''";
     [self.voiceBgView addSubview:self.voiceImgView];
@@ -159,6 +160,20 @@
   return chatBgViewWidth;
 }
 
+- (void)updateTimeLable:(UILabel *)lable {
+  CGSize thelableSize;
+  if([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending) {
+    thelableSize = [lable.text sizeWithFont:[UIFont systemFontOfSize:18]];
+  }else {
+    thelableSize = [lable.text  sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]}];
+  }
+  [lable mas_updateConstraints:^(MASConstraintMaker *make) {
+//    make.size.mas_equalTo(thelableSize);
+    make.width.mas_equalTo(thelableSize.width+5);
+  }];
+  
+}
+
 - (void)headAddGesture {
   [self.headView setUserInteractionEnabled:YES];
   [self.voiceBgView setUserInteractionEnabled:YES];
@@ -236,7 +251,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   } else {
     voiceImagePreStr = @"ReceiverVoiceNodePlaying00";
   }
-  self.voiceImgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%zd.png", voiceImagePreStr, self.index % 4]];
+  self.voiceImgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%zd", voiceImagePreStr, self.index % 4]];
   if (self.playing) {
     self.index++;
     [self performSelector:@selector(changeVoiceImage) withObject:nil afterDelay:0.25];
@@ -266,9 +281,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   self.delegate = (id) delegate;
   [self.voiceBgView setImage:[UIImage imageNamed:@""]];
   if (self.model.who) {
-    [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying.png"]];
+    [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
   } else {
-    [self.voiceImgView setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying.png"]];
+    [self.voiceImgView setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying"]];
   }
   if (!_model.sendFlag) {
     _model.sendFlag = YES;
@@ -435,7 +450,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     }];
 ////    [self.voiceImgView setFrame:CGRectMake(20, 15, 20, 20)];
     [self.voiceImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.size.mas_equalTo(CGSizeMake(20, 20));
+      make.size.mas_equalTo(CGSizeMake(9, 16));
       make.right.mas_equalTo(self.voiceBgView.mas_right).with.offset(-15);
       make.centerY.mas_equalTo(self.voiceBgView);
     }];
@@ -454,7 +469,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(15, 17));
       make.centerY.mas_equalTo(self.voiceBgView);
-      make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-10);
+      make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-1);
     }];
 ////    [self.readView setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 10, 5, 8, 8)];
     [self.readView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -486,7 +501,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     }];
     ////    [self.voiceImgView setFrame:CGRectMake(20, 15, 20, 20)];
     [self.voiceImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.size.mas_equalTo(CGSizeMake(20, 20));
+      make.size.mas_equalTo(CGSizeMake(9, 16));
       make.left.mas_equalTo(self.voiceBgView.mas_left).with.offset(15);
       make.centerY.mas_equalTo(self.voiceBgView);
     }];
@@ -505,7 +520,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(15, 17));
       make.centerY.mas_equalTo(self.voiceBgView);
-      make.left.mas_equalTo(self.voiceTimeLable.mas_right).with.offset(10);
+      make.left.mas_equalTo(self.voiceTimeLable.mas_right).with.offset(1);
     }];
     ////    [self.readView setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 10, 5, 8, 8)];
     [self.readView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -514,6 +529,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
       make.top.mas_equalTo(self).with.offset(5);
     }];
   }
+  [self updateTimeLable:self.voiceTimeLable];
   UIImage *newImg = [img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
   [self.voiceBgView setImage:newImg];
 }
