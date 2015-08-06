@@ -4,7 +4,7 @@
 #import "JCHATSendMessageViewController.h"
 #import "JCHATSelectFriendsCtl.h"
 #import "MBProgressHUD+Add.h"
-
+#import "JCHATAlertViewWait.h"
 @interface JCHATChatViewController ()
 {
    __block NSMutableArray *_conversationArr;
@@ -19,6 +19,12 @@
 
 @implementation JCHATChatViewController
 
+- (IBAction)clickToshowAlert:(id)sender {
+  [[JCHATAlertViewWait ins] showInView:self.view];
+}
+- (IBAction)hidenAll:(id)sender {
+  [[JCHATAlertViewWait ins] hidenAll];
+}
 @synthesize searchDisplayController;
 
 - (void)viewDidLoad {
