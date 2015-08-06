@@ -15,6 +15,8 @@
 #import "JCHATFileManager.h"
 #import "ViewUtil.h"
 #import "Masonry.h"
+#import "JCHATAudioPlayerHelper.h"
+
 
 @implementation JCHATToolBar
 
@@ -127,6 +129,7 @@
 
 - (void)holdDownButtonTouchDown {
     if ([self.delegate respondsToSelector:@selector(didStartRecordingVoiceAction)]) {
+        [[JCHATAudioPlayerHelper shareInstance] stopAudio];
         [self.delegate didStartRecordingVoiceAction];
     }
 }

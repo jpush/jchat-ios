@@ -26,7 +26,8 @@
   self.baseLine.backgroundColor = UIColorFromRGB(0x3f80de);
   [self.nameTextField setTextColor:UIColorFromRGB(0x2d2d2d)];
   [self.suggestLabel setTextColor:UIColorFromRGB(0xbbbbbb)];
-
+//  [self.nameTextField setValue:UIColorFromRGB(0x000000) forKeyPath:@"_placeholderLabel.textColor"];
+  [self.nameTextField setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
   UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
   titleLabel.backgroundColor = [UIColor clearColor];
   titleLabel.font = [UIFont boldSystemFontOfSize:20];
@@ -39,13 +40,15 @@
     self.charNumber.hidden = YES;
     self.suggestLabel.text = @"好名字可以让你的朋友更加容易记住你";
     self.nameTextField.placeholder = user.nickname;
+//    self.baselineTop.constant = 58;
     titleLabel.text = @"修改姓名";
   }
   if (self.updateType == 4) {
     self.deleteButton.hidden = YES;
     self.charNumber.hidden = YES;
     titleLabel.text = @"修改地区";
-    self.nameTextField = user.region;
+//    self.baselineTop.constant = 58;
+    self.nameTextField.placeholder = user.region;
   }
   if (self.updateType == 2) {
     self.suggestLabel.hidden = YES;
