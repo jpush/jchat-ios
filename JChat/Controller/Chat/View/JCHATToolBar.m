@@ -316,7 +316,10 @@
   
   _toolbar = NIB(JCHATToolBar);
 
-  _toolbar.frame =CGRectMake(0, 0, 320, 45);
+//  _toolbar.frame =CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _toolbar.frame =CGRectMake(0, 0, 200, self.frame.size.height);
+  _toolbar.backgroundColor = [UIColor yellowColor];
+  
 
 
 //  [_toolbar drawRect:_toolbar.frame];
