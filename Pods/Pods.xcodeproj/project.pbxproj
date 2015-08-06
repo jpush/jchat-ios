@@ -352,6 +352,7 @@
 				EE71DC99CB5FF58ACC4CCD5D /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		B931AE85C9CC260C6576CA17 /* Core */ = {
 			isa = PBXGroup;
