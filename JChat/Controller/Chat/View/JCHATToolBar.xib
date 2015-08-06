@@ -16,7 +16,6 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="KNP-M4-PJ8"/>
-                        <constraint firstAttribute="width" constant="235" id="hhV-iL-6fJ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
@@ -52,11 +51,12 @@
             <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="VuO-mV-udy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="FB0-LK-lnP"/>
+                <constraint firstItem="VuO-mV-udy" firstAttribute="leading" secondItem="rpU-3b-2dD" secondAttribute="trailing" constant="8" id="ILu-91-9Uh"/>
                 <constraint firstItem="YCs-zm-hKL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="MLM-D0-NAS"/>
                 <constraint firstItem="YCs-zm-hKL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="SKu-EB-2Ey"/>
                 <constraint firstItem="rpU-3b-2dD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="W1Q-Gc-ke8"/>
+                <constraint firstAttribute="trailing" secondItem="VuO-mV-udy" secondAttribute="trailing" constant="8" id="fBX-Bl-jGB"/>
                 <constraint firstItem="rpU-3b-2dD" firstAttribute="leading" secondItem="YCs-zm-hKL" secondAttribute="trailing" constant="8" id="o1K-RI-UVr"/>
-                <constraint firstItem="VuO-mV-udy" firstAttribute="leading" secondItem="rpU-3b-2dD" secondAttribute="trailing" constant="8" id="yFb-j6-FDN"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
