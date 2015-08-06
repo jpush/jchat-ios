@@ -14,6 +14,8 @@
 #import "NSString+MessageInputView.h"
 #import "JCHATFileManager.h"
 #import "ViewUtil.h"
+#import "Masonry.h"
+
 @implementation JCHATToolBar
 
 - (instancetype)init
@@ -79,8 +81,17 @@
 
 - (void)drawRect:(CGRect)rect {
     if (self.startRecordButton){
-        self.startRecordButton.frame = CGRectMake(self.voiceButton.frame.origin.x+self.voiceButton.frame.size.width+5, 7.5, self.textView.bounds.size.width+5, 30);
-        return;
+//        self.startRecordButton.frame = CGRectMake(self.voiceButton.frame.origin.x+self.voiceButton.frame.size.width+5, 7.5, self.textView.bounds.size.width+5, 30);
+      [self.startRecordButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        
+      }];
+      [self.startRecordButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(30);
+        make.top.mas_equalTo(self).with.offset(7.5);
+        make.left.mas_equalTo(self.voiceButton.mas_right).with.offset(5);
+        make.right.mas_equalTo(self.addButton.mas_left).with.offset(-5);
+      }];
+      return;
     }
     self.voiceButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.voiceButton setImage:[UIImage imageNamed:@"voice_02.png"] forState:UIControlStateNormal];
@@ -91,7 +102,9 @@
     [self addGestureRecognizer:gesture];
     [self setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.bounds.size.width, 45)];
 
-    self.startRecordButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    self.startRecordButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  self.startRecordButton = [UIButton new];
+  
     [self.startRecordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.startRecordButton setTitleColor: [UIColor whiteColor] forState:UIControlStateHighlighted];
     [self.startRecordButton setTitle:@"按住 说话" forState:UIControlStateNormal];
@@ -316,7 +329,10 @@
   
   _toolbar = NIB(JCHATToolBar);
 
-  _toolbar.frame =CGRectMake(0, 0, 320, 45);
+//  _toolbar.frame =CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _toolbar.frame =CGRectMake(0, 0, 200, self.frame.size.height);
+  _toolbar.backgroundColor = [UIColor yellowColor];
+  
 
 
 //  [_toolbar drawRect:_toolbar.frame];
