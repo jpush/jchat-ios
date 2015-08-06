@@ -248,6 +248,7 @@
 		445048F61B671D680005D818 /* JCHATAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048F51B671D680005D818 /* JCHATAvatarView.m */; };
 		445048FF1B67583C0005D818 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */; };
 		44B2813F1B72F2D2009EB372 /* JCHATTextTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */; };
+		44B281421B732D64009EB372 /* JCHATAlertViewWait.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B281411B732D64009EB372 /* JCHATAlertViewWait.m */; };
 		44C3E7E61B6A24B200D3D825 /* sendmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */; };
 		44C3E9141B6B7A1E00D3D825 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E8FA1B6B7A1D00D3D825 /* Info.plist */; };
 		44C3E9151B6B7A1E00D3D825 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E8FC1B6B7A1D00D3D825 /* MASCompositeConstraint.m */; };
@@ -667,6 +668,8 @@
 		445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
 		44B2813D1B72F2D2009EB372 /* JCHATTextTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATTextTableCell.h; sourceTree = "<group>"; };
 		44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATTextTableCell.m; sourceTree = "<group>"; };
+		44B281401B732D64009EB372 /* JCHATAlertViewWait.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAlertViewWait.h; sourceTree = "<group>"; };
+		44B281411B732D64009EB372 /* JCHATAlertViewWait.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAlertViewWait.m; sourceTree = "<group>"; };
 		44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sendmusic.mp3; sourceTree = "<group>"; };
 		44C3E8FA1B6B7A1D00D3D825 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44C3E8FB1B6B7A1D00D3D825 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
@@ -1512,6 +1515,8 @@
 				6039B43A49478616C846695C /* SDWebImage */,
 				6039B6B7F476CC918C72C26B /* JCHATCustomFormatter.m */,
 				6039B5CD3A2AEA7D09ABF7ED /* JCHATCustomFormatter.h */,
+				44B281401B732D64009EB372 /* JCHATAlertViewWait.h */,
+				44B281411B732D64009EB372 /* JCHATAlertViewWait.m */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -2055,6 +2060,7 @@
 				6039B4D8DBD38B846DEA54DA /* XHVoiceCommonHelper.m in Sources */,
 				44C3E94A1B6F0D8700D3D825 /* JCHATChangeNameViewController.m in Sources */,
 				44C3E9451B6F095700D3D825 /* JCHATMsgAlertStateTableViewCell.m in Sources */,
+				44B281421B732D64009EB372 /* JCHATAlertViewWait.m in Sources */,
 				6039B40AE179D5BE54BA7580 /* JCHATStringUtils.m in Sources */,
 				6039B1E9989D1A1D82C2D934 /* NSDate+Utilities.m in Sources */,
 			);
