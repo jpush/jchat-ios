@@ -69,7 +69,7 @@
 
   NSShadow *shadow = [[NSShadow alloc]init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0,-1);
+  shadow.shadowOffset = CGSizeMake(0,0);
   [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    [UIColor whiteColor], NSForegroundColorAttributeName,
                                                                    shadow,NSShadowAttributeName,
@@ -109,7 +109,7 @@
   // searchResultsDelegate 就是 UITableViewDelegate
   searchDisplayController.searchResultsDelegate = self;
 
-  self.addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 65, 100, 100)];
+  self.addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 1, 100, 100)];
   [self.addBgView setBackgroundColor:[UIColor clearColor]];
   [self.addBgView setUserInteractionEnabled:YES];
   UIImage *frameImg =[UIImage imageNamed:@"frame"];
@@ -286,6 +286,7 @@
         }else {
           _conversationArr = nil;
         }
+        NSLog(@"huangmin   reload  %@",_conversationArr);
         [self.chatTableView reloadData];
       });
     }];

@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f1P-Zd-3L0">
-                    <rect key="frame" x="40" y="35" width="490" height="22"/>
+                    <rect key="frame" x="30" y="35" width="500" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="MTB-La-JZw"/>
                     </constraints>
@@ -36,7 +36,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="好名字可以让你的朋友更加容易记住你" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJo-i4-EMh">
-                    <rect key="frame" x="8" y="65" width="310" height="13"/>
+                    <rect key="frame" x="30" y="65" width="310" height="13"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="310" id="aFQ-kn-NYP"/>
                         <constraint firstAttribute="height" constant="13" id="qCH-4f-RTk"/>
@@ -74,14 +74,14 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="eRg-Qa-9An" secondAttribute="trailing" constant="13" id="Doq-YU-Rah"/>
                 <constraint firstAttribute="trailing" secondItem="pnT-h8-KgF" secondAttribute="trailing" constant="8" id="FIW-Lr-zBW"/>
-                <constraint firstItem="CJo-i4-EMh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Uc4-bp-0oG"/>
+                <constraint firstItem="CJo-i4-EMh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="Uc4-bp-0oG"/>
                 <constraint firstItem="CJo-i4-EMh" firstAttribute="top" secondItem="pnT-h8-KgF" secondAttribute="bottom" constant="5" id="WBw-kn-Wqp"/>
                 <constraint firstAttribute="trailing" secondItem="f1P-Zd-3L0" secondAttribute="trailing" constant="70" id="Wl3-B3-TQc"/>
                 <constraint firstItem="QbT-2r-UaC" firstAttribute="top" secondItem="eRg-Qa-9An" secondAttribute="bottom" constant="2" id="cbd-ek-YHh"/>
                 <constraint firstItem="eRg-Qa-9An" firstAttribute="centerX" secondItem="QbT-2r-UaC" secondAttribute="centerX" id="fAW-MM-Egc"/>
                 <constraint firstItem="f1P-Zd-3L0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="35" id="iR1-Ko-m01"/>
                 <constraint firstItem="eRg-Qa-9An" firstAttribute="centerY" secondItem="f1P-Zd-3L0" secondAttribute="centerY" constant="-14.5" id="joA-iK-w5B"/>
-                <constraint firstItem="f1P-Zd-3L0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="oQp-nr-49y"/>
+                <constraint firstItem="f1P-Zd-3L0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="oQp-nr-49y"/>
                 <constraint firstItem="pnT-h8-KgF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="s4m-s9-qKD"/>
                 <constraint firstItem="eRg-Qa-9An" firstAttribute="centerX" secondItem="QbT-2r-UaC" secondAttribute="centerX" id="whS-mK-dyx"/>
                 <constraint firstItem="pnT-h8-KgF" firstAttribute="top" secondItem="f1P-Zd-3L0" secondAttribute="bottom" constant="2" id="yrA-up-T5T"/>
