@@ -30,6 +30,7 @@
                     <state key="normal" image="add01.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="highlighted" image="add01_pre"/>
                     <connections>
                         <action selector="addBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="pbb-SA-CQS"/>
                     </connections>
@@ -71,7 +72,8 @@
         </view>
     </objects>
     <resources>
-        <image name="add01.png" width="22" height="22"/>
+        <image name="add01.png" width="27" height="27"/>
+        <image name="add01_pre" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

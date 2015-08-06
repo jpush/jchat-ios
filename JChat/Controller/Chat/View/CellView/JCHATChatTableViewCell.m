@@ -62,7 +62,7 @@
     
     self.messageNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, height/2 - 46/2, 22, 22)];
     [self.messageNumberLabel.layer setMasksToBounds:YES];
-    self.messageNumberLabel.layer.cornerRadius = 12.5;
+    self.messageNumberLabel.layer.cornerRadius = 11;
     self.messageNumberLabel.layer.borderWidth = 1;
     self.messageNumberLabel.layer.borderColor = [UIColor whiteColor].CGColor;
     self.messageNumberLabel.textAlignment = NSTextAlignmentCenter;
@@ -96,38 +96,41 @@
 - (void)setCellDataWithConversation:(JMSGConversation *)conversation {
   self.headView.layer.cornerRadius = 23;
   [self.headView.layer setMasksToBounds:YES];
-
+  
   if ([[NSFileManager defaultManager] fileExistsAtPath:conversation.avatarThumb]) {
     [self.headView setImage:[UIImage imageWithContentsOfFile:conversation.avatarThumb]];
   } else {
-    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
+    if (conversation.chatType == kJMSGSingle) {
+      [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+    }else {
+      [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
+    }
   }
-
   if (conversation.targetName != nil) {
     self.nickName.text = conversation.targetName;
   } else {
     self.nickName.text = conversation.targetId;
   }
-
+  
   if ([conversation.unreadCount integerValue] > 0) {
     [self.messageNumberLabel setHidden:NO];
     self.messageNumberLabel.text = [NSString stringWithFormat:@"%@", conversation.unreadCount];
   } else {
     [self.messageNumberLabel setHidden:YES];
   }
-
+  
   if (conversation.latestDate != nil && ![conversation.latestDate isEqualToString:@"(null)"]) {
     double time = [conversation.latestDate longLongValue];
     self.time.text = [JCHATStringUtils getFriendlyDateString:time forConversation:YES];
   } else {
     self.time.text = @"";
   }
-
+  
   if (conversation.latestType == nil) {
     self.message.text = @"";
     return;
   }
-
+  
   if ([conversation.latestType isEqualToString:@"text"]|| [conversation.latestType isEqualToString:@"event"]) {
     self.message.text = conversation.latestText;
   } else if ([conversation.latestType isEqualToString:@"image"]) {

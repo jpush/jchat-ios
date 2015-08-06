@@ -119,8 +119,8 @@
         </view>
     </objects>
     <resources>
-        <image name="login_01.png" width="22" height="22"/>
-        <image name="login_02.png" width="24" height="24"/>
+        <image name="login_01.png" width="20" height="22"/>
+        <image name="login_02.png" width="23" height="23"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

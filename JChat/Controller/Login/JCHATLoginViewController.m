@@ -14,8 +14,8 @@
 #import "AppDelegate.h"
 #import "NSString+MessageInputView.h"
 #import <JMessage/JMessage.h>
-
-
+#import "JChatConstants.h"
+#import "ViewUtil.h"
 @interface JCHATLoginViewController () {
   BOOL pushFlag;
 }
@@ -51,7 +51,7 @@
 
   NSShadow *shadow = [[NSShadow alloc] init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0, -1);
+  shadow.shadowOffset = CGSizeMake(0, 0);
 
   NSDictionary *dic = @{
       NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -65,6 +65,8 @@
 
   self.userNameLine.alpha = 0.5;
   self.passwordLine.alpha = 0.5;
+  [self.loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x6fd66b) frame:self.loginBtn.frame] forState:UIControlStateNormal];
+  [self.loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x498d67) frame:self.loginBtn.frame] forState:UIControlStateHighlighted];
   self.loginBtn.layer.cornerRadius = 4;
   [self.loginBtn.layer setMasksToBounds:YES];
   self.navigationItem.hidesBackButton = YES;

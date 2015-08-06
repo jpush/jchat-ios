@@ -24,6 +24,7 @@
   self.navigationItem.rightBarButtonItem = rightbutton;
   [self.charNumber setTextColor:UIColorFromRGB(0xbbbbbb)];
   self.baseLine.backgroundColor = UIColorFromRGB(0x3f80de);
+  [self.nameTextField setTextColor:UIColorFromRGB(0x2d2d2d)];
   [self.suggestLabel setTextColor:UIColorFromRGB(0xbbbbbb)];
 
   UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];

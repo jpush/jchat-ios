@@ -73,6 +73,7 @@
   [addView setBackgroundColor:[UIColor clearColor]];
   [addView addTarget:self action:@selector(addFriend) forControlEvents:UIControlEventTouchUpInside];
   [addView setImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
+  [addView setImage:[UIImage imageNamed:@"addMan_13_pre"] forState:UIControlStateHighlighted];
   [tableHeadView addSubview:addView];
   
   self.detailTableView.tableHeaderView = tableHeadView;
