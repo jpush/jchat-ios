@@ -245,7 +245,7 @@
   [_bgView updataNameLable];
   NSShadow *shadow = [[NSShadow alloc] init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0, -1);
+  shadow.shadowOffset = CGSizeMake(0, 0);
 
   NSDictionary *dic = @{
       NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -253,7 +253,8 @@
       NSFontAttributeName:[UIFont boldSystemFontOfSize:18]
   };
   [self.navigationController.navigationBar setTitleTextAttributes:dic];
-
+  self.view.backgroundColor = [UIColor whiteColor];
+  self.settingTableView.backgroundColor = [UIColor whiteColor];
   [self updateUserInfo];
 }
 

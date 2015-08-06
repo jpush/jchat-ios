@@ -48,6 +48,7 @@
     if (self.voiceButton.selected == NO) {
         self.voiceButton.selected = YES;
         [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03_pre"] forState:UIControlStateHighlighted];
         [self.textView setHidden:YES];
         [self.startRecordButton setHidden:NO];
         if (self.delegate && [self.delegate respondsToSelector:@selector(pressVoiceBtnToHideKeyBoard)]) {
@@ -55,7 +56,8 @@
         }
     }else{
         self.voiceButton.selected=NO;
-        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02.png"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02_pre"] forState:UIControlStateHighlighted];
         [self.startRecordButton setHidden:YES];
         JPIMLog(@"startRecordButton is :%@",self.startRecordButton);
         [self.textView setHidden:NO];
@@ -67,8 +69,10 @@
     [super layoutSubviews];
     if (self.voiceButton.selected == NO) {
         [self.voiceButton setImage:[UIImage imageNamed:@"voice_02.png"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02_pre"] forState:UIControlStateHighlighted];
     }else{
         [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03_pre"] forState:UIControlStateHighlighted];
     }
     [self setBackgroundColor:[UIColor colorWithRed:223/255.0 green:223/255.0 blue:223/255.0 alpha:1]];
 }
