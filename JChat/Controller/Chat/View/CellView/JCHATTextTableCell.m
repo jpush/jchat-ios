@@ -24,10 +24,16 @@
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setBackgroundColor:[UIColor clearColor]];
-    self.chatView =[[UIImageView alloc]init];
-    self.chatbgView =[[UIImageView alloc]init];
-    self.contentLabel =[[UILabel alloc]init];
-    self.headImgView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
+//    self.chatView =[[UIImageView alloc]init];
+//    self.chatbgView =[[UIImageView alloc]init];
+//    self.contentLabel =[[UILabel alloc]init];
+    self.chatbgView = [UIImageView new];
+    self.contentLabel = [UILabel new];
+    self.chatView = [UIImageView new];
+    
+//    self.headImgView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
+    self.headImgView = [UIImageView new];
+    
     self.stateView =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
