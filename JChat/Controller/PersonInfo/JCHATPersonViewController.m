@@ -89,7 +89,7 @@
   _genderPicker.tag = 200;
   [self.view addSubview:_genderPicker];
 
-  _titleArr = @[@"昵称", @"性别", @"地区", @"个性签名"];
+  _titleArr = @[@"用户名", @"性别", @"地区", @"个性签名"];
   _imgArr = @[@"wo_20", @"gender", @"location_21", @"signature"];
   _pickerDataArr = @[@"男", @"女",@"未知"];
 }
@@ -117,6 +117,8 @@
   }else {
     _genderNumber = [NSNumber numberWithInt:0];
   }
+
+  [_personTabl reloadData];
 }
 
 - (void)showResultInfo:(id)resultObject error:(NSError *)error {
@@ -193,7 +195,7 @@
   if (cell == nil) {
     cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATPersonInfoCell" owner:self options:nil] lastObject];
   }
-  cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   cell.infoTitleLabel.text = [_titleArr objectAtIndex:indexPath.row];
   cell.personInfoConten.text = [_infoArr objectAtIndex:indexPath.row];
   cell.titleImgView.image = [UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
