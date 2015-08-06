@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *charNumber;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (assign, nonatomic)JMSGUpdateUserInfoType updateType;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *baselineTop;
 
 @end
