@@ -106,6 +106,7 @@
                         <color key="titleColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="highlighted" image="login_19_pre"/>
                     <connections>
                         <action selector="registerBtnClick:" destination="-1" eventType="touchUpInside" id="0eh-89-a5O"/>
                     </connections>
@@ -150,9 +151,10 @@
         </view>
     </objects>
     <resources>
-        <image name="login_01.png" width="22" height="22"/>
-        <image name="login_02.png" width="24" height="24"/>
+        <image name="login_01.png" width="20" height="22"/>
+        <image name="login_02.png" width="23" height="23"/>
         <image name="login_19.png" width="23" height="23"/>
+        <image name="login_19_pre" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

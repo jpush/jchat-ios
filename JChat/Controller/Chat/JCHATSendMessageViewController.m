@@ -47,52 +47,52 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 
 @implementation JCHATSendMessageViewController
-- (IBAction)click_to_change:(id)sender {
-  
-//  self.toolBarToBottomConstrait.constant = 0;
-//  self.moreViewHeight.constant = 227;
-//  [self.view addSubview:self.toolBarContainer.toolbar];
-//
-//  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, 320, 45);
-//  [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
-
-  
-//  if ([voiceDuration integerValue] >= 60) {
-//    model.voiceTime = @"60''";
-//  }else{
-//    model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
-//  }
-//  JCHATChatModel *model =[[JCHATChatModel alloc] init];
-//  model.messageId = voiceMessage.messageId;
-//  model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
-//  model.type=kJMSGVoiceMessage;
-//  model.conversation = _conversation;
-//  model.targetId = self.conversation.targetId;
-//  model.displayName = self.targetName;
-//  model.readState = YES;
-//  model.who = YES;
-//  model.sendFlag = NO;
-//  model.mediaData = [NSData dataWithContentsOfFile:voicePath];
+//- (IBAction)click_to_change:(id)sender {
 //  
-//  if (self.conversation.chatType == kJMSGSingle) {
-//    voiceMessage.conversationType = kJMSGSingle;
-//  }else {
-//    voiceMessage.conversationType = kJMSGGroup;
-//  }
-
-  JMSGVoiceMessage *voiceMessage = [[JMSGVoiceMessage alloc] init];
-
-  voiceMessage.conversationType = kJMSGSingle;
-  
-  voiceMessage.targetId = self.conversation.targetId;
-  voiceMessage.duration = @"15''";//time;
-  NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"sendmusic" ofType:@"mp3"];
-  voiceMessage.mediaData = [NSData dataWithContentsOfFile:musicFilePath];//
-  [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
-  [JMSGMessage sendMessage:voiceMessage];
-
-
-}
+////  self.toolBarToBottomConstrait.constant = 0;
+////  self.moreViewHeight.constant = 227;
+////  [self.view addSubview:self.toolBarContainer.toolbar];
+////
+////  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, 320, 45);
+////  [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
+//
+//  
+////  if ([voiceDuration integerValue] >= 60) {
+////    model.voiceTime = @"60''";
+////  }else{
+////    model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
+////  }
+////  JCHATChatModel *model =[[JCHATChatModel alloc] init];
+////  model.messageId = voiceMessage.messageId;
+////  model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
+////  model.type=kJMSGVoiceMessage;
+////  model.conversation = _conversation;
+////  model.targetId = self.conversation.targetId;
+////  model.displayName = self.targetName;
+////  model.readState = YES;
+////  model.who = YES;
+////  model.sendFlag = NO;
+////  model.mediaData = [NSData dataWithContentsOfFile:voicePath];
+////  
+////  if (self.conversation.chatType == kJMSGSingle) {
+////    voiceMessage.conversationType = kJMSGSingle;
+////  }else {
+////    voiceMessage.conversationType = kJMSGGroup;
+////  }
+//
+//  JMSGVoiceMessage *voiceMessage = [[JMSGVoiceMessage alloc] init];
+//
+//  voiceMessage.conversationType = kJMSGSingle;
+//  
+//  voiceMessage.targetId = self.conversation.targetId;
+//  voiceMessage.duration = @"15''";//time;
+//  NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"sendmusic" ofType:@"mp3"];
+//  voiceMessage.mediaData = [NSData dataWithContentsOfFile:musicFilePath];//
+//  [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
+//  [JMSGMessage sendMessage:voiceMessage];
+//
+//
+//}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -575,6 +575,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
           [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
           [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
         }
+      NSLog(@"huangmin    message reload  %@",_messageDic[JCHATMessageIdKey]);
       [_messageTableView reloadData];
         if ([_messageDic[JCHATMessageIdKey] count] != 0) {
             [weakSelf.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
