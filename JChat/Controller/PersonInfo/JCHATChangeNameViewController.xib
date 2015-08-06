@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATChangeNameViewController">
             <connections>
                 <outlet property="baseLine" destination="pnT-h8-KgF" id="A0p-si-Mbb"/>
+                <outlet property="baselineTop" destination="nsW-Yj-46h" id="9h6-mI-8no"/>
                 <outlet property="charNumber" destination="QbT-2r-UaC" id="a87-bM-tH8"/>
                 <outlet property="deleteButton" destination="eRg-Qa-9An" id="Ro4-jo-1el"/>
                 <outlet property="nameTextField" destination="f1P-Zd-3L0" id="bHt-cw-crk"/>
@@ -20,43 +21,35 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f1P-Zd-3L0">
-                    <rect key="frame" x="30" y="35" width="500" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="MTB-La-JZw"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pnT-h8-KgF">
-                    <rect key="frame" x="8" y="59" width="584" height="1"/>
+                    <rect key="frame" x="0.0" y="70" width="600" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.96862751250000001" blue="0.50196081400000003" alpha="1" colorSpace="deviceRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="BBq-Fn-oAe"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="好名字可以让你的朋友更加容易记住你" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJo-i4-EMh">
-                    <rect key="frame" x="30" y="65" width="310" height="13"/>
+                    <rect key="frame" x="19" y="81" width="310" height="13"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="310" id="aFQ-kn-NYP"/>
                         <constraint firstAttribute="height" constant="13" id="qCH-4f-RTk"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QbT-2r-UaC">
-                    <rect key="frame" x="558" y="42" width="42" height="15"/>
+                    <rect key="frame" x="558" y="53" width="42" height="12"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="42" id="9n6-w8-650"/>
-                        <constraint firstAttribute="height" constant="15" id="Sfh-HE-Ms2"/>
+                        <constraint firstAttribute="height" constant="12" id="Sfh-HE-Ms2"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eRg-Qa-9An">
-                    <rect key="frame" x="571" y="24" width="16" height="16"/>
+                    <rect key="frame" x="571" y="27" width="16" height="16"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="AxH-HQ-tbU"/>
@@ -69,25 +62,49 @@
                         <action selector="deleteText:" destination="-1" eventType="touchUpInside" id="Ztx-pY-W1b"/>
                     </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f1P-Zd-3L0">
+                    <rect key="frame" x="19" y="27" width="542" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="MTB-La-JZw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="MTB-La-JZw"/>
+                        </mask>
+                    </variation>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="f1P-Zd-3L0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="24" id="1NZ-Ig-6tH"/>
+                <constraint firstItem="f1P-Zd-3L0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="27" id="4KN-It-oTA"/>
+                <constraint firstItem="pnT-h8-KgF" firstAttribute="top" secondItem="f1P-Zd-3L0" secondAttribute="bottom" constant="8" id="Bsu-nP-KML"/>
                 <constraint firstAttribute="trailing" secondItem="eRg-Qa-9An" secondAttribute="trailing" constant="13" id="Doq-YU-Rah"/>
-                <constraint firstAttribute="trailing" secondItem="pnT-h8-KgF" secondAttribute="trailing" constant="8" id="FIW-Lr-zBW"/>
-                <constraint firstItem="CJo-i4-EMh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="Uc4-bp-0oG"/>
-                <constraint firstItem="CJo-i4-EMh" firstAttribute="top" secondItem="pnT-h8-KgF" secondAttribute="bottom" constant="5" id="WBw-kn-Wqp"/>
+                <constraint firstAttribute="trailing" secondItem="pnT-h8-KgF" secondAttribute="trailing" id="FIW-Lr-zBW"/>
+                <constraint firstItem="eRg-Qa-9An" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="27" id="NtY-Y7-xmy"/>
+                <constraint firstItem="CJo-i4-EMh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="19" id="Uc4-bp-0oG"/>
+                <constraint firstItem="CJo-i4-EMh" firstAttribute="top" secondItem="pnT-h8-KgF" secondAttribute="bottom" constant="10" id="WBw-kn-Wqp"/>
                 <constraint firstAttribute="trailing" secondItem="f1P-Zd-3L0" secondAttribute="trailing" constant="70" id="Wl3-B3-TQc"/>
-                <constraint firstItem="QbT-2r-UaC" firstAttribute="top" secondItem="eRg-Qa-9An" secondAttribute="bottom" constant="2" id="cbd-ek-YHh"/>
+                <constraint firstItem="QbT-2r-UaC" firstAttribute="top" secondItem="eRg-Qa-9An" secondAttribute="bottom" constant="10" id="cbd-ek-YHh"/>
                 <constraint firstItem="eRg-Qa-9An" firstAttribute="centerX" secondItem="QbT-2r-UaC" secondAttribute="centerX" id="fAW-MM-Egc"/>
                 <constraint firstItem="f1P-Zd-3L0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="35" id="iR1-Ko-m01"/>
                 <constraint firstItem="eRg-Qa-9An" firstAttribute="centerY" secondItem="f1P-Zd-3L0" secondAttribute="centerY" constant="-14.5" id="joA-iK-w5B"/>
-                <constraint firstItem="f1P-Zd-3L0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="oQp-nr-49y"/>
-                <constraint firstItem="pnT-h8-KgF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="s4m-s9-qKD"/>
+                <constraint firstItem="eRg-Qa-9An" firstAttribute="leading" secondItem="f1P-Zd-3L0" secondAttribute="trailing" constant="10" id="kaO-nE-nx6"/>
+                <constraint firstItem="pnT-h8-KgF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="nsW-Yj-46h"/>
+                <constraint firstItem="f1P-Zd-3L0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="19" id="oQp-nr-49y"/>
+                <constraint firstItem="pnT-h8-KgF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="s4m-s9-qKD"/>
                 <constraint firstItem="eRg-Qa-9An" firstAttribute="centerX" secondItem="QbT-2r-UaC" secondAttribute="centerX" id="whS-mK-dyx"/>
                 <constraint firstItem="pnT-h8-KgF" firstAttribute="top" secondItem="f1P-Zd-3L0" secondAttribute="bottom" constant="2" id="yrA-up-T5T"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="1NZ-Ig-6tH"/>
+                    <exclude reference="Wl3-B3-TQc"/>
+                    <exclude reference="iR1-Ko-m01"/>
+                    <exclude reference="yrA-up-T5T"/>
+                    <exclude reference="joA-iK-w5B"/>
                     <exclude reference="whS-mK-dyx"/>
                 </mask>
             </variation>
