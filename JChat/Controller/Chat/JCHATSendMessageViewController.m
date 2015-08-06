@@ -185,7 +185,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 
 - (void)addtoolbar {
-  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, 320, 45);
+  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, kApplicationWidth, 45);
   
   [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
 
