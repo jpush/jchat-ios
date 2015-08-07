@@ -22,7 +22,8 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <JMessage/JMSGConversation.h>
 #import "JCHATStringUtils.h"
-#import "JCHATLoginViewController.h"
+//#import "JCHATLoginViewController.h"
+#import "JCHATAlreadyLoginViewController.h"
 //#import "JMSGConversation+Inner.h"
 #import "ViewUtil.h"
 #import "JCHATVoiceTableCell.h"
@@ -357,8 +358,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
       alert = @"本用户登出了。可能在其他设备上做了登录。";
     } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"用户在其他地方登录了"
-                                                      message:@"可能在其他设备上做了登录"
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                      message:@"登录错误，请重新登录"
                                                      delegate:self
                                             cancelButtonTitle:nil
                                             otherButtonTitles:@"退出",nil];
@@ -418,7 +419,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
       DDLogDebug(@"Logout callback with - %@", error);
     }];
-    JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] init];
+    JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
     loginCtl.hidesBottomBarWhenPushed = YES;
     UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
     appDelegate.window.rootViewController = navLogin;
