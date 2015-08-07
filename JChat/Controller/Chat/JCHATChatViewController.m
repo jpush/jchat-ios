@@ -19,12 +19,7 @@
 
 @implementation JCHATChatViewController
 
-- (IBAction)clickToshowAlert:(id)sender {
-  [[JCHATAlertViewWait ins] showInView:self.view];
-}
-- (IBAction)hidenAll:(id)sender {
-  [[JCHATAlertViewWait ins] hidenAll];
-}
+
 @synthesize searchDisplayController;
 
 - (void)viewDidLoad {
@@ -354,7 +349,8 @@ NSInteger sortType(id object1,id object2,void *cha) {
     if (buttonIndex == 0) {
     }else if (buttonIndex == 1)
     {
-        [MBProgressHUD showMessage:@"正在获取好友信息" view:self.view];
+//        [MBProgressHUD showMessage:@"正在获取好友信息" view:self.view];
+      [[JCHATAlertViewWait ins] showInView];
         if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
             return;
         }
@@ -363,7 +359,8 @@ NSInteger sortType(id object1,id object2,void *cha) {
         [[alertView textFieldAtIndex:0] resignFirstResponder];
         __weak __typeof(self)weakSelf = self;
         [JMSGUser getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+          [[JCHATAlertViewWait ins] hidenAll];
             if (error == nil) {
                 __strong __typeof(weakSelf) strongSelf = weakSelf;
                 sendMessageCtl.user = ((JMSGUser *) resultObject);
@@ -371,11 +368,13 @@ NSInteger sortType(id object1,id object2,void *cha) {
                 if (![sendMessageCtl.user.username isEqualToString:[JMSGUser getMyInfo].username]) {
                     [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
                 } else {
+                  [[JCHATAlertViewWait ins] hidenAll];
                     [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
                 }
                 NSLog(@"getuserinfo success");
             } else {
                 NSLog(@"没有这个用户!");
+              [[JCHATAlertViewWait ins] hidenAll];
                 [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
             }
         }];
