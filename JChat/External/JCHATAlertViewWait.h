@@ -14,6 +14,7 @@
 
 + (JCHATAlertViewWait *)ins;
 
-- (void)showInView:(UIView *)needshowview;
+- (void)showInView;
+
 - (void)hidenAll;
 @end
