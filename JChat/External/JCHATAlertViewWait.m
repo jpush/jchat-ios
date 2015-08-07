@@ -9,6 +9,7 @@
 #import "JCHATAlertViewWait.h"
 #import "Masonry.h"
 #import "JChatConstants.h"
+#import "AppDelegate.h"
 @implementation JCHATAlertViewWait
 + (JCHATAlertViewWait *)ins {
   static JCHATAlertViewWait *alertwait = nil;
@@ -27,18 +28,18 @@
   return self;
 }
 
-- (void)showInView:(UIView *)needshowview {
+- (void)showInView {
   NSLog(@"kaishi   show in view");
   self.alertView = [UIView new];
-//  self.alertView = [[UIView alloc] initWithFrame:CGRectMake(100, 0, 300, 300)];
-  self.alertView.alpha = 0.5;
-  self.alertView.backgroundColor = [UIColor grayColor];
-  [needshowview addSubview:self.alertView];
+  self.alertView.backgroundColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.5];
+  AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+  [appDelegate.window addSubview:self.alertView];
+  
   [self.alertView mas_makeConstraints:^(MASConstraintMaker *make) {
-    make.right.mas_equalTo(needshowview);
-    make.top.mas_equalTo(needshowview);
-    make.left.mas_equalTo(needshowview);
-    make.bottom.mas_equalTo(needshowview);
+    make.right.mas_equalTo(appDelegate.window);
+    make.top.mas_equalTo(appDelegate.window).with.offset(0);
+    make.left.mas_equalTo(appDelegate.window);
+    make.bottom.mas_equalTo(appDelegate.window);
   }];
   
   UIView *alertHub = [UIView new];
@@ -54,10 +55,12 @@
   
   UIImageView *clockImage = [UIImageView new];
   [alertHub addSubview:clockImage];
+  clockImage.image = [UIImage imageNamed:@"talking_icon_c_"];
+  
   [clockImage mas_makeConstraints:^(MASConstraintMaker *make) {
     make.size.mas_equalTo(CGSizeMake(17, 17));
     make.centerY.mas_equalTo(alertHub);
-    make.centerX.mas_equalTo(alertHub).with.offset(-30);
+    make.centerX.mas_equalTo(alertHub).with.offset(-45);
   }];
   
   UILabel *label = [UILabel new];
@@ -71,10 +74,6 @@
     make.left.mas_equalTo(clockImage.mas_right).with.offset(15);
   }];
   
-  UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 50)];
-  button.backgroundColor = [UIColor yellowColor];
-  [button addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
-  [self.alertView addSubview:button];
 }
 
 - (void)click {

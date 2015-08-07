@@ -247,6 +247,8 @@
 		445048EC1B660C8A0005D818 /* ViewUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048EB1B660C8A0005D818 /* ViewUtil.m */; };
 		445048F61B671D680005D818 /* JCHATAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048F51B671D680005D818 /* JCHATAvatarView.m */; };
 		445048FF1B67583C0005D818 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */; };
+		447575A91B744ABA00A5A646 /* talking_icon_c_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 447575A71B744ABA00A5A646 /* talking_icon_c_@2x.png */; };
+		447575AA1B744ABA00A5A646 /* talking_icon_c_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 447575A81B744ABA00A5A646 /* talking_icon_c_@3x.png */; };
 		44B2813F1B72F2D2009EB372 /* JCHATTextTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */; };
 		44B281421B732D64009EB372 /* JCHATAlertViewWait.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B281411B732D64009EB372 /* JCHATAlertViewWait.m */; };
 		44C3E7E61B6A24B200D3D825 /* sendmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */; };
@@ -666,6 +668,8 @@
 		445048F51B671D680005D818 /* JCHATAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAvatarView.m; sourceTree = "<group>"; };
 		445048FD1B67583C0005D818 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
 		445048FE1B67583C0005D818 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
+		447575A71B744ABA00A5A646 /* talking_icon_c_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "talking_icon_c_@2x.png"; sourceTree = "<group>"; };
+		447575A81B744ABA00A5A646 /* talking_icon_c_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "talking_icon_c_@3x.png"; sourceTree = "<group>"; };
 		44B2813D1B72F2D2009EB372 /* JCHATTextTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATTextTableCell.h; sourceTree = "<group>"; };
 		44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATTextTableCell.m; sourceTree = "<group>"; };
 		44B281401B732D64009EB372 /* JCHATAlertViewWait.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAlertViewWait.h; sourceTree = "<group>"; };
@@ -1135,6 +1139,8 @@
 			isa = PBXGroup;
 			children = (
 				44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */,
+				447575A71B744ABA00A5A646 /* talking_icon_c_@2x.png */,
+				447575A81B744ABA00A5A646 /* talking_icon_c_@3x.png */,
 				18B8FDA81B3D23DB00538C00 /* receiveFail@2x.png */,
 				18B8FDAA1B3D240500538C00 /* receiveFail@3x.png */,
 				187182411AFB80C000FB3168 /* bar_anxia@2x.png */,
@@ -1722,6 +1728,7 @@
 				187183C31AFB80C000FB3168 /* login_11@3x.png in Resources */,
 				187183191AFB80C000FB3168 /* JCHATChatViewController.xib in Resources */,
 				187183841AFB80C000FB3168 /* fail05@2x.png in Resources */,
+				447575A91B744ABA00A5A646 /* talking_icon_c_@2x.png in Resources */,
 				187184001AFB80C000FB3168 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				1871838B1AFB80C000FB3168 /* headDefalt_34@3x.png in Resources */,
 				187183791AFB80C000FB3168 /* arrows_43@3x.png in Resources */,
@@ -1793,6 +1800,7 @@
 				187183881AFB80C000FB3168 /* group_33@2x.png in Resources */,
 				187184011AFB80C000FB3168 /* shezhi@2x.png in Resources */,
 				187183D21AFB80C000FB3168 /* login_17@3x.png in Resources */,
+				447575AA1B744ABA00A5A646 /* talking_icon_c_@3x.png in Resources */,
 				44C3E9531B6F416E00D3D825 /* set_btn_del_pre_@3x.png in Resources */,
 				187184131AFB80C000FB3168 /* wo_20@2x.png in Resources */,
 				44C3E9791B709F1A00D3D825 /* keyboard_03_pre@3x.png in Resources */,
