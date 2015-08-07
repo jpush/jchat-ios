@@ -164,14 +164,17 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       personView.delegate = self;
       [personView.deletePersonBtn setHidden:YES];
       if (i*4 +j == [_groupData count]) {
-        [personView.headViewBtn setImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
+        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
+        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"addMan_13_pre"] forState:UIControlStateHighlighted];
+        
         personView.headViewBtn.tag = 10000;
         _addBtn = personView.headViewBtn;
         [personView.deletePersonBtn setHidden:YES];
         personView.memberLable.text = @"";
         [_headView addSubview:personView];
       }else if (i*4 +j == [_groupData count] + 1) {
-        [personView.headViewBtn setImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
+        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
+//        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@""] forState:<#(UIControlState)#>]
         personView.headViewBtn.tag = 20000;
         _deleteBtn = personView.headViewBtn;
         [personView.deletePersonBtn setHidden:YES];
@@ -183,7 +186,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       }else {
         personView.headViewBtn.tag = 1000 + i*4+j;
         JMSGUser *user = [_groupData objectAtIndex:i*4+j];
-        [personView.headViewBtn setBackgroundColor:[UIColor redColor]];
         if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
           [personView.headViewBtn setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
         }else {
