@@ -8,7 +8,7 @@
 #define UMENG_APPKEY @"55487cee67e58e5431003b06"
 
 // 需要填写为您自己的 JPush Appkey
-#define JMSSAGE_APPKEY @"d237f366f6b75c1738cd8fa1"
+#define JMSSAGE_APPKEY @"4f7aef34fb361292c566a1cd"
 
 #define CHANNEL @""
 
