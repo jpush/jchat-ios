@@ -743,7 +743,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
         NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
         [picker setMediaTypes:arrMediaTypes];
         picker.showsCameraControls = YES;
-        picker.modalTransitionStyle = UIModalTransitionStylePartialCurl;
         picker.editing = YES;
         picker.delegate = self;
         [self presentViewController:picker animated:YES completion:nil];
