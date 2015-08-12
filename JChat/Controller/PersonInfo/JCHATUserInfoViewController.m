@@ -52,7 +52,7 @@
   [self.settingTableView setBackgroundColor:[UIColor colorWithRed:235 / 255.0 green:235 / 255.0 blue:243 / 255.0 alpha:1]];
   self.settingTableView.dataSource = self;
   self.settingTableView.delegate = self;
-
+  self.settingTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
   self.settingTableView.tableFooterView = [[UIView alloc] init];
 
   [self setAvatar];
@@ -314,7 +314,7 @@
   JCHATSettingCell *cell = (JCHATSettingCell *) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil) {
     cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATSettingCell" owner:self options:nil] lastObject];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 56, kApplicationWidth, 0.5)];
     [line setBackgroundColor:UIColorFromRGB(0xd0d0cf)];
 
@@ -329,6 +329,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+  cell.selected = NO;
+
   if (indexPath.row == 0) {
     JCHATPersonViewController *personCtl = [[JCHATPersonViewController alloc] init];
     personCtl.hidesBottomBarWhenPushed = YES;

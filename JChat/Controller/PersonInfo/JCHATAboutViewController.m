@@ -20,7 +20,7 @@
   _JChatVersion.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
   _JMessageVersion.text = JMESSAGE_VERSION;
   _JMessageBuild.text   = JMESSAGE_BUILD;
-    // Do any additional setup after loading the view from its nib.
+  _JChatBuild.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
 - (void)didReceiveMemoryWarning {
