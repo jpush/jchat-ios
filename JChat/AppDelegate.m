@@ -67,7 +67,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
       
     }
   }
-  [[UINavigationBar appearance] setBarTintColor:[UIColor yellowColor]/*UIColorFromRGB(0x3f80de)*/];
+  [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x3f80de)];
+  [[UINavigationBar appearance] setTranslucent:NO];
+  [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+  [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];
 }
 
 - (void)registerJPushStatusNotification {

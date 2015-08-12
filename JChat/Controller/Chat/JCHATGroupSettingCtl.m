@@ -16,7 +16,7 @@
 #import "JCHATPersonViewController.h"
 #import "JCHATFriendDetailViewController.h"
 #import "JCHATDetailsInfoViewController.h"
-
+#import "Masonry.h"
 #define kheadViewHeight 100
 
 @interface JCHATGroupSettingCtl ()
@@ -47,21 +47,24 @@
   _groupTitleData =@[@"群聊名称",@"清空聊天记录",@"删除并退出"];
 
   self.groupTab = [[JCHATChatTable alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth,self.view.frame.size.height)];
+  [self.view addSubview:self.groupTab];
   self.groupTab.dataSource = self;
   self.groupTab.delegate = self;
   self.groupTab.touchDelegate = self;
   [self.groupTab setBackgroundColor:[UIColor whiteColor]];
   self.groupTab.separatorStyle = UITableViewCellSeparatorStyleNone;
-  [self.view addSubview:self.groupTab];
+
   
   _headView = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 0, kApplicationWidth, kheadViewHeight)];
+  self.groupTab.tableHeaderView = _headView;
   [_headView setBackgroundColor:[UIColor clearColor]];
   _headLine = [[UIView alloc]initWithFrame:CGRectMake(0, kheadViewHeight-1, kApplicationWidth, 1)];
-  [_headLine setBackgroundColor:[UIColor colorWithRed:197/255.0 green:197/255.0 blue:197/255.0 alpha:197/255.0]];
   [_headView addSubview:_headLine];
+  [_headLine setBackgroundColor:[UIColor colorWithRed:197/255.0 green:197/255.0 blue:197/255.0 alpha:197/255.0]];
+
   _headView.showsHorizontalScrollIndicator = NO;
   _headView.showsVerticalScrollIndicator = NO;
-  self.groupTab.tableHeaderView = _headView;
+
   
   [self getGroupMemberList];
   
@@ -133,6 +136,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       [strongSelf sorteUserArr:resultObject];
       JPIMMAINTHEAD(^{
           [strongSelf reloadHeadViewData];
+        [strongSelf.groupTab reloadData];
       });
     }else {
     }
@@ -140,6 +144,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 }
 
 - (void)reloadHeadViewData {
+  NSLog(@"HUANGMIN   RELOAD");
   for (UIView *v in _headView.subviews) {
     if ([v isKindOfClass:[JCHATGroupPersonView class]]) {
       [v removeFromSuperview];
@@ -158,6 +163,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       NSArray *personXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATGroupPersonView"owner:self options:nil];
       JCHATGroupPersonView * personView = [personXib objectAtIndex:0];
       [personView setFrame:CGRectMake(width +j*(headWidth + width), 10 + (headHeight +10) * i, headWidth, headHeight)];
+      personView.backgroundColor = [UIColor clearColor];
       [personView.headViewBtn setFrame:CGRectMake(0, 0, 46, 46)];
       [personView.headViewBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
       [_groupBtnArr addObject:personView];
@@ -174,7 +180,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         [_headView addSubview:personView];
       }else if (i*4 +j == [_groupData count] + 1) {
         [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
-//        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@""] forState:<#(UIControlState)#>]
         personView.headViewBtn.tag = 20000;
         _deleteBtn = personView.headViewBtn;
         [personView.deletePersonBtn setHidden:YES];
@@ -491,12 +496,17 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 - (void)setHeadViewContentSize {
   NSInteger headViewHeight;
   NSInteger headHeight = 75;
+
   headViewHeight = [self getRowFromGroupData] * (headHeight + 10)+10;
   
   [_headView setFrame:CGRectMake(_headView.frame.origin.x, _headView.frame.origin.y, _headView.frame.size.width, headViewHeight+2)];
+//  [_headView mas_updateConstraints:^(MASConstraintMaker *make) {
+//    make.height.mas_equalTo(headViewHeight +2);
+//  }];
+  _groupTab.tableHeaderView = _headView;
   [_headView setContentSize:CGSizeMake(self.view.bounds.size.width, headViewHeight)];
   [_headLine setFrame:CGRectMake(0, _headView.bounds.size.height - 1.5, self.view.bounds.size.width, 0.5)];
-  _groupTab.tableHeaderView = _headView;
+
   [_groupTab reloadData];
 }
 
