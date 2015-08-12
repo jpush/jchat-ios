@@ -311,8 +311,6 @@
 
 - (void)awakeFromNib {
   [super awakeFromNib];
-  self.backgroundColor = [UIColor yellowColor];
-  NSLog(@"huangminawakefromnib");
 }
 
 @end

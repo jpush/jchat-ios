@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *JChatVersion;
 @property (weak, nonatomic) IBOutlet UILabel *JMessageVersion;
 @property (weak, nonatomic) IBOutlet UILabel *JMessageBuild;
+@property (weak, nonatomic) IBOutlet UILabel *JChatBuild;
 
 @end

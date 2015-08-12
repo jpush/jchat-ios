@@ -57,10 +57,10 @@
                 <constraint firstAttribute="trailing" secondItem="73S-EI-iRM" secondAttribute="trailing" constant="6" id="EPX-NM-a8K"/>
                 <constraint firstItem="73S-EI-iRM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="Zvx-kp-dOt"/>
                 <constraint firstItem="6d7-tY-UO6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="b9S-HK-kOR"/>
-                <constraint firstAttribute="bottom" secondItem="6d7-tY-UO6" secondAttribute="bottom" id="izM-b2-m0f"/>
                 <constraint firstAttribute="trailing" secondItem="t0q-dv-nx0" secondAttribute="trailing" id="kCG-gu-Zgb"/>
                 <constraint firstItem="t0q-dv-nx0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kpe-uZ-8G8"/>
                 <constraint firstAttribute="trailing" secondItem="6d7-tY-UO6" secondAttribute="trailing" id="mdh-Gx-j5g"/>
+                <constraint firstItem="6d7-tY-UO6" firstAttribute="top" secondItem="73S-EI-iRM" secondAttribute="bottom" constant="8" id="spO-UH-pm3"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

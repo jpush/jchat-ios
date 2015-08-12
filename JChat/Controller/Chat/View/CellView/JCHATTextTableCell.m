@@ -10,7 +10,7 @@
 #import "JChatConstants.h"
 #import <JMessage/JMessage.h>
 #import "JCHATSendMessageViewController.h"
-
+#import "Masonry.h"
 #define headHeight 46
 
 @implementation JCHATTextTableCell
@@ -44,9 +44,12 @@
     [self.sendFailView setUserInteractionEnabled:YES];
     [self addSubview:self.stateView];
     [self addSubview:self.sendFailView];
-    [self.chatbgView addSubview:self.chatView];
+//    [self.chatbgView addSubview:self.chatView];
+    [self addSubview:self.chatView];
+    [self addSubview:self.chatbgView];
     [self.chatView addSubview:self.contentLabel];
-    [self.chatbgView addSubview:self.headImgView];
+//    [self.chatbgView addSubview:self.headImgView];
+    [self addSubview:self.headImgView];
     [self addSubview:self.chatbgView];
     [self headAddGesture];
   }
@@ -60,6 +63,8 @@
 
 - (void)setCellData:(JCHATChatModel *)model delegate:(id )delegate
 {
+
+  
   self.headImgView.layer.cornerRadius = 23;
   self.conversation = model.conversation;
   [self.headImgView.layer setMasksToBounds:YES];
@@ -78,8 +83,24 @@
   [self creadBuddleChatView];
 }
 
+- (void)deleteAllConstrait {
+  [self.chatbgView mas_remakeConstraints:^(MASConstraintMaker *make) {
+  }];
+  [self.chatView mas_remakeConstraints:^(MASConstraintMaker *make) {
+  }];
+  [self.sendFailView mas_remakeConstraints:^(MASConstraintMaker *make) {
+  }];
+  [self.stateView mas_remakeConstraints:^(MASConstraintMaker *make) {
+  }];
+  [self.headImgView mas_remakeConstraints:^(MASConstraintMaker *make) {
+  }];
+  [self.contentLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+  }];
+}
 - (void)creadBuddleChatView
 {
+  [self deleteAllConstrait];
+  
   if (_model.type == kJMSGTextMessage) {
     UIFont *font =[UIFont systemFontOfSize:18];
     CGSize maxSize = CGSizeMake(200, 2000);
@@ -87,8 +108,94 @@
     NSMutableParagraphStyle *paragraphStyle= [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     CGSize realSize = [_model.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
-    //            [_model.chatContent sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByWordWrapping];
+//                [_model.chatContent sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByWordWrapping];
+    
+    
+    
+    
+    
     UIImage *img=nil;
+    
+    
+    if (_model.who) {
+//      [self.chatbgView setFrame:CGRectMake(kApplicationWidth-bgSize.width, 0, bgSize.width, bgSize.height)];
+//      [self.headImgView setFrame:CGRectMake(imgSize.width+5, 0, headHeight, headHeight)];
+      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self).with.offset(0);
+        make.right.mas_equalTo(self).with.offset(-5);
+        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+      }];
+      
+//      [self.chatView setFrame:CGRectMake(0, 0, imgSize.width, imgSize.height)];
+      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self);
+        make.right.mas_equalTo(self.headImgView.mas_left).with.offset(-5);
+        make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
+      }];
+      
+////      [self.stateView setFrame:CGRectMake(self.chatbgView.frame.origin.x-35, (self.chatbgView.frame.size.height-30)/2, 30, 30)];
+      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-10);
+//        make.top.mas_equalTo(self).with.offset(5);
+        make.centerY.mas_equalTo(self);
+      }];
+////      [self.sendFailView setFrame:CGRectMake(self.chatbgView.frame.origin.x-25, (self.chatbgView.frame.size.height-15)/2, 17, 15)];
+      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(17, 15));
+        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-10);
+//        make.top.mas_equalTo(self).with.offset(5);
+        make.centerY.mas_equalTo(self);
+      }];
+//
+      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.chatView).with.offset(5);
+        make.right.mas_equalTo(self.chatView).with.offset(-15);
+        make.left.mas_equalTo(self.chatView).with.offset(5);
+        make.bottom.mas_equalTo(self.chatView).with.offset(-5);
+      }];
+      
+    }else
+    {
+      //      [self.chatbgView setFrame:CGRectMake(kApplicationWidth-bgSize.width, 0, bgSize.width, bgSize.height)];
+      //      [self.headImgView setFrame:CGRectMake(imgSize.width+5, 0, headHeight, headHeight)];
+      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self).with.offset(0);
+        make.left.mas_equalTo(self).with.offset(5);
+        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+      }];
+      
+      //      [self.chatView setFrame:CGRectMake(0, 0, imgSize.width, imgSize.height)];
+      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self);
+        make.left.mas_equalTo(self.headImgView.mas_right).with.offset(5);
+        make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
+      }];
+      
+      //      [self.stateView setFrame:CGRectMake(self.chatbgView.frame.origin.x-35, (self.chatbgView.frame.size.height-30)/2, 30, 30)];
+      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
+        //        make.top.mas_equalTo(self).with.offset(5);
+        make.centerY.mas_equalTo(self);
+      }];
+      //      [self.sendFailView setFrame:CGRectMake(self.chatbgView.frame.origin.x-25, (self.chatbgView.frame.size.height-15)/2, 17, 15)];
+      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(17, 15));
+        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
+        //        make.top.mas_equalTo(self).with.offset(5);
+        make.centerY.mas_equalTo(self);
+      }];
+      
+      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.chatView).with.offset(5);
+        make.right.mas_equalTo(self.chatView).with.offset(-5);
+        make.left.mas_equalTo(self.chatView).with.offset(15);
+        make.bottom.mas_equalTo(self.chatView).with.offset(-5);
+      }];
+
+    }
+    
     if (_model.who) {
       img =[UIImage imageNamed:@"mychatBg"];
     }else
@@ -104,13 +211,27 @@
     imgSize.width=realSize.width+2*15;
     self.chatView.layer.cornerRadius=6;
     [self.chatView.layer setMasksToBounds:YES];
+    
+    
+    
     if (_model.who) {
-      [self.chatView setFrame:CGRectMake(kApplicationWidth-imgSize.width, 0, imgSize.width, imgSize.height)];
+//      [self.chatView setFrame:CGRectMake(kApplicationWidth-imgSize.width, 0, imgSize.width, imgSize.height)];
+      [self.chatbgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self).with.offset(imgSize.width);
+        make.top.mas_equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(imgSize.width, imgSize.height));
+        
+      }];
     }else
     {
-      [self.chatView setFrame:CGRectMake(0, 0, imgSize.width, imgSize.height)];
+//      [self.chatView setFrame:CGRectMake(0, 0, imgSize.width, imgSize.height)];
+      [self.chatbgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(imgSize.width, imgSize.height));
+      }];
     }
-    [self.contentLabel setFrame:CGRectMake(15, 10, realSize.width, realSize.height)];
+    
+//    [self.contentLabel setFrame:CGRectMake(15, 10, realSize.width, realSize.height)];
+
     [self.contentLabel setBackgroundColor:[UIColor clearColor]];
     self.contentLabel.numberOfLines=0;
     self.contentLabel.text = _model.chatContent;
@@ -119,23 +240,18 @@
     [self.chatbgView setBackgroundColor:[UIColor clearColor]];
     CGSize bgSize =CGSizeMake(imgSize.width+headHeight+10, imgSize.height);
     [self.headImgView setBackgroundColor:[UIColor clearColor]];
-    if (_model.who) {
-      [self.chatbgView setFrame:CGRectMake(kApplicationWidth-bgSize.width, 0, bgSize.width, bgSize.height)];
-      [self.headImgView setFrame:CGRectMake(imgSize.width+5, 0, headHeight, headHeight)];
-      [self.chatView setFrame:CGRectMake(0, 0, imgSize.width, imgSize.height)];
-      [self.stateView setFrame:CGRectMake(self.chatbgView.frame.origin.x-35, (self.chatbgView.frame.size.height-30)/2, 30, 30)];
-      [self.sendFailView setFrame:CGRectMake(self.chatbgView.frame.origin.x-25, (self.chatbgView.frame.size.height-15)/2, 17, 15)];
-    }else
-    {
-      [self.chatbgView setFrame:CGRectMake(0, 0, bgSize.width, bgSize.height)];
-      [self.headImgView setFrame:CGRectMake(5, 0, headHeight, headHeight)];
-      [self.chatView setFrame:CGRectMake(headHeight+10, 0, imgSize.width, imgSize.height)];
-      [self.stateView setFrame:CGRectMake(self.chatbgView.frame.origin.x+self.chatbgView.frame.size.width+5, (self.chatbgView.frame.size.height-30)/2, 30, 30)];
-      [self.sendFailView setFrame:CGRectMake(self.chatbgView.frame.origin.x+self.chatbgView.frame.size.width+5, (self.chatbgView.frame.size.height-15)/2, 17, 15)];
-    }
+    
+    
+    
+    
+    
+
+    
+    
   }else{
     NSLog(@"消息错误");
   }
+  
   [self.stateView setHidden:YES];
   [self.stateView stopAnimating];
   [self.sendFailView setHidden:YES];
