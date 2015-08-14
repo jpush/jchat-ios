@@ -24,7 +24,7 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view from its nib.
   self.navigationItem.hidesBackButton = YES;
-  _doneBtn.backgroundColor = UIColorFromRGB(0xb9ebb8);
+  _doneBtn.backgroundColor = UIColorFromRGB(0x6fd66b);
   _doneBtn.layer.cornerRadius = 5;
   _baseLine.backgroundColor = UIColorFromRGB(0xc1d2ec);
   _nameTextF.textColor = UIColorFromRGB(0x555555);

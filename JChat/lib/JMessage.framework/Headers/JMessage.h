@@ -21,8 +21,8 @@
 @interface JMessage : NSObject
 
 // 当前JMessage版本号
-#define JMESSAGE_VERSION @"1.0.3"
-#define JMESSAGE_BUILD   @"260"
+#define JMESSAGE_VERSION @"1.0.6"
+#define JMESSAGE_BUILD   @"268"
 
 extern NSInteger const JMESSAGE_API_VERSION;
 

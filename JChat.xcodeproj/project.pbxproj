@@ -303,6 +303,7 @@
 		44C3E9811B70A06F00D3D825 /* add01_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E97F1B70A06F00D3D825 /* add01_pre@3x.png */; };
 		44C3E9841B70A0EE00D3D825 /* face_16_pre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9821B70A0EE00D3D825 /* face_16_pre@2x.png */; };
 		44C3E9851B70A0EE00D3D825 /* face_16_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E9831B70A0EE00D3D825 /* face_16_pre@3x.png */; };
+		44C78F1C1B7B15A6006D4192 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44C78F1B1B7B15A6006D4192 /* Accelerate.framework */; };
 		44D3DBBC1B550AB80051B3E2 /* JCHATSetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */; };
 		44D3DBBD1B550AB80051B3E2 /* JCHATSetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */; };
 		44D3DBC21B550E770051B3E2 /* login_20_pre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44D3DBBE1B550E770051B3E2 /* login_20_pre@3x.png */; };
@@ -675,6 +676,9 @@
 		44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATTextTableCell.m; sourceTree = "<group>"; };
 		44B281401B732D64009EB372 /* JCHATAlertViewWait.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAlertViewWait.h; sourceTree = "<group>"; };
 		44B281411B732D64009EB372 /* JCHATAlertViewWait.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAlertViewWait.m; sourceTree = "<group>"; };
+		44B60EA91B7B43D400AE828D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		44B60EAB1B7B43DF00AE828D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		44B60EAD1B7B43EA00AE828D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sendmusic.mp3; sourceTree = "<group>"; };
 		44C3E8FA1B6B7A1D00D3D825 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44C3E8FB1B6B7A1D00D3D825 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
@@ -747,6 +751,7 @@
 		44C3E97F1B70A06F00D3D825 /* add01_pre@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add01_pre@3x.png"; sourceTree = "<group>"; };
 		44C3E9821B70A0EE00D3D825 /* face_16_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face_16_pre@2x.png"; sourceTree = "<group>"; };
 		44C3E9831B70A0EE00D3D825 /* face_16_pre@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face_16_pre@3x.png"; sourceTree = "<group>"; };
+		44C78F1B1B7B15A6006D4192 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		44D3DBB91B550AB80051B3E2 /* JCHATSetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSetDetailViewController.h; sourceTree = "<group>"; };
 		44D3DBBA1B550AB80051B3E2 /* JCHATSetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSetDetailViewController.m; sourceTree = "<group>"; };
 		44D3DBBB1B550AB80051B3E2 /* JCHATSetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSetDetailViewController.xib; sourceTree = "<group>"; };
@@ -842,6 +847,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C78F1C1B7B15A6006D4192 /* Accelerate.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -1375,6 +1381,10 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				44B60EAD1B7B43EA00AE828D /* OpenGLES.framework */,
+				44B60EAB1B7B43DF00AE828D /* CoreVideo.framework */,
+				44B60EA91B7B43D400AE828D /* CoreMedia.framework */,
+				44C78F1B1B7B15A6006D4192 /* Accelerate.framework */,
 				8FE536811B3AAD6200EFC8CE /* JMessage.framework */,
 				1839834E1AFC91C800AC8280 /* CoreTelephony.framework */,
 				1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */,
@@ -1663,6 +1673,7 @@
 				TargetAttributes = {
 					18AB9C8B1A43BCB7007B2A04 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = RL64Y54S9V;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -2324,7 +2335,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",

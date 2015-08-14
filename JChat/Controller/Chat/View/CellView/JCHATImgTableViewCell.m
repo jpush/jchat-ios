@@ -57,7 +57,7 @@
     
     self.percentLabel =[[UILabel alloc]init];
 //    self.percentLabel = [UILabel new];
-    
+    self.percentLabel.hidden = NO;
     self.percentLabel.font =[UIFont systemFontOfSize:18];
     self.percentLabel.textAlignment=NSTextAlignmentCenter;
     self.percentLabel.textColor=[UIColor whiteColor];
@@ -220,6 +220,7 @@
   self.model.messageId = _message.messageId;
   __weak typeof(self) weakSelf = self;
   _message.progressCallback = ^(float percent) {
+    NSLog(@"huangmin   percent   %f",percent);
     weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
   };
   if (self.conversation.chatType == kJMSGSingle) {
@@ -234,46 +235,49 @@
   [JMSGMessage sendMessage:_message];
 }
 
-- (void)tapPicture:(UIGestureRecognizer *)gesture
-{
+- (void)tapPicture:(UIGestureRecognizer *)gesture {
+  if(self.downLoadIndicatorView.hidden == YES) {
+  
+    
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-        NSLog(@"正在下载缩略图");
-        JPIMLog(@"Action");
-        [self.downLoadIndicatorView setHidden:NO];
-        [self.downLoadIndicatorView startAnimating];
-        [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
-            if (error == nil) {
-                NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-                [JMSGMessage downloadThumbImage:resultObject
-                                   withProgress:progress
-                              completionHandler:^(id resultObject, NSError *error) {
-                    JPIMMAINTHEAD(^{
-                        [self.downLoadIndicatorView stopAnimating];
-                        if (error == nil) {
-                            self.model.pictureThumbImgPath = [(NSURL *)resultObject path];
-                            self.model.messageStatus = kJMSGStatusReceiveSucceed;
-                            [self.contentImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
-                            [self updateFrame];
-                            JPIMLog(@"下载缩略图成功 :%@",[(NSURL *)resultObject path]);
-                        }else {
-                            JPIMLog(@"下载缩略图失败");
-                            [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
-                        }
-                    });
-                }];
-            }else {
-                JPIMLog(@"下载缩略图获取消息失败。。。");
-                JPIMMAINTHEAD(^{
-                    [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
-                });
-            }
-        }];
-        //下载缩略图
-    }else {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(tapPicture:tapView:tableViewCell:)]) {
-            [self.delegate tapPicture:self.cellIndex tapView:(UIImageView *)gesture.view tableViewCell:self];
+      NSLog(@"正在下载缩略图");
+      JPIMLog(@"Action");
+      [self.downLoadIndicatorView setHidden:NO];
+      [self.downLoadIndicatorView startAnimating];
+      [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
+        if (error == nil) {
+          NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
+          [JMSGMessage downloadThumbImage:resultObject
+                             withProgress:progress
+                        completionHandler:^(id resultObject, NSError *error) {
+                          JPIMMAINTHEAD(^{
+                            [self.downLoadIndicatorView stopAnimating];
+                            if (error == nil) {
+                              self.model.pictureThumbImgPath = [(NSURL *)resultObject path];
+                              self.model.messageStatus = kJMSGStatusReceiveSucceed;
+                              [self.contentImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
+                              [self updateFrame];
+                              JPIMLog(@"下载缩略图成功 :%@",[(NSURL *)resultObject path]);
+                            }else {
+                              JPIMLog(@"下载缩略图失败");
+                              [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
+                            }
+                          });
+                        }];
+        }else {
+          JPIMLog(@"下载缩略图获取消息失败。。。");
+          JPIMMAINTHEAD(^{
+            [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
+          });
         }
+      }];
+      //下载缩略图
+    }else {
+      if (self.delegate && [self.delegate respondsToSelector:@selector(tapPicture:tapView:tableViewCell:)]) {
+        [self.delegate tapPicture:self.cellIndex tapView:(UIImageView *)gesture.view tableViewCell:self];
+      }
     }
+  }
 }
 
 - (void)layoutSubviews
