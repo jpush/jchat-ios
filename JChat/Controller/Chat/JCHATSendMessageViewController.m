@@ -1250,7 +1250,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         if (!model.sendFlag) {
             model.sendFlag = YES;
             // 消息展示出来时，调用发文本消息
-          [self sendTextMessage:model.messageId];//! 在这里调用会引起卡顿
+          [self sendTextMessage:model.messageId];
         }
         [cell setCellData:model delegate:self];
         return cell;
