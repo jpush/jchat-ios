@@ -15,6 +15,7 @@
 @end
 
 @interface JCHATTextTableCell : UITableViewCell<UIAlertViewDelegate>
+@property (assign, nonatomic) BOOL isMe;
 @property (strong, nonatomic) JCHATChatModel *model;
 @property (nonatomic,strong)  UIActivityIndicatorView *stateView;
 @property (strong, nonatomic)  UIImageView *sendFailView;

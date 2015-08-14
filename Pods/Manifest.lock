@@ -28,13 +28,16 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.0.1):
     - CocoaLumberjack/Default
+  - GPUImage (0.1.7)
 
 DEPENDENCIES:
   - AFNetworking
   - CocoaLumberjack
+  - GPUImage (~> 0.1.7)
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
 
 COCOAPODS: 0.38.2
