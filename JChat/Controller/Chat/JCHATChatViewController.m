@@ -18,8 +18,6 @@
 @end
 
 @implementation JCHATChatViewController
-
-
 @synthesize searchDisplayController;
 
 - (void)viewDidLoad {
@@ -480,14 +478,17 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-    sendMessageCtl.hidesBottomBarWhenPushed=YES;
-    sendMessageCtl.conversation.chatType = kJMSGSingle;
-    JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
-    sendMessageCtl.conversation = conversation;
-    [self.navigationController pushViewController:sendMessageCtl animated:YES];
-    NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
-    [self saveBadge:badge];
+  UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+  cell.selected = NO;
+  JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
+  sendMessageCtl.hidesBottomBarWhenPushed=YES;
+  sendMessageCtl.conversation.chatType = kJMSGSingle;
+  JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
+  sendMessageCtl.conversation = conversation;
+  [self.navigationController pushViewController:sendMessageCtl animated:YES];
+  
+  NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
+  [self saveBadge:badge];
 }
 
 - (void)saveBadge:(NSInteger)badge {

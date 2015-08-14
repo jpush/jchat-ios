@@ -39,23 +39,24 @@
     self.deleteButton.hidden = YES;
     self.charNumber.hidden = YES;
     self.suggestLabel.text = @"好名字可以让你的朋友更加容易记住你";
-    self.nameTextField.placeholder = user.nickname;
+    self.nameTextField.placeholder = user.nickname?:@"请输入你的姓名";
 //    self.baselineTop.constant = 58;
     titleLabel.text = @"修改姓名";
   }
   if (self.updateType == 4) {
     self.deleteButton.hidden = YES;
     self.charNumber.hidden = YES;
+    self.suggestLabel.hidden = YES;
     titleLabel.text = @"修改地区";
 //    self.baselineTop.constant = 58;
-    self.nameTextField.placeholder = user.region;
+    self.nameTextField.placeholder = user.region?:@"请输入你所在的地区";
   }
   if (self.updateType == 2) {
     self.suggestLabel.hidden = YES;
 //    self.nameTextField.delegate = self;
     [self.nameTextField addTarget:self action:@selector(textFieldChange) forControlEvents:UIControlEventEditingChanged];
 
-    self.nameTextField.placeholder = user.signature;
+    self.nameTextField.placeholder = user.signature?:@"请输入你的签名";
     titleLabel.text = @"修改签名";
   }
 

@@ -27,7 +27,8 @@
 //#import "JMSGConversation+Inner.h"
 #import "ViewUtil.h"
 #import "JCHATVoiceTableCell.h"
-
+#import "JCHATTextTableCell.h"
+#import <UIKit/UIPrintInfo.h>
 #define interval 60*2
 
 NSString * const JCHATMessage      = @"JCHATMessage";
@@ -94,6 +95,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 //
 //
 //}
+
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -736,19 +738,27 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 #pragma mark --调用相机
 -(void)cameraClick {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        NSString *requiredMediaType = ( NSString *)kUTTypeImage;
-        NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
-        [picker setMediaTypes:arrMediaTypes];
-        picker.showsCameraControls = YES;
-        picker.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-        picker.editing = YES;
-        picker.delegate = self;
-        [self presentViewController:picker animated:YES completion:nil];
-    }
+  UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+  if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    NSString *requiredMediaType = ( NSString *)kUTTypeImage;
+    NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
+    [picker setMediaTypes:arrMediaTypes];
+    picker.showsCameraControls = YES;
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    picker.editing = YES;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+  }
 }
+
+//- (void) didRotate:(NSNotification *)notification
+//{
+//  //Maintain the camera in Landscape orientation
+////  [[UIDevice currentDevice] setOrientation:UIInterfaceOrientationLandscapeRight];
+//  [UIDevice currentDevice].orientation = UIInterfaceOrientationLandscapeRight;
+//  
+//}
 
 #pragma mark - UIImagePickerController Delegate
 //相机,相册Finish的代理
@@ -802,6 +812,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   [self addMessage:model];
   [self dropToolBar];
 }
+
 
 #pragma mark --
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -1039,8 +1050,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 #pragma mark -- 刷新对应的
 - (void)reloadCellDataWith:(NSInteger)Index {
-  [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-  [self scrollToEnd];
+  [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];//UITableViewRowAnimationNone
+//  [self scrollToEnd];
   UITableViewCell *tableCell = [self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Index inSection:0]];
   [tableCell setHighlighted:YES animated:NO];
   [tableCell setHighlighted:NO animated:NO];
@@ -1049,9 +1060,14 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 - (void)addCellToTabel {
   NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
-  [self.messageTableView beginUpdates];
+//  [self.messageTableView beginUpdates];sdafa
+//  [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];//UITableViewRowAnimationBottom
+//  [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+
   [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-  [self.messageTableView endUpdates];
+//  [self.messageTableView reloadData];
+//  [self.messageTableView scrollRectToVisible:CGRectMake(0, self.messageTableView.contentSize.height - self.messageTableView.bounds.size.height, self.messageTableView.bounds.size.width, self.messageTableView.bounds.size.height) animated:YES];
+//  [self.messageTableView endUpdates];
   [self scrollToEnd];
 }
 
@@ -1227,9 +1243,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }
     if (model.type == kJMSGTextMessage) {
         static NSString *cellIdentifier = @"textCell";
-        JCHATTextTableViewCell *cell = (JCHATTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        JCHATTextTableCell *cell = (JCHATTextTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
-            cell = [[JCHATTextTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell = [[JCHATTextTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
         if (!model.sendFlag) {
             model.sendFlag = YES;
