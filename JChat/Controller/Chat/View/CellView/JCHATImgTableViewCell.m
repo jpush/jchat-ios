@@ -12,7 +12,6 @@
 #import "Masonry.h"
 #define headHeight 46
 
-//这段如果使用约束，会出现卡顿显现，先使用绝对布局，后面再研究
 
 @implementation JCHATImgTableViewCell
 
@@ -25,16 +24,16 @@
     [self setBackgroundColor:[UIColor clearColor]];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    self.headView  = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
-//    self.headView = [UIImageView new];
+//    self.headView  = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headHeight, headHeight)];
+    self.headView = [UIImageView new];
     
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
     [self addSubview:self.headView];
     self.headView.layer.cornerRadius = 23;
     [self.headView.layer setMasksToBounds:YES];
     
-    self.pictureImgView = [[UIImageView alloc]init];
-//    self.pictureImgView = [UIImageView new];
+//    self.pictureImgView = [[UIImageView alloc]init];
+    self.pictureImgView = [UIImageView new];
     
     [self addSubview:self.pictureImgView];
     self.pictureImgView.layer.cornerRadius=6;
@@ -47,46 +46,53 @@
     [self.pictureImgView setImage:newImg];
     [self.pictureImgView setBackgroundColor:[UIColor clearColor]];
     
-    self.contentImgView  =[[UIImageView alloc] init];
-//    self.contentImgView = [UIImageView new];
-    
-    [self.contentImgView setUserInteractionEnabled:YES];
+    self.pictureImgView.userInteractionEnabled = YES;
     UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
-    [self.contentImgView addGestureRecognizer:gesture];
-    [self.contentImgView setFrame:CGRectMake(5, 5, self.pictureImgView.bounds.size.width-2*8-2, self.pictureImgView.bounds.size.height)];
+    [self.pictureImgView addGestureRecognizer:gesture];
+//    self.contentImgView  =[[UIImageView alloc] init];
+//    self.contentImgView = [UIImageView new];
+//    self.contentImgView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.contentImgView.clipsToBounds = YES;
+//    [self.contentImgView setUserInteractionEnabled:YES];
+//    UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
+//    [self.contentImgView addGestureRecognizer:gesture];
+//    [self.contentImgView setFrame:CGRectMake(5, 5, self.pictureImgView.bounds.size.width-2*8-2, self.pictureImgView.bounds.size.height)];
     
-    self.percentLabel =[[UILabel alloc]init];
-//    self.percentLabel = [UILabel new];
+//    self.percentLabel =[[UILabel alloc]init];
+    self.percentLabel = [UILabel new];
     self.percentLabel.hidden = NO;
     self.percentLabel.font =[UIFont systemFontOfSize:18];
     self.percentLabel.textAlignment=NSTextAlignmentCenter;
     self.percentLabel.textColor=[UIColor whiteColor];
     [self.percentLabel setBackgroundColor:[UIColor clearColor]];
-    [self.contentImgView addSubview:self.percentLabel];
-    [self.pictureImgView addSubview:self.contentImgView];
+//    [self.contentImgView addSubview:self.percentLabel];
+    [self.pictureImgView addSubview:self.percentLabel];
     
-    self.circleView =[[UIActivityIndicatorView alloc] init];
-//    self.circleView = [UIActivityIndicatorView new];
+//    [self.pictureImgView addSubview:self.contentImgView];
+    
+//    self.circleView =[[UIActivityIndicatorView alloc] init];
+    self.circleView = [UIActivityIndicatorView new];
     
     [self addSubview:self.circleView];
     [self.circleView setBackgroundColor:[UIColor clearColor]];
     [self.circleView setHidden:NO];
     self.circleView.hidesWhenStopped=YES;
     
-    self.downLoadIndicatorView =[[UIActivityIndicatorView alloc] init];
-//    self.downLoadIndicatorView = [UIActivityIndicatorView new];
+//    self.downLoadIndicatorView =[[UIActivityIndicatorView alloc] init];
+    self.downLoadIndicatorView = [UIActivityIndicatorView new];
     
-    [self.contentImgView addSubview:self.downLoadIndicatorView];
+//    [self.contentImgView addSubview:self.downLoadIndicatorView];
+    [self.pictureImgView addSubview:self.downLoadIndicatorView];
     [self.downLoadIndicatorView setBackgroundColor:[UIColor clearColor]];
     [self.downLoadIndicatorView setHidden:NO];
     self.downLoadIndicatorView.hidesWhenStopped=YES;
     
-    self.sendFailView =[[UIImageView alloc] init];
-//    self.sendFailView = [UIImageView new];
-    
+//    self.sendFailView =[[UIImageView alloc] init];
+    self.sendFailView = [UIImageView new];
+    [self addSubview:self.sendFailView];
     [self.sendFailView setUserInteractionEnabled:YES];
     [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
-    [self addSubview:self.sendFailView];
+
     [self headAddGesture];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGNotification_SendMessageResult object:nil];
   }
@@ -109,7 +115,9 @@
             return ;
         }
         [self.circleView stopAnimating];
-        self.contentImgView.alpha = 1;
+//        self.contentImgView.alpha = 1;
+        self.pictureImgView.alpha = 1;
+        _model.isSending = NO;
         if (error == nil) {
             self.model.messageStatus = kJMSGStatusSendSucceed;
             [self.sendFailView setHidden:YES];
@@ -123,12 +131,13 @@
             _sendFailImgMessage = [message copy];
         }
         [self updateFrame];
+
     });
 }
 
 - (void)headAddGesture {
     [self.headView setUserInteractionEnabled:YES];
-    [self.contentImgView setUserInteractionEnabled:YES];
+//    [self.contentImgView setUserInteractionEnabled:YES];
     [self.pictureImgView setUserInteractionEnabled:YES];
 
     UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushPersonInfoCtlClick)];
@@ -149,7 +158,9 @@
         [self.sendFailView setHidden:YES];
         [self.circleView setHidden:NO];
         [self.circleView startAnimating];
-        self.contentImgView.alpha = 0.5;
+//        self.contentImgView.alpha = 0.5;
+      self.pictureImgView.alpha = 0.5;
+        _model.isSending = YES;
         self.model.messageStatus = kJMSGStatusSending;
         __weak typeof(self)weakSelf = self;
         if (!self.sendFailImgMessage) {
@@ -186,15 +197,26 @@
     self.conversation = chatModel.conversation;
     self.model = chatModel;
      _message= message;
+  if (_model.isSending) {
+//    self.contentImgView.alpha = 0.5;
+    self.pictureImgView.alpha = 0.5;
+  }else {
+//    self.contentImgView.alpha = 1;
+    self.pictureImgView.alpha = 1;
+  }
      [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-        [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
+//        [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
+      [self.pictureImgView setImage:[UIImage imageNamed:@"receiveFail"]];
     } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
-        [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
+//        [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
+      [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
     }else if (message.mediaData){
-      [self.contentImgView setImage:[UIImage imageWithData:message.mediaData]];
+//      [self.contentImgView setImage:[UIImage imageWithData:message.mediaData]];
+      [self.pictureImgView setImage:[UIImage imageWithData:message.mediaData]];
     }else {
-      [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
+//      [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
+      [self.pictureImgView setImage:[UIImage imageWithData:message.mediaData]];
     }
     self.delegate = (id)controler;
     self.cellIndex = indexPath;
@@ -206,7 +228,8 @@
     [self updateFrame];
     if (!_model.sendFlag) {
         _model.sendFlag = YES;
-      [self sendImageMessage];
+        [self sendImageMessage];
+
     }
 }
 
@@ -215,12 +238,13 @@
   DDLogDebug(@"Action - sendImageMessage");
   [self.circleView setHidden:NO];
   [self.circleView startAnimating];
-  self.contentImgView.alpha = 0.5;
+//  self.contentImgView.alpha = 0.5;
+  self.pictureImgView.alpha = 0.5;
+  _model.isSending = YES;
   self.model.messageStatus = kJMSGStatusSending;
   self.model.messageId = _message.messageId;
   __weak typeof(self) weakSelf = self;
   _message.progressCallback = ^(float percent) {
-    NSLog(@"huangmin   percent   %f",percent);
     weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
   };
   if (self.conversation.chatType == kJMSGSingle) {
@@ -236,9 +260,8 @@
 }
 
 - (void)tapPicture:(UIGestureRecognizer *)gesture {
-  if(self.downLoadIndicatorView.hidden == YES) {
   
-    
+    NSLog(@"nslog  tap gesture");
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
       NSLog(@"正在下载缩略图");
       JPIMLog(@"Action");
@@ -255,7 +278,8 @@
                             if (error == nil) {
                               self.model.pictureThumbImgPath = [(NSURL *)resultObject path];
                               self.model.messageStatus = kJMSGStatusReceiveSucceed;
-                              [self.contentImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
+//                              [self.contentImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
+                              [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
                               [self updateFrame];
                               JPIMLog(@"下载缩略图成功 :%@",[(NSURL *)resultObject path]);
                             }else {
@@ -277,7 +301,7 @@
         [self.delegate tapPicture:self.cellIndex tapView:(UIImageView *)gesture.view tableViewCell:self];
       }
     }
-  }
+
 }
 
 - (void)layoutSubviews
@@ -287,33 +311,37 @@
 
 - (void)updateFrame
 {
-    NSInteger imgHeight;
-    NSInteger imgWidth;
+    NSInteger imgHeight = 0;
+    NSInteger imgWidth = 0;
     [self.percentLabel setHidden:NO];
     if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-      imgHeight = [UIImage imageNamed:@"receiveFail"].size.height;
-      imgWidth = [UIImage imageNamed:@"receiveFail"].size.width;
-      [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
+//      imgHeight = [UIImage imageNamed:@"receiveFail"].size.height;
+//      imgWidth = [UIImage imageNamed:@"receiveFail"].size.width;
+//      [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
+      [self.downLoadIndicatorView setCenter:CGPointMake(self.pictureImgView.frame.size.width/2, self.pictureImgView.frame.size.height/2)];
     }else {
-        [self.downLoadIndicatorView setHidden:YES];
-      UIImage *showImg;
+      [self.downLoadIndicatorView setHidden:YES];
+      _model.isSending = NO;
+      __block UIImage *showImg;
+
       if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
-       showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+          showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
+        });
       }else if (self.message.mediaData) {
         showImg = [UIImage imageWithData:self.message.mediaData];
       } else {
         showImg = [UIImage imageNamed:@"receiveFail"];
       }
-        if (IS_IPHONE_6P) {
-            imgHeight = showImg.size.height/3;
-            imgWidth  = showImg.size.width/3;
-        }else {
-            imgHeight = showImg.size.height/2;
-            imgWidth  = showImg.size.width/2;
-        }
-//      imgHeight = showImg.size.height/showImg.scale;
-//      imgWidth = showImg.size.width/showImg.scale;
-
+//        if (IS_IPHONE_6P) {
+//            imgHeight = showImg.size.height/3;
+//            imgWidth  = showImg.size.width/3;
+//        }else {
+//            imgHeight = showImg.size.height/2;
+//            imgWidth  = showImg.size.width/2;
+//        }
+      imgHeight = _model.imageSize.height;
+      imgWidth = _model.imageSize.width;
     }
     if (self.model.messageStatus == kJMSGStatusSending || self.model.messageStatus == kJMSGStatusReceiving) {
         [self.circleView setHidden:NO];
@@ -333,72 +361,64 @@
     }
     UIImage *img=nil;
   
-//  [self.headView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//  }];
-//  [self.pictureImgView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//  }];
-//  [self.contentImgView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//  }];
-//  [self.percentLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-//  }];
-//  [self.circleView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//  }];
-//  [self.downLoadIndicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//  }];
+  [self.headView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
+  [self.pictureImgView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
+//  [self.contentImgView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
+  [self.percentLabel mas_remakeConstraints:^(MASConstraintMaker *make) {}];
+  [self.circleView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
+  [self.downLoadIndicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
   
-  self.sendFailView = [UIImageView new];
+
     if (self.model.who) {//myself
         img =[UIImage imageNamed:@"mychatBg"];
-        [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - 5, 0, headHeight, headHeight)];
-//      [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
-//        make.right.mas_equalTo(self).with.offset(-5);
-//        make.top.mas_equalTo(self);
-//      }];
-        [self.pictureImgView setFrame:CGRectMake(kApplicationWidth - headHeight - 5 - imgWidth, 0, imgWidth, imgHeight)];
+//        [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - 5, 0, headHeight, headHeight)];
+      [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+        make.right.mas_equalTo(self).with.offset(-5);
+        make.top.mas_equalTo(self);
+      }];
+//        [self.pictureImgView setFrame:CGRectMake(kApplicationWidth - headHeight - 5 - imgWidth, 0, imgWidth, imgHeight)];
 
-//      [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
-//        make.width.mas_equalTo(imgWidth);
-//        make.height.mas_equalTo(imgHeight);
-//        make.top.mas_equalTo(self);
-//        make.right.mas_equalTo(self.headView.mas_left).with.offset(-5);
-//      }];
-        [self.contentImgView setFrame:CGRectMake(5, 5, self.pictureImgView.bounds.size.width-2*8-2, self.pictureImgView.bounds.size.height-10)];
+      [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
+        make.top.mas_equalTo(self);
+        make.right.mas_equalTo(self.headView.mas_left).with.offset(-5);
+      }];
+//        [self.contentImgView setFrame:CGRectMake(5, 5, self.pictureImgView.bounds.size.width-2*8-2, self.pictureImgView.bounds.size.height-10)];
 //      [self.contentImgView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(self.pictureImgView).with.offset(5);
 //        make.left.mas_equalTo(self.pictureImgView).with.offset(5);
 //        make.right.mas_equalTo(self.pictureImgView).with.offset(-13);
 //        make.bottom.mas_equalTo(self.pictureImgView).with.offset(-5);
 //      }];
-        [self.circleView setFrame:CGRectMake(self.pictureImgView.frame.origin.x-25, 40, 20, 20)];
-//      [self.circleView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(20, 20));
-//        make.top.mas_equalTo(self).with.offset(40);
-//        make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(25);
-//      }];
-      [self.sendFailView setFrame:CGRectMake(self.pictureImgView.frame.origin.x-25, 42.5, 17, 15)];
-//      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(17, 15));
-//        make.top.mas_equalTo(self).with.offset(42);
-////        make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(25);
-//      }];
+//        [self.circleView setFrame:CGRectMake(self.pictureImgView.frame.origin.x-25, 40, 20, 20)];
+      [self.circleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.top.mas_equalTo(self).with.offset(40);
+        make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(-15);
+      }];
+//      [self.sendFailView setFrame:CGRectMake(self.pictureImgView.frame.origin.x-25, 42.5, 17, 15)];
+      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(17, 15));
+        make.top.mas_equalTo(self).with.offset(42);
+        make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(25);
+      }];
 
     }else{
         img =[UIImage imageNamed:@"otherChatBg"];
-        [self.headView setFrame:CGRectMake(5, 0, headHeight, headHeight)];
-//      [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
-//        make.left.mas_equalTo(self).with.offset(5);
-//        make.top.mas_equalTo(self);
-//      }];
-      [self.pictureImgView setFrame:CGRectMake(headHeight + 5, 0, imgWidth, imgHeight)];
-//      [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
-//        make.left.mas_equalTo(self.headView.mas_right).with.offset(5);
-//        make.top.mas_equalTo(self);
-//      }];
-        [self.contentImgView setFrame:CGRectMake(12, 5, self.pictureImgView.bounds.size.width - 2 * 8 - 2, self.pictureImgView.bounds.size.height-10)];
+//        [self.headView setFrame:CGRectMake(5, 0, headHeight, headHeight)];
+      [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+        make.left.mas_equalTo(self).with.offset(5);
+        make.top.mas_equalTo(self);
+      }];
+//      [self.pictureImgView setFrame:CGRectMake(headHeight + 5, 0, imgWidth, imgHeight)];
+      [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
+        make.left.mas_equalTo(self.headView.mas_right).with.offset(5);
+        make.top.mas_equalTo(self);
+      }];
+//        [self.contentImgView setFrame:CGRectMake(12, 5, self.pictureImgView.bounds.size.width - 2 * 8 - 2, self.pictureImgView.bounds.size.height-10)];
 //      [self.contentImgView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.left.mas_equalTo(self.pictureImgView).with.offset(12);
 //        make.top.mas_equalTo(self.pictureImgView).with.offset(5);
@@ -406,31 +426,48 @@
 //        make.bottom.mas_equalTo(self.pictureImgView).with.offset(-5);
 //        
 //      }];
-        [self.circleView setFrame:CGRectMake(self.pictureImgView.frame.origin.x + 5, 40, 20, 20)];
-//      [self.circleView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(20, 20));
-//        make.left.mas_equalTo(self.pictureImgView.mas_right).with.offset(5);
-//        make.top.mas_equalTo(self).with.offset(40);
-//      }];
-        [self.sendFailView setFrame:CGRectMake(self.pictureImgView.frame.origin.x + 5, 42.5, 17, 15)];
-//      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.size.mas_equalTo(CGSizeMake(17, 15));
-//        make.left.mas_equalTo(self.pictureImgView.mas_left).with.offset(5);
-//        make.top.mas_equalTo(self).with.offset(42.5);
-//      }];
+//        [self.circleView setFrame:CGRectMake(self.pictureImgView.frame.origin.x + 5, 40, 20, 20)];
+      [self.circleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.left.mas_equalTo(self.pictureImgView.mas_right).with.offset(5);
+        make.top.mas_equalTo(self).with.offset(40);
+      }];
+//        [self.sendFailView setFrame:CGRectMake(self.pictureImgView.frame.origin.x + 5, 42.5, 17, 15)];
+      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(17, 15));
+        make.left.mas_equalTo(self.pictureImgView.mas_left).with.offset(5);
+        make.top.mas_equalTo(self).with.offset(42.5);
+      }];
     }
     [self.percentLabel setFrame:CGRectMake(0, 0, 50, 50)];
-    [self.percentLabel setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
-//    [self.percentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//      make.size.mas_equalTo(CGSizeMake(50, 50));
+//    [self.percentLabel setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
+    [self.percentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.size.mas_equalTo(CGSizeMake(50, 50));
 //      make.center.mas_equalTo(self.contentImgView);
-//    }];
-    [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
-//    [self.downLoadIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.center.mas_equalTo(self.pictureImgView);
+    }];
+//    [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
+    [self.downLoadIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
 //      make.center.mas_equalTo(self.contentImgView);
-//    }];
-    UIImage *newImg =[img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
-    [self.pictureImgView setImage:newImg];
+      make.center.mas_equalTo(self.pictureImgView);
+    }];
+  CALayer *imagemask = [CALayer layer];
+  imagemask.frame = CGRectMake(0, 0, self.pictureImgView.frame.size.width, self.pictureImgView.frame.size.height);
+
+    img =[img resizableImageWithCapInsets:UIEdgeInsetsMake(35, 20, 35, 20)];//(28, 20, 28, 20)
+//  img = [img resizableImageWithCapInsets:UIEdgeInsetsMake(<#CGFloat top#>, <#CGFloat left#>, <#CGFloat bottom#>, <#CGFloat right#>)]
+  UIGraphicsBeginImageContext(self.pictureImgView.frame.size);
+  // 绘制改变大小的图片
+  [img drawInRect:CGRectMake(0, 0, self.pictureImgView.frame.size.width, self.pictureImgView.frame.size.height)];
+  // 从当前context中创建一个改变大小后的图片
+  UIImage* newImg = UIGraphicsGetImageFromCurrentImageContext();
+  // 使当前的context出堆栈
+  UIGraphicsEndImageContext();
+
+  imagemask.contents = (__bridge id)(newImg.CGImage);
+
+  self.pictureImgView.layer.mask =imagemask;
+//    [self.pictureImgView setImage:newImg];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
