@@ -119,12 +119,12 @@
 
       [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(30, 30));
-        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-10);
+        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
         make.centerY.mas_equalTo(self);
       }];
       [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(17, 15));
-        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-10);
+        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
         make.centerY.mas_equalTo(self);
       }];
 //

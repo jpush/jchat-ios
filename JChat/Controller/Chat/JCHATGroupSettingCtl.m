@@ -144,7 +144,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 }
 
 - (void)reloadHeadViewData {
-  NSLog(@"HUANGMIN   RELOAD");
   for (UIView *v in _headView.subviews) {
     if ([v isKindOfClass:[JCHATGroupPersonView class]]) {
       [v removeFromSuperview];
