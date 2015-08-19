@@ -285,7 +285,6 @@
         }else {
           _conversationArr = nil;
         }
-        NSLog(@"huangmin   reload  %@",_conversationArr);
         [self.chatTableView reloadData];
       });
     }];
