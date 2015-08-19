@@ -251,6 +251,18 @@
 		447575AA1B744ABA00A5A646 /* talking_icon_c_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 447575A81B744ABA00A5A646 /* talking_icon_c_@3x.png */; };
 		44B2813F1B72F2D2009EB372 /* JCHATTextTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */; };
 		44B281421B732D64009EB372 /* JCHATAlertViewWait.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B281411B732D64009EB372 /* JCHATAlertViewWait.m */; };
+		44BA64561B83211700F704DB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839833E1AFC917C00AC8280 /* CFNetwork.framework */; };
+		44BA64571B83212200F704DB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983461AFC919C00AC8280 /* CoreFoundation.framework */; };
+		44BA64581B83212A00F704DB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834E1AFC91C800AC8280 /* CoreTelephony.framework */; };
+		44BA64591B83213300F704DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */; };
+		44BA645A1B83213B00F704DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983421AFC918C00AC8280 /* CoreGraphics.framework */; };
+		44BA645B1B83214800F704DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983441AFC919300AC8280 /* Foundation.framework */; };
+		44BA645C1B83214E00F704DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983401AFC918300AC8280 /* UIKit.framework */; };
+		44BA645D1B83215800F704DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983361AFC914900AC8280 /* Security.framework */; };
+		44BA645E1B83216200F704DB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983341AFC914100AC8280 /* libz.dylib */; };
+		44BA645F1B83216A00F704DB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */; };
+		44BA64601B83217500F704DB /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983381AFC915C00AC8280 /* CoreAudio.framework */; };
+		44BA64611B83218700F704DB /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839833A1AFC916C00AC8280 /* libsqlite3.0.dylib */; };
 		44C3E7E61B6A24B200D3D825 /* sendmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */; };
 		44C3E9141B6B7A1E00D3D825 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E8FA1B6B7A1D00D3D825 /* Info.plist */; };
 		44C3E9151B6B7A1E00D3D825 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E8FC1B6B7A1D00D3D825 /* MASCompositeConstraint.m */; };
@@ -872,6 +884,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44BA64611B83218700F704DB /* libsqlite3.0.dylib in Frameworks */,
+				44BA64601B83217500F704DB /* CoreAudio.framework in Frameworks */,
+				44BA645F1B83216A00F704DB /* AudioToolbox.framework in Frameworks */,
+				44BA645E1B83216200F704DB /* libz.dylib in Frameworks */,
+				44BA645D1B83215800F704DB /* Security.framework in Frameworks */,
+				44BA645C1B83214E00F704DB /* UIKit.framework in Frameworks */,
+				44BA645B1B83214800F704DB /* Foundation.framework in Frameworks */,
+				44BA645A1B83213B00F704DB /* CoreGraphics.framework in Frameworks */,
+				44BA64591B83213300F704DB /* SystemConfiguration.framework in Frameworks */,
+				44BA64581B83212A00F704DB /* CoreTelephony.framework in Frameworks */,
+				44BA64571B83212200F704DB /* CoreFoundation.framework in Frameworks */,
+				44BA64561B83211700F704DB /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2245,7 +2269,7 @@
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
-				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -2288,123 +2312,9 @@
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
-				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
-		};
-		44C3E9221B6E768900D3D825 /* ad-hoc Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "ad-hoc Profile";
-		};
-		44C3E9231B6E768900D3D825 /* ad-hoc Profile */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC57155E308472729B329A1B /* Pods.ad-hoc profile.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/JChat/lib",
-					"/Users/xiaomeng/JPUSHIM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
-					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
-				);
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/JChat/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
-					"$(PROJECT_DIR)/Pods",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "$(inherited)";
-				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
-				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "极光IM";
-				PROVISIONING_PROFILE = "";
-				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
-				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
-				VALID_ARCHS = "armv7 armv7s arm64 i386 x86_64";
-			};
-			name = "ad-hoc Profile";
-		};
-		44C3E9241B6E768900D3D825 /* ad-hoc Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)/JChat/lib",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "JChat Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-					"-all_load",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
-			};
-			name = "ad-hoc Profile";
 		};
 		8F8840AC1B159E7500BDC126 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2439,6 +2349,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
+				VALID_ARCHS = "arm64 armv7 arm7";
 			};
 			name = Debug;
 		};
@@ -2472,6 +2383,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
+				VALID_ARCHS = "arm64 armv7 arm7";
 			};
 			name = Release;
 		};
@@ -2483,7 +2395,6 @@
 			buildConfigurations = (
 				18AB9CAD1A43BCB7007B2A04 /* Debug */,
 				18AB9CAE1A43BCB7007B2A04 /* Release */,
-				44C3E9221B6E768900D3D825 /* ad-hoc Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2493,7 +2404,6 @@
 			buildConfigurations = (
 				18AB9CB01A43BCB7007B2A04 /* Debug */,
 				18AB9CB11A43BCB7007B2A04 /* Release */,
-				44C3E9231B6E768900D3D825 /* ad-hoc Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2503,7 +2413,6 @@
 			buildConfigurations = (
 				8F8840AC1B159E7500BDC126 /* Debug */,
 				8F8840AD1B159E7500BDC126 /* Release */,
-				44C3E9241B6E768900D3D825 /* ad-hoc Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

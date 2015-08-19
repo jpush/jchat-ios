@@ -34,10 +34,11 @@
     
 //    self.pictureImgView = [[UIImageView alloc]init];
     self.pictureImgView = [UIImageView new];
-    
+    self.pictureImgView.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:self.pictureImgView];
     self.pictureImgView.layer.cornerRadius=6;
     [self.pictureImgView.layer setMasksToBounds:YES];
+
     [self setUserInteractionEnabled:YES];
     [self.pictureImgView setUserInteractionEnabled:YES];
     UIImage *img=nil;
@@ -210,7 +211,7 @@
       [self.pictureImgView setImage:[UIImage imageNamed:@"receiveFail"]];
     } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
 //        [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
-      [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
+      [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];//!
     }else if (message.mediaData){
 //      [self.contentImgView setImage:[UIImage imageWithData:message.mediaData]];
       [self.pictureImgView setImage:[UIImage imageWithData:message.mediaData]];
@@ -359,7 +360,7 @@
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:YES];
     }
-    UIImage *img=nil;
+//    UIImage *img=nil;//!
   
   [self.headView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
   [self.pictureImgView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
@@ -381,7 +382,8 @@
 
       [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
-        make.top.mas_equalTo(self);
+//        make.top.mas_equalTo(self);
+        make.centerY.mas_equalTo(self);
         make.right.mas_equalTo(self.headView.mas_left).with.offset(-5);
       }];
 //        [self.contentImgView setFrame:CGRectMake(5, 5, self.pictureImgView.bounds.size.width-2*8-2, self.pictureImgView.bounds.size.height-10)];
@@ -416,7 +418,8 @@
       [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
         make.left.mas_equalTo(self.headView.mas_right).with.offset(5);
-        make.top.mas_equalTo(self);
+//        make.top.mas_equalTo(self);
+        make.centerY.mas_equalTo(self);
       }];
 //        [self.contentImgView setFrame:CGRectMake(12, 5, self.pictureImgView.bounds.size.width - 2 * 8 - 2, self.pictureImgView.bounds.size.height-10)];
 //      [self.contentImgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -452,21 +455,19 @@
       make.center.mas_equalTo(self.pictureImgView);
     }];
   CALayer *imagemask = [CALayer layer];
-  imagemask.frame = CGRectMake(0, 0, self.pictureImgView.frame.size.width, self.pictureImgView.frame.size.height);
+//  img =[img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];//(28, 20, 28, 20)
+  imagemask.contents = (__bridge id)(img.CGImage);
 
-    img =[img resizableImageWithCapInsets:UIEdgeInsetsMake(35, 20, 35, 20)];//(28, 20, 28, 20)
+//  self.pictureImgView.layer.mask = imagemask;
+  
 //  img = [img resizableImageWithCapInsets:UIEdgeInsetsMake(<#CGFloat top#>, <#CGFloat left#>, <#CGFloat bottom#>, <#CGFloat right#>)]
-  UIGraphicsBeginImageContext(self.pictureImgView.frame.size);
-  // 绘制改变大小的图片
-  [img drawInRect:CGRectMake(0, 0, self.pictureImgView.frame.size.width, self.pictureImgView.frame.size.height)];
-  // 从当前context中创建一个改变大小后的图片
-  UIImage* newImg = UIGraphicsGetImageFromCurrentImageContext();
-  // 使当前的context出堆栈
-  UIGraphicsEndImageContext();
-
-  imagemask.contents = (__bridge id)(newImg.CGImage);
-
-  self.pictureImgView.layer.mask =imagemask;
+//  UIGraphicsBeginImageContext(self.pictureImgView.frame.size);
+//  // 绘制改变大小的图片
+//  [img drawInRect:CGRectMake(0, 0, self.pictureImgView.frame.size.width, self.pictureImgView.frame.size.height)];
+//  // 从当前context中创建一个改变大小后的图片
+//  UIImage* newImg = UIGraphicsGetImageFromCurrentImageContext();
+//  // 使当前的context出堆栈
+//  UIGraphicsEndImageContext();
 //    [self.pictureImgView setImage:newImg];
 }
 
