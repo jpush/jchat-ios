@@ -23,7 +23,9 @@
 //                          index:(NSInteger)index;
 @end
 
-@interface JCHATImgTableViewCell : UITableViewCell<UIAlertViewDelegate>
+@interface JCHATImgTableViewCell : UITableViewCell<UIAlertViewDelegate>{
+  UIImage *img;
+}
 @property (strong, nonatomic)  NSIndexPath *cellIndex;
 @property (assign, nonatomic)  id <PictureDelegate> delegate;
 @property (strong, nonatomic)  UIImageView *contentImgView;
@@ -37,7 +39,6 @@
 @property (nonatomic,strong)   JMSGConversation *conversation;
 @property (nonatomic,strong)   UIActivityIndicatorView *downLoadIndicatorView;
 @property (strong, nonatomic)  JMSGImageMessage *message;
-
 -(void)sendImageMessage;
 
 -(void)setCellData :(UIViewController *)controler

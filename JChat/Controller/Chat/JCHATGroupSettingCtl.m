@@ -144,7 +144,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 }
 
 - (void)reloadHeadViewData {
-  NSLog(@"HUANGMIN   RELOAD");
   for (UIView *v in _headView.subviews) {
     if ([v isKindOfClass:[JCHATGroupPersonView class]]) {
       [v removeFromSuperview];
@@ -189,8 +188,14 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         }
         return;
       }else {
+
         personView.headViewBtn.tag = 1000 + i*4+j;
-        JMSGUser *user = [_groupData objectAtIndex:i*4+j];
+        __block JMSGUser *user = [_groupData objectAtIndex:i*4+j];
+        [JMSGUser getUserInfoWithUsername:user.username completionHandler:^(id resultObject, NSError *error) {
+          user = (JMSGUser *)resultObject;
+        }];
+        
+                NSLog(@"huangmin   %@",user.avatarThumbPath);
         if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
           [personView.headViewBtn setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
         }else {
