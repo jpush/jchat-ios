@@ -70,6 +70,9 @@
     imgWidth = 135;
     imgHeight = (img.size.height/img.size.width) *imgWidth;
   }
+  if ((imgWidth > imgHeight?imgHeight/imgWidth:imgWidth/imgHeight)<0.47) {
+    return imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);//CGSizeMake(55, 135);
+  }
   return  CGSizeMake(imgWidth, imgHeight);
 
 }
