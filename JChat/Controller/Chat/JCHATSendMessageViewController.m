@@ -1188,7 +1188,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (model.imageSize.height == 0) {
       model.imageSize = [model getImageSize];
     }
-    return model.imageSize.height < 44?50:model.imageSize.height;
+    return model.imageSize.height < 44?50:model.imageSize.height+5;
   } else if (model.type == kJMSGVoiceMessage) {
     return 60;
   } else {
