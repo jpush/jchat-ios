@@ -14,7 +14,9 @@
 #import "AppDelegate.h"
 @interface JCHATSetDetailViewController ()<UIActionSheetDelegate,
     UIImagePickerControllerDelegate
->
+>{
+    UILabel *titleLabel;
+}
 
 @end
 
@@ -30,6 +32,14 @@
   _nameTextF.textColor = UIColorFromRGB(0x555555);
   _setAvatarBtn.layer.cornerRadius = 28;
   _setAvatarBtn.layer.masksToBounds = YES;
+    
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.text = @"输入昵称";
+    self.navigationItem.titleView = titleLabel;
 }
 
 - (IBAction)clickToFinish:(id)sender {

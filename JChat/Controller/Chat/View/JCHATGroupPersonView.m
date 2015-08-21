@@ -17,7 +17,6 @@
   [self.headViewBtn setFrame:CGRectMake(0, 0, 46, 46)];
   [self.headViewBtn.layer setMasksToBounds:YES];
   [self.headViewBtn.layer setCornerRadius:23];
-  [self.headViewBtn setBackgroundColor:[UIColor redColor]];
 }
 
 /*

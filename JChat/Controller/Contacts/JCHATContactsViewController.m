@@ -45,8 +45,8 @@
     // searchResultsDelegate 就是 UITableViewDelegate
     searchDisplayController.searchResultsDelegate = self;
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-    self.navigationController.navigationBar.alpha=0.8;
-    self.title=@"通信录";
+    self.navigationController.navigationBar.alpha=1;
+    self.title=@"通讯录";
     NSShadow *shadow = [[NSShadow alloc]init];
     shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
     shadow.shadowOffset = CGSizeMake(0,0);
