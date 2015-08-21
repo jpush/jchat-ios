@@ -346,9 +346,9 @@
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		9C979D9E5AD8492296E1A3D3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5FD764EC422CFC7BB8C437 /* libPods.a */; };
+		AA06B2441B8711E100E5997E /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE536811B3AAD6200EFC8CE /* JMessage.framework */; };
 		AA4D05A91B43917B007D7B78 /* JCHATAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */; };
 		AA4D05AA1B43917B007D7B78 /* JCHATAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */; };
-		AA68E27E1B7B0EAE00FEF1B5 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE536811B3AAD6200EFC8CE /* JMessage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -829,9 +829,11 @@
 		8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		8FF149F91AFBA11800D13F2E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		AA06B2421B86F1FB00E5997E /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../JMessageFramework/build/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		AA4D05A61B43917B007D7B78 /* JCHATAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAboutViewController.h; sourceTree = "<group>"; };
 		AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAboutViewController.m; sourceTree = "<group>"; };
 		AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATAboutViewController.xib; sourceTree = "<group>"; };
+		AA5E4FB91B85E669006CDB78 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		B8B54727AA73AD3FB615786C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DC57155E308472729B329A1B /* Pods.ad-hoc profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.ad-hoc profile.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.ad-hoc profile.xcconfig"; sourceTree = "<group>"; };
 		E78CC7C67314E62543E96F04 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -842,7 +844,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA68E27E1B7B0EAE00FEF1B5 /* JMessage.framework in Frameworks */,
+				AA06B2441B8711E100E5997E /* JMessage.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
 				1839834B1AFC91B600AC8280 /* SystemConfiguration.framework in Frameworks */,
@@ -1375,6 +1377,8 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA06B2421B86F1FB00E5997E /* JMessage.framework */,
+				AA5E4FB91B85E669006CDB78 /* JMessage.framework */,
 				8FE536811B3AAD6200EFC8CE /* JMessage.framework */,
 				1839834E1AFC91C800AC8280 /* CoreTelephony.framework */,
 				1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */,
@@ -2202,6 +2206,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",
@@ -2246,6 +2251,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",
@@ -2325,6 +2331,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",

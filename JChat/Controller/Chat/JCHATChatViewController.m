@@ -1,4 +1,3 @@
-
 #import "JCHATChatViewController.h"
 #import "JCHATChatTableViewCell.h"
 #import "JCHATSendMessageViewController.h"
