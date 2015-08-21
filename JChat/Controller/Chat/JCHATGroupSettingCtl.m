@@ -74,7 +74,7 @@
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupChange object:nil];
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha=0.8;
+  self.navigationController.navigationBar.alpha=1;
   
   [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    [UIColor whiteColor], NSForegroundColorAttributeName,

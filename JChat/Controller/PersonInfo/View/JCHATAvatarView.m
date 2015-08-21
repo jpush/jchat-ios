@@ -89,29 +89,11 @@
 
 - (void)setOriginImage:(UIImage *)originImage{
 
-  
-  //    sepiaFilter = [[GPUImageSobelEdgeDetectionFilter alloc] init];
-  
-//  GPUImageView *imageView = (GPUImageView *)imageView;
-  
-
-
-
   self.centeraverter.image = originImage;
 
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     UIImage *inputImage = originImage; // The WID.jpg example is greater than 2048 pixels tall, so it fails on older devices
     self.centeraverter.image = originImage;
-
-//    sourcePicture = [[GPUImagePicture alloc] initWithImage:inputImage smoothlyScaleOutput:YES];
-//    sepiaFilter = [[GPUImageTiltShiftFilter alloc] init];
-//    [sepiaFilter forceProcessingAtSize:imageView.sizeInPixels]; // This is now needed to make the filter run at the smaller output size  sizeInPixels
-//    [(GPUImageTiltShiftFilter *)sepiaFilter setTopFocusLevel:2];
-//    [(GPUImageTiltShiftFilter *)sepiaFilter setBottomFocusLevel:2];
-//      
-//      
-//    [sourcePicture addTarget:sepiaFilter];
-//    [sepiaFilter addTarget:imageView];
 
       sepiaFilter = [[GPUImageiOSBlurFilter alloc] init];
       sepiaFilter.blurRadiusInPixels = 3.0f;
@@ -120,11 +102,6 @@
       GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:inputImage];
       [picture addTarget:sepiaFilter];
       [sepiaFilter addTarget:imageView];
-      
-//      [picture processImageWithCompletionHandler:^{
-//          [sepiaFilter removeAllTargets];
-//      }];
-
 
     dispatch_async(dispatch_get_main_queue(), ^{
           // switch back to the main thread to update your UI

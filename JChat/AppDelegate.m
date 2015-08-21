@@ -339,8 +339,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
   UINavigationController *contactsNav = [[UINavigationController alloc]
                                          initWithRootViewController:contactsViewController];
   
-  contactsViewController.navigationItem.title=@"通信录";
-  UITabBarItem *contractsTab = [[UITabBarItem alloc] initWithTitle:@"通信录"
+  contactsViewController.navigationItem.title=@"通讯录";
+  UITabBarItem *contractsTab = [[UITabBarItem alloc] initWithTitle:@"通讯录"
                                                              image:[normalImageArray objectAtIndex:1]
                                                                tag:11];
   [contractsTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_18.png"]
