@@ -44,7 +44,7 @@
   [self.view setBackgroundColor:[UIColor whiteColor]];
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha = 0.8;
+  self.navigationController.navigationBar.alpha = 1;
   self.title = @"个人信息";
   [self loadUserInfoData];
 
