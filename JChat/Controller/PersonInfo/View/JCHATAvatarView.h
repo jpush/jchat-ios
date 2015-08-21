@@ -13,7 +13,7 @@
 @interface JCHATAvatarView : UIImageView {
   GPUImageView * imageView;
   GPUImagePicture *sourcePicture;
-  GPUImageOutput<GPUImageInput> *sepiaFilter, *sepiaFilter2;
+  GPUImageiOSBlurFilter *sepiaFilter;
 }
 @property(strong,nonatomic)UIImage *originImage;
 @property(strong,nonatomic)UIImageView *centeraverter;
