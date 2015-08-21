@@ -22,7 +22,7 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-    self.navigationController.navigationBar.alpha=0.8;
+    self.navigationController.navigationBar.alpha=1;
     self.title=@"新消息提醒";
     
     NSShadow *shadow = [[NSShadow alloc]init];
