@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender){
 /**
  *  更新用户信息接口
  *
- *  @param parameter     更新的值。除kJMSGGender性别类型，需要传入JMSGUserGender包装成NSNumber的对象，其他类型传NSString类型的对象。
+ *  @param parameter     更新的值。kJMSGGender性别类型，需要传入JMSGUserGender包装成NSNumber的对象，更新头像需要传入NSData类型的parameter,其他类型传NSString类型的对象。
  *  @param type          更新属性类型,这是一个 enum 类型
  *  @param handler       结果回调。resultObject值不需要关心,始终为nil
  */
