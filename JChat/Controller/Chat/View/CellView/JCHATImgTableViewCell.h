@@ -40,7 +40,7 @@
 @property (nonatomic,strong)   UIActivityIndicatorView *downLoadIndicatorView;
 @property (strong, nonatomic)  JMSGImageMessage *message;
 -(void)sendImageMessage;
-
+-(void)initAutoLayout;
 -(void)setCellData :(UIViewController *)controler
          chatModel :(JCHATChatModel *)chatModel
             message:(JMSGImageMessage *)message
