@@ -7,6 +7,7 @@
 //
 
 #import "JCHATShowTimeCell.h"
+#import "Masonry.h"
 
 @implementation JCHATShowTimeCell
 
@@ -44,6 +45,7 @@
   paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
   CGSize realSize = [self.model.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
   [self.messageTimeLabel setFrame:CGRectMake(self.messageTimeLabel.frame.origin.x, self.messageTimeLabel.frame.origin.y, realSize.width,realSize.height)];
+
   self.messageTimeLabel.text= self.model.chatContent;
 }
 

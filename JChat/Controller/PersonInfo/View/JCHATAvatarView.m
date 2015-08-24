@@ -88,7 +88,10 @@
 
 
 - (void)setOriginImage:(UIImage *)originImage{
-
+  if(!originImage){
+    self.image = originImage;
+    return;
+  }
   self.centeraverter.image = originImage;
 
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
