@@ -68,7 +68,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     }
   }
   [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x3f80de)];
-  [[UINavigationBar appearance] setTranslucent:NO];
+  if([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) {
+
+  }else {
+    [[UINavigationBar appearance] setTranslucent:NO];
+  }
+
   [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
   [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];
 }

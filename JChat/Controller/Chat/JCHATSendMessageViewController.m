@@ -29,13 +29,14 @@
 #import "JCHATVoiceTableCell.h"
 #import "JCHATTextTableCell.h"
 #import <UIKit/UIPrintInfo.h>
+//#import <UITableView+FDTemplateLayoutCell/UITableView+FDTemplateLayoutCell.h>
 #define interval 60*2
 
 NSString * const JCHATMessage      = @"JCHATMessage";
 NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 @interface JCHATSendMessageViewController () {
-
+  
 @private
   NSMutableArray *_imgDataArr;
   __block JMSGConversation *_conversation;
@@ -43,6 +44,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   __block NSMutableArray *_userArr;
   NSMutableDictionary *_JMSgMessageDic;
   UIButton *_rightBtn;
+
 }
 
 @end
@@ -112,7 +114,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   _imgDataArr =[[NSMutableArray alloc] init];
   
-
 
   DDLogDebug(@"Action - viewDidLoad");
   if (self.user) {
@@ -213,6 +214,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
 
+  [self.messageTableView registerClass:[JCHATTextTableCell class]forCellReuseIdentifier:@"JCHATTextTableCell"];
+  [self.messageTableView registerClass:[JCHATImgTableViewCell class] forCellReuseIdentifier:@"JCHATImgTableViewCell"];
+  [self.messageTableView registerClass:[JCHATVoiceTableCell class] forCellReuseIdentifier:@"JCHATVoiceTableCell"];
+  //-registerClass:forCellReuseIdentifier:
   self.moreViewContainer.moreView.delegate = self;
 
 }
@@ -1165,26 +1170,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   JCHATChatModel *model = _messageDic[JCHATMessage][messageId ];
   if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
-//    return model.getTextSize.height + 8;
     return model.contentHeight +8;
   } else if (model.type == kJMSGImageMessage) {
-//      UIImage *img;
-//      if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
-//      img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
-//      }else if (model.mediaData) {
-//      img = [UIImage imageWithData:model.mediaData];
-//      }else {
-//        img = [UIImage imageNamed:@"receiveFail.png"];
-//        return img.size.height;
-//      }
-//    float imgHeight = img.size.height/img.scale;
-//      if (IS_IPHONE_6P) {
-//        imgHeight = img.size.height / 3;
-//      } else {
-//        imgHeight = img.size.height/ 2 ;
-//      }
-//
-//    return  imgHeight < 44? 50: imgHeight;
     if (model.imageSize.height == 0) {
       model.imageSize = [model getImageSize];
     }
@@ -1194,6 +1181,22 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   } else {
     return 40;
   }
+
+//  if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
+//    return [tableView fd_heightForCellWithIdentifier:@"JCHATTextTableCell" cacheByIndexPath:indexPath configuration:^(JCHATTextTableCell *cell) {
+////      [self configureCell:cell atIndexPath:indexPath];
+//    }];
+//  } else if (model.type == kJMSGImageMessage) {
+//    return [tableView fd_heightForCellWithIdentifier:@"JCHATImgTableViewCell" cacheByIndexPath:indexPath configuration:^(JCHATImgTableViewCell *cell) {
+////      [self configureCell:cell atIndexPath:indexPath];
+//    }];
+//  } else if (model.type == kJMSGVoiceMessage) {
+//    return [tableView fd_heightForCellWithIdentifier:@"JCHATVoiceTableCell" cacheByIndexPath:indexPath configuration:^(JCHATVoiceTableCell *cell) {
+////      [self configureCell:cell atIndexPath:indexPath];
+//    }];
+//  } else {
+//    return 40;
+//  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1269,55 +1272,67 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
   }
     if (model.type == kJMSGTextMessage) {
-        static NSString *cellIdentifier = @"textCell";
-        JCHATTextTableCell *cell = (JCHATTextTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[JCHATTextTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
+//        static NSString *cellIdentifier = @"JCHATTextTableCell";//textCell
+//        JCHATTextTableCell *cell = (JCHATTextTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil) {
+//            cell = [[JCHATTextTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//        }
+
+
+        JCHATTextTableCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"JCHATTextTableCell" forIndexPath:indexPath];
         if (!model.sendFlag) {
-            model.sendFlag = YES;
-            // 消息展示出来时，调用发文本消息
-            [self sendTextMessage:model.messageId];
+          model.sendFlag = YES;
+          // 消息展示出来时，调用发文本消息
+          [self sendTextMessage:model.messageId];
         }
         [cell setCellData:model delegate:self];
+
         return cell;
-    }else if(model.type == kJMSGImageMessage)
+      }else if(model.type == kJMSGImageMessage)
     {
-        static NSString *cellIdentifier = @"imgCell";
-        JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[JCHATImgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-      JMSGImageMessage *imgMessage = _JMSgMessageDic[model.messageId];
-      [cell setCellData:self chatModel:model message:imgMessage indexPath:indexPath];
+//        static NSString *cellIdentifier = @"JCHATImgTableViewCell";//imgCell
+//        JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil) {
+//            cell = [[JCHATImgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//        }
+
+        JCHATImgTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JCHATImgTableViewCell" forIndexPath:indexPath];
+        JMSGImageMessage *imgMessage = _JMSgMessageDic[model.messageId];
+        
+        [cell setCellData:self chatModel:model message:imgMessage indexPath:indexPath];
         return cell;
     }else if (model.type == kJMSGVoiceMessage)
     {
-        static NSString *cellIdentifier = @"voiceCell";
-        JCHATVoiceTableCell *cell = (JCHATVoiceTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[JCHATVoiceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-//      JCHATVoiceTableCell *cell = CELL(tableView, JCHATVoiceTableCell);
-      
-      JMSGVoiceMessage *voiceMessage = _JMSgMessageDic[model.messageId];
-      [cell setCellData:model delegate:self message:voiceMessage indexPath:indexPath];
+//        static NSString *cellIdentifier = @"JCHATVoiceTableCell";//voiceCell
+//        JCHATVoiceTableCell *cell = (JCHATVoiceTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil) {
+//            cell = [[JCHATVoiceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//        }
+      JCHATVoiceTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JCHATVoiceTableCell" forIndexPath:indexPath];
+        JMSGVoiceMessage *voiceMessage = _JMSgMessageDic[model.messageId];
+        
+        [cell setCellData:model delegate:self message:voiceMessage indexPath:indexPath];
+
         return cell;
     }else if (model.type == kJMSGTimeMessage || model.type == kJMSGEventMessage) {
         static NSString *cellIdentifier = @"timeCell";
+
+
         JCHATShowTimeCell *cell = (JCHATShowTimeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATShowTimeCell" owner:self options:nil] lastObject];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-      if (model.type == kJMSGEventMessage) {
-        cell.messageTimeLabel.text = model.chatContent;
-//        [cell setCellData:model];
-      }else {
-        cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
-      }
+        
+        if (model.type == kJMSGEventMessage) {
+          cell.messageTimeLabel.text = model.chatContent;
+          //        [cell setCellData:model];
+        }else {
+          cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
+        }
+
         return cell;
-    }
+      }
     else{
         return nil;
     }
