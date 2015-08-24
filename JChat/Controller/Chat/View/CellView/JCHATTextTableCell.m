@@ -16,7 +16,9 @@
 @implementation JCHATTextTableCell
 
 - (void)awakeFromNib {
+  [super awakeFromNib];
   // Initialization code
+  self.contentView.bounds = [UIScreen mainScreen].bounds;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -45,7 +47,7 @@
     [self addSubview:self.headImgView];
     [self headAddGesture];
     self.isMe = YES;
-    
+    [self initAutorLayout];
   }
   return self;
 }
@@ -77,6 +79,39 @@
   [self creadBuddleChatView];
 }
 
+- (void)initAutorLayout {
+  [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.mas_equalTo(self).with.offset(0);
+    make.right.mas_equalTo(self).with.offset(-5);
+    make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+  }];
+  
+  [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.mas_equalTo(self);
+    make.right.mas_equalTo(self.headImgView.mas_left).with.offset(-5);
+    make.size.mas_equalTo(CGSizeMake( 30, 20));
+  }];
+  
+  [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(30, 30));
+    make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
+    make.centerY.mas_equalTo(self);
+  }];
+  [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(17, 15));
+    make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
+    make.centerY.mas_equalTo(self);
+  }];
+  //
+  [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.mas_equalTo(self.chatView).with.offset(5);
+    make.right.mas_equalTo(self.chatView).with.offset(-15);
+    make.left.mas_equalTo(self.chatView).with.offset(5);
+    make.bottom.mas_equalTo(self.chatView).with.offset(-5);
+  }];
+
+}
+
 - (void)deleteAllConstrait {
   [self.chatView mas_remakeConstraints:^(MASConstraintMaker *make) {
   }];
@@ -94,7 +129,7 @@
 //  if ([self.isMe]) {
   
   
-  [self deleteAllConstrait];
+//  [self deleteAllConstrait];
   
   if (_model.type == kJMSGTextMessage) {
     UIFont *font =[UIFont systemFontOfSize:18];
@@ -105,63 +140,114 @@
     CGSize realSize = [_model.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
 
     if (_model.who) {
-      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self).with.offset(0);
+//        make.right.mas_equalTo(self).with.offset(-5);
+//        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+//      }];
+//
+//      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self);
+//        make.right.mas_equalTo(self.headImgView.mas_left).with.offset(-5);
+//        make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
+//      }];
+//
+//      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(30, 30));
+//        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
+//        make.centerY.mas_equalTo(self);
+//      }];
+//      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(17, 15));
+//        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
+//        make.centerY.mas_equalTo(self);
+//      }];
+////
+//      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self.chatView).with.offset(5);
+//        make.right.mas_equalTo(self.chatView).with.offset(-15);
+//        make.left.mas_equalTo(self.chatView).with.offset(5);
+//        make.bottom.mas_equalTo(self.chatView).with.offset(-5);
+//      }];
+      [self.headImgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).with.offset(0);
         make.right.mas_equalTo(self).with.offset(-5);
         make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
       }];
-
-      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.chatView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
         make.right.mas_equalTo(self.headImgView.mas_left).with.offset(-5);
         make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
       }];
-
-      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.stateView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(30, 30));
         make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
         make.centerY.mas_equalTo(self);
       }];
-      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.sendFailView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(17, 15));
         make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
         make.centerY.mas_equalTo(self);
       }];
-//
-      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.contentLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.chatView).with.offset(5);
         make.right.mas_equalTo(self.chatView).with.offset(-15);
         make.left.mas_equalTo(self.chatView).with.offset(5);
         make.bottom.mas_equalTo(self.chatView).with.offset(-5);
       }];
-      
     }else
     {
-      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self).with.offset(0);
+//        make.left.mas_equalTo(self).with.offset(5);
+//        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+//      }];
+//
+//      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self);
+//        make.left.mas_equalTo(self.headImgView.mas_right).with.offset(5);
+//        make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
+//      }];
+//
+//      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(30, 30));
+//        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
+//        make.centerY.mas_equalTo(self);
+//      }];
+//
+//      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(17, 15));
+//        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
+//        make.centerY.mas_equalTo(self);
+//      }];
+//      
+//      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(self.chatView).with.offset(5);
+//        make.right.mas_equalTo(self.chatView).with.offset(-5);
+//        make.left.mas_equalTo(self.chatView).with.offset(15);
+//        make.bottom.mas_equalTo(self.chatView).with.offset(-5);
+//      }];
+      [self.headImgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).with.offset(0);
-        make.left.mas_equalTo(self).with.offset(5);
+        make.right.mas_equalTo(self).with.offset(5+headHeight-self.frame.size.width);
         make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
       }];
-
-      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.chatView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
-        make.left.mas_equalTo(self.headImgView.mas_right).with.offset(5);
+        make.right.mas_equalTo(self.headImgView.mas_left).with.offset(headHeight + 5 +realSize.width +30);
         make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
       }];
-
-      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.stateView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(30, 30));
-        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
+        make.right.mas_equalTo(self.chatView.mas_left).with.offset(realSize.width + 35);
         make.centerY.mas_equalTo(self);
       }];
-
-      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.sendFailView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(17, 15));
-        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
+        make.right.mas_equalTo(self.chatView.mas_left).with.offset(realSize.width +35);
         make.centerY.mas_equalTo(self);
       }];
-      
-      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+      [self.contentLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.chatView).with.offset(5);
         make.right.mas_equalTo(self.chatView).with.offset(-5);
         make.left.mas_equalTo(self.chatView).with.offset(15);

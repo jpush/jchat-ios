@@ -27,6 +27,13 @@
   return self;
 }
 
+- (void)awakeFromNib {
+  [super awakeFromNib];
+  // Initialization code
+  self.contentView.bounds = [UIScreen mainScreen].bounds;
+}
+
+
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -34,32 +41,26 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     chatBgViewWidth = 60;
     [self setBackgroundColor:[UIColor clearColor]];
-//    self.voiceTimeLable = [[UILabel alloc] init];
     self.voiceTimeLable = [UILabel new];
-//    self.voiceBgView = [[UIImageView alloc] init];
-    self.voiceBgView = [UIImageView new];
     
+    self.voiceBgView = [UIImageView new];
     [self.voiceBgView setBackgroundColor:[UIColor clearColor]];
     [self addSubview:self.voiceBgView];
     
-//    self.headView = [[UIImageView alloc] init];
     self.headView = [UIImageView new];
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
-    [self addSubview:self.headView];
-
     self.headView.layer.cornerRadius = 23;
     [self.headView.layer setMasksToBounds:YES];
+    [self addSubview:self.headView];
+
+
     
-//    self.voiceImgView = [[UIImageView alloc] init];
     self.voiceImgView = [UIImageView new];
     [self.voiceImgView setBackgroundColor:[UIColor clearColor]];
     [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
     [self addSubview:self.voiceTimeLable];
-//    [self.voiceImgView setFrame:CGRectMake(30, 5, 9, 30)];//!
-
     
     [self.voiceTimeLable setBackgroundColor:[UIColor clearColor]];
-//    [self.voiceTimeLable setFrame:CGRectMake(5, 5, 45, 30)];
     [self.voiceTimeLable setTextColor:UIColorFromRGB(0x636363)];
     self.voiceTimeLable.textAlignment = NSTextAlignmentLeft;
     self.voiceTimeLable.font = [UIFont systemFontOfSize:18];
@@ -70,7 +71,6 @@
     img = [UIImage imageNamed:@"mychatBg"];
     UIImage *newImg = [img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
     [self.voiceBgView setImage:newImg];
-//    [self.voiceBgView setFrame:CGRectMake(kApplicationWidth - 70, 0, 100, 60)];
     self.voiceBgView.layer.cornerRadius = 6;
     [self.voiceBgView.layer setMasksToBounds:YES];
     
@@ -84,23 +84,20 @@
     [self.stateView setHidden:NO];
     self.stateView.hidesWhenStopped = YES;
     
-//    self.sendFailView = [[UIImageView alloc] init];
     self.sendFailView = [UIImageView new];
-    
     [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
     [self.sendFailView setUserInteractionEnabled:YES];
     [self.sendFailView setBackgroundColor:[UIColor clearColor]];
     [self.sendFailView setHidden:YES];
     [self addSubview:self.sendFailView];
     
-//    self.readView = [[UIImageView alloc] init];
     self.readView = [UIImageView new];
     [self.readView setBackgroundColor:[UIColor redColor]];
     self.readView.layer.cornerRadius = 4;
     [self addSubview:self.readView];
     self.continuePlayer = NO;
     [self headAddGesture];
-    
+    [self initAutorLayout];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(sendMessageResponse:)
                                                  name:JMSGNotification_SendMessageResult object:nil];
@@ -397,6 +394,46 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   [self updateFrame];
 }
 
+- (void)initAutorLayout {
+  [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+    make.top.mas_equalTo(0);
+    make.right.mas_equalTo(self).with.offset(-gapWidth);
+  }];
+  [self.voiceBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(chatBgViewWidth, chatBgViewHeight));
+    make.right.mas_equalTo(self.headView.mas_left).with.offset(-gapWidth);
+    make.top.mas_equalTo(0);
+  }];
+  [self.voiceImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(9, 16));
+    make.right.mas_equalTo(self.voiceBgView.mas_right).with.offset(-15);
+    make.centerY.mas_equalTo(self.voiceBgView);
+  }];
+  [self.voiceTimeLable mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(40, 30));
+    make.centerY.mas_equalTo(self.voiceBgView);
+    make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(-10);
+  }];
+  
+  [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(30, 30));
+    make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-10);
+  }];
+  [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(15, 17));
+    make.centerY.mas_equalTo(self.voiceBgView);
+    make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-1);
+  }];
+  [self.readView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(8, 8));
+    make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(-10);
+    make.top.mas_equalTo(self).with.offset(5);
+  }];
+
+
+}
+
 - (void)updateFrame {
   /*信息读取状态显示*/
   if (self.model.readState) {
@@ -418,65 +455,84 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.sendFailView setHidden:YES];
   }
   
-  [self.headView mas_remakeConstraints:^(MASConstraintMaker *make) {
-  }];
-  [self.voiceBgView mas_remakeConstraints:^(MASConstraintMaker *make) {
-  }];
-  [self.voiceImgView mas_remakeConstraints:^(MASConstraintMaker *make) {
-  }];
-  [self.voiceTimeLable mas_remakeConstraints:^(MASConstraintMaker *make) {
-  }];
-  [self.stateView mas_remakeConstraints:^(MASConstraintMaker *make) {
-  }];
-  [self.sendFailView mas_remakeConstraints:^(MASConstraintMaker *make) {
-  }];
-  [self.readView mas_remakeConstraints:^(MASConstraintMaker *make) {
-  }];
+
   
   UIImage *img = nil;
   if (self.model.who) {//wo
     img = [UIImage imageNamed:@"mychatBg"];
-//    [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - gapWidth, 0, headHeight, headHeight)];//头像位置
-    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+
+//    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+//      make.top.mas_equalTo(0);
+//      make.right.mas_equalTo(self).with.offset(-gapWidth);
+//    }];
+//    [self.voiceBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(chatBgViewWidth, chatBgViewHeight));
+//      make.right.mas_equalTo(self.headView.mas_left).with.offset(-gapWidth);
+//      make.top.mas_equalTo(0);
+//    }];
+//    [self.voiceImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(9, 16));
+//      make.right.mas_equalTo(self.voiceBgView.mas_right).with.offset(-15);
+//      make.centerY.mas_equalTo(self.voiceBgView);
+//    }];
+//    [self.voiceTimeLable mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(40, 30));
+//      make.centerY.mas_equalTo(self.voiceBgView);
+//      make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(-10);
+//    }];
+//
+//    [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(30, 30));
+//      make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-10);
+//    }];
+//    [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(15, 17));
+//      make.centerY.mas_equalTo(self.voiceBgView);
+//      make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-1);
+//    }];
+//    [self.readView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(8, 8));
+//      make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(-10);
+//      make.top.mas_equalTo(self).with.offset(5);
+//    }];
+    [self.headView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
       make.top.mas_equalTo(0);
       make.right.mas_equalTo(self).with.offset(-gapWidth);
     }];
-//    [self.voiceBgView setFrame:CGRectMake(kApplicationWidth - chatBgViewWidth - (headHeight + 2 * gapWidth), 0, chatBgViewWidth, chatBgViewHeight)];
-    [self.voiceBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.voiceBgView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(chatBgViewWidth, chatBgViewHeight));
       make.right.mas_equalTo(self.headView.mas_left).with.offset(-gapWidth);
       make.top.mas_equalTo(0);
     }];
-////    [self.voiceImgView setFrame:CGRectMake(20, 15, 20, 20)];
-    [self.voiceImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.voiceImgView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(9, 16));
       make.right.mas_equalTo(self.voiceBgView.mas_right).with.offset(-15);
       make.centerY.mas_equalTo(self.voiceBgView);
     }];
-////    [self.voiceTimeLable setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 50, 10, 40, 30)];
-    [self.voiceTimeLable mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.voiceTimeLable mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(40, 30));
       make.centerY.mas_equalTo(self.voiceBgView);
       make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(-10);
     }];
-////    [self.stateView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 40, 10, 30, 30)];
-    [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.voiceTimeLable.textAlignment = NSTextAlignmentRight;
+    
+    [self.stateView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(30, 30));
       make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-10);
     }];
-////    [self.sendFailView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 20, (50 - 15) / 2, 17, 15)];
-    [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.sendFailView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(15, 17));
       make.centerY.mas_equalTo(self.voiceBgView);
       make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(-1);
     }];
-////    [self.readView setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 10, 5, 8, 8)];
-    [self.readView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.readView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(8, 8));
       make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(-10);
       make.top.mas_equalTo(self).with.offset(5);
     }];
+
   } else {
     img = [UIImage imageNamed:@"otherChatBg"];
 //    [self.headView setFrame:CGRectMake(gapWidth, 0, headHeight, headHeight)];
@@ -487,47 +543,78 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 //    [self.sendFailView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x + self.voiceTimeLable.frame.size.width + 5, (50 - 15) / 2, 17, 15)];
 //    [self.readView setFrame:CGRectMake(self.voiceBgView.frame.origin.x + self.voiceBgView.frame.size.width + 10, 5, 8, 8)];
     
-    //    [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - gapWidth, 0, headHeight, headHeight)];//头像位置
-    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+
+//    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
+//      make.top.mas_equalTo(0);
+//      make.left.mas_equalTo(self).with.offset(gapWidth);
+//    }];
+//    [self.voiceBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(chatBgViewWidth, chatBgViewHeight));
+//      make.left.mas_equalTo(self.headView.mas_right).with.offset(gapWidth);
+//      make.top.mas_equalTo(0);
+//    }];
+//    [self.voiceImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(9, 16));
+//      make.left.mas_equalTo(self.voiceBgView.mas_left).with.offset(15);
+//      make.centerY.mas_equalTo(self.voiceBgView);
+//    }];
+//    [self.voiceTimeLable mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(40, 30));
+//      make.centerY.mas_equalTo(self.voiceBgView);
+//      make.left.mas_equalTo(self.voiceBgView.mas_right).with.offset(10);
+//    }];
+//    [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(30, 30));
+//      make.left.mas_equalTo(self.voiceTimeLable.mas_right).with.offset(10);
+//    }];
+//    [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(15, 17));
+//      make.centerY.mas_equalTo(self.voiceBgView);
+//      make.left.mas_equalTo(self.voiceTimeLable.mas_right).with.offset(1);
+//    }];
+//    [self.readView mas_makeConstraints:^(MASConstraintMaker *make) {
+//      make.size.mas_equalTo(CGSizeMake(8, 8));
+//      make.left.mas_equalTo(self.voiceBgView.mas_right).with.offset(10);
+//      make.top.mas_equalTo(self).with.offset(5);
+//    }];
+    [self.headView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
       make.top.mas_equalTo(0);
-      make.left.mas_equalTo(self).with.offset(gapWidth);
+      make.right.mas_equalTo(self).with.offset(gapWidth+headHeight-self.frame.size.width);
     }];
-    //    [self.voiceBgView setFrame:CGRectMake(kApplicationWidth - chatBgViewWidth - (headHeight + 2 * gapWidth), 0, chatBgViewWidth, chatBgViewHeight)];
-    [self.voiceBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.voiceBgView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(chatBgViewWidth, chatBgViewHeight));
-      make.left.mas_equalTo(self.headView.mas_right).with.offset(gapWidth);
+      make.right.mas_equalTo(self.headView.mas_left).with.offset(headHeight + gapWidth + chatBgViewWidth);
       make.top.mas_equalTo(0);
     }];
-    ////    [self.voiceImgView setFrame:CGRectMake(20, 15, 20, 20)];
-    [self.voiceImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.voiceImgView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(9, 16));
-      make.left.mas_equalTo(self.voiceBgView.mas_left).with.offset(15);
+      make.right.mas_equalTo(self.voiceBgView.mas_right).with.offset(24 - chatBgViewWidth);
       make.centerY.mas_equalTo(self.voiceBgView);
     }];
-    ////    [self.voiceTimeLable setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 50, 10, 40, 30)];
-    [self.voiceTimeLable mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.voiceTimeLable mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(40, 30));
       make.centerY.mas_equalTo(self.voiceBgView);
-      make.left.mas_equalTo(self.voiceBgView.mas_right).with.offset(10);
+      make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(chatBgViewWidth + 50);
     }];
-    ////    [self.stateView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 40, 10, 30, 30)];
-    [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.voiceTimeLable.textAlignment = NSTextAlignmentLeft;
+    
+    [self.stateView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(30, 30));
-      make.left.mas_equalTo(self.voiceTimeLable.mas_right).with.offset(10);
+      make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(40 + 10 + 30);
     }];
-    ////    [self.sendFailView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 20, (50 - 15) / 2, 17, 15)];
-    [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.sendFailView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(15, 17));
       make.centerY.mas_equalTo(self.voiceBgView);
-      make.left.mas_equalTo(self.voiceTimeLable.mas_right).with.offset(1);
+      make.right.mas_equalTo(self.voiceTimeLable.mas_left).with.offset(40 + 10 +30);
     }];
-    ////    [self.readView setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 10, 5, 8, 8)];
-    [self.readView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.readView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(8, 8));
-      make.left.mas_equalTo(self.voiceBgView.mas_right).with.offset(10);
+      make.right.mas_equalTo(self.voiceBgView.mas_left).with.offset(chatBgViewWidth +10 +8);
       make.top.mas_equalTo(self).with.offset(5);
     }];
+
   }
   [self updateTimeLable:self.voiceTimeLable];
   UIImage *newImg = [img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
