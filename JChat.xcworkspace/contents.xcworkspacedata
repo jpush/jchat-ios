@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:JChat.xcodeproj">
+      location = "group:/Users/xiaomeng/JPUSHIM/2.0.0IM/jchat-ios/JChat.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
