@@ -356,12 +356,12 @@
 		6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
-		8FE536821B3AAD6200EFC8CE /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE536811B3AAD6200EFC8CE /* JMessage.framework */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		9C979D9E5AD8492296E1A3D3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5FD764EC422CFC7BB8C437 /* libPods.a */; };
 		AA4D05A91B43917B007D7B78 /* JCHATAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */; };
 		AA4D05AA1B43917B007D7B78 /* JCHATAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */; };
+		AA657C951B8AFFBA00F93CC4 /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE536811B3AAD6200EFC8CE /* JMessage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -665,7 +665,7 @@
 		187182E81AFB80C000FB3168 /* wo_20@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wo_20@3x.png"; sourceTree = "<group>"; };
 		187182EA1AFB80C000FB3168 /* yuyin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yuyin@2x.png"; sourceTree = "<group>"; };
 		187182EB1AFB80C000FB3168 /* zhaopian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhaopian@2x.png"; sourceTree = "<group>"; };
-		18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "极光IM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18AB9C8C1A43BCB7007B2A04 /* JChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B8FDA81B3D23DB00538C00 /* receiveFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "receiveFail@2x.png"; sourceTree = "<group>"; };
 		18B8FDAA1B3D240500538C00 /* receiveFail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "receiveFail@3x.png"; sourceTree = "<group>"; };
 		2E5FD764EC422CFC7BB8C437 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -849,6 +849,8 @@
 		AA4D05A61B43917B007D7B78 /* JCHATAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAboutViewController.h; sourceTree = "<group>"; };
 		AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAboutViewController.m; sourceTree = "<group>"; };
 		AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATAboutViewController.xib; sourceTree = "<group>"; };
+		AA657C901B8AFC1800F93CC4 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../JMessageFramework/build/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
+		AA657C931B8AFEDB00F93CC4 /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos/JMessage.framework"; sourceTree = "<group>"; };
 		B8B54727AA73AD3FB615786C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DC57155E308472729B329A1B /* Pods.ad-hoc profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.ad-hoc profile.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.ad-hoc profile.xcconfig"; sourceTree = "<group>"; };
 		E78CC7C67314E62543E96F04 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -859,6 +861,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA657C951B8AFFBA00F93CC4 /* JMessage.framework in Frameworks */,
 				44C78F1C1B7B15A6006D4192 /* Accelerate.framework in Frameworks */,
 				1839834F1AFC91C800AC8280 /* CoreTelephony.framework in Frameworks */,
 				1839834D1AFC91BF00AC8280 /* AudioToolbox.framework in Frameworks */,
@@ -866,7 +869,6 @@
 				183983491AFC91A400AC8280 /* CoreLocation.framework in Frameworks */,
 				183983471AFC919C00AC8280 /* CoreFoundation.framework in Frameworks */,
 				183983451AFC919300AC8280 /* Foundation.framework in Frameworks */,
-				8FE536821B3AAD6200EFC8CE /* JMessage.framework in Frameworks */,
 				183983431AFC918C00AC8280 /* CoreGraphics.framework in Frameworks */,
 				183983411AFC918300AC8280 /* UIKit.framework in Frameworks */,
 				1839833F1AFC917C00AC8280 /* CFNetwork.framework in Frameworks */,
@@ -1396,7 +1398,7 @@
 		18AB9C8D1A43BCB7007B2A04 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */,
+				18AB9C8C1A43BCB7007B2A04 /* JChat.app */,
 				8F8840A41B159E7500BDC126 /* JChat Tests.xctest */,
 			);
 			name = Products;
@@ -1405,6 +1407,8 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA657C931B8AFEDB00F93CC4 /* JMessage.framework */,
+				AA657C901B8AFC1800F93CC4 /* JMessage.framework */,
 				44B60EAD1B7B43EA00AE828D /* OpenGLES.framework */,
 				44B60EAB1B7B43DF00AE828D /* CoreVideo.framework */,
 				44B60EA91B7B43D400AE828D /* CoreMedia.framework */,
@@ -1664,7 +1668,7 @@
 			);
 			name = JChat;
 			productName = "JPush IM";
-			productReference = 18AB9C8C1A43BCB7007B2A04 /* 极光IM.app */;
+			productReference = 18AB9C8C1A43BCB7007B2A04 /* JChat.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8F8840A31B159E7500BDC126 /* JChat Tests */ = {
@@ -1697,7 +1701,7 @@
 				TargetAttributes = {
 					18AB9C8B1A43BCB7007B2A04 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = RL64Y54S9V;
+						DevelopmentTeam = 8X2A38Q9VD;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -2237,6 +2241,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",
@@ -2264,7 +2269,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "极光IM";
+				PRODUCT_NAME = JChat;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2281,6 +2286,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",
@@ -2307,7 +2313,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "极光IM";
+				PRODUCT_NAME = JChat;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2346,7 +2352,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "JChat Tests";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
 				VALID_ARCHS = "arm64 armv7 arm7";
@@ -2380,7 +2386,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "JChat Tests";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
 				VALID_ARCHS = "arm64 armv7 arm7";
