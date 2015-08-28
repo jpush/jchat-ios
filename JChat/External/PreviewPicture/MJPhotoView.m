@@ -90,30 +90,24 @@
                 __weak MJPhotoView *photoView = self;
                 _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
                 if (_photo.message.messageId) {
-                    [_conversation getMessage:_photo.message.messageId completionHandler:^(id resultObject, NSError *error) {
-                        if (error ==nil) {
-                            [JMSGMessage downloadOriginImage:resultObject
-                                                withProgress:progress
-                                           completionHandler:^(id resultObject, NSError *error) {
-                                if (error == nil) {
-                                    JPIMLog(@"下载大图 success");
-                                    _photo.url = resultObject;
-                                    _photo.message.pictureImgPath = [(NSURL *)resultObject absoluteString];
-                                    [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                      photo.image = image;
-                                        // 调整frame参数
-                                        [photoView adjustFrame];
-                                    }];                                    // 调整frame参数
-                                }else {
-                                    JPIMLog(@"下载大图 error");
-                                    _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
-                                    [MBProgressHUD showMessage:@"下载大图失败！" view:self];
-                                }
-                            }];
-                        }else {
-                            JPIMLog(@"获取messsage fail");
-                        }
-                    }];
+                  JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
+                  [message largeImageDataWithProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                    if (error == nil) {
+                      JPIMLog(@"下载大图 success");
+                      _photo.url = resultObject;
+                      _photo.message.pictureImgPath = [(NSURL *)resultObject absoluteString];
+                      [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                        photo.image = image;
+                        // 调整frame参数
+                        [photoView adjustFrame];
+                      }];                                    // 调整frame参数
+                    }else {
+                      JPIMLog(@"下载大图 error");
+                      _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
+                      [MBProgressHUD showMessage:@"下载大图失败！" view:self];
+                    }
+                  }];
+
                 }else {
                     JPIMLog(@"messageid is nil");
                 }
@@ -145,43 +139,28 @@
         NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
         __weak MJPhoto *photo = _photo;
             if (_photo.message.messageId) {
-                [_conversation getMessage:_photo.message.messageId completionHandler:^(id resultObject, NSError *error) {
-                    if (error ==nil) {
-                        [JMSGMessage downloadOriginImage:resultObject
-                                            withProgress:progress
-                                       completionHandler:^(id resultObject, NSError *error) {
-                            if (error == nil) {
-                                JPIMLog(@"下载大图 success");
-                                _photo.url = resultObject;
-                                _photo.message.pictureImgPath = [(NSURL *)resultObject path];
-//                                UIImage *img = [UIImage imageWithContentsOfFile:_photo.message.pictureImgPath];
-                                
-                                [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                    photo.image = image;
-                                    // 调整frame参数
-                                    [photoView photoDidFinishLoadWithImage:image];
+              JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
+              [message largeImageDataWithProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                if (error == nil) {
+                  JPIMLog(@"下载大图 success");
+                  _photo.url = resultObject;
+                  _photo.message.pictureImgPath = [(NSURL *)resultObject path];
+                  [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                    photo.image = image;
+                    // 调整frame参数
+                    [photoView photoDidFinishLoadWithImage:image];
+                    
+                  }];                                    // 调整frame参数
+                }else {
+                  JPIMLog(@"下载大图 error");
+                  _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
+                  [MBProgressHUD showMessage:@"下载大图失败！" view:self];
+                }
+              }];
 
-                                }];                                    // 调整frame参数
-                            }else {
-                                JPIMLog(@"下载大图 error");
-                                _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
-                                [MBProgressHUD showMessage:@"下载大图失败！" view:self];
-                            }
-                        }];
-                    }else {
-                        JPIMLog(@"获取messsage fail");
-                    }
-                }];
             }else {
                 JPIMLog(@"messageid is nil");
             }
-//        [_imageView setImageWithURL:_photo.url placeholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSUInteger receivedSize, long long expectedSize) {
-//            if (receivedSize > kMinProgress) {
-//                loading.progress = (float)receivedSize/expectedSize;
-//            }
-//        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-//            [photoView photoDidFinishLoadWithImage:image];
-//        }];
     }
 }
 

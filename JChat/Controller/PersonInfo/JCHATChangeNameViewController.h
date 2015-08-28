@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *suggestLabel;
 @property (weak, nonatomic) IBOutlet UILabel *charNumber;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (assign, nonatomic)JMSGUpdateUserInfoType updateType;
+@property (assign, nonatomic)JMSGUserField updateType;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *baselineTop;
 
 @end

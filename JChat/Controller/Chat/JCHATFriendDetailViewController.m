@@ -72,45 +72,95 @@
     _infoArr = [[NSMutableArray alloc]init];
     [MBProgressHUD showMessage:@"正在加载！" toView:self.view];
     __weak __typeof(self)weakSelf = self;
-    [JMSGUser getUserInfoWithUsername:self.userInfo.username completionHandler:^(id resultObject, NSError *error) {
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (error) {
-            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-            [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
-            return;
+  [JMSGUser userInfoArrayWithUsernameArray:@[self.userInfo.username] completionHandler:^(id resultObject, NSError *error) {
+    __strong __typeof(weakSelf) strongSelf = weakSelf;
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    if (error) {
+      [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+      [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
+      return;
+    }
+    JMSGUser *user = resultObject;
+    //            if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
+    //                [_headView setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath]];
+    //            } else {
+    //                [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+    //            }
+    [user thumbAvatarData:^(id resultObject, NSError *error) {
+      if (error == nil) {
+        if (resultObject != nil) {
+          [_headView setImage:[UIImage imageWithData:resultObject]];
+        }else {
+          [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
         }
-        JMSGUser *user = resultObject;
-        if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
-            [_headView setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath]];
-        } else {
-            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-        }
-        if (user.nickname) {
-            _nameLabel.text = user.nickname;
-        } else {
-            _nameLabel.text = user.username;
-        }
-        if (user.userGender == kJMSGUnknown) {
-            [_infoArr addObject:@"未知"];
-        } else if (user.userGender == kJMSGMale) {
-            [_infoArr addObject:@"男"];
-        } else {
-            [_infoArr addObject:@"女"];
-        }
-        if (user.region) {
-            [_infoArr addObject:user.region];
-        } else {
-            [_infoArr addObject:@""];
-        }
-        if (user.signature) {
-            [_infoArr addObject:user.signature];
-        } else {
-            [_infoArr addObject:@""];
-        }
-        [strongSelf.detailTableView reloadData];
+      }else {
+        DDLogDebug(@"JCHATFriendDetailVC  thumbAvatarData fail");
+      }
     }];
+    if (user.nickname) {
+      _nameLabel.text = user.nickname;
+    } else {
+      _nameLabel.text = user.username;
+    }
+    if (user.gender == kJMSGUserGenderUnknown) {
+      [_infoArr addObject:@"未知"];
+    } else if (user.gender == kJMSGUserGenderMale) {
+      [_infoArr addObject:@"男"];
+    } else {
+      [_infoArr addObject:@"女"];
+    }
+    if (user.region) {
+      [_infoArr addObject:user.region];
+    } else {
+      [_infoArr addObject:@""];
+    }
+    if (user.signature) {
+      [_infoArr addObject:user.signature];
+    } else {
+      [_infoArr addObject:@""];
+    }
+    [strongSelf.detailTableView reloadData];
+  }];
+//    [JMSGUser getUserInfoWithUsername:self.userInfo.username completionHandler:^(id resultObject, NSError *error) {
+//        __strong __typeof(weakSelf) strongSelf = weakSelf;
+//
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        if (error) {
+//            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//            [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
+//            return;
+//        }
+//        JMSGUser *user = resultObject;
+//        if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
+//            [_headView setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath]];
+//        } else {
+//            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//        }
+//        if (user.nickname) {
+//            _nameLabel.text = user.nickname;
+//        } else {
+//            _nameLabel.text = user.username;
+//        }
+//        if (user.userGender == kJMSGUnknown) {
+//            [_infoArr addObject:@"未知"];
+//        } else if (user.userGender == kJMSGMale) {
+//            [_infoArr addObject:@"男"];
+//        } else {
+//            [_infoArr addObject:@"女"];
+//        }
+//        if (user.region) {
+//            [_infoArr addObject:user.region];
+//        } else {
+//            [_infoArr addObject:@""];
+//        }
+//        if (user.signature) {
+//            [_infoArr addObject:user.signature];
+//        } else {
+//            [_infoArr addObject:@""];
+//        }
+//        [strongSelf.detailTableView reloadData];
+//    }];
    }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

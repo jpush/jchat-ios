@@ -301,11 +301,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 // ---------- end of JPUSH
 
 
-
-- (void)sendApnsNotificationSkipPage:(NSDictionary *)notificaton {
-  [[NSNotificationCenter defaultCenter] postNotificationName:KApnsNotification object:notificaton];
-}
-
 #pragma mark --初始化各个功能模块
 -(void)initTheMainGTablebar {
 #pragma clang diagnostic push

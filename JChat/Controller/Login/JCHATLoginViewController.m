@@ -100,6 +100,7 @@
   NSString *password = self.passwordField.text.stringByTrimingWhitespace;
 
   if ([self checkValidUsername:username AndPassword:password]) {
+
     [JMSGUser loginWithUsername:username
                        password:password
               completionHandler:^(id resultObject, NSError *error) {
@@ -108,13 +109,6 @@
         AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
         [appDelegate.tabBarCtl setSelectedIndex:0];
         // 显示登录状态？
-//        if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kHaveLogin]) {
-//          [self.navigationController popViewControllerAnimated:YES];
-//        } else {
-//          [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
-//          pushFlag = NO;
-//        }
-//        [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
         appDelegate.window.rootViewController = appDelegate.tabBarCtl;
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];

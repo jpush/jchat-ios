@@ -24,9 +24,9 @@
 @property (nonatomic,strong)   UIImageView *headImgView;
 @property (nonatomic,strong)   UILabel *contentLabel;
 @property (assign, nonatomic)  id<selectHeadViewDelegate> delegate;
-@property (nonatomic,strong)   JMSGContentMessage *sendFailMessage;
+@property (nonatomic,strong)   JMSGMessage *sendFailMessage;
 @property (nonatomic,strong)   JMSGConversation *conversation;
-@property (nonatomic,strong)   JMSGContentMessage *message;
+@property (nonatomic,strong)   JMSGMessage *message;
 
 - (void)setCellData:(JCHATChatModel *)model delegate:(id )delegate;
 

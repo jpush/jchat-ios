@@ -101,47 +101,47 @@
     self.continuePlayer = NO;
     [self headAddGesture];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(sendMessageResponse:)
-                                                 name:JMSGNotification_SendMessageResult object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(sendMessageResponse:)
+//                                                 name:JMSGNotification_SendMessageResult object:nil];
   }
   return self;
 }
 
 #pragma mark --发送消息响应
-- (void)sendMessageResponse:(NSNotification *)response {
-  DDLogDebug(@"Event - sendMessageResponse");
-  
-  JPIMMAINTHEAD(^{
-    [self.stateView stopAnimating];
-    
-    NSDictionary *responseDic = [response userInfo];
-    NSError *error = responseDic[JMSGSendMessageError];
-    JMSGVoiceMessage *message = responseDic[JMSGSendMessageObject];
-    
-    if (![message.messageId isEqualToString:_message.messageId]) {
-      DDLogWarn(@"The response msgId is not for this cell");
-      return;
-    }
-    
-    if (error == nil) {
-      DDLogVerbose(@"VoiceMessage response - %@", message);
-      self.model.messageStatus = kJMSGStatusSendSucceed;
-      [self.sendFailView setHidden:YES];
-      [self.stateView stopAnimating];
-      [self.stateView setHidden:YES];
-    } else {
-      DDLogDebug(@"VoiceMessage response error - %@", error);
-      self.model.messageStatus = kJMSGStatusSendFail;
-      [self.sendFailView setHidden:NO];
-      [self.stateView stopAnimating];
-      [self.stateView setHidden:YES];
-      _voiceFailMessage = message;
-    }
-    
-    [self updateFrame];
-  });
-}
+//- (void)sendMessageResponse:(NSNotification *)response {
+//  DDLogDebug(@"Event - sendMessageResponse");
+//  
+//  JPIMMAINTHEAD(^{
+//    [self.stateView stopAnimating];
+//    
+//    NSDictionary *responseDic = [response userInfo];
+//    NSError *error = responseDic[KEY_ERROR];
+//    JMSGMessage *message = responseDic[JMSGSendMessageObject];
+//    
+//    if (![message.messageId isEqualToString:_message.messageId]) {
+//      DDLogWarn(@"The response msgId is not for this cell");
+//      return;
+//    }
+//    
+//    if (error == nil) {
+//      DDLogVerbose(@"VoiceMessage response - %@", message);
+//      self.model.messageStatus = kJMSGStatusSendSucceed;
+//      [self.sendFailView setHidden:YES];
+//      [self.stateView stopAnimating];
+//      [self.stateView setHidden:YES];
+//    } else {
+//      DDLogDebug(@"VoiceMessage response error - %@", error);
+//      self.model.messageStatus = kJMSGStatusSendFail;
+//      [self.sendFailView setHidden:NO];
+//      [self.stateView stopAnimating];
+//      [self.stateView setHidden:YES];
+//      _voiceFailMessage = message;
+//    }
+//    
+//    [self updateFrame];
+//  });
+//}
 
 #pragma mark -- 语音时长算法
 - (float)getLengthWithDuration:(NSInteger)duration {
@@ -202,22 +202,17 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.sendFailView setHidden:YES];
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
-    self.model.messageStatus = kJMSGStatusSending;
+    self.model.messageStatus = kJMSGMessageStatusSending;
     if (!self.voiceFailMessage) {
-      [self.conversation getMessage:self.model.messageId
-                  completionHandler:^(id resultObject, NSError *error) {
-                    if (error == nil) {
-                      self.voiceFailMessage = resultObject;
-                      self.voiceFailMessage.resourcePath = self.model.voicePath;
-                      self.voiceFailMessage.conversationType = self.conversation.chatType;
-                      self.message = resultObject;
-                      [JMSGMessage sendMessage:self.voiceFailMessage];
-                    } else {
-                      JPIMLog(@"获取消息失败!");
-                    }
-                  }];
+      self.voiceFailMessage = [self.conversation messageWithMessageId:self.model.messageId];
+      if (self.voiceFailMessage != nil) {
+        self.message = self.voiceFailMessage;
+        [JMSGMessage sendMessage:self.voiceFailMessage];
+      }else {
+        DDLogDebug(@"Action get messageWithMessageid fail");
+      }
+
     } else {
-      self.voiceFailMessage.resourcePath = self.model.voicePath;
       [JMSGMessage sendMessage:self.voiceFailMessage];
     }
   }
@@ -260,16 +255,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)setCellData:(JCHATChatModel *)model
            delegate:(id)delegate
-            message:(JMSGVoiceMessage *)message
+            message:(JMSGMessage *)message
           indexPath:(NSIndexPath *)indexPath {
   self.conversation = model.conversation;
   self.delegate = delegate;
   _message = message;
   [self.stateView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
   self.model = model;
-  if ([[NSFileManager defaultManager] fileExistsAtPath:model.avatar]) {
-    [self.headView setImage:[UIImage imageWithContentsOfFile:model.avatar]];
-  } else {
+  if (model.avatar != nil) {
+    [self.headView setImage:[UIImage imageWithData:model.avatar]];
+  }else {
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
   }
   self.indexPath = indexPath;
@@ -302,37 +297,28 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 - (void)playVoice {
   DDLogDebug(@"Action - playVoice");
   __block NSString *status = nil;
-  if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
+  if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
     // 这条消息之前的状态是下载失败，则先重新下载
-    [self.conversation getMessage:self.model.messageId
-                completionHandler:^(id resultObject, NSError *error) {
-                  if (error == nil) {
-                    NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-                    [JMSGMessage downloadVoice:resultObject
-                                  withProgress:progress
-                             completionHandler:^(id resultObject, NSError *error) {
-                               JPIMMAINTHEAD(^{
-                                 if (error == nil) {
-                                   self.model.voicePath = [(NSURL *) resultObject path];
-                                   self.model.messageStatus = kJMSGStatusReceiveSucceed;
-                                   status = @"下载语音成功";
-                                   DDLogDebug(@"%@ -%@", status, [(NSURL *) resultObject path]);
-                                   [self playVoice];
-                                 } else {
-                                   status = @"下载语音失败";
-                                   DDLogWarn(@"%@ -%@", status, [(NSURL *) resultObject path]);
-                                   [MBProgressHUD showMessage:status view:self];
-                                 }
-                               });
-                             }];
-                  } else {
-                    status = @"获取消息失败。。。";
-                    DDLogDebug(status);
-                    JPIMMAINTHEAD(^{
-                      [MBProgressHUD showMessage:status view:self];
-                    });
-                  }
-                }];
+    self.message = [self.conversation messageWithMessageId:self.model.messageId];
+    [self.message voiceData:^(id resultObject, NSError *error) {
+      if (error == nil) {
+
+        if (resultObject != nil) {
+          self.model.mediaData = resultObject;
+          self.model.messageStatus = kJMSGMessageStatusReceiveSucceed;
+          status =  @"下载语音成功";
+          DDLogDebug(@"%@ -%@", status, [(NSURL *) resultObject path]);
+          [self playVoice];
+          [MBProgressHUD showMessage:status view:self];
+        }
+      }else {
+        DDLogDebug(@"Action  voiceData");
+        status = @"获取消息失败。。。";
+        [MBProgressHUD showMessage:status view:self];
+      }
+
+    }];
+
     return;
   }
   
@@ -388,7 +374,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   DDLogDebug(@"Action - sendVoiceMessage");
   [self.stateView setHidden:NO];
   [self.stateView startAnimating];
-  self.model.messageStatus = kJMSGStatusSending;
+  self.model.messageStatus = kJMSGMessageStatusSending;
   DDLogVerbose(@"The voiceMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
 }
@@ -404,13 +390,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   } else {
     [self.readView setHidden:NO];
   }
-  if (self.model.messageStatus == kJMSGStatusSending) {
+  if (self.model.messageStatus == kJMSGMessageStatusSending) {
     [self.stateView setHidden:NO];
     [self.sendFailView setHidden:YES];
-  } else if (self.model.messageStatus == kJMSGStatusSendSucceed) {
+  } else if (self.model.messageStatus == kJMSGMessageStatusSending) {
     [self.stateView setHidden:YES];
     [self.sendFailView setHidden:YES];
-  } else if (self.model.messageStatus == kJMSGStatusSendFail) {
+  } else if (self.model.messageStatus == kJMSGMessageStatusSendFailed) {
     [self.stateView setHidden:YES];
     [self.sendFailView setHidden:NO];
   } else {
