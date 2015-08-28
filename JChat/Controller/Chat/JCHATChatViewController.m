@@ -44,9 +44,9 @@
                                            selector:@selector(isConnecting)
                                                name:kJPFNetworkIsConnectingNotification
                                              object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(reveiveMessageNotifi:)
-                                               name:JMSGNotification_ReceiveMessage object:nil];
+//  [[NSNotificationCenter defaultCenter] addObserver:self
+//                                           selector:@selector(reveiveMessageNotifi:)
+//                                               name:JMSGNotification_ReceiveMessage object:nil];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(alreadyLoginClick)
@@ -61,7 +61,10 @@
                                            selector:@selector(skipToSingleChatView:)
                                                name:kSkipToSingleChatViewState
                                              object:nil];
-  
+  //  [[NSNotificationCenter defaultCenter] addObserver:self
+  //                                           selector:@selector(getConversationList)
+  //                                               name:JMSGNotification_ConversationInfoChanged
+  //                                             object:nil];
 
   self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
   self.navigationController.navigationBar.translucent = NO;
@@ -118,16 +121,11 @@
   [self.view bringSubviewToFront:self.addBgView];
   [self.addBgView setHidden:YES];
   [self addBtn];
+  [self addDelegate];
+}
 
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(receiveNotificationSkipToChatPageView:)
-                                               name:KApnsNotification
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(getConversationList)
-                                               name:JMSGNotification_ConversationInfoChanged
-                                             object:nil];
-
+- (void)addDelegate {
+  [JMessage addDelegate:self withConversation:nil];
 }
 
 - (void)skipToSingleChatView :(NSNotification *)notification {
@@ -145,10 +143,17 @@
 - (JMSGConversation *)getConversationWithTargetId:(NSString *)targetId {
   for (NSInteger i=0; i< [_conversationArr count]; i++) {
     JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
-    if ([conversation.targetId isEqual:targetId]) {
-      return conversation;
+    if (conversation.conversationType == kJMSGConversationTypeSingle) {
+      if ([((JMSGUser *)conversation.target).username isEqualToString:targetId]) {
+        return conversation;
+      }
+    }else {
+      if ([((JMSGGroup *)conversation.target).gid isEqualToString:targetId]) {
+        return conversation;
+      }
     }
   }
+  DDLogDebug(@"Action getConversationWithTargetId  fail to meet conversation");
   return nil;
 }
 
@@ -156,7 +161,7 @@
   DDLogDebug(@"Action - creatGroupSuccessToPushView - %@", conversation);
   for (NSInteger i=0; i<[_conversationArr count]; i++) {
     JMSGConversation *conversationObject = [_conversationArr objectAtIndex:i];
-    if ([conversationObject.Id isEqualToString:conversation.Id]) {
+    if ([conversationObject.target isEqualToConversation:conversation.target]) {
       [_conversationArr removeObjectAtIndex:i];
       [_conversationArr insertObject:conversation atIndex:i];
       [_chatTableView reloadData];
@@ -170,59 +175,52 @@
   DDLogDebug(@"Action - creatGroupSuccessToPushView - %@", object);
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
   sendMessageCtl.hidesBottomBarWhenPushed=YES;
-  sendMessageCtl.conversation = (JMSGConversation *)[object object];
+  sendMessageCtl.conversation = [JMSGConversation groupConversationWithGroupId:((JMSGGroup *)[object object]).gid];
   [self.navigationController pushViewController:sendMessageCtl animated:YES];
 }
 
-- (void)receiveNotificationSkipToChatPageView:(NSNotification *)notification {
-    DDLogDebug(@"Action - receiveNotificationSkipToChatPageView - %@", notification);
-    JCHATSendMessageViewController *sendMessageCtl;
-    for (UIViewController *ctl in self.navigationController.childViewControllers) {
-        if ([ctl isKindOfClass:[JCHATSendMessageViewController class]]) {
-            return;
-        }
-    }
-    if (!sendMessageCtl) {
-       sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-    }
-    sendMessageCtl.hidesBottomBarWhenPushed = YES;
-    sendMessageCtl.conversation.chatType = kJMSGSingle;
-    NSDictionary *apnsDic = [notification object];
-    NSString *targetName = [apnsDic[@"aps"] objectForKey:@"alert"];
-    if ([targetName isEqualToString:[JMSGUser getMyInfo].username]) {
-        return;
-    }
-   __block JMSGConversation *conversation;
-    for (NSInteger i =0; i<[_conversationArr count]; i++) {
-        JMSGConversation *getConversation = [_conversationArr objectAtIndex:i];
-        if ([getConversation.targetId isEqualToString:[[targetName componentsSeparatedByString:@":"] objectAtIndex:0]]) {
-            conversation = getConversation;
-        }
-    }
-    if (!conversation) {
-        [JMSGConversation createConversation:targetName withType:kJMSGSingle completionHandler:^(id resultObject, NSError *error) {
-            conversation = (JMSGConversation  *)resultObject ;
-            JPIMMAINTHEAD(^{
-                sendMessageCtl.conversation = conversation;
-                [self.navigationController pushViewController:sendMessageCtl animated:YES];
-            });
-            NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
-            [self saveBadge:badge];
-            [conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-                if (error == nil) {
-                    DDLogDebug(@"消息清零成功");
-                }else {
-                    DDLogDebug(@"消息清零失败");
-                }
-            }];
-        }];
-        return;
-    }
-    sendMessageCtl.conversation = conversation;
-    [self.navigationController pushViewController:sendMessageCtl animated:YES];
-    NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
-    [self saveBadge:badge];
-}
+//- (void)receiveNotificationSkipToChatPageView:(NSNotification *)notification {
+//  DDLogDebug(@"Action - receiveNotificationSkipToChatPageView - %@", notification);
+//  JCHATSendMessageViewController *sendMessageCtl;
+//  for (UIViewController *ctl in self.navigationController.childViewControllers) {
+//    if ([ctl isKindOfClass:[JCHATSendMessageViewController class]]) {
+//      return;
+//    }
+//  }
+//  if (!sendMessageCtl) {
+//    sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
+//  }
+//  sendMessageCtl.hidesBottomBarWhenPushed = YES;
+//  NSDictionary *apnsDic = [notification object];
+//  NSString *targetName = [apnsDic[@"aps"] objectForKey:@"alert"];
+//  if ([targetName isEqualToString:[JMSGUser myInfo].username]) {
+//    return;
+//  }
+//  __block JMSGConversation *conversation;
+//  for (NSInteger i =0; i<[_conversationArr count]; i++) {
+//    JMSGConversation *getConversation = [_conversationArr objectAtIndex:i];
+//    if ([getConversation.target isEqualToString:[[targetName componentsSeparatedByString:@":"] objectAtIndex:0]]) {
+//      conversation = getConversation;
+//    }
+//  }
+//  if (!conversation) {
+//    [JMSGConversation createSingleConversationWithUsername:targetName completionHandler:^(id resultObject, NSError *error) {
+//      conversation = (JMSGConversation  *)resultObject ;
+//      JPIMMAINTHEAD(^{
+//        sendMessageCtl.conversation = conversation;
+//        [self.navigationController pushViewController:sendMessageCtl animated:YES];
+//      });
+//      NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
+//      [self saveBadge:badge];
+//      [conversation clearUnreadCount];
+//    }];
+//    return;
+//  }
+//  sendMessageCtl.conversation = conversation;
+//  [self.navigationController pushViewController:sendMessageCtl animated:YES];
+//  NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
+//  [self saveBadge:badge];
+//}
 
 -(void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
@@ -252,11 +250,15 @@
 }
 
 
-#pragma mark --收到消息
-- (void)reveiveMessageNotifi :(NSNotification *)notifi {
-    [self getConversationList];
+#pragma mark JMSGMessageDelegate
+- (void)onReceiveMessage:(JMSGMessage *)message
+                   error:(NSError *)error {
+  [self getConversationList];
 }
 
+- (void)onConversationChanged:(JMSGConversation *)conversation {
+  [self getConversationList];
+}
 - (void)viewDidAppear:(BOOL)animated {
   DDLogDebug(@"Action - viewDidAppear");
   [super viewDidAppear:YES];
@@ -269,33 +271,33 @@
 }
 
 - (void)getConversationList {
-    [self.addBgView setHidden:YES];
-
-    [JMSGConversation getConversationListWithCompletionHandler:^(id resultObject, NSError *error) {
-      JPIMMAINTHEAD(^{
-
-        if (error == nil) {
-                _conversationArr = [self sortConversation:resultObject];
-                _unreadCount = 0;
-                for (NSInteger i=0; i < [_conversationArr count]; i++) {
-                    JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
-                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
-                }
-                [self saveBadge:_unreadCount];
-        }else {
-          _conversationArr = nil;
+  [self.addBgView setHidden:YES];
+  [JMSGConversation allConversations:^(id resultObject, NSError *error) {
+    NSLog(@"huangmin   resultObject   %@",resultObject);
+    JPIMMAINTHEAD(^{
+      if (error == nil) {
+        _conversationArr = [self sortConversation:resultObject];
+        _unreadCount = 0;
+        for (NSInteger i=0; i < [_conversationArr count]; i++) {
+          JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
+          _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
         }
-        [self.chatTableView reloadData];
-      });
-    }];
+        [self saveBadge:_unreadCount];
+      }else {
+        _conversationArr = nil;
+      }
+      [self.chatTableView reloadData];
+    });
+  }];
+
 }
 
 NSInteger sortType(id object1,id object2,void *cha) {
     JMSGConversation *model1 = (JMSGConversation *)object1;
     JMSGConversation *model2 = (JMSGConversation *)object2;
-    if([model1.latestDate integerValue] > [model2.latestDate integerValue]) {
+    if([model1.latestMessage.timestamp integerValue] > [model2.latestMessage.timestamp integerValue]) {
         return NSOrderedAscending;
-    }else if([model1.latestDate integerValue] < [model2.latestDate integerValue]) {
+    }else if([model1.latestMessage.timestamp integerValue] < [model2.latestMessage.timestamp integerValue]) {
         return NSOrderedDescending;
     }
     return NSOrderedSame;
@@ -351,30 +353,52 @@ NSInteger sortType(id object1,id object2,void *cha) {
         if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
             return;
         }
-        JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-        sendMessageCtl.hidesBottomBarWhenPushed=YES;
+        JCHATSendMessageViewController *sendMessageCtl = [[JCHATSendMessageViewController alloc] init];
+        sendMessageCtl.hidesBottomBarWhenPushed = YES;
         [[alertView textFieldAtIndex:0] resignFirstResponder];
         __weak __typeof(self)weakSelf = self;
-        [JMSGUser getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
-//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-          [[JCHATAlertViewWait ins] hidenAll];
-            if (error == nil) {
-                __strong __typeof(weakSelf) strongSelf = weakSelf;
-                sendMessageCtl.user = ((JMSGUser *) resultObject);
-                NSLog(@"username :%@", sendMessageCtl.user.username);
-                if (![sendMessageCtl.user.username isEqualToString:[JMSGUser getMyInfo].username]) {
-                    [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
-                } else {
+      [JMSGUser userInfoArrayWithUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                   [[JCHATAlertViewWait ins] hidenAll];
-                    [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
-                }
-                NSLog(@"getuserinfo success");
-            } else {
-                NSLog(@"没有这个用户!");
-              [[JCHATAlertViewWait ins] hidenAll];
-                [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
-            }
-        }];
+                    if (error == nil) {
+                        __strong __typeof(weakSelf) strongSelf = weakSelf;
+                        sendMessageCtl.user = ((JMSGUser *) resultObject[0]);
+//                        DDLogDebug(@"username :%@", sendMessageCtl.user);
+                      NSLog(@"username :%@", sendMessageCtl.user.username);
+                        if (![sendMessageCtl.user.username isEqualToString:[JMSGUser myInfo].username]) {
+                            [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
+                        } else {
+                          [[JCHATAlertViewWait ins] hidenAll];
+                            [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
+                        }
+                        DDLogDebug(@"getuserinfo success");
+                    } else {
+                        DDLogDebug(@"没有这个用户!");
+                      [[JCHATAlertViewWait ins] hidenAll];
+                        [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
+                    }
+                }];
+//        [JMSGUser getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+////            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//          [[JCHATAlertViewWait ins] hidenAll];
+//            if (error == nil) {
+//                __strong __typeof(weakSelf) strongSelf = weakSelf;
+//                sendMessageCtl.user = ((JMSGUser *) resultObject);
+//                DDLogDebug(@"username :%@", sendMessageCtl.user.username);
+//                
+//                if (![sendMessageCtl.user.username isEqualToString:[JMSGUser myInfo].username]) {
+//                    [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
+//                } else {
+//                  [[JCHATAlertViewWait ins] hidenAll];
+//                    [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
+//                }
+//                DDLogDebug(@"getuserinfo success");
+//            } else {
+//                DDLogDebug(@"没有这个用户!");
+//              [[JCHATAlertViewWait ins] hidenAll];
+//                [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
+//            }
+//        }];
     }
 }
 
@@ -414,26 +438,27 @@ NSInteger sortType(id object1,id object2,void *cha) {
 //进入编辑模式，按下出现的编辑按钮后
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   DDLogDebug(@"Action - tableView");
-    JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
-    // FIXME 这里要考虑单聊、群聊
-    [JMSGConversation deleteConversation:conversation.targetId
-                                withType:kJMSGSingle
-                       completionHandler:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          DDLogDebug(@"delete conversation success");
-        }else {
-          DDLogDebug(@"delete conversation error");
-        }
-    }];
-    [conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          DDLogDebug(@"delete message success");
-        }else {
-          DDLogDebug(@"delete message error");
-        }
-    }];
-    [_conversationArr removeObjectAtIndex:indexPath.row];
-    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+  JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
+  // FIXME 这里要考虑单聊、群聊
+  [JMSGConversation deleteSingleConversationWithUsername:((JMSGUser *)conversation.target).username];
+  //    [JMSGConversation deleteConversation:conversation.targetId
+  //                                withType:kJMSGSingle
+  //                       completionHandler:^(id resultObject, NSError *error) {
+  //        if (error == nil) {
+  //          DDLogDebug(@"delete conversation success");
+  //        }else {
+  //          DDLogDebug(@"delete conversation error");
+  //        }
+  //    }];
+//  [conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      DDLogDebug(@"delete message success");
+//    }else {
+//      DDLogDebug(@"delete message error");
+//    }
+//  }];
+  [_conversationArr removeObjectAtIndex:indexPath.row];
+  [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -481,7 +506,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
   cell.selected = NO;
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
   sendMessageCtl.hidesBottomBarWhenPushed=YES;
-  sendMessageCtl.conversation.chatType = kJMSGSingle;
+//  sendMessageCtl.conversation.conversationType = kJMSGConversationTypeSingle;
   JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
   sendMessageCtl.conversation = conversation;
   [self.navigationController pushViewController:sendMessageCtl animated:YES];

@@ -76,7 +76,7 @@
     
     [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
     if (![self.passwordField.text isEqualToString:@""] && ![self.passwordField.text isEqualToString:@""]) {
-      NSLog(@"   username  %@,password  %@",[[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName],self.passwordField.text);
+      DDLogDebug(@"   username  %@,password  %@",[[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName],self.passwordField.text);
       NSString *username = ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]);
       NSString *password = self.passwordField.text.stringByTrimingWhitespace;
       [JMSGUser loginWithUsername:username

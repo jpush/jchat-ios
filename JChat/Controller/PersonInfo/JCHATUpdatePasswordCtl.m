@@ -39,19 +39,23 @@
     }else if ([self.passwordField.text isEqualToString:@""] && [self.passwordFieldAgain.text isEqualToString:@""]) {
         [MBProgressHUD showMessage:@"请输入密码!" view:self.view];
     }else if ([self.passwordField.text isEqualToString:self.passwordFieldAgain.text]){
-        JMSGUser *user = [JMSGUser getMyInfo];
+        JMSGUser *user = [JMSGUser myInfo];
         [MBProgressHUD showMessage:@"正在修改" toView:self.view];
-        [JMSGUser updatePasswordWithNewPassword:self.passwordField.text oldPassword:user.password completionHandler:^(id resultObject, NSError *error) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            if (error == nil) {
-                JPIMLog(@"更新密码成功");
-                [self.navigationController popViewControllerAnimated:YES];
-                [MBProgressHUD showMessage:@"更新密码成功" view:self.view];
-            } else {
-                JPIMLog(@"更新密码失败");
-                [MBProgressHUD showMessage:@"更新密码失败" view:self.view];
-            }
-        }];
+//        [JMSGUser updatePasswordWithNewPassword:self.passwordField.text oldPassword:user.password completionHandler:^(id resultObject, NSError *error) {
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            if (error == nil) {
+//                JPIMLog(@"更新密码成功");
+//                [self.navigationController popViewControllerAnimated:YES];
+//                [MBProgressHUD showMessage:@"更新密码成功" view:self.view];
+//            } else {
+//                JPIMLog(@"更新密码失败");
+//                [MBProgressHUD showMessage:@"更新密码失败" view:self.view];
+//            }
+//        }];
+      
+      [JMSGUser updateMyPasswordWithNewPassword:self.passwordField.text oldPassword:self.oldpassword.text completionHandler:^(id resultObject, NSError *error) {
+        NSLog(@"resultObject   %@       error %@",resultObject,error);
+      }];
     }else {
       [MBProgressHUD showMessage:@"确认密码不一致!" view:self.view];
     }

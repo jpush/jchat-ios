@@ -35,15 +35,15 @@
 @property (nonatomic,strong)   UIActivityIndicatorView *circleView;
 @property (strong, nonatomic)  UIImageView *pictureImgView;
 @property (nonatomic,strong)   UIImageView *sendFailView;
-@property (nonatomic,strong)   JMSGImageMessage *sendFailImgMessage;
+@property (nonatomic,strong)   JMSGMessage *sendFailImgMessage;
 @property (nonatomic,strong)   JMSGConversation *conversation;
 @property (nonatomic,strong)   UIActivityIndicatorView *downLoadIndicatorView;
-@property (strong, nonatomic)  JMSGImageMessage *message;
+@property (strong, nonatomic)  JMSGMessage *message;
 -(void)sendImageMessage;
 
 -(void)setCellData :(UIViewController *)controler
          chatModel :(JCHATChatModel *)chatModel
-            message:(JMSGImageMessage *)message
+            message:(JMSGMessage *)message
          indexPath :(NSIndexPath *)indexPath;
 
 

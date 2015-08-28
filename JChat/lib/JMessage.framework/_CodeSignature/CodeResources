@@ -4,33 +4,85 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/JMSGAbstractContent.h</key>
+		<data>
+		BVP90xlfxZlxLV4F0lU2XvzPrR4=
+		</data>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		D5+5n12sH+CellRBPjGHq+TCg5I=
+		9aYN7g58xMOm/1csKQcEpDCyUJE=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		eEB7/ImqoYnp4/Cl5sYH6XtuR1U=
+		PQS403jQ4s39/dSSHtMF4JyPlQ8=
+		</data>
+		<key>Headers/JMSGConversationDelegate.h</key>
+		<data>
+		QtadrIArDwOPbVLp6aFFDMnL4gg=
+		</data>
+		<key>Headers/JMSGCustomContent.h</key>
+		<data>
+		CaMPAJjkzG1HVmRcuMDVfgEt2H8=
+		</data>
+		<key>Headers/JMSGEventContent.h</key>
+		<data>
+		wIoPeQqpr0/Hh6rXUjZ33wkNkQo=
 		</data>
 		<key>Headers/JMSGGroup.h</key>
 		<data>
-		eBQG9MMl9VR3qXb9ntcusa8Iih4=
+		9XNl1XM+EBb5Sbyks+hghdIHHdc=
+		</data>
+		<key>Headers/JMSGGroupDelegate.h</key>
+		<data>
+		H1SZaEd/7gB7kRYU+ZX1kMm/3zg=
+		</data>
+		<key>Headers/JMSGGroupManager.h</key>
+		<data>
+		freWMSNEvPf5FA4bj/cRBeHTnD4=
+		</data>
+		<key>Headers/JMSGImageContent.h</key>
+		<data>
+		gLRLGcXDpOSOhafq+d0T7hbgTGo=
+		</data>
+		<key>Headers/JMSGMediaContent.h</key>
+		<data>
+		vOUO71Vkv6swT/78QjBusxOHHSc=
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		OneqiLyQyT2CoH812A1F3JpWmKI=
+		OfCBQA0mLwku+/e9qqEqbtZMEwg=
+		</data>
+		<key>Headers/JMSGMessageDelegate.h</key>
+		<data>
+		bxQaDaj4h7Ks3GP11HEzEUde6Y4=
+		</data>
+		<key>Headers/JMSGMessageOperation.h</key>
+		<data>
+		+yd6GOPR9BD6NgfFZ8e1e/89Xsk=
+		</data>
+		<key>Headers/JMSGTextContent.h</key>
+		<data>
+		MTAzjqaGcklE+gk2B0aDMEk3KoU=
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		QMxENmX3nXl+u1ztnWRsQcbzK0M=
+		Rvx4Puqkbh5CKskWn30eK/c2lSM=
+		</data>
+		<key>Headers/JMSGVoiceContent.h</key>
+		<data>
+		m6Msq4646aQ4JVajXsRr7+hDdDs=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		tWZbfCbsg0aT8HEfOBGzsT1+n5Q=
+		YABskIR/Yb43hTvlo9gsugnk0eA=
+		</data>
+		<key>Headers/JMessageDelegate.h</key>
+		<data>
+		tYkK6hYEntJ5rLdKzwSTmYQTR4k=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>
-		LMFYfsx9uTSlPtfjd3424PFTU78=
+		7i4D1/HT9MtLCbJ4+LW4kBy3sgU=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -43,33 +95,85 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/JMSGAbstractContent.h</key>
+		<data>
+		BVP90xlfxZlxLV4F0lU2XvzPrR4=
+		</data>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		D5+5n12sH+CellRBPjGHq+TCg5I=
+		9aYN7g58xMOm/1csKQcEpDCyUJE=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		eEB7/ImqoYnp4/Cl5sYH6XtuR1U=
+		PQS403jQ4s39/dSSHtMF4JyPlQ8=
+		</data>
+		<key>Headers/JMSGConversationDelegate.h</key>
+		<data>
+		QtadrIArDwOPbVLp6aFFDMnL4gg=
+		</data>
+		<key>Headers/JMSGCustomContent.h</key>
+		<data>
+		CaMPAJjkzG1HVmRcuMDVfgEt2H8=
+		</data>
+		<key>Headers/JMSGEventContent.h</key>
+		<data>
+		wIoPeQqpr0/Hh6rXUjZ33wkNkQo=
 		</data>
 		<key>Headers/JMSGGroup.h</key>
 		<data>
-		eBQG9MMl9VR3qXb9ntcusa8Iih4=
+		9XNl1XM+EBb5Sbyks+hghdIHHdc=
+		</data>
+		<key>Headers/JMSGGroupDelegate.h</key>
+		<data>
+		H1SZaEd/7gB7kRYU+ZX1kMm/3zg=
+		</data>
+		<key>Headers/JMSGGroupManager.h</key>
+		<data>
+		freWMSNEvPf5FA4bj/cRBeHTnD4=
+		</data>
+		<key>Headers/JMSGImageContent.h</key>
+		<data>
+		gLRLGcXDpOSOhafq+d0T7hbgTGo=
+		</data>
+		<key>Headers/JMSGMediaContent.h</key>
+		<data>
+		vOUO71Vkv6swT/78QjBusxOHHSc=
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		OneqiLyQyT2CoH812A1F3JpWmKI=
+		OfCBQA0mLwku+/e9qqEqbtZMEwg=
+		</data>
+		<key>Headers/JMSGMessageDelegate.h</key>
+		<data>
+		bxQaDaj4h7Ks3GP11HEzEUde6Y4=
+		</data>
+		<key>Headers/JMSGMessageOperation.h</key>
+		<data>
+		+yd6GOPR9BD6NgfFZ8e1e/89Xsk=
+		</data>
+		<key>Headers/JMSGTextContent.h</key>
+		<data>
+		MTAzjqaGcklE+gk2B0aDMEk3KoU=
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		QMxENmX3nXl+u1ztnWRsQcbzK0M=
+		Rvx4Puqkbh5CKskWn30eK/c2lSM=
+		</data>
+		<key>Headers/JMSGVoiceContent.h</key>
+		<data>
+		m6Msq4646aQ4JVajXsRr7+hDdDs=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		tWZbfCbsg0aT8HEfOBGzsT1+n5Q=
+		YABskIR/Yb43hTvlo9gsugnk0eA=
+		</data>
+		<key>Headers/JMessageDelegate.h</key>
+		<data>
+		tYkK6hYEntJ5rLdKzwSTmYQTR4k=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>
-		LMFYfsx9uTSlPtfjd3424PFTU78=
+		7i4D1/HT9MtLCbJ4+LW4kBy3sgU=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>

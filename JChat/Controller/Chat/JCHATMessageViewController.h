@@ -14,7 +14,7 @@
 #import "JCHATChatModel.h"
 #import "XHVoiceRecordHUD.h"
 #import "XHVoiceRecordHelper.h"
-#import "JCHATVoiceTableViewCell.h"
+#import "JCHATVoiceTableCell.h"
 #import <JMessage/JMessage.h>
 
 @interface JCHATMessageViewController : UIViewController<
@@ -35,7 +35,7 @@
 @property(nonatomic, assign) JPIMInputViewType textViewInputViewType;
 @property(assign, nonatomic) BOOL barBottomFlag;
 @property(nonatomic, strong, readwrite) XHVoiceRecordHUD *voiceRecordHUD;
-@property(nonatomic, strong, readwrite) JCHATVoiceTableViewCell *saveVoiceCell;
+@property(nonatomic, strong, readwrite) JCHATVoiceTableCell *saveVoiceCell;
 @property(strong, nonatomic) JMSGConversation *conversation;
 @property(strong, nonatomic) NSString *targetName;
 @property(strong, nonatomic) JMSGUser *user;

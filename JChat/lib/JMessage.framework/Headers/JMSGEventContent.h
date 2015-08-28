@@ -1,0 +1,24 @@
+/*
+ *	| |    | |  \ \  / /  | |    | |   / _______|
+ *	| |____| |   \ \/ /   | |____| |  / /
+ *	| |____| |    \  /    | |____| |  | |   _____
+ * 	| |    | |    /  \    | |    | |  | |  |____ |
+ *  | |    | |   / /\ \   | |    | |  \ \______| |
+ *  | |    | |  /_/  \_\  | |    | |   \_________|
+ *
+ * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
+ */
+
+#import <Foundation/Foundation.h>
+#import <JMessage/JMSGAbstractContent.h>
+
+@interface JMSGEventContent : JMSGAbstractContent <NSCopying>
+
+/*!
+ @abstract 展示此事件的文本描述
+
+ @discussion SDK 根据事件类型，拼接成完整的事件描述信息。
+ */
+- (NSString *)showEventNotification;
+
+@end

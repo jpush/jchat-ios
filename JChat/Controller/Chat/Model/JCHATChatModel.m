@@ -23,7 +23,7 @@
 }
 
 -(float )getTextHeight {
-  if (self.type == kJMSGTextMessage || self.type == kJMSGEventMessage || self.type == kJMSGTimeMessage) {
+  if (self.type == kJMSGContentTypeText || self.type == kJMSGContentTypeEventNotification || self.type == kJMSGContentTypeTime) {
     UIFont *font =[UIFont systemFontOfSize:18];
     CGSize maxSize = CGSizeMake(200, 2000);
     

@@ -71,7 +71,7 @@
     _nameLable.shadowColor = [UIColor grayColor];
     _nameLable.textAlignment = NSTextAlignmentCenter;
     _nameLable.shadowOffset = CGSizeMake(-1.0, 1.0);
-    JMSGUser *userinfo =  [JMSGUser getMyInfo];
+    JMSGUser *userinfo =  [JMSGUser myInfo];
     _nameLable.text = (userinfo.nickname ?userinfo.nickname:(userinfo.username?userinfo.username:@""));
     
     [self addSubview:_nameLable];
@@ -80,7 +80,7 @@
 }
 
 - (void)updataNameLable {
-  JMSGUser *userinfo =  [JMSGUser getMyInfo];
+  JMSGUser *userinfo =  [JMSGUser myInfo];
   JPIMMAINTHEAD(^{
     _nameLable.text = (userinfo.nickname ?userinfo.nickname:(userinfo.username?userinfo.username:@""));
   });

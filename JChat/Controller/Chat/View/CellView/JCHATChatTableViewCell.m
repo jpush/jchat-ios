@@ -96,22 +96,19 @@
 - (void)setCellDataWithConversation:(JMSGConversation *)conversation {
   self.headView.layer.cornerRadius = 23;
   [self.headView.layer setMasksToBounds:YES];
-  
-  if ([[NSFileManager defaultManager] fileExistsAtPath:conversation.avatarThumb]) {
-    [self.headView setImage:[UIImage imageWithContentsOfFile:conversation.avatarThumb]];
-  } else {
-    if (conversation.chatType == kJMSGSingle) {
-      [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-    }else {
-      [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
-    }
+
+  if (conversation.conversationType == kJMSGConversationTypeSingle) {
+    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+    self.nickName.text = ((JMSGUser *)conversation.target).nickname?:((JMSGUser *)conversation.target).username;
+  }else {
+    [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
+    self.nickName.text = ((JMSGGroup *)conversation.target).gid;
   }
-  if (conversation.targetName != nil) {
-    self.nickName.text = conversation.targetName;
-  } else {
-    self.nickName.text = conversation.targetId;
-  }
+  [conversation avatarData:^(id resultObject, NSError *error) {
+    [self.headView setImage:[UIImage imageWithData:resultObject]];
+  }];
   
+
   if ([conversation.unreadCount integerValue] > 0) {
     [self.messageNumberLabel setHidden:NO];
     self.messageNumberLabel.text = [NSString stringWithFormat:@"%@", conversation.unreadCount];
@@ -119,25 +116,36 @@
     [self.messageNumberLabel setHidden:YES];
   }
   
-  if (conversation.latestDate != nil && ![conversation.latestDate isEqualToString:@"(null)"]) {
-    double time = [conversation.latestDate longLongValue];
+  if (conversation.latestMessage.timestamp != nil ) {
+    double time = [conversation.latestMessage.timestamp doubleValue];
     self.time.text = [JCHATStringUtils getFriendlyDateString:time forConversation:YES];
+
   } else {
     self.time.text = @"";
   }
   
-  if (conversation.latestType == nil) {
+  if (conversation.latestMessage.contentType == kJMSGContentTypeUnknown) {
     self.message.text = @"";
     return;
   }
-  
-  if ([conversation.latestType isEqualToString:@"text"]|| [conversation.latestType isEqualToString:@"event"]) {
-    self.message.text = conversation.latestText;
-  } else if ([conversation.latestType isEqualToString:@"image"]) {
-    self.message.text = @"[图片]";
-  } else if ([conversation.latestType isEqualToString:@"voice"]) {
+//  JMSGMessage *lastMessage = [JMSGMessage ]
+  switch (conversation.latestMessage.contentType) {
+    case kJMSGContentTypeText:
+      self.message.text = ((JMSGTextContent *)conversation.latestMessage.content).text;
+      break;
+    case kJMSGContentTypeImage:
+      self.message.text = @"[图片]";
+      break;
+    case kJMSGContentTypeVoice:
     self.message.text = @"[语音]";
+    case kJMSGContentTypeEventNotification:
+      self.message.text = [((JMSGEventContent *)conversation.latestMessage.content) showEventNotification];
+    default:
+      break;
   }
 }
+
+
+
 
 @end
