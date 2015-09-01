@@ -1345,9 +1345,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   JMSGContentMessage *message = _JMSgMessageDic[messageId];
   DDLogVerbose(@"The message:%@", message);
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    for (int i = 0; i < 150; i++) {
-      [JMSGMessage sendMessage:message];
-    }
+    [JMSGMessage sendMessage:message];
   });
 
 }
