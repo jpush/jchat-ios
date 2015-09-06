@@ -71,8 +71,6 @@
                                                name:kupdateUserInfo
                                              object:nil];
 
-
-//  [_bgView setBlurLevel:0.5]x;
 }
 
 
@@ -207,11 +205,12 @@
   JMSGUser *user = [JMSGUser myInfo];
   image = [image resizedImageByWidth:upLoadImgWidth];
   [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) type:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error == nil) {
       DDLogDebug(@"update headView success");
       [MBProgressHUD showMessage:@"上传成功" view:self.view];
     }else {
-      DDLogDebug(@"update headView fail");
+      DDLogDebug(@"update headView fail %@",error);
       [MBProgressHUD showMessage:@"上传失败!" view:self.view];
     }
   }];

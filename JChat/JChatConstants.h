@@ -137,4 +137,11 @@ typedef NS_ENUM(NSInteger, JCHATErrorCode) {
 
 };
 
+//Color
+#define kNavigationBarColor UIColorFromRGB(0x3f80de)
+#define kTabbarColor UIColorFromRGB(0x3e3e3e)
+#define kTextfieldPlaceholderColor UIColorFromRGB(0x555555)
+#define kTableviewCellClickColor UIColorFromRGB(0xdddddd)
+
+
 

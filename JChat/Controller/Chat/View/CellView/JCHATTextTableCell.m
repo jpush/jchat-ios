@@ -104,7 +104,7 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     CGSize realSize = [_model.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
 
-    if (_model.who) {
+    if (_model.isMyMessage) {//isme
       [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).with.offset(0);
         make.right.mas_equalTo(self).with.offset(-5);
@@ -172,7 +172,7 @@
     self.contentLabel.font = font;
   }
     UIImage *img=nil;
-    if (_model.who) {
+    if (_model.isMyMessage) {
       img =[UIImage imageNamed:@"mychatBg"];
     }else
     {

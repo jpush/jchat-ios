@@ -104,7 +104,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   JMSGUser *userInfo;
   _groupData = [[(NSArray *)arr sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
   for (NSInteger i=0; i< [_groupData count]; i++) {
-
     userInfo = [[_groupData objectAtIndex:i] copy];
     if ([self.sendMessageCtl.groupInfo.owner isEqualToString:userInfo.username]) {
       [_groupData removeObjectAtIndex:i];
@@ -127,23 +126,9 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 }
 
 - (void)getGroupMemberList {
-//   typeof(self) __weak weakSelf = self;
-  
-//    [JMSGGroup groupInfoWithGroupId:((jms)(self.conversation.target) completionHandler:<#^(id resultObject, NSError *error)handler#>]
-  ;
   [self sorteUserArr:[((JMSGGroup *)(self.conversation.target)) memberArray]];
+  [self reloadHeadViewData];
   [self.groupTab reloadData];
-//  [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
-//    typeof(weakSelf) __strong strongSelf = weakSelf;
-//    if (error == nil) {
-//      [strongSelf sorteUserArr:resultObject];
-//      JPIMMAINTHEAD(^{
-//          [strongSelf reloadHeadViewData];
-//        [strongSelf.groupTab reloadData];
-//      });
-//    }else {
-//    }
-//  }];
 }
 
 - (void)reloadHeadViewData {
@@ -152,7 +137,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       [v removeFromSuperview];
     }
   }
-  
   _groupBtnArr = [[NSMutableArray alloc]init];
   NSInteger headWidth = 56;
   NSInteger headHeight = 75;
@@ -194,19 +178,9 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 
         personView.headViewBtn.tag = 1000 + i*4+j;
         __block JMSGUser *user = [_groupData objectAtIndex:i*4+j];
-//        [JMSGUser getUserInfoWithUsername:user.username completionHandler:^(id resultObject, NSError *error) {
-//          user = (JMSGUser *)resultObject;
-//        }];
-
         [JMSGUser userInfoArrayWithUsernameArray:@[user.username] completionHandler:^(id resultObject, NSError *error) {
             user = (JMSGUser *)resultObject;
         }];
-//                NSLog(@"huangmin   %@",user.avatarThumbPath);
-//        if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
-//          [personView.headViewBtn setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
-//        }else {
-//          [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
-//        }
           [user thumbAvatarData:^(id resultObject, NSError *error) {
             if (error == nil) {
               if (resultObject == nil) {
@@ -452,7 +426,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   }else if (alertView.tag == 100){
     if (buttonIndex ==1) {
       [self.conversation deleteAllMessages];
-      
+      [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAllMessage object:nil];
 //      [self.conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
 //        if (error == nil) {
 //          [MBProgressHUD showMessage:@"删除消息成功" view:self.view];

@@ -241,7 +241,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     return;
   }
   NSString *voiceImagePreStr = @"";
-  if (self.model.who) {
+  if (self.model.isMyMessage) {
     voiceImagePreStr = @"SenderVoiceNodePlaying00";
   } else {
     voiceImagePreStr = @"ReceiverVoiceNodePlaying00";
@@ -275,7 +275,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   }
   self.delegate = (id) delegate;
   [self.voiceBgView setImage:[UIImage imageNamed:@""]];
-  if (self.model.who) {
+  if (self.model.isMyMessage) {
     [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
   } else {
     [self.voiceImgView setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying"]];
@@ -351,7 +351,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
   self.playing = NO;
   self.index = 0;
-  if (self.model.who) {
+  if (self.model.isMyMessage) {
     [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying.png"]];
   } else {
     [self.voiceImgView setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying.png"]];
@@ -420,7 +420,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   }];
   
   UIImage *img = nil;
-  if (self.model.who) {//wo
+  if (self.model.isMyMessage) {//wo
     img = [UIImage imageNamed:@"mychatBg"];
 //    [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - gapWidth, 0, headHeight, headHeight)];//头像位置
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {

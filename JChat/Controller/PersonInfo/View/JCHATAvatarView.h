@@ -19,5 +19,5 @@
 @property(strong,nonatomic)UIImageView *centeraverter;
 @property(strong,nonatomic)UILabel *nameLable;
 - (void)updataNameLable;
-//- (UIImage *)blurryImage:(UIImage *)image withBlurLevel:(CGFloat)blur;
+
 @end

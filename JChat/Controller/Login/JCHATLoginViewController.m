@@ -16,14 +16,13 @@
 #import <JMessage/JMessage.h>
 #import "JChatConstants.h"
 #import "ViewUtil.h"
-@interface JCHATLoginViewController () {
-  BOOL pushFlag;
-}
+
+@interface JCHATLoginViewController ()
 
 @property(weak, nonatomic) IBOutlet UILabel *userNameLine;
 @property(weak, nonatomic) IBOutlet UILabel *passwordLine;
-@property(weak, nonatomic) IBOutlet UITextField *accountField;
-@property(weak, nonatomic) IBOutlet UITextField *passwordField;
+@property(weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property(weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property(weak, nonatomic) IBOutlet UIButton *registerBtn;
 @property(weak, nonatomic) IBOutlet UIButton *loginBtn;
 
@@ -32,27 +31,19 @@
 
 @implementation JCHATLoginViewController
 
-- (void)dealloc {
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-
-  pushFlag = NO;
-
+  
   [self.view setBackgroundColor:[UIColor colorWithRed:72 / 255.0 green:62 / 255.0 blue:39 / 255.0 alpha:1.0]];
-  self.passwordField.secureTextEntry = YES;
-  self.passwordField.keyboardType = UIKeyboardTypeDefault;
-  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  _passwordTextField.secureTextEntry = YES;
+  _passwordTextField.keyboardType = UIKeyboardTypeDefault;
+  self.navigationController.navigationBar.barTintColor = kNavigationBarColor;
   self.navigationController.navigationBar.translucent = NO;
 
   self.title = @"极光IM";
 
   NSShadow *shadow = [[NSShadow alloc] init];
-  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0, 0);
-
   NSDictionary *dic = @{
       NSForegroundColorAttributeName:[UIColor whiteColor],
       NSShadowAttributeName:shadow,
@@ -60,44 +51,40 @@
   };
   [self.navigationController.navigationBar setTitleTextAttributes:dic];
   [self.view setBackgroundColor:[UIColor whiteColor]];
-  [self.userNameLine setBackgroundColor:[UIColor grayColor]];
-  [self.passwordLine setBackgroundColor:[UIColor grayColor]];
-
-  self.userNameLine.alpha = 0.5;
-  self.passwordLine.alpha = 0.5;
-  [self.loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x6fd66b) frame:self.loginBtn.frame] forState:UIControlStateNormal];
-  [self.loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x498d67) frame:self.loginBtn.frame] forState:UIControlStateHighlighted];
-  self.loginBtn.layer.cornerRadius = 4;
-  [self.loginBtn.layer setMasksToBounds:YES];
+  [_userNameLine setBackgroundColor:[UIColor grayColor]];//TODO: UI 分开
+  [_passwordLine setBackgroundColor:[UIColor grayColor]];
+  
+  _userNameLine.alpha = 0.5;
+  _passwordLine.alpha = 0.5;
+  [_loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x6fd66b) frame:_loginBtn.frame] forState:UIControlStateNormal];
+  [_loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x498d67) frame:_loginBtn.frame] forState:UIControlStateHighlighted];
+  _loginBtn.layer.cornerRadius = 4;
+  [_loginBtn.layer setMasksToBounds:YES];
+  [_usernameTextField becomeFirstResponder];
   self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
-  _accountField.text = @"";
-  _passwordField.text = @"";
+  _usernameTextField.text = @"";
+  _passwordTextField.text = @"";
   [self.navigationController.navigationBar setHidden:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:YES];
-  if (pushFlag) {
-    [self.navigationController.navigationBar setHidden:NO];
-  } else {
-    [self.navigationController.navigationBar setHidden:YES];
-  }
 }
 
 #pragma mark --登录按钮响应
 - (IBAction)loginBtnClick:(id)sender {
   DDLogDebug(@"Action - loginBtnClick");
-  [self.passwordField resignFirstResponder];
-  [self.accountField resignFirstResponder];
+  [_passwordTextField resignFirstResponder];
+  [_usernameTextField resignFirstResponder];
 
   [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
 
-  NSString *username = self.accountField.text.stringByTrimingWhitespace;
-  NSString *password = self.passwordField.text.stringByTrimingWhitespace;
+  NSString *username = _usernameTextField.text.stringByTrimingWhitespace;
+  NSString *password = _passwordTextField.text.stringByTrimingWhitespace;
 
   if ([self checkValidUsername:username AndPassword:password]) {
 
@@ -153,31 +140,25 @@
 
 - (void)userLoginSave {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-  [userDefaults setObject:self.accountField.text forKey:kuserName];
-  [userDefaults setObject:self.passwordField.text forKey:kPassword];
+  [userDefaults setObject:_usernameTextField.text forKey:kuserName];
+  [userDefaults setObject:_passwordTextField.text forKey:kPassword];
   [userDefaults synchronize];
 }
-
 
 #pragma mark --注册按钮响应
 - (IBAction)registerBtnClick:(id)sender {
   DDLogDebug(@"Action - registerBtnClick");
-
   JCHATRegisterViewController *registerCtl = [[JCHATRegisterViewController alloc] initWithNibName:@"JCHATRegisterViewController" bundle:nil];
   [self.navigationController pushViewController:registerCtl animated:YES];
-  pushFlag = YES;
 }
 
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [self.accountField resignFirstResponder];
-  [self.passwordField resignFirstResponder];
+  [_usernameTextField resignFirstResponder];
+  [_passwordTextField resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
 }
-
-
 
 @end

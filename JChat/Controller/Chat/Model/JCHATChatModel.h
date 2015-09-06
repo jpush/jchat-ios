@@ -28,7 +28,7 @@
 @property (nonatomic,strong)   NSString  *pictureImgPath;
 @property (nonatomic,strong)   NSString  *pictureThumbImgPath;
 @property (nonatomic,assign)   JMSGMessageStatus messageStatus;
-@property (nonatomic,assign)   BOOL who;
+@property (nonatomic,assign)   BOOL isMyMessage;
 @property (nonatomic,strong)   NSNumber *messageTime;
 @property (nonatomic,assign)   NSInteger photoIndex;
 @property (nonatomic,assign)   BOOL readState;
@@ -39,4 +39,7 @@
 @property (nonatomic,assign)   CGSize imageSize;
 -(float)getTextHeight;
 -(CGSize)getImageSize;
+
+-(void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation;
+
 @end

@@ -12,5 +12,5 @@
 @interface JCHATChatViewController : UIViewController<UISearchBarDelegate,UISearchControllerDelegate,UISearchControllerDelegate,UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,TouchTableViewDelegate,UIGestureRecognizerDelegate,JMessageDelegate,JMSGConversationDelegate>
 @property (nonatomic, strong) UIImageView *addBgView;
 @property (weak, nonatomic) IBOutlet JCHATChatTable *chatTableView;
-
+@property (nonatomic,strong)UISearchDisplayController * searchDisplayController;
 @end

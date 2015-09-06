@@ -90,24 +90,10 @@
   }
   [_groupTextField resignFirstResponder];
   [MBProgressHUD showMessage:@"正在创建群组！" toView:self.view];
-//  JMSGGroup *group = [[JMSGGroup alloc]init];
-//  group.groupName = _groupTextField.text;
-//  [JMSGGroup createGroup:group completionHandler:^(id resultObject, NSError *error) {
-//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//    if (error ==nil) {
-//      [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-//      [[NSNotificationCenter defaultCenter] postNotificationName:kCreatGroupState object:resultObject];
-//    }else if (error.code == 808003) {
-//      [MBProgressHUD showMessage:@"创建群组数量达到上限！" view:self.view];
-//    }else {
-//      [MBProgressHUD showMessage:@"创建群组失败！" view:self.view];
-//    }
-//  }];
   [JMSGGroup createGroupWithName:_groupTextField.text description:@"" memberArray:nil completionHandler:^(id resultObject, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (error ==nil) {
           [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-          NSLog(@"huangmin creategroup %@",resultObject);
           [[NSNotificationCenter defaultCenter] postNotificationName:kCreatGroupState object:resultObject];
         }else if (error.code == 808003) {
           [MBProgressHUD showMessage:@"创建群组数量达到上限！" view:self.view];

@@ -32,13 +32,9 @@
     UIAlertViewDelegate,
     JMessageDelegate>
 
-//@property(strong, nonatomic) JCHATToolBar *toolBar;
-//@property(strong, nonatomic) UITableView *messageTableView;
-//@property(strong, nonatomic) JCHATMoreView *moreView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *msgTableBottomToToolBar;
 @property (weak, nonatomic) IBOutlet UITableView *messageTableView;
 @property (weak, nonatomic) IBOutlet JCHATToolBarContainer *toolBarContainer;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarToBottomConstrait;
 @property (weak, nonatomic) IBOutlet JCHATMoreViewContainer *moreViewContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *moreViewHeight;
