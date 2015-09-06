@@ -54,7 +54,17 @@
 //        }];
       
       [JMSGUser updateMyPasswordWithNewPassword:self.passwordField.text oldPassword:self.oldpassword.text completionHandler:^(id resultObject, NSError *error) {
-        NSLog(@"resultObject   %@       error %@",resultObject,error);
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+        if (error == nil) {
+          JPIMLog(@"更新密码成功");
+          [self.navigationController popViewControllerAnimated:YES];
+          [MBProgressHUD showMessage:@"更新密码成功" view:self.view];
+        } else {
+          JPIMLog(@"更新密码失败");
+          DDLogDebug(@"resultObject   %@       error %@",resultObject,error);
+          [MBProgressHUD showMessage:@"更新密码失败" view:self.view];
+        }
       }];
     }else {
       [MBProgressHUD showMessage:@"确认密码不一致!" view:self.view];

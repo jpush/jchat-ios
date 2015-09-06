@@ -124,8 +124,8 @@
 
 -(void)perFormAdd :(UIButton *)btn
 {
-    JCHATAddViewController *addFriends =[[JCHATAddViewController alloc] init];
-    [self.navigationController pushViewController:addFriends animated:YES];
+  JCHATAddViewController *addFriends = [[JCHATAddViewController alloc] init];
+  [self.navigationController pushViewController:addFriends animated:YES];
 }
 
 

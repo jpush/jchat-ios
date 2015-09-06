@@ -43,6 +43,11 @@
 }
 
 - (IBAction)clickToFinish:(id)sender {
+  if ([_nameTextF.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"请输入昵称" view:self.view];
+    return;
+  }
+  
   [JMSGUser updateMyInfoWithParameter:_nameTextF.text type:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
         AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
         appDelegate.window.rootViewController = appDelegate.tabBarCtl;

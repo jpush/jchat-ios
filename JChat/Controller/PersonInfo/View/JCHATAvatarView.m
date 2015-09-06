@@ -66,7 +66,6 @@
     _nameLable.center = CGPointMake(self.center.x, self.center.y+40);
     _nameLable.backgroundColor = [UIColor clearColor];
     _nameLable.font = [UIFont fontWithName:@"helvetica" size:16];
-//    _nameLable.text = @"小歪";
     _nameLable.textColor = [UIColor whiteColor];
     _nameLable.shadowColor = [UIColor grayColor];
     _nameLable.textAlignment = NSTextAlignmentCenter;
@@ -88,36 +87,17 @@
 
 
 - (void)setOriginImage:(UIImage *)originImage{
-
   self.centeraverter.image = originImage;
-
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    UIImage *inputImage = originImage; // The WID.jpg example is greater than 2048 pixels tall, so it fails on older devices
+    UIImage *inputImage = originImage;
     self.centeraverter.image = originImage;
-
-      sepiaFilter = [[GPUImageiOSBlurFilter alloc] init];
-      sepiaFilter.blurRadiusInPixels = 3.0f;
-
-      
-      GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:inputImage];
-      [picture addTarget:sepiaFilter];
-      [sepiaFilter addTarget:imageView];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-          // switch back to the main thread to update your UI
-     [picture processImage];
-     [imageView setNeedsDisplay];
-    });
-
+    sepiaFilter = [[GPUImageiOSBlurFilter alloc] init];
+    sepiaFilter.blurRadiusInPixels = 3.0f;
+    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:inputImage];
+    [picture addTarget:sepiaFilter];
+    [sepiaFilter addTarget:imageView];
+    [picture processImage];
   });
-  
-
-  
 }
-
-
-
-
-
 
 @end

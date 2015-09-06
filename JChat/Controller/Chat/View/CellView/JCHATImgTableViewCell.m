@@ -375,7 +375,7 @@
   [self.downLoadIndicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
   
 
-    if (self.model.who) {//myself
+    if (self.model.isMyMessage) {//myself
         img =[UIImage imageNamed:@"mychatBg"];
 //        [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - 5, 0, headHeight, headHeight)];
       [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {

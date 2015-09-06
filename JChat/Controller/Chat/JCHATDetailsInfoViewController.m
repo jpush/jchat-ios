@@ -108,34 +108,9 @@
         strongSelf.sendMessageCtl.title = group.name;
         [strongSelf.navigationController popViewControllerAnimated:YES];
       }else {
-        DDLogDebug(@"huangmin  error %@",error);
-        
         [MBProgressHUD showMessage:@"创建群失败" view:self.view];
-        
       }
-      
     }];
-//    JMSGGroup *group = [[JMSGGroup alloc]init];
-//    group.name =[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,self.chatUser.username,[alertView textFieldAtIndex:0].text];
-//    group.group_members = [NSString stringWithFormat:@"%@,%@",self.chatUser.username,[alertView textFieldAtIndex:0].text];
-//    // block self
-//    typeof(self) __weak weakSelf = self;
-//    [JMSGGroup createGroup:group completionHandler:^(id resultObject, NSError *error) {
-
-    
-//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//    typeof(weakSelf) __strong strongSelf = weakSelf;
-//      if (error == nil) {
-//        [MBProgressHUD showMessage:@"创建群成功" view:self.view];
-//        strongSelf.sendMessageCtl.conversation = resultObject;
-//        strongSelf.sendMessageCtl.targetName = group.groupName;
-//        strongSelf.sendMessageCtl.title = group.groupName;
-//        [strongSelf.navigationController popViewControllerAnimated:YES];
-//      }else {
-//        [MBProgressHUD showMessage:@"创建群失败" view:self.view];
-//
-//      }
-//    }];
   }
 }
 
@@ -213,11 +188,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-//    if ([[NSFileManager defaultManager] fileExistsAtPath:self.chatUser.avatarThumbPath]) {
-//        [_headView setImage:[UIImage imageNamed:self.chatUser.avatarThumbPath]];
-//    }else {
-//        [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-//    }
   [self.chatUser thumbAvatarData:^(id resultObject, NSError *error) {
     if (error == nil) {
       if (resultObject == nil) {
@@ -232,15 +202,6 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [MBProgressHUD showMessage:@"正在删除消息记录！" toView:self.view];
-//    [_conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//        if (error == nil) {
-//            [MBProgressHUD showMessage:@"删除聊天记录成功！" view:self.view];
-//        }else {
-//            [MBProgressHUD showMessage:@"删除聊天记录失败！" view:self.view];
-//        }
-//    }];
   [_conversation deleteAllMessages];
 }
 

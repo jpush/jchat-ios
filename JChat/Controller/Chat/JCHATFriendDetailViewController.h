@@ -14,7 +14,5 @@
 @interface JCHATFriendDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SkipToSendMessageDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *detailTableView;
 @property (strong, nonatomic) JMSGUser *userInfo;
-
 @property (assign, nonatomic) BOOL isGroupFlag;
-
 @end
