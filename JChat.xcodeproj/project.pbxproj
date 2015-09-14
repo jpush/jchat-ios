@@ -251,18 +251,6 @@
 		447575AA1B744ABA00A5A646 /* talking_icon_c_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 447575A81B744ABA00A5A646 /* talking_icon_c_@3x.png */; };
 		44B2813F1B72F2D2009EB372 /* JCHATTextTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */; };
 		44B281421B732D64009EB372 /* JCHATAlertViewWait.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B281411B732D64009EB372 /* JCHATAlertViewWait.m */; };
-		44BA64561B83211700F704DB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839833E1AFC917C00AC8280 /* CFNetwork.framework */; };
-		44BA64571B83212200F704DB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983461AFC919C00AC8280 /* CoreFoundation.framework */; };
-		44BA64581B83212A00F704DB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834E1AFC91C800AC8280 /* CoreTelephony.framework */; };
-		44BA64591B83213300F704DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */; };
-		44BA645A1B83213B00F704DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983421AFC918C00AC8280 /* CoreGraphics.framework */; };
-		44BA645B1B83214800F704DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983441AFC919300AC8280 /* Foundation.framework */; };
-		44BA645C1B83214E00F704DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983401AFC918300AC8280 /* UIKit.framework */; };
-		44BA645D1B83215800F704DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983361AFC914900AC8280 /* Security.framework */; };
-		44BA645E1B83216200F704DB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983341AFC914100AC8280 /* libz.dylib */; };
-		44BA645F1B83216A00F704DB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */; };
-		44BA64601B83217500F704DB /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983381AFC915C00AC8280 /* CoreAudio.framework */; };
-		44BA64611B83218700F704DB /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1839833A1AFC916C00AC8280 /* libsqlite3.0.dylib */; };
 		44C3E7E61B6A24B200D3D825 /* sendmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E7E51B6A24B200D3D825 /* sendmusic.mp3 */; };
 		44C3E9141B6B7A1E00D3D825 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44C3E8FA1B6B7A1D00D3D825 /* Info.plist */; };
 		44C3E9151B6B7A1E00D3D825 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C3E8FC1B6B7A1D00D3D825 /* MASCompositeConstraint.m */; };
@@ -353,7 +341,6 @@
 		6039BE427413C75524B44247 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BBAC6063CD3111B1D5BB /* SDWebImageCompat.m */; };
 		6039BEB5A028137372C528B5 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BB2A0EFF4230235771DD /* MJPhotoView.m */; };
 		6039BF2B12872ADB34A48CDD /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B8ABA6FD03A3F74DB106 /* MJPhotoBrowser.m */; };
-		6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
@@ -363,16 +350,6 @@
 		AA4D05A91B43917B007D7B78 /* JCHATAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */; };
 		AA4D05AA1B43917B007D7B78 /* JCHATAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		8F8840AA1B159E7500BDC126 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18AB9C841A43BCB7007B2A04 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 18AB9C8B1A43BCB7007B2A04;
-			remoteInfo = "极光IM";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AAC65A4A1AF76DA000BBFCF9 /* Embed Frameworks */ = {
@@ -840,7 +817,6 @@
 		6039BF128CC5C5BE6823314B /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
 		6039BF638019C00F541E859F /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
 		6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
-		8F8840A41B159E7500BDC126 /* JChat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JChat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8840A71B159E7500BDC126 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FE536811B3AAD6200EFC8CE /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = JChat/lib/JMessage.framework; sourceTree = "<group>"; };
 		8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
@@ -879,25 +855,6 @@
 				183983351AFC914100AC8280 /* libz.dylib in Frameworks */,
 				6039BD6A5FE0420731B8833A /* libMobClickLibrary.a in Frameworks */,
 				9C979D9E5AD8492296E1A3D3 /* libPods.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F8840A11B159E7500BDC126 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				44BA64611B83218700F704DB /* libsqlite3.0.dylib in Frameworks */,
-				44BA64601B83217500F704DB /* CoreAudio.framework in Frameworks */,
-				44BA645F1B83216A00F704DB /* AudioToolbox.framework in Frameworks */,
-				44BA645E1B83216200F704DB /* libz.dylib in Frameworks */,
-				44BA645D1B83215800F704DB /* Security.framework in Frameworks */,
-				44BA645C1B83214E00F704DB /* UIKit.framework in Frameworks */,
-				44BA645B1B83214800F704DB /* Foundation.framework in Frameworks */,
-				44BA645A1B83213B00F704DB /* CoreGraphics.framework in Frameworks */,
-				44BA64591B83213300F704DB /* SystemConfiguration.framework in Frameworks */,
-				44BA64581B83212A00F704DB /* CoreTelephony.framework in Frameworks */,
-				44BA64571B83212200F704DB /* CoreFoundation.framework in Frameworks */,
-				44BA64561B83211700F704DB /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1399,7 +1356,6 @@
 			isa = PBXGroup;
 			children = (
 				18AB9C8C1A43BCB7007B2A04 /* JChat.app */,
-				8F8840A41B159E7500BDC126 /* JChat Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1671,24 +1627,6 @@
 			productReference = 18AB9C8C1A43BCB7007B2A04 /* JChat.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8F8840A31B159E7500BDC126 /* JChat Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8F8840AE1B159E7500BDC126 /* Build configuration list for PBXNativeTarget "JChat Tests" */;
-			buildPhases = (
-				8F8840A01B159E7500BDC126 /* Sources */,
-				8F8840A11B159E7500BDC126 /* Frameworks */,
-				8F8840A21B159E7500BDC126 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8F8840AB1B159E7500BDC126 /* PBXTargetDependency */,
-			);
-			name = "JChat Tests";
-			productName = "JChat Tests";
-			productReference = 8F8840A41B159E7500BDC126 /* JChat Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1708,10 +1646,6 @@
 							};
 						};
 					};
-					8F8840A31B159E7500BDC126 = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 18AB9C8B1A43BCB7007B2A04;
-					};
 				};
 			};
 			buildConfigurationList = 18AB9C871A43BCB7007B2A04 /* Build configuration list for PBXProject "JChat" */;
@@ -1728,7 +1662,6 @@
 			projectRoot = "";
 			targets = (
 				18AB9C8B1A43BCB7007B2A04 /* JChat */,
-				8F8840A31B159E7500BDC126 /* JChat Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1965,13 +1898,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F8840A21B159E7500BDC126 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -2115,23 +2041,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F8840A01B159E7500BDC126 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8F8840AB1B159E7500BDC126 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 18AB9C8B1A43BCB7007B2A04 /* JChat */;
-			targetProxy = 8F8840AA1B159E7500BDC126 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		187181921AFB80BF00FB3168 /* LaunchScreen.xib */ = {
@@ -2245,8 +2155,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",
-					"/Users/xiaomeng/JPUSHIM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
-					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
@@ -2290,8 +2198,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JChat/lib",
-					"/Users/xiaomeng/JPUSHIM/2.0.0IM/JMessageFramework/build/Debug-iphoneos",
-					"/Users/apple/Desktop/demo/JMessage/ios-im/build/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
 				);
@@ -2322,77 +2228,6 @@
 			};
 			name = Release;
 		};
-		8F8840AC1B159E7500BDC126 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)/JChat/lib",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "JChat Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-					"-all_load",
-				);
-				PRODUCT_NAME = "JChat Tests";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
-				VALID_ARCHS = "arm64 armv7 arm7";
-			};
-			name = Debug;
-		};
-		8F8840AD1B159E7500BDC126 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)/JChat/lib",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "JChat Tests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-					"-all_load",
-				);
-				PRODUCT_NAME = "JChat Tests";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/极光IM.app/极光IM";
-				VALID_ARCHS = "arm64 armv7 arm7";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2410,15 +2245,6 @@
 			buildConfigurations = (
 				18AB9CB01A43BCB7007B2A04 /* Debug */,
 				18AB9CB11A43BCB7007B2A04 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8F8840AE1B159E7500BDC126 /* Build configuration list for PBXNativeTarget "JChat Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8F8840AC1B159E7500BDC126 /* Debug */,
-				8F8840AD1B159E7500BDC126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
