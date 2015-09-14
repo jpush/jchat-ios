@@ -80,12 +80,13 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)clickToSave {
+  kWEAKSELF
   [JMSGUser updateMyInfoWithParameter:self.nameTextField.text type:self.updateType completionHandler:^(id resultObject, NSError *error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (error == nil) {
           [MBProgressHUD showMessage:@"修改成功" view:self.view];
     
-          [self.navigationController popViewControllerAnimated:YES];
+          [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
           [MBProgressHUD showMessage:@"修改失败" view:self.view];
         }

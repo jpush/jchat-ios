@@ -73,40 +73,40 @@
 }
 
 - (IBAction)loginBtnClick:(id)sender {
-    
-    [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
-    if (![_passwordField.text isEqualToString:@""] && ![_passwordField.text isEqualToString:@""]) {
-      NSString *username = ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]);
-      NSString *password = _passwordField.text.stringByTrimingWhitespace;
-      [JMSGUser loginWithUsername:username
-                         password:password
-                completionHandler:^(id resultObject, NSError *error) {
-                  if (error == nil) {
-                    [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
-                    [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
+  
+  [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
+  if (![_passwordField.text isEqualToString:@""] && ![_passwordField.text isEqualToString:@""]) {
+    NSString *username = ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]);
+    NSString *password = _passwordField.text.stringByTrimingWhitespace;
+    [JMSGUser loginWithUsername:username
+                       password:password
+              completionHandler:^(id resultObject, NSError *error) {
+                if (error == nil) {
+                  [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                  [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
+
+                  JPIMMAINTHEAD(^{
                     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-
-                    JPIMMAINTHEAD(^{
-                      [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
-                      [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    });
-
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
+                    appDelegate.window.rootViewController = appDelegate.tabBarCtl;
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                  });
+                  
+                  [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
+                } else {
+                  if (error.code == 100) {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [MBProgressHUD showMessage:@"用户不存在!" view:self.view];
                   } else {
-                    if (error.code == 100) {
-                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                      [MBProgressHUD showMessage:@"用户不存在!" view:self.view];
-                    } else {
-                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                      [MBProgressHUD showMessage:@"登录失败!" view:self.view];
-                    }
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [MBProgressHUD showMessage:@"登录失败!" view:self.view];
                   }
-                }];
-    }else{
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showMessage:@"密码不能为空!" view:self.view];
-    }
-
+                }
+              }];
+  }else{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showMessage:@"密码不能为空!" view:self.view];
+  }
+  
 }
 - (IBAction)registerBtnClick:(id)sender {
   DDLogDebug(@"Action - registerBtnClick");

@@ -12,7 +12,6 @@
 #import <JMessage/JMSGConstants.h>
 #import <JMessage/JMSGConversation.h>
 #import <JMessage/JMSGGroup.h>
-#import <JMessage/JMSGGroupManager.h>
 #import <JMessage/JMSGMessage.h>
 #import <JMessage/JMSGUser.h>
 #import <JMessage/JPUSHService.h>
@@ -38,7 +37,7 @@
 
 /*! JMessage SDK 版本号。用于展示 SDK 的版本信息 */
 #define JMESSAGE_VERSION @"1.1.0"
-#define JMESSAGE_BUILD   @"405"
+#define JMESSAGE_BUILD   @"406"
 
 /*! API Version - Int for program logic */
 extern NSInteger const JMESSAGE_API_VERSION;

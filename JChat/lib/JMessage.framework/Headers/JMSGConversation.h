@@ -306,7 +306,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 /*!
  @abstract 发送语音消息
  @param voiceData 语音消息数据
- @param duration 语音消息时长（秒）
+ @param duration 语音消息时长（秒）. 长度必须大于 0.
  @discussion 快捷发送消息接口。如果发送语音消息不需要附加 extra，则使用此接口更方便。
  */
 - (void)sendVoiceMessage:(NSData *)voiceData
@@ -324,6 +324,13 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
  @discussion 把未读数设置为 0
  */
 - (void)clearUnreadCount;
+
+/*!
+ * @abstract 获取最后一条消息的内容文本
+ *
+ * @discussion 通常用来展示在会话列表的第 2 行. 如果是图片消息,通常是文本 [图片] 之类. CustomContent 可以定制这个文本.
+ */
+- (NSString *)latestMessageContentText;
 
 /*!
  @abstract 判断消息是否属于这个 Conversation

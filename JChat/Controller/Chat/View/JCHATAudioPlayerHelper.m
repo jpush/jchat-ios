@@ -70,7 +70,10 @@
              NSString *wavName = [amrName stringByReplacingOccurrencesOfString:@"wavToAmr" withString:@"amrToWav"];
              AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[XHVoiceCommonHelper getPathByFileName:fileName ofType:@"wav"]] error:nil];
              */
-            AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName] error:nil];
+          
+          NSError *error = [[NSError alloc] init];
+            AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName] error:&error];
+          NSLog(@"huangmin  the avaudioPlayer  avaudioplayer %@  error  %@",pl,error);
             pl.delegate = self;
             [pl play];
             self.player = pl;

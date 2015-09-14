@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		PQS403jQ4s39/dSSHtMF4JyPlQ8=
+		atW4O9eYbABa5GE87qUW+Xc9C+w=
 		</data>
 		<key>Headers/JMSGConversationDelegate.h</key>
 		<data>
@@ -35,10 +35,6 @@
 		<key>Headers/JMSGGroupDelegate.h</key>
 		<data>
 		H1SZaEd/7gB7kRYU+ZX1kMm/3zg=
-		</data>
-		<key>Headers/JMSGGroupManager.h</key>
-		<data>
-		freWMSNEvPf5FA4bj/cRBeHTnD4=
 		</data>
 		<key>Headers/JMSGImageContent.h</key>
 		<data>
@@ -74,7 +70,7 @@
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		YABskIR/Yb43hTvlo9gsugnk0eA=
+		h9gD9tweWAc6nK0pXjZgGMPomA8=
 		</data>
 		<key>Headers/JMessageDelegate.h</key>
 		<data>
@@ -86,7 +82,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		yK0yj6jS2v7H8l9Ynn8TDpve7jo=
+		/PGKH3lO3ozJ0agxofXMPUCCLBY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -105,7 +101,7 @@
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		PQS403jQ4s39/dSSHtMF4JyPlQ8=
+		atW4O9eYbABa5GE87qUW+Xc9C+w=
 		</data>
 		<key>Headers/JMSGConversationDelegate.h</key>
 		<data>
@@ -126,10 +122,6 @@
 		<key>Headers/JMSGGroupDelegate.h</key>
 		<data>
 		H1SZaEd/7gB7kRYU+ZX1kMm/3zg=
-		</data>
-		<key>Headers/JMSGGroupManager.h</key>
-		<data>
-		freWMSNEvPf5FA4bj/cRBeHTnD4=
 		</data>
 		<key>Headers/JMSGImageContent.h</key>
 		<data>
@@ -165,7 +157,7 @@
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		YABskIR/Yb43hTvlo9gsugnk0eA=
+		h9gD9tweWAc6nK0pXjZgGMPomA8=
 		</data>
 		<key>Headers/JMessageDelegate.h</key>
 		<data>

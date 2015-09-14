@@ -429,8 +429,13 @@ NSInteger sortType(id object1,id object2,void *cha) {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   DDLogDebug(@"Action - tableView");
   JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
-  // FIXME 这里要考虑单聊、群聊
-  [JMSGConversation deleteSingleConversationWithUsername:((JMSGUser *)conversation.target).username];
+
+  if (conversation.conversationType == kJMSGConversationTypeSingle) {
+    [JMSGConversation deleteSingleConversationWithUsername:((JMSGUser *)conversation.target).username];
+  } else {
+    [JMSGConversation deleteGroupConversationWithGroupId:((JMSGGroup *)conversation.target).gid];
+  }
+
   [_conversationArr removeObjectAtIndex:indexPath.row];
   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -481,6 +486,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
   sendMessageCtl.hidesBottomBarWhenPushed=YES;
   JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
+  NSLog(@"huangmin  select conversation  %@",[_conversationArr objectAtIndex:indexPath.row]);
   sendMessageCtl.conversation = conversation;
   [self.navigationController pushViewController:sendMessageCtl animated:YES];
   

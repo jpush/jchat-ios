@@ -109,8 +109,7 @@
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
   __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  JMSGUser *user = [JMSGUser myInfo];
-//  image = [image resizedImageByWidth:upLoadImgWidth];
+
   [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) type:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
                           JPIMMAINTHEAD(^{
                             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

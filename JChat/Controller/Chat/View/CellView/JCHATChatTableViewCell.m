@@ -128,21 +128,23 @@
     self.message.text = @"";
     return;
   }
-
-  switch (conversation.latestMessage.contentType) {
-    case kJMSGContentTypeText:
-      self.message.text = ((JMSGTextContent *)conversation.latestMessage.content).text;
-      break;
-    case kJMSGContentTypeImage:
-      self.message.text = @"[图片]";
-      break;
-    case kJMSGContentTypeVoice:
-    self.message.text = @"[语音]";
-    case kJMSGContentTypeEventNotification:
-      self.message.text = [((JMSGEventContent *)conversation.latestMessage.content) showEventNotification];
-    default:
-      break;
-  }
+  self.message.text = conversation.latestMessageContentText;
+//  switch (conversation.latestMessage.contentType) {
+//    case kJMSGContentTypeText:
+//      self.message.text = [conversation latestMessageContentText];
+//      break;
+//    case kJMSGContentTypeImage:
+//      self.message.text = @"[图片]";
+//      break;
+//    case kJMSGContentTypeVoice:
+//      self.message.text = @"[语音]";
+//      break;
+//    case kJMSGContentTypeEventNotification:
+//      self.message.text = [((JMSGEventContent *)conversation.latestMessage.content) showEventNotification];
+//      break;
+//    default:
+//      break;
+//  }
 }
 
 
