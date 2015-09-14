@@ -47,6 +47,12 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 @implementation JCHATSendMessageViewController
 
+- (IBAction)click_to_send_message:(id)sender {
+  
+  
+  
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.automaticallyAdjustsScrollViewInsets = NO;
@@ -93,7 +99,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self getGroupMemberListWithGetMessageFlag:YES];
   [self addNotification];
   [self sendInfoRequest];
+    NSLog(@"huangmin   group conversation  %@",_conversation);
   [self addDelegate];
+
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -118,7 +127,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 - (void)viewWillDisappear:(BOOL)animated {
   DDLogDebug(@"Event - viewWillDisappear");
-  [super viewWillAppear:YES];
+  [super viewWillAppear:animated];
   [_conversation clearUnreadCount];
   [[JCHATAudioPlayerHelper shareInstance] stopAudio];
   [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
@@ -179,6 +188,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     group = self.conversation.target;
     _userArr = [NSMutableArray arrayWithArray:[group memberArray]];
     [self isContantMeWithUserArr:_userArr];
+    [self getAllMessage];
   }else {
     if (getMesageFlag) {
       [self getAllMessage];
@@ -219,27 +229,36 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 
 - (void)sendInfoRequest {
-  //  if (self.user) {
-  //    [JMSGUser getUserInfoWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
-  //      if (resultObject) {
-  //        [self setTitleWithUser:resultObject];
-  //      }
-  //    }];
-  //  }else if (self.conversation && self.conversation.conversationType == kJMSGConversationTypeGroup) {
-  //    [JMSGGroup getGroupInfo:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
-  //      if (error == nil) {
-  //        _groupInfo = resultObject;
-  //      }else {
-  //        DDLogDebug(@"获取groupInfo fail");
-  //      }
-  //    }];
-  //  }else if (self.conversation && self.conversation.conversationType == kJMSGConversationTypeSingle) {
-  //    [JMSGUser getUserInfoWithUsername:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
-  //      [self setTitleWithUser:resultObject];
-  //    }];
-  //  }
-}
+    if (self.user) {
+//      [JMSGUser getUserInfoWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
+//        if (resultObject) {
+//          [self setTitleWithUser:resultObject];
+//        }
+//      }];
+      [JMSGUser userInfoArrayWithUsernameArray:@[self.user.username] completionHandler:^(id resultObject, NSError *error) {
+        if (error == nil) {
+          [self setTitleWithUser:resultObject];
+        } else {
+          DDLogDebug(@"get user info fail");
+        }
+      }];
+    }else if (self.conversation && self.conversation.conversationType == kJMSGConversationTypeGroup) {
+//      [JMSGGroup getGroupInfo:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
+//        if (error == nil) {
+//          _groupInfo = resultObject;
+//        }else {
+//          DDLogDebug(@"获取groupInfo fail");
+//        }
+//      }];
 
+//      [JMSGGroup groupInfoWithGroupId:self.conversation.target completionHandler:<#^(id resultObject, NSError *error)handler#>]
+//    }else if (self.conversation && self.conversation.conversationType == kJMSGConversationTypeSingle) {
+//      [JMSGUser getUserInfoWithUsername:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
+//        [self setTitleWithUser:resultObject];
+//      }];
+//    }
+}
+}
 
 
 #pragma mark --JMessageDelegate
@@ -253,12 +272,12 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
       alert = @"本用户登出了。可能在其他设备上做了登录。";
     } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
                                                       message:@"登录错误，请重新登录"
                                                      delegate:self
                                             cancelButtonTitle:nil
                                             otherButtonTitles:@"退出",nil];
-      [alert show];
+      [alertView show];
       return;
       
     } else if (error.code == JCHAT_ERROR_MSG_TARGET_NOT_EXIST) {
@@ -299,7 +318,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
   DDLogDebug(@"Event - receiveMessageNotification");
-  
+  DDLogDebug(@"huangmin   receiveMessage  %@",message);
   JPIMMAINTHEAD((^{
     [_JMSgMessageDic setObject:message forKey:message.msgId];
     DDLogDebug(@"The received msg - %@", message);
@@ -309,11 +328,12 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
     
     if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-      if (![((JMSGUser *)message.target).username isEqualToString:self.user.username]) {
-        // FIXME - This condition should be done by SDK.
-        DDLogWarn(@"It's single chat, but the targetId of the msg is not me. Throw away.");
-        return;
-      }
+//      if (![((JMSGUser *)message.target).username isEqualToString:self.user.username]) {
+//        // FIXME - This condition should be done by SDK.
+//        DDLogWarn(@"It's single chat, but the targetId of the msg is not me. Throw away.");
+//        return;
+//      }
+//      if{}
     } else if (![((JMSGGroup *)_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
       DDLogWarn(@"It's group chat, but the targetId of the msg is not group. Throw away.");
       return;
@@ -322,6 +342,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [model setChatModelWith:message conversationType:_conversation];
     model.photoIndex = [_imgDataArr count] -1;
     [self addmessageShowTimeData:message.timestamp];
+    model.sendFlag = YES;
     [self addMessage:model];
   }));
 }
@@ -418,15 +439,18 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 - (void)getAllMessage {
   DDLogDebug(@"Action - getAllMessage");
-  __block NSMutableArray * arrList;
+  __block NSMutableArray * arrList = [[NSMutableArray alloc] init];
   [self cleanMessageCache];
-  [arrList addObjectsFromArray:[_conversation messageArrayFromNewestWithOffset:nil limit:nil]];
+  [arrList addObjectsFromArray:[[[_conversation messageArrayFromNewestWithOffset:@0 limit:@200] reverseObjectEnumerator] allObjects]];
+
+  NSLog(@"huangmin conversation    message   %@",[_conversation messageArrayFromNewestWithOffset:@0 limit:@100]);
   for (NSInteger i=0; i< [arrList count]; i++) {
     JMSGMessage *message = [arrList objectAtIndex:i];
     [_JMSgMessageDic setObject:message forKey:message.msgId];
     JCHATChatModel *model = [[JCHATChatModel alloc] init];
     [model setChatModelWith:message conversationType:_conversation];
     model.photoIndex = [_imgDataArr count] -1;
+    model.sendFlag = YES;
     [self dataMessageShowTime:message.timestamp];
     [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
     [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
@@ -549,7 +573,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   img = [img resizedImageByWidth:upLoadImgWidth];
 //  UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
   JMSGMessage* message = nil;
-  [self addmessageShowTimeData:message.timestamp];
   __block JCHATChatModel *model = [[JCHATChatModel alloc] init];
   JMSGImageContent *imageContent = [[JMSGImageContent alloc] initWithImageData:UIImagePNGRepresentation(img)];
   model.mediaData = UIImagePNGRepresentation(img);
@@ -560,6 +583,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     model.targetId = ((JMSGGroup *)(_conversation.target)).gid;
     message = [JMSGMessage createGroupMessageWithContent:imageContent groupId:((JMSGGroup *)_conversation.target).gid];
   }
+  [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
   model.messageStatus = kJMSGMessageStatusSending;
   [_imgDataArr addObject:model];
@@ -579,8 +603,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 #pragma mark --add Delegate
 - (void)addDelegate {
   NSLog(@"huangmin    the conversation  %@",self.conversation);
-  [JMessage addDelegate:self withConversation:self.conversation];
-  
+//  [JMessage addDelegate:self withConversation:self.conversation];
+  [JMessage addDelegate:self withConversation:nil];
 }
 #pragma mark --加载通知
 -(void)addNotification{
@@ -780,10 +804,15 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     model.targetId = ((JMSGUser *)_conversation.target).username;
     message = [JMSGMessage createSingleMessageWithContent:textContent username:model.targetId];
+    NSLog(@"huagnmin    conversation target   %@    ",_conversation);
+    NSLog(@"需要发送的message  是  %@",message);
   }else {
+
     model.targetId = ((JMSGGroup *)_conversation.target).gid;
-    message = [JMSGMessage createSingleMessageWithContent:textContent username:model.targetId];
+    message = [JMSGMessage createGroupMessageWithContent:textContent groupId:model.targetId];
   }
+  NSLog(@"huagnmin    conversation target   %@    ",_conversation);
+  NSLog(@"需要发送的message  是  %@",message);
   [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
   [_JMSgMessageDic setObject:message forKey:message.msgId];
@@ -897,8 +926,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark --释放内存
 - (void)dealloc {
+  DDLogDebug(@"Action -- dealloc");
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [self.toolBarContainer.toolbar.textView removeObserver:self forKeyPath:@"contentSize"];
+//remove delegate
+  [JMessage removeDelegate:self];
 }
 
 - (void)tapClick:(UIGestureRecognizer *)gesture {
@@ -956,7 +988,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (cell == nil) {
       cell = [[JCHATVoiceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    //      JCHATVoiceTableCell *cell = CELL(tableView, JCHATVoiceTableCell);
     
     JMSGMessage *voiceMessage = _JMSgMessageDic[model.messageId];
     [cell setCellData:model delegate:self message:voiceMessage indexPath:indexPath];
@@ -1033,7 +1064,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
       photo.url = [NSURL fileURLWithPath:url]; // 图片路径
     }else {
       if (messageObject.pictureThumbImgPath == nil) {
-        url = messageObject.pictureThumbImgPath;
+        photo.url = messageObject.pictureThumbImgPath;
       }else {
         photo.url = [NSURL fileURLWithPath:url]; // 图片路径
       }
@@ -1144,35 +1175,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   __block JCHATChatModel *model =[[JCHATChatModel alloc] init];
   model.messageId = voiceMessage.msgId;
   JMSGVoiceContent *voiceContent = [[JMSGVoiceContent alloc] initWithVoiceData:[NSData dataWithContentsOfFile:voicePath] voiceDuration:[NSNumber numberWithInteger:[voiceDuration integerValue]]];
-  
-  if ([voiceDuration integerValue] >= 60) {
-    model.voiceTime = @"60''";
-  }else{
-    model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
-  }
-  //  model.avatar = [JMSGUser myInfo].avatarThumbPath;
-  [[JMSGUser myInfo] thumbAvatarData:^(id resultObject, NSError *error) {
-    if (error == nil) {
-      model.avatar = (NSData *)resultObject;
-    }else {
-      NSLog(@"JCHATSendMessageVC  getAvatar  ");
-    }
-  }];
-  model.type=kJMSGContentTypeVoice;
-  model.conversation = _conversation;
-  model.targetId = self.conversation.target;
-  model.displayName = self.targetName;
-  model.readState = YES;
-  model.isMyMessage = YES;
-  model.sendFlag = NO;
-  model.mediaData = [NSData dataWithContentsOfFile:voicePath];
-  
+
   if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
     voiceMessage = [JMSGMessage createSingleMessageWithContent:voiceContent username:((JMSGUser *)(_conversation.target)).username];
   }else {
     voiceMessage = [JMSGMessage createGroupMessageWithContent:voiceContent groupId:((JMSGGroup *)(_conversation.target)).gid];
   }
-  model.messageTime = voiceMessage.timestamp;
+//  model.messageTime = voiceMessage.timestamp;
+  NSLog(@"huangmin   voicemessage  %@",voiceMessage);
+  [model setChatModelWith:voiceMessage conversationType:_conversation];
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.msgId];
   [JCHATFileManager deleteFile:voicePath];
   [self addMessage:model];
@@ -1365,9 +1376,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
 }
-
-
-
 
 // ---------------------------------- Private methods
 

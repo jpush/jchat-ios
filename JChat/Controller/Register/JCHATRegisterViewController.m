@@ -102,10 +102,11 @@
                       [self.navigationController pushViewController:detailVC animated:YES];
                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     } else {
+                      DDLogDebug(@"login fail error  %@",error);
                       NSString *alert = @"用户登录失败";
                       if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
                         alert = @"用户名不存在";
-                      } else if (error.code == JCHAT_ERROR_USER_WRONG_PASSWORD) {
+                      } else if (error.code == JCHAT_ERROR_LOGIN_PASSWORD_WRONG) {
                         alert = @"密码错误！";
                       } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
                         alert = @"用户名或者密码不合法！";

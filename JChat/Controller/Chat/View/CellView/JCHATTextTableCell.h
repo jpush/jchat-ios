@@ -14,7 +14,7 @@
 -(void)selectHeadView:(JCHATChatModel *)model;
 @end
 
-@interface JCHATTextTableCell : UITableViewCell<UIAlertViewDelegate>
+@interface JCHATTextTableCell : UITableViewCell<UIAlertViewDelegate,JMessageDelegate>
 @property (assign, nonatomic) BOOL isMe;
 @property (strong, nonatomic) JCHATChatModel *model;
 @property (nonatomic,strong)  UIActivityIndicatorView *stateView;

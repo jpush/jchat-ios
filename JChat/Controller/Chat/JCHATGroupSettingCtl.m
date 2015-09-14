@@ -132,6 +132,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 }
 
 - (void)reloadHeadViewData {
+  NSLog(@"huangmin   count  %ld",[_groupData count]);
   for (UIView *v in _headView.subviews) {
     if ([v isKindOfClass:[JCHATGroupPersonView class]]) {
       [v removeFromSuperview];
@@ -170,17 +171,17 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         _deleteBtn = personView.headViewBtn;
         [personView.deletePersonBtn setHidden:YES];
         personView.memberLable.text = @"";
+        NSLog(@"huangin  owner   %@",self.sendMessageCtl);
         if ([self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username]  && [_groupData count] !=1) {
           [_headView addSubview:personView];
         }
         return;
       }else {
-
         personView.headViewBtn.tag = 1000 + i*4+j;
         __block JMSGUser *user = [_groupData objectAtIndex:i*4+j];
-        [JMSGUser userInfoArrayWithUsernameArray:@[user.username] completionHandler:^(id resultObject, NSError *error) {
-            user = (JMSGUser *)resultObject;
-        }];
+//        [JMSGUser userInfoArrayWithUsernameArray:@[((JMSGGroup *)_conversation.target).gid/*user.username*/] completionHandler:^(id resultObject, NSError *error) {
+//            user = resultObject[0];
+//        }];
           [user thumbAvatarData:^(id resultObject, NSError *error) {
             if (error == nil) {
               if (resultObject == nil) {
@@ -394,23 +395,32 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     __weak __typeof(self)weakSelf = self;
     [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
         [((JMSGGroup *)(self.conversation.target)) addMembersFromUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+          [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
           if (error == nil) {
-            [weakSelf.groupData addObject:resultObject];
+//            [weakSelf.groupData addObject:resultObject];
+            [weakSelf addMemberToReload:resultObject[0]];
+            [MBProgressHUD showMessage:@"添加成员成功" view:weakSelf.view];
           }else {
-            DDLogDebug(@"addMembersFromUsernameArray fail");
+            DDLogDebug(@"addMembersFromUsernameArray fail with error %@",error);
+            [MBProgressHUD showMessage:@"添加成员失败" view:weakSelf.view];
           }
         }];
 
   }else if (alertView.tag ==400) {
     if (buttonIndex ==1) {
+      __weak __typeof(self)weakSelf = self;
       [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
       [((JMSGGroup *)(self.conversation.target)) exit:^(id resultObject, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
         if (error == nil) {
           DDLogDebug(@"推出群组成功");
+          [MBProgressHUD showMessage:@"推出群组成功" view:weakSelf.view];
         }else {
           DDLogDebug(@"推出群组失败");
+          [MBProgressHUD showMessage:@"推出群组失败" view:weakSelf.view];
         }
       }];
+    
 //      [JMSGGroup exitGroup:self.conversation.target completionHandler:^(id resultObject, NSError *error) {
 //        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 //        if (error == nil) {

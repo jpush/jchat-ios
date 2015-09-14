@@ -92,8 +92,10 @@
     UIImage *inputImage = originImage;
     self.centeraverter.image = originImage;
     sepiaFilter = [[GPUImageiOSBlurFilter alloc] init];
+    [sepiaFilter useNextFrameForImageCapture];
     sepiaFilter.blurRadiusInPixels = 3.0f;
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:inputImage];
+    
     [picture addTarget:sepiaFilter];
     [sepiaFilter addTarget:imageView];
     [picture processImage];

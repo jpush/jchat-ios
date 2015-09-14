@@ -108,6 +108,7 @@
         strongSelf.sendMessageCtl.title = group.name;
         [strongSelf.navigationController popViewControllerAnimated:YES];
       }else {
+        DDLogDebug(@"huangmin   creategroupwithname  fail  %@",error);
         [MBProgressHUD showMessage:@"创建群失败" view:self.view];
       }
     }];

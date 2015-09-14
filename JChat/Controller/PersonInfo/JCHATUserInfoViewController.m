@@ -79,34 +79,33 @@
   //设置背景图片
   _bgView = [[JCHATAvatarView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, 176)/*(kApplicationHeight) / 2)*/];
   [_bgView setUserInteractionEnabled:YES];
-
-
-  JMSGUser *user = [JMSGUser myInfo];
-  [user largeAvatarData:^(id resultObject, NSError *error) {
-    if (error == nil) {
-      if (resultObject != nil) {
-        _bgView.originImage = [UIImage imageWithData:resultObject];
-      }else {
-        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-      }
-    }else {
-      DDLogDebug(@"Action -- largeAvatarData");
-      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-    }
-  }];
-  
-  [user thumbAvatarData:^(id resultObject, NSError *error) {
-    if (error == nil) {
-      if (resultObject != nil) {
-        _bgView.originImage = [UIImage imageWithData:resultObject];
-      }else {
-        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-      }
-    }else {
-      DDLogDebug(@"Action -- largeAvatarData");
-      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-    }
-  }];
+  _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+  [self updateAvatar];
+//  [user largeAvatarData:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      if (resultObject != nil) {
+//        _bgView.originImage = [UIImage imageWithData:resultObject];
+//      }else {
+//        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//      }
+//    }else {
+//      DDLogDebug(@"Action -- largeAvatarData");
+//      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//    }
+//  }];
+//  
+//  [user thumbAvatarData:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      if (resultObject != nil) {
+//        _bgView.originImage = [UIImage imageWithData:resultObject];
+//      }else {
+//        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//      }
+//    }else {
+//      DDLogDebug(@"Action -- largeAvatarData");
+//      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//    }
+//  }];
 
   UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
   [_bgView addGestureRecognizer:gesture];
@@ -198,15 +197,15 @@
 //相机,相册Finish的代理
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   DDLogDebug(@"Action - imagePickerController");
-
+  __typeof(self) weakSelf = self;
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
-  UIImage *image;
+  __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  JMSGUser *user = [JMSGUser myInfo];
   image = [image resizedImageByWidth:upLoadImgWidth];
   [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) type:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error == nil) {
+      weakSelf.bgView.originImage = image;
       DDLogDebug(@"update headView success");
       [MBProgressHUD showMessage:@"上传成功" view:self.view];
     }else {
@@ -233,8 +232,8 @@
   [self.navigationController setNavigationBarHidden:NO];
   self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
   self.navigationController.navigationBar.translucent = NO;
-
   self.title = @"我";
+  
   [_bgView updataNameLable];
   NSShadow *shadow = [[NSShadow alloc] init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];

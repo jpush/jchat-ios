@@ -15,8 +15,8 @@
 {
   self = [super init];
   if (self) {
-    self.readState=NO;
-    self.sendFlag =YES;
+    self.readState = YES;
+    self.sendFlag = YES;
     self.isSending = NO;
   }
   return self;
@@ -30,7 +30,6 @@
   _isMyMessage = ![message isReceivedSide];
   _messageStatus = message.status;
   _messageTime = message.timestamp;
-  _readState = NO;
   _sendFlag = NO;
   _isSending =NO;
   _conversation = conversation;
@@ -38,7 +37,7 @@
     _targetId = ((JMSGUser *)message.target).username;
     _displayName =  [((JMSGUser *)message.target) displayName];
   }else {
-    _targetId = ((JMSGGroup *)message.target).gid;
+    _targetId = ((JMSGGroup *)message.target).gid;//
     _displayName = [((JMSGGroup *)message.target) displayName];
   }
   _chatContent =@"";
@@ -52,12 +51,15 @@
     {
       _pictureThumbImgPath = ((JMSGImageContent *)message.content).thumbImagePath;
       _pictureImgPath = ((JMSGImageContent *)message.content).largeImagePath;
+        __weak __typeof(self)weakSelf = self;
       [message thumbImageData:^(id resultObject, NSError *error) {
+        NSLog(@"huangmin   thumbimagedata  %@",resultObject);
         if (error == nil) {
+
           _mediaData = resultObject;
-          [self getImageSize];
+          [weakSelf getImageSize];
         }else {
-          DDLogDebug(@"get thumbImageData fail");
+          DDLogDebug(@"get thumbImageData fail,with error %@",error);
         }
       }];
     }
@@ -90,7 +92,7 @@
       __strong __typeof(weakSelf)strongSelf = weakSelf;
       strongSelf.avatar = resultObject;
     }else {
-      DDLogDebug(@"get thumbAvatarData fail");
+      DDLogDebug(@"get thumbAvatarData fail with error %@",error);
     }
   }];
   [self getTextHeight];

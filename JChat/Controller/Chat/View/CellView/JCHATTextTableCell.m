@@ -45,7 +45,6 @@
     [self addSubview:self.headImgView];
     [self headAddGesture];
     self.isMe = YES;
-    
   }
   return self;
 }
@@ -57,7 +56,11 @@
 
 - (void)setCellData:(JCHATChatModel *)model delegate:(id )delegate
 {
-
+//  if (!model.sendFlag) {
+//    model.sendFlag = YES;
+//    // 消息展示出来时，调用发文本消息
+//    [self sendTextMessage:model.messageId];
+//  }
   
   self.headImgView.layer.cornerRadius = 23;
   self.conversation = model.conversation;
@@ -65,11 +68,41 @@
   _model = model;
   self.delegate = delegate;
 
-  if (model.avatar != nil) {
-    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
-  }else {
-    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-  }
+  
+  typeof(self) __weak weakSelf = self;
+  JMSGMessage *tmpMessage = [model.conversation messageWithMessageId:model.messageId];
+  JMSGUser *tmpUser = [model.conversation messageWithMessageId:model.messageId].fromUser;
+  [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      JPIMMAINTHEAD(^{
+        if (resultObject !=nil) {
+          [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
+        }
+      });
+      
+    }else {
+      DDLogDebug(@"Action -- get thumbavatar fail");
+    }
+  }];
+  
+//  if (model.avatar != nil) {
+////    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
+//    typeof(self) __weak weakSelf = self;
+//
+//    
+//    [[model.conversation messageWithMessageId:model.messageId].fromUser thumbAvatarData:^(id resultObject, NSError *error) {
+//      if (error == nil) {
+//        JPIMMAINTHEAD(^{
+//          [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
+//        });
+//        
+//      }else {
+//        DDLogDebug(@"Action -- get thumbavatar fail");
+//      }
+//    }];
+//  }else {
+//    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//  }
   [self creadBuddleChatView];
 }
 
@@ -205,6 +238,7 @@
   [self.stateView stopAnimating];
   [self.sendFailView setHidden:YES];
   if (_model.messageStatus == kJMSGMessageStatusSending || _model.messageStatus == kJMSGMessageStatusReceiving) {
+    NSLog(@"huangmin    message status %d",_model.messageStatus);
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     [self.sendFailView setHidden:YES];
@@ -227,7 +261,6 @@
 
 - (void)headAddGesture {
   [self.headImgView setUserInteractionEnabled:YES];
-//  [self.chatbgView setUserInteractionEnabled:YES];
   [self.chatView setUserInteractionEnabled:YES];
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushPersonInfoCtlClick)];
   [self.headImgView addGestureRecognizer:gesture];
@@ -285,4 +318,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   }
 }
 
+#pragma mark --JMessageDelegate
+- (void)onSendMessageResponse:(JMSGMessage *)message
+                        error:(NSError *)error {
+
+}
+
+- (void)dealloc {
+  DDLogDebug(@"Action -- dealloc");
+}
 @end

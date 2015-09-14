@@ -15,9 +15,10 @@
   GPUImagePicture *sourcePicture;
   GPUImageiOSBlurFilter *sepiaFilter;
 }
-@property(strong,nonatomic)UIImage *originImage;
-@property(strong,nonatomic)UIImageView *centeraverter;
-@property(strong,nonatomic)UILabel *nameLable;
+
+@property(strong, nonatomic)UIImage *originImage;
+@property(strong, nonatomic)UIImageView *centeraverter;
+@property(strong, nonatomic)UILabel *nameLable;
 - (void)updataNameLable;
 
 @end
