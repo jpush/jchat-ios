@@ -68,10 +68,10 @@
   _model = model;
   self.delegate = delegate;
 
-  
+  _message = model.message;
   typeof(self) __weak weakSelf = self;
-  JMSGMessage *tmpMessage = [model.conversation messageWithMessageId:model.messageId];
-  JMSGUser *tmpUser = [model.conversation messageWithMessageId:model.messageId].fromUser;
+  JMSGUser *tmpUser = _message.fromUser;
+
   [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
     if (error == nil) {
       JPIMMAINTHEAD(^{
@@ -79,7 +79,6 @@
           [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
         }
       });
-      
     }else {
       DDLogDebug(@"Action -- get thumbavatar fail");
     }
@@ -238,7 +237,6 @@
   [self.stateView stopAnimating];
   [self.sendFailView setHidden:YES];
   if (_model.messageStatus == kJMSGMessageStatusSending || _model.messageStatus == kJMSGMessageStatusReceiving) {
-    NSLog(@"huangmin    message status %d",_model.messageStatus);
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     [self.sendFailView setHidden:YES];
@@ -284,7 +282,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     if (!_sendFailMessage) {
-      _sendFailMessage = [self.conversation messageWithMessageId:_model.messageId];
+//      _sendFailMessage = [self.conversation messageWithMessageId:_model.messageId];
+      _message = _model.message;//!!
       _message = _sendFailMessage;
       [JMSGMessage sendMessage:_message];
 //      if (self.conversation.conversationType == kJMSGConversationTypeSingle) {

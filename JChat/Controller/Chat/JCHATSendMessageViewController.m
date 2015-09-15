@@ -89,6 +89,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }
   if (_conversation && _conversation.conversationType == kJMSGConversationTypeGroup) {
     self.title = _conversation.title;
+    _groupInfo = _conversation.target;
   } else {
     if (!_user) {
       _user = _conversation.target;
@@ -99,7 +100,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self getGroupMemberListWithGetMessageFlag:YES];
   [self addNotification];
   [self sendInfoRequest];
-    NSLog(@"huangmin   group conversation  %@",_conversation);
   [self addDelegate];
 
 
@@ -317,8 +317,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 #pragma mark --收到消息
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
+  if ([_conversation.target isEqualToUser:message.class]) {
+    
+  }
   DDLogDebug(@"Event - receiveMessageNotification");
-  DDLogDebug(@"huangmin   receiveMessage  %@",message);
+
   JPIMMAINTHEAD((^{
     [_JMSgMessageDic setObject:message forKey:message.msgId];
     DDLogDebug(@"The received msg - %@", message);
@@ -443,7 +446,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   [self cleanMessageCache];
   [arrList addObjectsFromArray:[[[_conversation messageArrayFromNewestWithOffset:@0 limit:@200] reverseObjectEnumerator] allObjects]];
 
-  NSLog(@"huangmin conversation    message   %@",[_conversation messageArrayFromNewestWithOffset:@0 limit:@100]);
   for (NSInteger i=0; i< [arrList count]; i++) {
     JMSGMessage *message = [arrList objectAtIndex:i];
     [_JMSgMessageDic setObject:message forKey:message.msgId];
@@ -602,7 +604,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 #pragma mark --add Delegate
 - (void)addDelegate {
-  NSLog(@"huangmin    the conversation  %@",self.conversation);
 //  [JMessage addDelegate:self withConversation:self.conversation];
   [JMessage addDelegate:self withConversation:nil];
 }
@@ -1182,7 +1183,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     voiceMessage = [JMSGMessage createGroupMessageWithContent:voiceContent groupId:((JMSGGroup *)(_conversation.target)).gid];
   }
 //  model.messageTime = voiceMessage.timestamp;
-  NSLog(@"huangmin   voicemessage  %@",voiceMessage);
   [model setChatModelWith:voiceMessage conversationType:_conversation];
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.msgId];
   [JCHATFileManager deleteFile:voicePath];

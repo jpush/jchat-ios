@@ -87,7 +87,7 @@
   NSString *password = _passwordTextField.text.stringByTrimingWhitespace;
 
   if ([self checkValidUsername:username AndPassword:password]) {
-
+    
     [JMSGUser loginWithUsername:username
                        password:password
               completionHandler:^(id resultObject, NSError *error) {
@@ -115,6 +115,7 @@
         DDLogError(alert);
       }
     }];
+    
   }
 }
 

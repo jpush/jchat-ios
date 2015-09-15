@@ -23,6 +23,7 @@
 }
 
 -(void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation {
+  _message = message;
   _chatType = conversation.conversationType;
   _messageId = message.msgId;
   _fromId = message.fromUser.username;
@@ -53,7 +54,6 @@
       _pictureImgPath = ((JMSGImageContent *)message.content).largeImagePath;
         __weak __typeof(self)weakSelf = self;
       [message thumbImageData:^(id resultObject, NSError *error) {
-        NSLog(@"huangmin   thumbimagedata  %@",resultObject);
         if (error == nil) {
 
           _mediaData = resultObject;

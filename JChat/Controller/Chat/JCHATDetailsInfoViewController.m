@@ -98,6 +98,7 @@
     [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
     __block JMSGGroup *group =nil;
     typeof(self) __weak weakSelf = self;
+
     [JMSGGroup createGroupWithName:[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] description:@"" memberArray:@[[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       typeof(weakSelf) __strong strongSelf = weakSelf;
@@ -108,7 +109,6 @@
         strongSelf.sendMessageCtl.title = group.name;
         [strongSelf.navigationController popViewControllerAnimated:YES];
       }else {
-        DDLogDebug(@"huangmin   creategroupwithname  fail  %@",error);
         [MBProgressHUD showMessage:@"创建群失败" view:self.view];
       }
     }];

@@ -486,7 +486,6 @@ NSInteger sortType(id object1,id object2,void *cha) {
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
   sendMessageCtl.hidesBottomBarWhenPushed=YES;
   JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
-  NSLog(@"huangmin  select conversation  %@",[_conversationArr objectAtIndex:indexPath.row]);
   sendMessageCtl.conversation = conversation;
   [self.navigationController pushViewController:sendMessageCtl animated:YES];
   

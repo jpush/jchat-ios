@@ -335,14 +335,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
       [[JCHATAudioPlayerHelper shareInstance] setDelegate:nil];
     }
     [[JCHATAudioPlayerHelper shareInstance] setDelegate:(id) self];
-    NSLog(@"huangmin the voicepath  %@",self.model.voicePath);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.voicePath]) {
-
-      NSLog(@"huangmin  voice file exit");
-    }else {
-      NSLog(@"huangmin  voice file not exit");
-    }
-    
     [[JCHATAudioPlayerHelper shareInstance] managerAudioWithFileName:self.model.voicePath toPlay:YES];
     self.playing = YES;
   } else {

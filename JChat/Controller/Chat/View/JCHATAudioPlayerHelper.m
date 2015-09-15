@@ -73,7 +73,6 @@
           
           NSError *error = [[NSError alloc] init];
             AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName] error:&error];
-          NSLog(@"huangmin  the avaudioPlayer  avaudioplayer %@  error  %@",pl,error);
             pl.delegate = self;
             [pl play];
             self.player = pl;
