@@ -10,28 +10,29 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <JMessage/JMSGMediaContent.h>
+#import <JMessage/JMSGMediaAbstractContent.h>
 
-@interface JMSGImageContent : JMSGMediaContent <NSCopying>
+@interface JMSGImageContent : JMSGMediaAbstractContent <NSCopying>
 
 /*!
  @abstract 图片链接
  */
-@property(nonatomic, strong, readonly) NSString *imageLink;
+@property(nonatomic, strong, readonly) NSString * JMSG_NULLABLE imageLink;
 
 /*!
  @abstract 缩略图路径
 
  @discussion 可以
  */
-@property(nonatomic, strong, readonly) NSString *thumbImagePath;
+@property(nonatomic, strong, readonly) NSString * JMSG_NULLABLE thumbImagePath;
 
-@property(nonatomic, strong, readonly) NSString *largeImagePath;
+@property(nonatomic, strong, readonly) NSString * JMSG_NULLABLE largeImagePath;
+
+- (nullable instancetype)init NS_UNAVAILABLE;
 
 /*!
  @abstract 从图片数据初始化消息图片内容
  */
-- (instancetype)initWithImageData:(NSData *)data;
-
+- (nullable instancetype)initWithImageData:(NSData * JMSG_NONNULL)data;
 
 @end

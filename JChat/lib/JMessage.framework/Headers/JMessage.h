@@ -9,12 +9,13 @@
  * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
  */
 
+#import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
-#import <JMessage/JMSGConversation.h>
+#import <JMessage/JPUSHService.h>
+#import <JMessage/JMSGUser.h>
 #import <JMessage/JMSGGroup.h>
 #import <JMessage/JMSGMessage.h>
-#import <JMessage/JMSGUser.h>
-#import <JMessage/JPUSHService.h>
+#import <JMessage/JMSGConversation.h>
 #import <JMessage/JMSGAbstractContent.h>
 #import <JMessage/JMSGCustomContent.h>
 #import <JMessage/JMSGEventContent.h>
@@ -23,7 +24,6 @@
 #import <JMessage/JMSGTextContent.h>
 #import <JMessage/JMSGVoiceContent.h>
 #import <JMessage/JMessageDelegate.h>
-
 
 @protocol JMSGMessageDelegate;
 @protocol JMessageDelegate;
@@ -37,7 +37,7 @@
 
 /*! JMessage SDK 版本号。用于展示 SDK 的版本信息 */
 #define JMESSAGE_VERSION @"1.1.0"
-#define JMESSAGE_BUILD   @"406"
+#define JMESSAGE_BUILD   @"402"
 
 /*! API Version - Int for program logic */
 extern NSInteger const JMESSAGE_API_VERSION;
@@ -75,11 +75,24 @@ extern NSInteger const JMESSAGE_API_VERSION;
 + (void)removeAllDelegates;
 
 /*!
+  @abstract 控制Log的输出等级,目前对外只有Debug模式,Info模式和关闭Log可选
+
+  @discussion 默认的Log模式为Info Mode,只展示必要Log信息,当需要调试时才需要开启Debug模式
+              如果上线或者不关心JMessage的业务时,选择Log off不打印任何JMessage的Log(除了出错信息和警告)
+ */
++ (void)setDebugMode;
+
++ (void)setInfoMode;
+
++ (void)setLogOFF;
+
+
+/*!
  @abstract 获取当前服务器端时间
 
  @discussion 可用于纠正本地时间。
  */
-+ (NSTimeInterval)currentServerTime;
++ (int)currentServerTime;
 
 @end
 

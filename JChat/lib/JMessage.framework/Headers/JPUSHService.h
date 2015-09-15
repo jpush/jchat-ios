@@ -1,10 +1,15 @@
-//
-//  JPUSHService.h
-//  JPUSHService
-//
-//  Created by JPush on 12-8-15.
-//  Copyright (c) 2012年 HXHG. All rights reserved.
-//  Version: 2.0.0
+/*
+ *	| |    | |  \ \  / /  | |    | |   / _______|
+ *	| |____| |   \ \/ /   | |____| |  / /
+ *	| |____| |    \  /    | |____| |  | |   _____
+ * 	| |    | |    /  \    | |    | |  | |  |____ |
+ *  | |    | |   / /\ \   | |    | |  \ \______| |
+ *  | |    | |  /_/  \_\  | |    | |   \_________|
+ *
+ * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
+ */
+
+#import <Foundation/Foundation.h>
 
 @class CLRegion;
 @class UILocalNotification;
@@ -14,11 +19,11 @@ extern NSString *const kJPFNetworkDidSetupNotification;     // 建立连接
 extern NSString *const kJPFNetworkDidCloseNotification;     // 关闭连接
 extern NSString *const kJPFNetworkDidRegisterNotification;  // 注册成功
 extern NSString *const kJPFNetworkDidLoginNotification;     // 登录成功
-extern NSString *const
-    kJPFNetworkDidReceiveMessageNotification;         // 收到消息(非APNS)
+extern NSString *const kJPFNetworkDidReceiveMessageNotification;         // 收到消息(非APNS)
 extern NSString *const kJPFServiceErrorNotification;  // 错误提示
 
 @class CLLocation;
+
 @interface JPUSHService : NSObject
 
 #pragma - mark 基本功能

@@ -16,6 +16,8 @@
 
 @interface JMSGGroup : NSObject
 
+JMSG_ASSUME_NONNULL_BEGIN
+
 ///----------------------------------------------------
 /// @name Class methods 类方法
 ///----------------------------------------------------
@@ -31,9 +33,9 @@
  @discussion 向服务器端提交创建群组请求，服务器端会生成群组ID，可以基于这个ID做后续很多操作。
  */
 + (void)createGroupWithName:(NSString *)groupName
-                description:(NSString *)groupDesc
-                memberArray:(NSArray *)usernameArray
-          completionHandler:(JMSGCompletionHandler)handler;
+                description:(NSString * JMSG_NULLABLE)groupDesc
+                memberArray:(NSArray JMSG_GENERIC(__kindof NSString *)* JMSG_NULLABLE)usernameArray
+          completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /**
 *  更新群组信息
@@ -42,7 +44,7 @@
 *         Handler 里 resultObject 是更新后的群组信息，其内容类型是 JMSGGroup。
 */
 + (void)updateGroupInfoWithGroup:(JMSGGroup *)group
-               completionHandler:(JMSGCompletionHandler)handler;
+               completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /**
 * 获取群组信息
@@ -81,12 +83,12 @@
 
  @discussion 用于群组聊天的展示名称；以及向群组发消息时的 target_name
  */
-@property(nonatomic, copy, readonly) NSString *name;
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE name;
 
 /*!
  @abstract 群组描述信息
  */
-@property(nonatomic, copy, readonly) NSString *desc;
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE desc;
 
 /*!
  @abstract 群组等级
@@ -119,7 +121,7 @@
  @discussion 一般在群组成员界面调用此接口，展示群组的所有成员列表。
  本接口只是在本地请求成员列表，不会发起服务器端请求。
  */
-- (NSArray *)memberArray;
+- (NSArray JMSG_GENERIC(__kindof JMSGUser *)*)memberArray;
 
 /*!
  @abstract 向群组中添加成员
@@ -127,8 +129,8 @@
  @param usernameArray 用户名数组。数据里的成员类型是 NSString
  @param handler 结果回调。正常返回时 resultObject 为当前新加入的成员数据。数据里成员类型为 JMSGUser
  */
-- (void)addMembersFromUsernameArray:(NSArray *)usernameArray
-                  completionHandler:(JMSGCompletionHandler)handler;
+- (void)addMembersFromUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
+                  completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 删除群成员
@@ -136,15 +138,15 @@
  @param usernameArray 元素是 username
  @param handler 结果回调。正常返回时 resultObject 为 当前删除成员数组，数组里的成员类型为 JMSGUser
  */
-- (void)removeMembersFromUsernameArray:(NSArray *)usernameArray
-                     completionHandler:(JMSGCompletionHandler)handler;
+- (void)removeMembersFromUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
+                     completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 我退出当前群组
 
  @param handler 结果回调。正常返回时 resultObject 为 nil。
  */
-- (void)exit:(JMSGCompletionHandler)handler;
+- (void)exit:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 群组的展示名
@@ -153,7 +155,9 @@
  */
 - (NSString *)displayName;
 
-- (BOOL)isEqualToGroup:(JMSGGroup *)group;
+- (BOOL)isEqualToGroup:(JMSGGroup * JMSG_NULLABLE)group;
+
+JMSG_ASSUME_NONNULL_END
 
 @end
 

@@ -24,6 +24,9 @@ typedef NS_ENUM(NSUInteger, JMSGUserField) {
   kJMSGUserFieldsAvatar = 5,
 };
 
+/*!
+ *
+ */
 typedef NS_ENUM(NSUInteger, JMSGUserGender) {
   kJMSGUserGenderUnknown = 0,
   kJMSGUserGenderMale,
@@ -32,6 +35,8 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 
 
 @interface JMSGUser : NSObject <NSCopying>
+
+JMSG_ASSUME_NONNULL_BEGIN
 
 ///----------------------------------------------------
 /// @name Class Methods 类方法
@@ -46,7 +51,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 */
 + (void)registerWithUsername:(NSString *)username
                     password:(NSString *)password
-           completionHandler:(JMSGCompletionHandler)handler;
+           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /**
 *  用户登录接口
@@ -57,7 +62,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 */
 + (void)loginWithUsername:(NSString *)username
                  password:(NSString *)password
-        completionHandler:(JMSGCompletionHandler)handler;
+        completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 退出登录
@@ -66,7 +71,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 
  @discussion 这个接口一般总是返回成功，即使背后与服务器端通讯失败，客户端也总是会退出登录的。
  */
-+ (void)logout:(JMSGCompletionHandler)handler;
++ (void)logout:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 批量获取用户信息
@@ -76,7 +81,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 
  @discussion 这是一个批量接口。
  */
-+ (void)userInfoArrayWithUsernameArray:(NSArray *)usernameArray
++ (void)userInfoArrayWithUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
                      completionHandler:(JMSGCompletionHandler)handler;
 
 
@@ -97,7 +102,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 */
 + (void)updateMyInfoWithParameter:(id)parameter
                              type:(JMSGUserField)type
-                completionHandler:(JMSGCompletionHandler)handler;
+                completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /**
 *  更新密码接口
@@ -108,7 +113,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 */
 + (void)updateMyPasswordWithNewPassword:(NSString *)newPassword
                             oldPassword:(NSString *)oldPassword
-                      completionHandler:(JMSGCompletionHandler)handler;
+                      completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 
 
@@ -130,14 +135,14 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 
  @discussion 用户自定义的昵称，可任意定义。
  */
-@property(nonatomic, copy, readonly) NSString *nickname;
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE nickname;
 
 /*!
  @abstract 用户头像（媒体文件ID）
 
  @discussion 此文件ID仅用于内部更新，不支持外部URL。
  */
-@property(nonatomic, copy, readonly) NSString *avatar;
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE avatar;
 
 /*!
  @abstract 性别
@@ -149,10 +154,10 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 /*!
  @abstract 生日
  */
-@property(nonatomic, copy, readonly) NSString *birthday;
-@property(nonatomic, copy, readonly) NSString *region;
-@property(nonatomic, copy, readonly) NSString *signature;
-@property(nonatomic, copy, readonly) NSString *cTime;
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE birthday;
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE region;
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE signature;
+@property(nonatomic, copy, readonly) NSString * cTime;
 
 
 /*!
@@ -182,6 +187,8 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
  */
 - (NSString *)displayName;
 
-- (BOOL)isEqualToUser:(JMSGUser *)user;
+- (BOOL)isEqualToUser:(JMSGUser * JMSG_NULLABLE)user;
+
+JMSG_ASSUME_NONNULL_END
 
 @end

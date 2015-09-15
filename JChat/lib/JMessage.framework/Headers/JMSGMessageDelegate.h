@@ -1,3 +1,4 @@
+#import <Foundation/Foundation.h>
 #import <JMessage/JMSGMessage.h>
 
 @protocol JMSGMessageDelegate <NSObject>

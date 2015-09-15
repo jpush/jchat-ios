@@ -14,6 +14,9 @@
 
 #import <Foundation/Foundation.h>
 
+
+#pragma mark - macros
+
 #define JMSG_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
 
 /*!
@@ -35,6 +38,37 @@ typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
  */
 typedef void (^JMSGMediaUploadProgressHandler)(float percent);
 
+//generic
+#if __has_feature(objc_generics) || __has_extension(objc_generics)
+#  define JMSG_GENERIC(...) <__VA_ARGS__>
+#else
+#  define JMSG_GENERIC(...)
+#endif
+
+//nullable
+#if __has_feature(nullability)
+#  define JMSG_NONNULL __nonnull
+#  define JMSG_NULLABLE __nullable
+#else
+#  define JMSG_NONNULL
+#  define JMSG_NULLABLE
+#endif
+
+#if __has_feature(assume_nonnull)
+#  ifdef NS_ASSUME_NONNULL_BEGIN
+#    define JMSG_ASSUME_NONNULL_BEGIN NS_ASSUME_NONNULL_BEGIN
+#  else
+#    define JMSG_ASSUME_NONNULL_BEGIN _Pragma("clang assume_nonnull begin")
+#  endif
+#  ifdef NS_ASSUME_NONNULL_END
+#    define JMSG_ASSUME_NONNULL_END NS_ASSUME_NONNULL_END
+#  else
+#    define JMSG_ASSUME_NONNULL_END _Pragma("clang assume_nonnull end")
+#  endif
+#else
+#  define JMSG_ASSUME_NONNULL_BEGIN
+#  define JMSG_ASSUME_NONNULL_END
+#endif
 
 #pragma mark - Error Definitions
 
@@ -45,6 +79,9 @@ typedef void (^JMSGMediaUploadProgressHandler)(float percent);
  */
 typedef NS_ENUM(NSInteger, JMSGSDKErrorCode) {
 
+  // network - 80
+  JMSG_ERROR_NETWORK_USER_NOT_REGISTER = 801003,
+  
   /// Network - 860
 
   JMSG_ERROR_NETWORK_REQUEST_INVALIDATE = 860010,
@@ -106,7 +143,7 @@ typedef NS_ENUM(NSInteger, JMSGSDKErrorCode) {
   kJMSGErrorSDKParamConversationTypeUnknown = 866001, // 会话类型错误
   kJMSGErrorSDKParamConversationUsernameInvalid = 866002, // 会话 username 无效
   kJMSGErrorSDKParamConversationGroupIdInvalid = 866003, // 会话 groupId 无效
-
+  kJMSGErrorSDKParamConversationLackAvatarPath = 866004, // 会话没有 avatarPath
 
   /// Group - 867
 
@@ -156,17 +193,16 @@ typedef NS_ENUM(NSUInteger, JMSGTcpErrorCode) {
 
 // General key
 
-static NSString *const KEY_ERROR = @"error";
 static NSString *const KEY_APP_KEY = @"appkey";
 
 
 // User
+
 static NSString *const KEY_USERNAME = @"username";
 static NSString *const KEY_PASSWORD = @"password";
 
 static NSString *const KEY_NEW_PASSWORD = @"new_password";
 static NSString *const KEY_OLD_PASSWORD = @"old_password";
-
 
 static NSString *const KEY_NICKNAME = @"nickname";
 static NSString *const KEY_AVATAR = @"avatar";
@@ -179,9 +215,5 @@ static NSString *const KEY_UID = @"uid";
 static NSString *const KEY_ADDRESS = @"address";
 
 
-// register
-
-
 #endif
-
 

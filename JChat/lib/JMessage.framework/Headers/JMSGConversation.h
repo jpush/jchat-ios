@@ -57,12 +57,6 @@ typedef NS_ENUM(NSInteger, JMSGMessageStatus) {
   kJMSGMessageStatusReceiveSucceed = 8,
 };
 
-/// FIXME:这个应该要删除掉
-typedef NS_ENUM(NSInteger, JMSGMessageMetaType) {
-  kJMSGMetaSendType,
-  kJMSGMetaReceiveType,
-  kJMSGMetaAvatarType,
-};
 
 /*!
  @typedef
@@ -74,13 +68,13 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
   kJMSGFileTypeVoice,
 };
 
-
 @interface JMSGConversation : NSObject
 
 ///----------------------------------------------------
 /// @name Conversation Operations 会话相关操作（类方法）
 ///----------------------------------------------------
 
+JMSG_ASSUME_NONNULL_BEGIN
 
 /*!
  @abstract 获取单聊会话
@@ -89,7 +83,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 
  @discussion 如果会话还不存在，则返回 nil
  */
-+ (JMSGConversation *)singleConversationWithUsername:(NSString *)username;
++ (JMSGConversation * JMSG_NULLABLE)singleConversationWithUsername:(NSString *)username;
 
 /*!
  @abstract 获取群聊会话
@@ -98,7 +92,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 
  @discussion 如果会话还不存在，则返回 nil
  */
-+ (JMSGConversation *)groupConversationWithGroupId:(NSString *)groupId;
++ (JMSGConversation * JMSG_NULLABLE)groupConversationWithGroupId:(NSString *)groupId;
 
 /*!
  @abstract 创建单聊会话（异步）
@@ -111,7 +105,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
  服务器端如果找不到该 username，或者某种原因查找失败，则创建会话失败。
  */
 + (void)createSingleConversationWithUsername:(NSString *)username
-                           completionHandler:(JMSGCompletionHandler)handler;
+                           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 创建群聊会话（异步）
@@ -124,7 +118,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
  如果从服务器上获取 groupId 的信息不存在或者失败，则创建会话失败。
  */
 + (void)createGroupConversationWithGroupId:(NSString *)groupId
-                         completionHandler:(JMSGCompletionHandler)handler;
+                         completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 删除单聊会话
@@ -165,17 +159,17 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
  @abstract 会话标题
  @discussion 会话头像应通过 avatarData: 方法异步去获取。
  */
-@property(nonatomic, strong, readonly) NSString *title;
+@property(nonatomic, strong, readonly) NSString * JMSG_NULLABLE title;
 
 /*!
  @abstract 最后一条消息
  */
-@property(nonatomic, strong, readonly) JMSGMessage *latestMessage;
+@property(nonatomic, strong, readonly) JMSGMessage * JMSG_NULLABLE latestMessage;
 
 /**
 * 未读数
 */
-@property(nonatomic, strong, readonly) NSNumber *unreadCount;
+@property(nonatomic, strong, readonly) NSNumber * JMSG_NULLABLE unreadCount;
 
 ///--------------------------------------------------------
 /// @name Conversation Extend Properties 会话扩展属性：用于聊天
@@ -206,7 +200,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 
  @discussion 这个接口在正常场景下不需要单独使用到。
  */
-- (JMSGMessage *)messageWithMessageId:(NSString *)messageId;
+- (JMSGMessage * JMSG_NULLABLE)messageWithMessageId:(NSString *)messageId;
 
 /*!
  @abstract 同步分页获取最新的消息
@@ -222,8 +216,8 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
  - offset = nil, limit = 100，表示从最新开始取 100 条记录。
  - offset = 100, limit = nil，表示从最新第 100 条开始，获取余下所有记录。
  */
-- (NSArray *)messageArrayFromNewestWithOffset:(NSNumber *)offset
-                                        limit:(NSNumber *)limit;
+- (NSArray JMSG_GENERIC(__kindof JMSGMessage *)*)messageArrayFromNewestWithOffset:(NSNumber * JMSG_NULLABLE)offset
+                                                                   limit:(NSNumber * JMSG_NULLABLE)limit;
 
 /*!
  @abstract 异步获取所有消息记录
@@ -266,7 +260,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 
  注意：如果创建消息的内容是图片，并且图片可能比较大，则建议不要使用这个同步接口，改用 #createMessageForImageAysnc。
  */
-- (JMSGMessage *)createMessageWithContent:(JMSGAbstractContent *)content;
+- (JMSGMessage * JMSG_NULLABLE)createMessageWithContent:(JMSGAbstractContent *)content;
 
 /*!
  @abstract 创建消息对象（图片，异步）
@@ -278,7 +272,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
  @discussion 对于图片消息，因为 SDK 要做缩图有一定的性能损耗，图片文件很大时存储落地也会较慢。所以创建图片消息，建议使用这个异步接口。
  */
 - (void)createMessageAyncWithImageContent:(JMSGImageContent *)content
-                        completionHandler:(JMSGCompletionHandler)handler;
+                        completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 发送消息（已经创建好对象的）
@@ -312,6 +306,14 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 - (void)sendVoiceMessage:(NSData *)voiceData
                 duration:(NSNumber *)duration;
 
+/*!
+ @abstract 异步获取会话头像
+
+ @param handler 结果回调。正常返回时 resultObject 的类型是 NSData，即头像的数据。
+
+ @discussion SDK会自动做一些策略，比如缓存。
+ */
+- (void)avatarData:(JMSGCompletionHandler)handler;
 
 
 ///----------------------------------------------------
@@ -337,7 +339,7 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
 
  @discussion 当前在聊天界面时，接收到消息通知，需要通过这个接口判断该消息是否属于当前这个会话，从而做不同的动作
 
- 如果注册消息接收事件时，只注册接收当前会话的消息，则一般这个接口使用不上。
+ 如果注册消息接收事件时，只注册接收当前会话的消息，则不需要用此接口判断.
  */
 - (BOOL)isMessageForThisConversation:(JMSGMessage *)message;
 
@@ -351,21 +353,11 @@ typedef NS_ENUM(NSInteger, JMSGFileType) {
  */
 - (void)refreshFromServer;
 
-/*!
- @abstract 异步获取会话头像
-
- @param handler 结果回调。正常返回时 resultObject 的类型是 NSData，即头像的数据。
-
- @discussion SDK会自动做一些策略，比如缓存。
- */
-- (void)avatarData:(JMSGCompletionHandler)handler;
-
-
-
 ///----------------------------------------------------
 /// @name Class Normal 类基本方法
 ///----------------------------------------------------
 
-- (BOOL)isEqualToConversation:(JMSGConversation *)conversation;
+- (BOOL)isEqualToConversation:(JMSGConversation * JMSG_NULLABLE)conversation;
 
+JMSG_ASSUME_NONNULL_END
 @end

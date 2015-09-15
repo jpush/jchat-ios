@@ -14,11 +14,13 @@
 
 @interface JMSGEventContent : JMSGAbstractContent <NSCopying>
 
+- (nullable instancetype)init NS_UNAVAILABLE;
+
 /*!
  @abstract 展示此事件的文本描述
 
  @discussion SDK 根据事件类型，拼接成完整的事件描述信息。
  */
-- (NSString *)showEventNotification;
+- (NSString * JMSG_NONNULL)showEventNotification;
 
 @end

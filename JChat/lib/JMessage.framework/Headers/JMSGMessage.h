@@ -42,6 +42,8 @@
  */
 @interface JMSGMessage : NSObject <NSCopying, NSCoding>
 
+JMSG_ASSUME_NONNULL_BEGIN
+
 ///----------------------------------------------------
 /// @name Class APIs 类方法
 ///----------------------------------------------------
@@ -163,7 +165,7 @@
 /*!
  @abstract 服务器端下发的消息ID
  */
-@property(nonatomic, strong, readonly) NSString *serverMessageId;
+@property(nonatomic, strong, readonly) NSString * JMSG_NULLABLE serverMessageId;
 
 /*!
  @abstract 消息发送对象
@@ -192,7 +194,7 @@
  @abstract 消息内容对象
  @discussion 使用时应通过 contentType 先获取到具体的消息类型，然后转型到相应的具体类。
  */
-@property(nonatomic, copy, readonly) JMSGAbstractContent *content;
+@property(nonatomic, copy, readonly) JMSGAbstractContent * JMSG_NULLABLE content;
 
 /*!
  @abstract 消息发出的时间戳
@@ -219,41 +221,42 @@
 /*!
  @abstract 上传资源文件progress绑定(用来监听上传progress回调)
  */
-@property(nonatomic, copy)JMSGMediaUploadProgressHandler uploadHandler;
+@property(nonatomic, copy)JMSGMediaUploadProgressHandler JMSG_NULLABLE uploadHandler;
 
 
 ///----------------------------------------------------
 /// @name Instance APIs 实例方法
 ///----------------------------------------------------
+- (instancetype)init NS_UNAVAILABLE;
 
 /*!
  @abstract 获取图片消息的大图数据
 
  @param progress 下载进度。会持续回调更新进度。如果为 nil 则表示不关心进度。
- @param completionHandler 结果回调。如果为 nil 则表示不关心结果。
+ @param completionHandler 结果回调(。返回正常时 resultObject 类型为 NSData.
 
- @discussion 一般在预览图片大图时，谳用此接口。
+ @discussion 一般在预览图片大图时，要用此接口。
  */
-- (void)largeImageDataWithProgress:(NSProgress *)progress
+- (void)largeImageDataWithProgress:(NSProgress * JMSG_NULLABLE)progress
                  completionHandler:(JMSGCompletionHandler)handler;
 
 /*!
  @abstract 获取图片消息的缩略图数据
 
- @param completionHandler 结果回调。如果为 nil 表示不关心结果。返回正常时 resultObject 内容是缩略图数据，类型是 NSData
+ @param completionHandler 结果回调。返回正常时 resultObject 内容是缩略图数据，类型是 NSData
 
  @discussion 展示缩略时调用此接口，获取缩略图数据。
- 背后如果本地还没有下载到，会发起网络请求下载。下载完后再回调。
+ 如果本地还没有图片，会发起网络请求下载。下载完后再回调。
  */
 - (void)thumbImageData:(JMSGCompletionHandler)handler;
 
 /*!
  @abstract 获取图片消息的缩略图数据
 
- @param completionHandler 结果回调。如果为 nil 表示不关心结果。返回正常时 resultObject 内容是缩略图数据，类型是 NSData
+ @param completionHandler 结果回调。返回正常时 resultObject 内容是缩略图数据，类型是 NSData
 
- @discussion 展示缩略时调用此接口，获取缩略图数据。
- 背后如果本地还没有下载到，会发起网络请求下载。下载完后再回调。
+ @discussion
+ 如果本地还没有语音数据，会发起网络请求下载。下载完后再回调。
  */
 - (void)voiceData:(JMSGCompletionHandler)handler;
 
@@ -269,13 +272,26 @@
 - (BOOL)isReceivedSide;
 
 /*!
+ * @abstract 设置该消息的 fromName
+ *
+ * @discussion 该信息填充在发出的消息里. 对方收到 Notification 时的提示的消息发送人, 也用此字段.
+ * JMessage SDK 内部默认从 Profile -> nickname 去获取到 fromName 信息, 不存在时使用 username.
+ * 如果集成此 SDK 没有设置用户信息的 nickname, 则对方收到通知时显示的消息发送人就显示的是 username.
+ * 这时可以创建 JMSGMessage 对象后, 调用此方法来设置 fromName.
+ * 本设置会覆盖默认的 Profile -> nickname 规则.
+ */
+- (void)setFromName:(NSString * JMSG_NULLABLE)displayName;
+
+/*!
  @abstract 消息对象转换为 JSON 字符串的表示。
 
  @discussion 遵循 Message JSON 协议的定义。
  */
 - (NSString *)toJsonString;
 
-- (BOOL)isEqualToMessage:(JMSGMessage *)message;
+- (BOOL)isEqualToMessage:(JMSGMessage * JMSG_NULLABLE)message;
+
+JMSG_ASSUME_NONNULL_END
 
 @end
 

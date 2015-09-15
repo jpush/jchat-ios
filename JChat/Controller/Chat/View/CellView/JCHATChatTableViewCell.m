@@ -96,7 +96,6 @@
 - (void)setCellDataWithConversation:(JMSGConversation *)conversation {
   self.headView.layer.cornerRadius = 23;
   [self.headView.layer setMasksToBounds:YES];
-
   if (conversation.conversationType == kJMSGConversationTypeSingle) {
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
     self.nickName.text = ((JMSGUser *)conversation.target).nickname?:((JMSGUser *)conversation.target).username;
@@ -124,10 +123,10 @@
     self.time.text = @"";
   }
   
-  if (conversation.latestMessage.contentType == kJMSGContentTypeUnknown) {
-    self.message.text = @"";
-    return;
-  }
+//  if (conversation.latestMessage.contentType == kJMSGContentTypeUnknown) {
+//    self.message.text = @"";
+//    return;
+//  }
   self.message.text = conversation.latestMessageContentText;
 //  switch (conversation.latestMessage.contentType) {
 //    case kJMSGContentTypeText:

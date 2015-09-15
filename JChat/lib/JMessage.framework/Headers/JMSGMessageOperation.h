@@ -9,6 +9,8 @@
  * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
  */
 
+#import <Foundation/Foundation.h>
+
 @class JMSGInnerMessage;
 
 
