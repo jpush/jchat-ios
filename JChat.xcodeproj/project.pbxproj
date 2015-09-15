@@ -51,8 +51,6 @@
 		1871832F1AFB80C000FB3168 /* JCHATSelectFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181C71AFB80BF00FB3168 /* JCHATSelectFriendCell.xib */; };
 		187183301AFB80C000FB3168 /* JCHATShowTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181C91AFB80BF00FB3168 /* JCHATShowTimeCell.m */; };
 		187183311AFB80C000FB3168 /* JCHATShowTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181CA1AFB80BF00FB3168 /* JCHATShowTimeCell.xib */; };
-		187183321AFB80C000FB3168 /* JCHATTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */; };
-		187183331AFB80C000FB3168 /* JCHATVoiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */; };
 		187183351AFB80C000FB3168 /* JCHATGroupPersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D31AFB80BF00FB3168 /* JCHATGroupPersonView.m */; };
 		187183361AFB80C000FB3168 /* JCHATGroupPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187181D41AFB80BF00FB3168 /* JCHATGroupPersonView.xib */; };
 		187183371AFB80C000FB3168 /* JCHATMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187181D61AFB80BF00FB3168 /* JCHATMessageTextView.m */; };
@@ -449,10 +447,6 @@
 		187181C81AFB80BF00FB3168 /* JCHATShowTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATShowTimeCell.h; sourceTree = "<group>"; };
 		187181C91AFB80BF00FB3168 /* JCHATShowTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATShowTimeCell.m; sourceTree = "<group>"; };
 		187181CA1AFB80BF00FB3168 /* JCHATShowTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATShowTimeCell.xib; sourceTree = "<group>"; };
-		187181CB1AFB80BF00FB3168 /* JCHATTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATTextTableViewCell.h; sourceTree = "<group>"; };
-		187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATTextTableViewCell.m; sourceTree = "<group>"; };
-		187181CD1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATVoiceTableViewCell.h; sourceTree = "<group>"; };
-		187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATVoiceTableViewCell.m; sourceTree = "<group>"; };
 		187181D21AFB80BF00FB3168 /* JCHATGroupPersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATGroupPersonView.h; sourceTree = "<group>"; };
 		187181D31AFB80BF00FB3168 /* JCHATGroupPersonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATGroupPersonView.m; sourceTree = "<group>"; };
 		187181D41AFB80BF00FB3168 /* JCHATGroupPersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATGroupPersonView.xib; sourceTree = "<group>"; };
@@ -1028,12 +1022,8 @@
 				187181C81AFB80BF00FB3168 /* JCHATShowTimeCell.h */,
 				187181C91AFB80BF00FB3168 /* JCHATShowTimeCell.m */,
 				187181CA1AFB80BF00FB3168 /* JCHATShowTimeCell.xib */,
-				187181CB1AFB80BF00FB3168 /* JCHATTextTableViewCell.h */,
-				187181CC1AFB80BF00FB3168 /* JCHATTextTableViewCell.m */,
 				44B2813D1B72F2D2009EB372 /* JCHATTextTableCell.h */,
 				44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */,
-				187181CD1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.h */,
-				187181CE1AFB80BF00FB3168 /* JCHATVoiceTableViewCell.m */,
 				44C3E91F1B6DE90D00D3D825 /* JCHATVoiceTableCell.h */,
 				44C3E9201B6DE90D00D3D825 /* JCHATVoiceTableCell.m */,
 				443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */,
@@ -1657,6 +1647,7 @@
 				18AB9C8A1A43BCB7007B2A04 /* Resources */,
 				AAC65A4A1AF76DA000BBFCF9 /* Embed Frameworks */,
 				88C5AB6D7EBDFD8C083FAB3F /* Copy Pods Resources */,
+				62E70C0D1BA116D10029203C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1986,6 +1977,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		62E70C0D1BA116D10029203C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
 		88C5AB6D7EBDFD8C083FAB3F /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2029,7 +2033,6 @@
 				44B2813F1B72F2D2009EB372 /* JCHATTextTableCell.m in Sources */,
 				1871831C1AFB80C000FB3168 /* JCHATFriendDetailViewController.m in Sources */,
 				187183251AFB80C000FB3168 /* JCHATChatTableViewCell.m in Sources */,
-				187183321AFB80C000FB3168 /* JCHATTextTableViewCell.m in Sources */,
 				187183411AFB80C000FB3168 /* JCHATAudioPlayerHelper.m in Sources */,
 				1871833F1AFB80C000FB3168 /* XHVoiceRecordHelper.m in Sources */,
 				187183581AFB80C000FB3168 /* JCHATPersonInfoCell.m in Sources */,
@@ -2046,7 +2049,6 @@
 				1871832E1AFB80C000FB3168 /* JCHATSelectFriendCell.m in Sources */,
 				187183501AFB80C000FB3168 /* JCHATPersonViewController.m in Sources */,
 				445048FF1B67583C0005D818 /* UIImageView+LBBlurredImage.m in Sources */,
-				187183331AFB80C000FB3168 /* JCHATVoiceTableViewCell.m in Sources */,
 				187183271AFB80C000FB3168 /* JCHATDetailTableViewCell.m in Sources */,
 				187183291AFB80C000FB3168 /* JCHATFrIendDetailMessgeCell.m in Sources */,
 				445048EC1B660C8A0005D818 /* ViewUtil.m in Sources */,
@@ -2169,6 +2171,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2189,6 +2192,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "";
 			};
 			name = Debug;
 		};
@@ -2212,6 +2216,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2226,6 +2231,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "";
 			};
 			name = Release;
 		};

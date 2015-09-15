@@ -72,6 +72,7 @@
 
 #define LOG_PREFIX @"JChat"
 
+#define kWEAKSELF __weak __typeof(self)weakSelf = self;
 /**
   DDLogError 错误：真的出错了，逻辑不正常
   DDLogWarn  警告：不是预期的情况，但也基本正常，不会导致逻辑问题
@@ -136,5 +137,12 @@ typedef NS_ENUM(NSInteger, JCHATErrorCode) {
 
 
 };
+
+//Color
+#define kNavigationBarColor UIColorFromRGB(0x3f80de)
+#define kTabbarColor UIColorFromRGB(0x3e3e3e)
+#define kTextfieldPlaceholderColor UIColorFromRGB(0x555555)
+#define kTableviewCellClickColor UIColorFromRGB(0xdddddd)
+
 
 

@@ -10,7 +10,9 @@
 
 @interface JCHATUpdatePasswordCtl : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *pressBtn;
+@property (weak, nonatomic) IBOutlet UITextField *oldpassword;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordFieldAgain;
+
 
 @end

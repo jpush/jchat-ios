@@ -42,11 +42,19 @@
   [_headView setUserInteractionEnabled:YES];
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeadClick)];
   [_headView addGestureRecognizer:gesture];
-  if ([[NSFileManager defaultManager] fileExistsAtPath:self.chatUser.avatarThumbPath]) {
-      [_headView setImage:[UIImage imageNamed:self.chatUser.avatarThumbPath]];
-  }else {
-      [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-  }
+  
+  [((JMSGUser *)self.conversation.target) thumbAvatarData:^(id resultObject, NSError *error) {
+        if (error == nil) {
+          if (resultObject == nil) {
+            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+          }else {
+            [_headView setImage:[UIImage imageWithData:resultObject]];
+          }
+        }else {
+          DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
+        }
+  }];
+
   [_headView.layer setMasksToBounds:YES];
   [_headView.layer setCornerRadius:23];
   [tableHeadView addSubview:_headView];
@@ -59,15 +67,8 @@
   nameLabel.textColor = [UIColor grayColor];
   nameLabel.font = [UIFont boldSystemFontOfSize:18];
   nameLabel.textAlignment = NSTextAlignmentLeft;
-  
-  if (self.chatUser.noteName) {
-      nameLabel.text = self.chatUser.noteName;
-  }else if (self.chatUser.nickname) {
-      nameLabel.text = self.chatUser.nickname;
-  }else {
-      nameLabel.text = self.chatUser.username;
-  }
-  
+
+  nameLabel.text = [((JMSGUser *)self.conversation.target) displayName];
   [tableHeadView addSubview:nameLabel];
   UIButton *addView =[[UIButton alloc] initWithFrame:CGRectMake(75, (80-46)/2, 46, 46)];
   [addView setBackgroundColor:[UIColor clearColor]];
@@ -95,23 +96,20 @@
     
   }else {
     [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
-    JMSGGroup *group = [[JMSGGroup alloc]init];
-    group.groupName =[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser getMyInfo].username,self.chatUser.username,[alertView textFieldAtIndex:0].text];
-    group.group_members = [NSString stringWithFormat:@"%@,%@",self.chatUser.username,[alertView textFieldAtIndex:0].text];
-    // block self
+    __block JMSGGroup *group =nil;
     typeof(self) __weak weakSelf = self;
-    [JMSGGroup createGroup:group completionHandler:^(id resultObject, NSError *error) {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    typeof(weakSelf) __strong strongSelf = weakSelf;
+
+    [JMSGGroup createGroupWithName:[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] description:@"" memberArray:@[[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      typeof(weakSelf) __strong strongSelf = weakSelf;
       if (error == nil) {
         [MBProgressHUD showMessage:@"创建群成功" view:self.view];
         strongSelf.sendMessageCtl.conversation = resultObject;
-        strongSelf.sendMessageCtl.targetName = group.groupName;
-        strongSelf.sendMessageCtl.title = group.groupName;
+        strongSelf.sendMessageCtl.targetName = group.name;
+        strongSelf.sendMessageCtl.title = group.name;
         [strongSelf.navigationController popViewControllerAnimated:YES];
       }else {
         [MBProgressHUD showMessage:@"创建群失败" view:self.view];
-
       }
     }];
   }
@@ -191,23 +189,21 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:self.chatUser.avatarThumbPath]) {
-        [_headView setImage:[UIImage imageNamed:self.chatUser.avatarThumbPath]];
-    }else {
+  [self.chatUser thumbAvatarData:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      if (resultObject == nil) {
         [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+      }else {
+        [_headView setImage:[UIImage imageWithData:resultObject]];
+      }
+    }else {
+      DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
     }
+  }];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [MBProgressHUD showMessage:@"正在删除消息记录！" toView:self.view];
-    [_conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (error == nil) {
-            [MBProgressHUD showMessage:@"删除聊天记录成功！" view:self.view];
-        }else {
-            [MBProgressHUD showMessage:@"删除聊天记录失败！" view:self.view];
-        }
-    }];
+  [_conversation deleteAllMessages];
 }
 
 - (void)didReceiveMemoryWarning {

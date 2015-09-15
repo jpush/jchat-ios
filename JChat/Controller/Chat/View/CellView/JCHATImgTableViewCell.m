@@ -95,46 +95,46 @@
     [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
 
     [self headAddGesture];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGNotification_SendMessageResult object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageResponse:) name:JMSGNotification_SendMessageResult object:nil];
   }
   return self;
 }
 
 #pragma mark --发送消息响应
-- (void)sendMessageResponse:(NSNotification *)response {
-  DDLogDebug(@"Event - sendMessageResponse");
-
-  JPIMMAINTHEAD(^{
-        NSDictionary *responseDic = [response userInfo];
-        NSError *error = [responseDic objectForKey:JMSGSendMessageError];
-        JMSGImageMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
-        if (error == nil) {
-        }else {
-            JPIMLog(@"Sent voiceMessage Response error:%@",error);
-        }
-        if (![message.messageId isEqualToString:_message.messageId]) {
-            return ;
-        }
-        [self.circleView stopAnimating];
-//        self.contentImgView.alpha = 1;
-        self.pictureImgView.alpha = 1;
-        _model.isSending = NO;
-        if (error == nil) {
-            self.model.messageStatus = kJMSGStatusSendSucceed;
-            [self.sendFailView setHidden:YES];
-            [self.circleView stopAnimating];
-            [self.circleView setHidden:YES];
-        }else {
-            self.model.messageStatus = kJMSGStatusSendFail;
-            [self.sendFailView setHidden:NO];
-            [self.circleView stopAnimating];
-            [self.circleView setHidden:YES];
-            _sendFailImgMessage = [message copy];
-        }
-        [self updateFrame];
-
-    });
-}
+//- (void)sendMessageResponse:(NSNotification *)response {
+//  DDLogDebug(@"Event - sendMessageResponse");
+//
+//  JPIMMAINTHEAD(^{
+//        NSDictionary *responseDic = [response userInfo];
+//        NSError *error = [responseDic objectForKey:JMSGSendMessageError];
+//        JMSGImageMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
+//        if (error == nil) {
+//        }else {
+//            JPIMLog(@"Sent voiceMessage Response error:%@",error);
+//        }
+//        if (![message.messageId isEqualToString:_message.messageId]) {
+//            return ;
+//        }
+//        [self.circleView stopAnimating];
+////        self.contentImgView.alpha = 1;
+//        self.pictureImgView.alpha = 1;
+//        _model.isSending = NO;
+//        if (error == nil) {
+//            self.model.messageStatus = kJMSGStatusSendSucceed;
+//            [self.sendFailView setHidden:YES];
+//            [self.circleView stopAnimating];
+//            [self.circleView setHidden:YES];
+//        }else {
+//            self.model.messageStatus = kJMSGStatusSendFail;
+//            [self.sendFailView setHidden:NO];
+//            [self.circleView stopAnimating];
+//            [self.circleView setHidden:YES];
+//            _sendFailImgMessage = [message copy];
+//        }
+//        [self updateFrame];
+//
+//    });
+//}
 
 - (void)headAddGesture {
     [self.headView setUserInteractionEnabled:YES];
@@ -162,27 +162,31 @@
 //        self.contentImgView.alpha = 0.5;
       self.pictureImgView.alpha = 0.5;
         _model.isSending = YES;
-        self.model.messageStatus = kJMSGStatusSending;
+        self.model.messageStatus = kJMSGMessageStatusSending;
         __weak typeof(self)weakSelf = self;
         if (!self.sendFailImgMessage) {
-            [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
-                if (error == nil) {
-                    weakSelf.sendFailImgMessage = resultObject;
-                    weakSelf.message = resultObject;
-                    weakSelf.sendFailImgMessage.progressCallback=^(float percent){
-                      weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
-                    };
-                    self.sendFailImgMessage.conversationType = self.conversation.chatType;
-                    [JMSGMessage sendMessage:self.sendFailImgMessage];
-                }else {
-                    NSLog(@"获取消息失败!");
-                }
-            }];
+         self.sendFailImgMessage = [self.conversation messageWithMessageId:self.model.messageId];
+//            [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
+//                if (error == nil) {
+//                    weakSelf.sendFailImgMessage = resultObject;
+//                    weakSelf.message = resultObject;
+//                    weakSelf.sendFailImgMessage.progressCallback=^(float percent){
+//                      weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
+//                    };
+//                    self.sendFailImgMessage.conversationType = self.conversation.chatType;
+//                    [JMSGMessage sendMessage:self.sendFailImgMessage];
+//                }else {
+//                    NSLog(@"获取消息失败!");
+//                }
+//            }];
         }else {
-            self.sendFailImgMessage.progressCallback=^(float percent){
-                weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
-            };
-            [JMSGMessage sendMessage:self.sendFailImgMessage];
+//            self.sendFailImgMessage.progressCallback=^(float percent){
+//                weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
+//            };
+          self.sendFailImgMessage.uploadHandler = ^(float percent){
+                            weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
+                        };
+          [JMSGMessage sendMessage:self.sendFailImgMessage];
         }
     }
 }
@@ -193,45 +197,57 @@
     }
 }
 
-- (void)setCellData :(UIViewController *)controler chatModel :(JCHATChatModel *)chatModel message:(JMSGImageMessage *)message indexPath :(NSIndexPath *)indexPath
-{
-    self.conversation = chatModel.conversation;
-    self.model = chatModel;
-     _message= message;
+- (void)setCellData :(UIViewController *)controler chatModel :(JCHATChatModel *)chatModel message:(JMSGMessage *)message indexPath :(NSIndexPath *)indexPath {
+  self.conversation = chatModel.conversation;
+  self.model = chatModel;
+  _message= message;
   if (_model.isSending) {
-//    self.contentImgView.alpha = 0.5;
     self.pictureImgView.alpha = 0.5;
   }else {
-//    self.contentImgView.alpha = 1;
     self.pictureImgView.alpha = 1;
   }
-     [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
-    if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
-//        [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
-      [self.pictureImgView setImage:[UIImage imageNamed:@"receiveFail"]];
-    } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
-//        [self.contentImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];
-      [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];//!
-    }else if (message.mediaData){
-//      [self.contentImgView setImage:[UIImage imageWithData:message.mediaData]];
-      [self.pictureImgView setImage:[UIImage imageWithData:message.mediaData]];
-    }else {
-//      [self.contentImgView setImage:[UIImage imageNamed:@"receiveFail"]];
-      [self.pictureImgView setImage:[UIImage imageWithData:message.mediaData]];
-    }
-    self.delegate = (id)controler;
-    self.cellIndex = indexPath;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:chatModel.avatar]) {
-       [self.headView setImage:[UIImage imageWithContentsOfFile:chatModel.avatar]];
-    }else {
-      [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-    }
-    [self updateFrame];
-    if (!_model.sendFlag) {
-        _model.sendFlag = YES;
-        [self sendImageMessage];
+  [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+  if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
+    [self.pictureImgView setImage:[UIImage imageNamed:@"receiveFail"]];
+  } else if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
+    [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath]];//!
+  }else if (((JMSGImageContent *)message.content).thumbImagePath){
+    [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:((JMSGImageContent *)message.content).thumbImagePath]];
+  }else {
+    //      [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:((JMSGImageContent *)message.content).thumbImagePath]];
+  }
+  self.delegate = (id)controler;
+  self.cellIndex = indexPath;
+//  if ([[NSFileManager defaultManager] fileExistsAtPath:chatModel.avatar]) {
+//    [self.headView setImage:[UIImage imageWithContentsOfFile:chatModel.avatar]];
+//  }else {
+//    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//  }
+  if (chatModel.avatar) {
+//    [self.headView setImage:[UIImage imageWithData:chatModel.avatar]];
+    
+    typeof(self) __weak weakSelf = self;
+    [[chatModel.conversation messageWithMessageId:chatModel.messageId] thumbImageData:^(id resultObject, NSError *error) {
+      if (error == nil) {
+        JPIMMAINTHEAD(^{
+          [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
+        });
+        
+      }else {
+        DDLogDebug(@"Action -- get thumbavatar fail");
+      }
+    }];
 
-    }
+  }else {
+    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+  }
+  
+  [self updateFrame];
+  if (!_model.sendFlag) {
+    _model.sendFlag = YES;
+    [self sendImageMessage];
+    
+  }
 }
 
 #pragma mark --上传图片
@@ -242,19 +258,19 @@
 //  self.contentImgView.alpha = 0.5;
   self.pictureImgView.alpha = 0.5;
   _model.isSending = YES;
-  self.model.messageStatus = kJMSGStatusSending;
-  self.model.messageId = _message.messageId;
+  self.model.messageStatus = kJMSGMessageStatusSending;
+  self.model.messageId = _message.msgId;
   __weak typeof(self) weakSelf = self;
-  _message.progressCallback = ^(float percent) {
+  _message.uploadHandler = ^(float percent) {
     weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
   };
-  if (self.conversation.chatType == kJMSGSingle) {
-    _message.conversationType = kJMSGSingle;
-  }else {
-    _message.conversationType = kJMSGGroup;
-  }
-  _message.targetId = self.model.targetId;
-  _message.mediaData = self.model.mediaData;
+//  if (self.conversation.chatType == kJMSGConversationTypeSingle) {
+//    _message.conversationType = kJMSGConversationTypeSingle;
+//  }else {
+//    _message.conversationType = kJMSGConversationTypeGroup;
+//  }
+//  _message.targetId = self.model.targetId;
+//  _message.mediaData = self.model.mediaData;
   
   DDLogVerbose(@"The imageMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
@@ -263,39 +279,40 @@
 - (void)tapPicture:(UIGestureRecognizer *)gesture {
   
     NSLog(@"nslog  tap gesture");
-    if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
+    if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
       NSLog(@"正在下载缩略图");
       JPIMLog(@"Action");
       [self.downLoadIndicatorView setHidden:NO];
       [self.downLoadIndicatorView startAnimating];
-      [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-          [JMSGMessage downloadThumbImage:resultObject
-                             withProgress:progress
-                        completionHandler:^(id resultObject, NSError *error) {
-                          JPIMMAINTHEAD(^{
-                            [self.downLoadIndicatorView stopAnimating];
-                            if (error == nil) {
-                              self.model.pictureThumbImgPath = [(NSURL *)resultObject path];
-                              self.model.messageStatus = kJMSGStatusReceiveSucceed;
-//                              [self.contentImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
-                              [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
-                              [self updateFrame];
-                              JPIMLog(@"下载缩略图成功 :%@",[(NSURL *)resultObject path]);
-                            }else {
-                              JPIMLog(@"下载缩略图失败");
-                              [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
-                            }
-                          });
-                        }];
-        }else {
-          JPIMLog(@"下载缩略图获取消息失败。。。");
-          JPIMMAINTHEAD(^{
-            [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
-          });
-        }
-      }];
+      [self.conversation messageWithMessageId:self.model.messageId];
+//      [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
+//        if (error == nil) {
+//          NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
+//          [JMSGMessage downloadThumbImage:resultObject
+//                             withProgress:progress
+//                        completionHandler:^(id resultObject, NSError *error) {
+//                          JPIMMAINTHEAD(^{
+//                            [self.downLoadIndicatorView stopAnimating];
+//                            if (error == nil) {
+//                              self.model.pictureThumbImgPath = [(NSURL *)resultObject path];
+//                              self.model.messageStatus = kJMSGStatusReceiveSucceed;
+////                              [self.contentImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
+//                              [self.pictureImgView setImage:[UIImage imageWithContentsOfFile:[(NSURL *)resultObject path]]];
+//                              [self updateFrame];
+//                              JPIMLog(@"下载缩略图成功 :%@",[(NSURL *)resultObject path]);
+//                            }else {
+//                              JPIMLog(@"下载缩略图失败");
+//                              [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
+//                            }
+//                          });
+//                        }];
+//        }else {
+//          JPIMLog(@"下载缩略图获取消息失败。。。");
+//          JPIMMAINTHEAD(^{
+//            [MBProgressHUD showMessage:@"下载缩略图失败" view:self];
+//          });
+//        }
+//      }];
       //下载缩略图
     }else {
       if (self.delegate && [self.delegate respondsToSelector:@selector(tapPicture:tapView:tableViewCell:)]) {
@@ -315,7 +332,7 @@
     NSInteger imgHeight = 0;
     NSInteger imgWidth = 0;
     [self.percentLabel setHidden:NO];
-    if (self.model.messageStatus == kJMSGStatusReceiveDownloadFailed) {
+    if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
 //      imgHeight = [UIImage imageNamed:@"receiveFail"].size.height;
 //      imgWidth = [UIImage imageNamed:@"receiveFail"].size.width;
 //      [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
@@ -329,8 +346,9 @@
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
           showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
         });
-      }else if (self.message.mediaData) {
-        showImg = [UIImage imageWithData:self.message.mediaData];
+      }else if (((JMSGImageContent *)self.message.content).thumbImagePath) {
+//        showImg = [UIImage imageWithData:((JMSGImageContent *)self.message.content).];
+        showImg = [UIImage imageWithContentsOfFile:((JMSGImageContent *)self.message.content).thumbImagePath];
       } else {
         showImg = [UIImage imageNamed:@"receiveFail"];
       }
@@ -344,15 +362,15 @@
       imgHeight = _model.imageSize.height;
       imgWidth = _model.imageSize.width;
     }
-    if (self.model.messageStatus == kJMSGStatusSending || self.model.messageStatus == kJMSGStatusReceiving) {
+    if (self.model.messageStatus == kJMSGMessageStatusSending || self.model.messageStatus == kJMSGMessageStatusReceiving) {
         [self.circleView setHidden:NO];
         [self.sendFailView setHidden:YES];
-    }else if (self.model.messageStatus == kJMSGStatusSendSucceed || self.model.messageStatus == kJMSGStatusReceiveSucceed)
+    }else if (self.model.messageStatus == kJMSGMessageStatusSendSucceed || self.model.messageStatus == kJMSGMessageStatusReceiveSucceed)
     {
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:YES];
         [self.percentLabel setHidden:YES];
-    }else if (self.model.messageStatus == kJMSGStatusSendFail)
+    }else if (self.model.messageStatus == kJMSGMessageStatusSendFailed)
     {
         [self.circleView setHidden:YES];
         [self.sendFailView setHidden:NO];
@@ -370,7 +388,7 @@
   [self.downLoadIndicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
   
 
-    if (self.model.who) {//myself
+    if (self.model.isMyMessage) {//myself
         img =[UIImage imageNamed:@"mychatBg"];
 //        [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - 5, 0, headHeight, headHeight)];
       [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {

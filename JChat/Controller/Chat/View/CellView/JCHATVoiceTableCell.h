@@ -38,18 +38,18 @@ playVoiceDelegate>
 @property(strong, nonatomic) UIActivityIndicatorView *stateView;
 @property(strong, nonatomic) UIImageView *sendFailView;
 @property(strong, nonatomic) UIImageView *readView;
-@property(strong, nonatomic) JMSGVoiceMessage *voiceFailMessage;
+@property(strong, nonatomic) JMSGMessage *voiceFailMessage;
 @property(strong, nonatomic) JMSGConversation *conversation;
 @property(strong, nonatomic) NSIndexPath *indexPath;
 @property(assign, nonatomic) BOOL continuePlayer;
 @property(assign, nonatomic) id <playVoiceDelegate> delegate;
-@property(strong, nonatomic) JMSGVoiceMessage *message;
+@property(strong, nonatomic) JMSGMessage *message;
 
 - (void)playVoice;
 
 - (void)setCellData:(JCHATChatModel *)model
            delegate:(id <playVoiceDelegate>)delegate
-            message:(JMSGVoiceMessage *)message
+            message:(JMSGMessage *)message
           indexPath:(NSIndexPath *)indexPath;
 
 - (void)sendVoiceMessage;

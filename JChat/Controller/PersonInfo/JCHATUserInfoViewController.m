@@ -57,10 +57,10 @@
 
   [self setAvatar];
   
-  if ([JMSGUser getMyInfo].nickname) {
-    self.titleArr = @[[JMSGUser getMyInfo].nickname, @"设置", @"退出登录"];
-  } else if ([JMSGUser getMyInfo].username) {
-    self.titleArr = @[[JMSGUser getMyInfo].username, @"设置", @"退出登录"];
+  if ([JMSGUser myInfo].nickname) {
+    self.titleArr = @[[JMSGUser myInfo].nickname, @"设置", @"退出登录"];
+  } else if ([JMSGUser myInfo].username) {
+    self.titleArr = @[[JMSGUser myInfo].username, @"设置", @"退出登录"];
   } else {
     self.titleArr = @[@"", @"设置", @"退出登录"];
   }
@@ -71,8 +71,6 @@
                                                name:kupdateUserInfo
                                              object:nil];
 
-
-//  [_bgView setBlurLevel:0.5]x;
 }
 
 
@@ -81,31 +79,33 @@
   //设置背景图片
   _bgView = [[JCHATAvatarView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, 176)/*(kApplicationHeight) / 2)*/];
   [_bgView setUserInteractionEnabled:YES];
-
-
-  JMSGUser *user = [JMSGUser getMyInfo];
-  
-  [JMSGUser getOriginAvatarImage:user
-               completionHandler:^(id resultObject, NSError *error) {
-                 if (error == nil) {
-                   if (user.avatarResourcePath) {
-                     UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-                     UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-
-                     _bgView.originImage = img;
-                   } else {
-                      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-                   }
-                 } else {
-                    _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-                 }
-               }];
-  
-  if (user.avatarThumbPath) {
-    _bgView.originImage = [UIImage imageNamed:user.avatarThumbPath];
-  } else {
-    _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-  }
+  _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+  [self updateAvatar];
+//  [user largeAvatarData:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      if (resultObject != nil) {
+//        _bgView.originImage = [UIImage imageWithData:resultObject];
+//      }else {
+//        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//      }
+//    }else {
+//      DDLogDebug(@"Action -- largeAvatarData");
+//      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//    }
+//  }];
+//  
+//  [user thumbAvatarData:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      if (resultObject != nil) {
+//        _bgView.originImage = [UIImage imageWithData:resultObject];
+//      }else {
+//        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//      }
+//    }else {
+//      DDLogDebug(@"Action -- largeAvatarData");
+//      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+//    }
+//  }];
 
   UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
   [_bgView addGestureRecognizer:gesture];
@@ -116,32 +116,34 @@
 - (void)updateAvatar {
   DDLogDebug((@"Action - updateAvatar"));
 
-  JMSGUser *user = [JMSGUser getMyInfo];
+  JMSGUser *user = [JMSGUser myInfo];
   [_bgView updataNameLable];
-  DDLogDebug(@"Current avatarResourcePath - %@", user.avatarResourcePath);
-
-  if (user.avatarResourcePath) {
-    UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-    UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-    _bgView.image = img;
-  } else {
-    JMSGUser *user = [JMSGUser getMyInfo];
-    [JMSGUser getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        JMSGUser *updated = (JMSGUser *) resultObject;
-        DDLogDebug(@"UPdated avatarResourcePath - %@", updated.avatarResourcePath);
-        if (user.avatarResourcePath) {
-          UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-          UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-          _bgView.originImage = img;
-        } else {
-          _bgView.originImage = [UIImage imageNamed:@"wo"];
-        }
-      } else {
-        _bgView.originImage = [UIImage imageNamed:@"wo"];
+  [user largeAvatarData:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      if (resultObject != nil) {
+        _bgView.originImage = [UIImage imageWithData:resultObject];
+      }else {
+        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
       }
-    }];
-  }
+    }else {
+      DDLogDebug(@"Action -- largeAvatarData");
+      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+    }
+  }];
+  
+  [user thumbAvatarData:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      if (resultObject != nil) {
+        _bgView.originImage = [UIImage imageWithData:resultObject];
+      }else {
+        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+      }
+    }else {
+      DDLogDebug(@"Action -- largeAvatarData");
+      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+    }
+  }];
+  
 }
 
 - (void)tapPicture:(UIGestureRecognizer *)gesture {
@@ -195,33 +197,23 @@
 //相机,相册Finish的代理
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   DDLogDebug(@"Action - imagePickerController");
-
+  __typeof(self) weakSelf = self;
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
-  UIImage *image;
+  __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  JMSGUser *user = [JMSGUser getMyInfo];
   image = [image resizedImageByWidth:upLoadImgWidth];
-  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1)
-                             withType:kJMSGAvatar
-                    completionHandler:^(id resultObject, NSError *error) {
-    JPIMMAINTHEAD(^{
-      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      if (error == nil) {
-        [MBProgressHUD showMessage:@"上传成功" view:self.view];
-        if (user.avatarResourcePath) {
-          DDLogDebug(@"update headView success %@", user);
-          UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-          UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-          _bgView.originImage = img;
-        } else {
-          _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-        }
-      } else {
-        DDLogDebug(@"update headView fail");
-        [MBProgressHUD showMessage:@"上传失败!" view:self.view];
-      }
-    });
+  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) type:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    if (error == nil) {
+      weakSelf.bgView.originImage = image;
+      DDLogDebug(@"update headView success");
+      [MBProgressHUD showMessage:@"上传成功" view:self.view];
+    }else {
+      DDLogDebug(@"update headView fail %@",error);
+      [MBProgressHUD showMessage:@"上传失败!" view:self.view];
+    }
   }];
+
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -240,8 +232,8 @@
   [self.navigationController setNavigationBarHidden:NO];
   self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
   self.navigationController.navigationBar.translucent = NO;
-
   self.title = @"我";
+  
   [_bgView updataNameLable];
   NSShadow *shadow = [[NSShadow alloc] init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
@@ -267,33 +259,8 @@
 - (void)updateUserInfo {
   DDLogDebug(@"Action - updateUserInfo");
 
-  JMSGUser *user = [JMSGUser getMyInfo];
-  DDLogDebug(@"Now the avatarResourcePath - %@", user.avatarResourcePath);
-  if (user.avatarResourcePath) {
-    UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-    UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-    _bgView.originImage = img;
-  } else {
-    [JMSGUser getOriginAvatarImage:user
-                 completionHandler:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        // 原 userInfo 对象，如果获取成功，avatarResourcePath 被重新赋值了。
-        JMSGUser *userObject = (JMSGUser *) resultObject;
-        DDLogDebug(@"Updated avatarResourcePath - %@", userObject.avatarResourcePath);
-        if (user.avatarResourcePath) {
-          UIImage *headImg = [UIImage imageWithContentsOfFile:userObject.avatarResourcePath];
-          UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-          [_bgView setImage:img];
-          _bgView.originImage = img;
-        } else {
-          _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-        }
-      } else {
-          _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-      }
-    }];
-  }
-
+  JMSGUser *user = [JMSGUser myInfo];
+  [self updateAvatar];
   if (user.nickname) {
     self.titleArr = @[user.nickname, @"设置", @"退出登录"];
   } else if (user.username) {
@@ -366,9 +333,12 @@
 //    }
     [appDelegate.tabBarCtl setSelectedIndex:0];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
-      DDLogDebug(@"Logout callback with - %@", error);
+    [JMSGUser logout:^(id resultObject, NSError *error) {
+      if (error == nil) {
+        DDLogDebug(@"Action logout success");
+      }
     }];
+
     JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
     UINavigationController *nvLoginCtl = [[UINavigationController alloc] initWithRootViewController:loginCtl];
     appDelegate.window.rootViewController = nvLoginCtl;

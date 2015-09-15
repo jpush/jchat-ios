@@ -114,21 +114,21 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==0) {
+      
+    }else if (buttonIndex==1)
+    {
       if (![[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
         [[alertView textFieldAtIndex:0] resignFirstResponder];
         
-        JPIMLog(@"%@ %@",[alertView textFieldAtIndex:0].text, [JMSGUser getMyInfo].password);
-        if ([[alertView textFieldAtIndex:0].text isEqualToString:[JMSGUser getMyInfo].password] ) {
-          
+//        JPIMLog(@"%@ %@",[alertView textFieldAtIndex:0].text, [JMSGUser getMyInfo].password);
+//        if ([[alertView textFieldAtIndex:0].text isEqualToString:[JMSGUser getMyInfo].password] ) {
+        
           JCHATUpdatePasswordCtl *updateWordCtl =[[JCHATUpdatePasswordCtl alloc] init];
           [self.navigationController pushViewController:updateWordCtl animated:YES];
         }
         [MBProgressHUD showMessage:@"输入原密码错误" view:self.view];
-      }
-
+//      }
       
-    }else if (buttonIndex==1)
-    {
       
     }
 }

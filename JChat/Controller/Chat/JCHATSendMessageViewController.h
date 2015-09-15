@@ -14,8 +14,10 @@
 #import "JCHATChatModel.h"
 #import "XHVoiceRecordHUD.h"
 #import "XHVoiceRecordHelper.h"
-#import "JCHATVoiceTableViewCell.h"
+//#import "JCHATVoiceTableViewCell.h"
+#import "JCHATVoiceTableCell.h"
 #import <JMessage/JMessage.h>
+
 
 @interface JCHATSendMessageViewController : UIViewController <
     UITableViewDataSource,
@@ -27,22 +29,19 @@
     PictureDelegate,
     playVoiceDelegate,
     UIGestureRecognizerDelegate,
-    UIAlertViewDelegate>
+    UIAlertViewDelegate,
+    JMessageDelegate>
 
-//@property(strong, nonatomic) JCHATToolBar *toolBar;
-//@property(strong, nonatomic) UITableView *messageTableView;
-//@property(strong, nonatomic) JCHATMoreView *moreView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *msgTableBottomToToolBar;
 @property (weak, nonatomic) IBOutlet UITableView *messageTableView;
 @property (weak, nonatomic) IBOutlet JCHATToolBarContainer *toolBarContainer;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarToBottomConstrait;
 @property (weak, nonatomic) IBOutlet JCHATMoreViewContainer *moreViewContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *moreViewHeight;
 @property(nonatomic, assign) JPIMInputViewType textViewInputViewType;
 @property(assign, nonatomic) BOOL barBottomFlag;
 @property(nonatomic, strong, readwrite) XHVoiceRecordHUD *voiceRecordHUD;
-@property(nonatomic, strong, readwrite) JCHATVoiceTableViewCell *saveVoiceCell;
+@property(nonatomic, strong, readwrite) JCHATVoiceTableCell *saveVoiceCell;
 @property(strong, nonatomic) JMSGConversation *conversation;
 @property(strong, nonatomic) NSString *targetName;
 @property(strong, nonatomic) JMSGUser *user;

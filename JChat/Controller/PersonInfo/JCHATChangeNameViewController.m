@@ -34,7 +34,7 @@
   titleLabel.textColor = [UIColor whiteColor];
   titleLabel.textAlignment = NSTextAlignmentCenter;
 
-  JMSGUser *user = [JMSGUser getMyInfo];
+  JMSGUser *user = [JMSGUser myInfo];
   if (self.updateType == 0) {
     self.deleteButton.hidden = YES;
     self.charNumber.hidden = YES;
@@ -80,17 +80,17 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)clickToSave {
-  [JMSGUser updateMyInfoWithParameter:self.nameTextField.text withType:self.updateType completionHandler:^(id resultObject, NSError *error) {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    if (error == nil) {
-      [MBProgressHUD showMessage:@"修改成功" view:self.view];
-
-      [self.navigationController popViewControllerAnimated:YES];
-    } else {
-      [MBProgressHUD showMessage:@"修改失败" view:self.view];
-    }
-  }];
-  
+  kWEAKSELF
+  [JMSGUser updateMyInfoWithParameter:self.nameTextField.text type:self.updateType completionHandler:^(id resultObject, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        if (error == nil) {
+          [MBProgressHUD showMessage:@"修改成功" view:self.view];
+    
+          [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
+          [MBProgressHUD showMessage:@"修改失败" view:self.view];
+        }
+      }];
 }
 - (IBAction)deleteText:(id)sender {
   self.nameTextField.text = @"";

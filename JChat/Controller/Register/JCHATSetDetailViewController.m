@@ -43,12 +43,15 @@
 }
 
 - (IBAction)clickToFinish:(id)sender {
-  [JMSGUser updateMyInfoWithParameter:_nameTextF.text withType:kJMSGNickname completionHandler:^(id resultObject, NSError *error) {
-    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-    appDelegate.window.rootViewController = appDelegate.tabBarCtl;
-    
-  }];
+  if ([_nameTextF.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"请输入昵称" view:self.view];
+    return;
+  }
   
+  [JMSGUser updateMyInfoWithParameter:_nameTextF.text type:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
+        AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+        appDelegate.window.rootViewController = appDelegate.tabBarCtl;
+      }];
 }
 
 - (IBAction)clickToSetAvatar:(id)sender {
@@ -104,33 +107,21 @@
   DDLogDebug(@"Action - imagePickerController");
   
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
-  UIImage *image;
+  __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  JMSGUser *user = [JMSGUser getMyInfo];
-//  image = [image resizedImageByWidth:upLoadImgWidth];
-  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1)
-                             withType:kJMSGAvatar
-                    completionHandler:^(id resultObject, NSError *error) {
-                      JPIMMAINTHEAD(^{
-                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                        if (error == nil) {
-                          [MBProgressHUD showMessage:@"上传成功" view:self.view];
-                          if (user.avatarResourcePath) {
-                            DDLogDebug(@"update headView success %@", user);
-                            [_setAvatarBtn setBackgroundImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
-                            
-                            //                            UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-//                            UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-//                            [_bgView setImage:img];
-                          } else {
-//                            [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
-                          }
-                        } else {
-                          DDLogDebug(@"update headView fail");
-                          [MBProgressHUD showMessage:@"上传失败!" view:self.view];
-                        }
-                      });
-                    }];
+
+  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) type:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
+                          JPIMMAINTHEAD(^{
+                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                            if (error == nil) {
+                              [MBProgressHUD showMessage:@"上传成功" view:self.view];
+                              [_setAvatarBtn setBackgroundImage:image forState:UIControlStateNormal];
+                            } else {
+                              DDLogDebug(@"update headView fail");
+                              [MBProgressHUD showMessage:@"上传失败!" view:self.view];
+                            }
+                          });
+                        }];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 

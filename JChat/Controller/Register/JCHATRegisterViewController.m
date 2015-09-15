@@ -42,13 +42,10 @@
   self.navigationController.navigationBar.translucent = NO;
   
   self.title = @"极光IM";
-  self.passwordField.secureTextEntry = YES;
-  self.passwordField.keyboardType = UIKeyboardTypeDefault;
+  self.passwordTextField.secureTextEntry = YES;
+  self.passwordTextField.keyboardType = UIKeyboardTypeDefault;
 
   NSShadow *shadow = [[NSShadow alloc] init];
-  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0, 0);
-
   NSDictionary *dic = @{
       NSForegroundColorAttributeName:[UIColor whiteColor],
       NSShadowAttributeName:shadow,
@@ -71,20 +68,20 @@
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  [self.accountField resignFirstResponder];
-  [self.passwordField resignFirstResponder];
+  [self.usernameTextField resignFirstResponder];
+  [self.passwordTextField resignFirstResponder];
 }
 
 - (IBAction)registerBtnClick:(id)sender {
   DDLogDebug(@"Action - registerBtnClick");
 
-  [self.accountField resignFirstResponder];
-  [self.passwordField resignFirstResponder];
+  [self.usernameTextField resignFirstResponder];
+  [self.passwordTextField resignFirstResponder];
   [MBProgressHUD showMessage:@"正在注册" view:self.view];
 
   // 要去掉空格
-  NSString *username = self.accountField.text.stringByTrimingWhitespace;
-  NSString *password = self.passwordField.text.stringByTrimingWhitespace;
+  NSString *username = self.usernameTextField.text.stringByTrimingWhitespace;
+  NSString *password = self.passwordTextField.text.stringByTrimingWhitespace;
 
   if ([self checkValidUsername:username AndPassword:password]) {
     [JMSGUser registerWithUsername:username
@@ -105,10 +102,11 @@
                       [self.navigationController pushViewController:detailVC animated:YES];
                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     } else {
+                      DDLogDebug(@"login fail error  %@",error);
                       NSString *alert = @"用户登录失败";
                       if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
                         alert = @"用户名不存在";
-                      } else if (error.code == JCHAT_ERROR_USER_WRONG_PASSWORD) {
+                      } else if (error.code == JCHAT_ERROR_LOGIN_PASSWORD_WRONG) {
                         alert = @"密码错误！";
                       } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
                         alert = @"用户名或者密码不合法！";
@@ -134,8 +132,8 @@
 
 - (void)userLoginSave {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-  [userDefaults setObject:self.accountField.text forKey:kuserName];
-  [userDefaults setObject:self.passwordField.text forKey:kPassword];
+  [userDefaults setObject:self.usernameTextField.text forKey:kuserName];
+  [userDefaults setObject:self.passwordTextField.text forKey:kPassword];
   [userDefaults synchronize];
 }
 

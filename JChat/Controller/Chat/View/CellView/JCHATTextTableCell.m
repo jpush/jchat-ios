@@ -45,7 +45,6 @@
     [self addSubview:self.headImgView];
     [self headAddGesture];
     self.isMe = YES;
-    
   }
   return self;
 }
@@ -57,18 +56,52 @@
 
 - (void)setCellData:(JCHATChatModel *)model delegate:(id )delegate
 {
-
+//  if (!model.sendFlag) {
+//    model.sendFlag = YES;
+//    // 消息展示出来时，调用发文本消息
+//    [self sendTextMessage:model.messageId];
+//  }
   
   self.headImgView.layer.cornerRadius = 23;
   self.conversation = model.conversation;
   [self.headImgView.layer setMasksToBounds:YES];
   _model = model;
   self.delegate = delegate;
-  if ([[NSFileManager defaultManager] fileExistsAtPath:model.avatar]) {
-    [self.headImgView setImage:[UIImage imageWithContentsOfFile:model.avatar]];
-  }else {
-    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-  }
+
+  _message = model.message;
+  typeof(self) __weak weakSelf = self;
+  JMSGUser *tmpUser = _message.fromUser;
+
+  [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      JPIMMAINTHEAD(^{
+        if (resultObject !=nil) {
+          [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
+        }
+      });
+    }else {
+      DDLogDebug(@"Action -- get thumbavatar fail");
+    }
+  }];
+  
+//  if (model.avatar != nil) {
+////    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
+//    typeof(self) __weak weakSelf = self;
+//
+//    
+//    [[model.conversation messageWithMessageId:model.messageId].fromUser thumbAvatarData:^(id resultObject, NSError *error) {
+//      if (error == nil) {
+//        JPIMMAINTHEAD(^{
+//          [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
+//        });
+//        
+//      }else {
+//        DDLogDebug(@"Action -- get thumbavatar fail");
+//      }
+//    }];
+//  }else {
+//    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//  }
   [self creadBuddleChatView];
 }
 
@@ -91,12 +124,11 @@
 }
 - (void)creadBuddleChatView
 {
-//  if ([self.isMe]) {
   
   
   [self deleteAllConstrait];
   
-  if (_model.type == kJMSGTextMessage) {
+  if (_model.type == kJMSGContentTypeText) {
     UIFont *font =[UIFont systemFontOfSize:18];
     CGSize maxSize = CGSizeMake(200, 2000);
     
@@ -104,7 +136,7 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     CGSize realSize = [_model.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
 
-    if (_model.who) {
+    if (_model.isMyMessage) {//isme
       [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self).with.offset(0);
         make.right.mas_equalTo(self).with.offset(-5);
@@ -172,7 +204,7 @@
     self.contentLabel.font = font;
   }
     UIImage *img=nil;
-    if (_model.who) {
+    if (_model.isMyMessage) {
       img =[UIImage imageNamed:@"mychatBg"];
     }else
     {
@@ -204,16 +236,16 @@
   [self.stateView setHidden:YES];
   [self.stateView stopAnimating];
   [self.sendFailView setHidden:YES];
-  if (_model.messageStatus == kJMSGStatusSending || _model.messageStatus == kJMSGStatusReceiving) {
+  if (_model.messageStatus == kJMSGMessageStatusSending || _model.messageStatus == kJMSGMessageStatusReceiving) {
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     [self.sendFailView setHidden:YES];
-  }else if (_model.messageStatus == kJMSGStatusSendSucceed || _model.messageStatus == kJMSGStatusReceiveSucceed)
+  }else if (_model.messageStatus == kJMSGMessageStatusSendSucceed || _model.messageStatus == kJMSGMessageStatusReceiveSucceed)
   {
     [self.stateView stopAnimating];
     [self.stateView setHidden:YES];
     [self.sendFailView setHidden:YES];
-  }else if (_model.messageStatus == kJMSGStatusSendFail || _model.messageStatus == kJMSGStatusReceiveDownloadFailed)
+  }else if (_model.messageStatus == kJMSGMessageStatusSendFailed || _model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed)
   {
     [self.stateView stopAnimating];
     [self.stateView setHidden:YES];
@@ -227,7 +259,6 @@
 
 - (void)headAddGesture {
   [self.headImgView setUserInteractionEnabled:YES];
-//  [self.chatbgView setUserInteractionEnabled:YES];
   [self.chatView setUserInteractionEnabled:YES];
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushPersonInfoCtlClick)];
   [self.headImgView addGestureRecognizer:gesture];
@@ -247,22 +278,31 @@
 clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (buttonIndex == 1) {
     [self.sendFailView setHidden:YES];
-    _model.messageStatus = kJMSGStatusSending;
+    _model.messageStatus = kJMSGMessageStatusSending;
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     if (!_sendFailMessage) {
-      [self.conversation getMessage:_model.messageId
-                  completionHandler:^(id resultObject, NSError *error) {
-                    if (error == nil) {
-                      _message = _sendFailMessage = resultObject;
-                      _message.targetId = self.conversation.targetId;
-                      _message.conversationType = self.conversation.chatType;
-                      _sendFailMessage.targetId = self.conversation.targetId;
-                      [JMSGMessage sendMessage:_sendFailMessage];
-                    }else {
-                      NSLog(@"获取消息失败!");
-                    }
-                  }];
+//      _sendFailMessage = [self.conversation messageWithMessageId:_model.messageId];
+      _message = _model.message;//!!
+      _message = _sendFailMessage;
+      [JMSGMessage sendMessage:_message];
+//      if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
+//        [JMSGMessage sendMessage:<#(JMSGMessage *)#>]
+//      }else {
+//      
+//      }
+//      [self.conversation getMessage:_model.messageId
+//                  completionHandler:^(id resultObject, NSError *error) {
+//                    if (error == nil) {
+//                      _message = _sendFailMessage = resultObject;
+//                      _message.targetId = self.conversation.targetId;
+//                      _message.conversationType = self.conversation.chatType;
+//                      _sendFailMessage.targetId = self.conversation.targetId;
+//                      [JMSGMessage sendMessage:_sendFailMessage];
+//                    }else {
+//                      NSLog(@"获取消息失败!");
+//                    }
+//                  }];
     }else {
       [JMSGMessage sendMessage:_sendFailMessage];
       JPIMLog(@"重新发送消息:%@",_sendFailMessage);
@@ -277,4 +317,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   }
 }
 
+#pragma mark --JMessageDelegate
+- (void)onSendMessageResponse:(JMSGMessage *)message
+                        error:(NSError *)error {
+
+}
+
+- (void)dealloc {
+  DDLogDebug(@"Action -- dealloc");
+}
 @end

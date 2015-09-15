@@ -23,7 +23,7 @@
 {
   UIScrollView *_headView;
   NSArray *_groupTitleData;
- __block NSMutableArray *_groupData;
+// __block NSMutableArray *_groupData;
  __block UIButton *_deleteBtn;
  __block UIButton *_addBtn;
   NSMutableArray *_groupBtnArr;
@@ -72,7 +72,7 @@
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
   shadow.shadowOffset = CGSizeMake(0,0);
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupChange object:nil];
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gropMemberChange:) name:JMSGNotification_GroupChange object:nil];
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
   self.navigationController.navigationBar.alpha=1;
   
@@ -104,9 +104,8 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   JMSGUser *userInfo;
   _groupData = [[(NSArray *)arr sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
   for (NSInteger i=0; i< [_groupData count]; i++) {
-
     userInfo = [[_groupData objectAtIndex:i] copy];
-    if ([self.sendMessageCtl.groupInfo.groupOwner longLongValue] == userInfo.uid ) {
+    if ([self.sendMessageCtl.groupInfo.owner isEqualToString:userInfo.username]) {
       [_groupData removeObjectAtIndex:i];
       [_groupData insertObject:userInfo atIndex:0];
       break;
@@ -127,20 +126,9 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 }
 
 - (void)getGroupMemberList {
-   typeof(self) __weak weakSelf = self;
-  
-  
-  [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
-    typeof(weakSelf) __strong strongSelf = weakSelf;
-    if (error == nil) {
-      [strongSelf sorteUserArr:resultObject];
-      JPIMMAINTHEAD(^{
-          [strongSelf reloadHeadViewData];
-        [strongSelf.groupTab reloadData];
-      });
-    }else {
-    }
-  }];
+  [self sorteUserArr:[((JMSGGroup *)(self.conversation.target)) memberArray]];
+  [self reloadHeadViewData];
+  [self.groupTab reloadData];
 }
 
 - (void)reloadHeadViewData {
@@ -149,7 +137,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       [v removeFromSuperview];
     }
   }
-  
   _groupBtnArr = [[NSMutableArray alloc]init];
   NSInteger headWidth = 56;
   NSInteger headHeight = 75;
@@ -183,24 +170,28 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         _deleteBtn = personView.headViewBtn;
         [personView.deletePersonBtn setHidden:YES];
         personView.memberLable.text = @"";
-        if ([self.sendMessageCtl.groupInfo.groupOwner longLongValue] == [JMSGUser getMyInfo].uid && [_groupData count] !=1) {
+        NSLog(@"huangin  owner   %@",self.sendMessageCtl);
+        if ([self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username]  && [_groupData count] !=1) {
           [_headView addSubview:personView];
         }
         return;
       }else {
-
         personView.headViewBtn.tag = 1000 + i*4+j;
         __block JMSGUser *user = [_groupData objectAtIndex:i*4+j];
-        [JMSGUser getUserInfoWithUsername:user.username completionHandler:^(id resultObject, NSError *error) {
-          user = (JMSGUser *)resultObject;
-        }];
-        
-                NSLog(@"huangmin   %@",user.avatarThumbPath);
-        if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
-          [personView.headViewBtn setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
-        }else {
-          [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
-        }
+//        [JMSGUser userInfoArrayWithUsernameArray:@[((JMSGGroup *)_conversation.target).gid/*user.username*/] completionHandler:^(id resultObject, NSError *error) {
+//            user = resultObject[0];
+//        }];
+          [user thumbAvatarData:^(id resultObject, NSError *error) {
+            if (error == nil) {
+              if (resultObject == nil) {
+                [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+              }else {
+                [personView.headViewBtn setImage:[UIImage imageWithData:resultObject] forState:UIControlStateNormal];
+              }
+            }else {
+              DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
+            }
+          }];
         
         if (user.nickname && ![user.nickname isEqualToString:@"(null)"] && ![user.nickname isEqualToString:@""]) {
           personView.memberLable.text = user.nickname;
@@ -238,7 +229,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
             [self deleteMemberWithPersonView:personView];
         }else {
           JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
-          if ([user.username isEqualToString:[JMSGUser getMyInfo].username]) {
+          if ([user.username isEqualToString:[JMSGUser myInfo].username]) {
             JCHATPersonViewController *personCtl =[[JCHATPersonViewController alloc] init];
             personCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:personCtl animated:YES];
@@ -260,29 +251,38 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   
   [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
   JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
-  [JMSGGroup deleteGroupMember:self.conversation.targetId members:user.username completionHandler:^(id resultObject, NSError *error) {
-    JPIMMAINTHEAD(^{
-      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      if (error == nil) {
-        [MBProgressHUD showMessage:@"删除好友成功！" view:self.view];
-        [personView removeFromSuperview];
-        [_groupBtnArr removeObjectAtIndex:personView.headViewBtn.tag - 1000];
-        [_groupData removeObjectAtIndex:personView.headViewBtn.tag - 1000];
-        [self reloadHeadViewData];
-        if ([_groupData count] == 1) {
-          JCHATGroupPersonView *personView = [_groupBtnArr lastObject];
-          if (personView.headViewBtn.tag == 20000) {
-            [personView removeFromSuperview];
-            [_groupBtnArr removeLastObject];
-            [self showDeleteMemberIcon:NO];
-          }
-          return;
-        }
-      }else {
-        [MBProgressHUD showMessage:@"删除好友失败！" view:self.view];
-      }
-    });
-    }];
+//  [JMSGGroup removeMembersFromUsernameArra]
+  [((JMSGGroup *)(self.conversation.target)) removeMembersFromUsernameArray:@[user] completionHandler:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      [self sorteUserArr:resultObject];
+      [self.groupTab reloadData];
+    }else {
+      DDLogDebug(@"JCHATGroupSettingCtl   fail to removeMembersFromUsernameArrary");
+    }
+  }];
+//  [JMSGGroup deleteGroupMember:self.conversation.targetId members:user.username completionHandler:^(id resultObject, NSError *error) {
+//    JPIMMAINTHEAD(^{
+//      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//      if (error == nil) {
+//        [MBProgressHUD showMessage:@"删除好友成功！" view:self.view];
+//        [personView removeFromSuperview];
+//        [_groupBtnArr removeObjectAtIndex:personView.headViewBtn.tag - 1000];
+//        [_groupData removeObjectAtIndex:personView.headViewBtn.tag - 1000];
+//        [self reloadHeadViewData];
+//        if ([_groupData count] == 1) {
+//          JCHATGroupPersonView *personView = [_groupBtnArr lastObject];
+//          if (personView.headViewBtn.tag == 20000) {
+//            [personView removeFromSuperview];
+//            [_groupBtnArr removeLastObject];
+//            [self showDeleteMemberIcon:NO];
+//          }
+//          return;
+//        }
+//      }else {
+//        [MBProgressHUD showMessage:@"删除好友失败！" view:self.view];
+//      }
+//    });
+//    }];
 }
 
 - (void)reloadGroupPersonViewFrame {
@@ -350,7 +350,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         cell.groupTitle.text = [_groupTitleData objectAtIndex:indexPath.row];
       if (indexPath.row == 0) {
         cell.groupName.delegate = self;
-        cell.groupName.text = self.conversation.targetName;
+        cell.groupName.text = self.conversation.title;
       }
         if (indexPath.row == 1) {
             [cell.groupName setHidden:YES];
@@ -391,70 +391,103 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
           return;
     }
+    __weak __typeof(self)weakSelf = self;
     [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
-    [JMSGGroup addMembers:self.conversation.targetId members:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      if (error == nil) {
-        for (NSInteger i=0; i<[(NSMutableArray *)resultObject count]; i++) {
-          [self addMemberToReload:[(NSMutableArray *)resultObject objectAtIndex:i]];
-        }
-      }else {
-        [MBProgressHUD showMessage:@"获取成员信息失败" view:self.view];
-      }
-    }];
+        [((JMSGGroup *)(self.conversation.target)) addMembersFromUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+          [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+          if (error == nil) {
+//            [weakSelf.groupData addObject:resultObject];
+            [weakSelf addMemberToReload:resultObject[0]];
+            [MBProgressHUD showMessage:@"添加成员成功" view:weakSelf.view];
+          }else {
+            DDLogDebug(@"addMembersFromUsernameArray fail with error %@",error);
+            [MBProgressHUD showMessage:@"添加成员失败" view:weakSelf.view];
+          }
+        }];
+
   }else if (alertView.tag ==400) {
     if (buttonIndex ==1) {
+      __weak __typeof(self)weakSelf = self;
       [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
-      [JMSGGroup exitGroup:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      [((JMSGGroup *)(self.conversation.target)) exit:^(id resultObject, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
         if (error == nil) {
-          [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];
-          [self.navigationController popToRootViewControllerAnimated:YES];
+          DDLogDebug(@"推出群组成功");
+          [MBProgressHUD showMessage:@"推出群组成功" view:weakSelf.view];
         }else {
-          DDLogDebug(@"exit group error :%@",error);
-          [MBProgressHUD showMessage:@"退出群组失败！" view:self.view];
+          DDLogDebug(@"推出群组失败");
+          [MBProgressHUD showMessage:@"推出群组失败" view:weakSelf.view];
         }
       }];
+    
+//      [JMSGGroup exitGroup:self.conversation.target completionHandler:^(id resultObject, NSError *error) {
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        if (error == nil) {
+//          [MBProgressHUD showMessage:@"退出群组成功！" view:self.view];
+//          [self.navigationController popToRootViewControllerAnimated:YES];
+//        }else {
+//          DDLogDebug(@"exit group error :%@",error);
+//          [MBProgressHUD showMessage:@"退出群组失败！" view:self.view];
+//        }
+//      }];
+      
     }
   }else if (alertView.tag == 100){
     if (buttonIndex ==1) {
-      [self.conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          [MBProgressHUD showMessage:@"删除消息成功" view:self.view];
-          [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAllMessage object:nil];
-        }else {
-          [MBProgressHUD showMessage:@"删除消息失败" view:self.view];
-        }
-      }];
+      [self.conversation deleteAllMessages];
+      [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAllMessage object:nil];
+//      [self.conversation deleteAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
+//        if (error == nil) {
+//          [MBProgressHUD showMessage:@"删除消息成功" view:self.view];
+//          [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAllMessage object:nil];
+//        }else {
+//          [MBProgressHUD showMessage:@"删除消息失败" view:self.view];
+//        }
+//      }];
     }
   }else {
     if (buttonIndex ==1) {
       
       [MBProgressHUD showMessage:@"更新群组名称" toView:self.view];
       typeof(self) __weak weakSelf = self;
-      [JMSGGroup getGroupInfo:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
+
+      [JMSGGroup updateGroupInfoWithGroup:((JMSGGroup *)(self.conversation.target)) completionHandler:^(id resultObject, NSError *error) {
         typeof(weakSelf) __strong strongSelf = weakSelf;
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (error == nil) {
-          JMSGGroup *group = (JMSGGroup *)resultObject;
-          group.groupName = [alertView textFieldAtIndex:0].text;
-          [JMSGGroup updateGroupInfo:group completionHandler:^(id resultObject, NSError *error) {
-            if (error == nil) {
-              JPIMMAINTHEAD(^{
-                JCHATGroupSettingCell * cell = (JCHATGroupSettingCell *)[_groupTab cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                cell.groupName.text = [alertView textFieldAtIndex:0].text;
-                strongSelf.conversation.targetName = [alertView textFieldAtIndex:0].text;
-                strongSelf.sendMessageCtl.title = [alertView textFieldAtIndex:0].text;
-                [MBProgressHUD showMessage:@"更新群组名称成功" view:self.view];
-              });
-            }else {
-              [MBProgressHUD showMessage:@"更新群组名称失败" view:self.view];
-            }
-          }];
+          JPIMMAINTHEAD(^{
+            JCHATGroupSettingCell * cell = (JCHATGroupSettingCell *)[_groupTab cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            cell.groupName.text = [alertView textFieldAtIndex:0].text;
+//            strongSelf.conversation. = [alertView textFieldAtIndex:0].text;
+            strongSelf.sendMessageCtl.title = [alertView textFieldAtIndex:0].text;
+            [MBProgressHUD showMessage:@"更新群组名称成功" view:self.view];
+          });
         }else {
           [MBProgressHUD showMessage:@"更新群组名称失败" view:self.view];
         }
       }];
+//      [JMSGGroup getGroupInfo:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
+//        typeof(weakSelf) __strong strongSelf = weakSelf;
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        if (error == nil) {
+//          JMSGGroup *group = (JMSGGroup *)resultObject;
+//          group.groupName = [alertView textFieldAtIndex:0].text;
+//          [JMSGGroup updateGroupInfo:group completionHandler:^(id resultObject, NSError *error) {
+//            if (error == nil) {
+//              JPIMMAINTHEAD(^{
+//                JCHATGroupSettingCell * cell = (JCHATGroupSettingCell *)[_groupTab cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                cell.groupName.text = [alertView textFieldAtIndex:0].text;
+//                strongSelf.conversation.targetName = [alertView textFieldAtIndex:0].text;
+//                strongSelf.sendMessageCtl.title = [alertView textFieldAtIndex:0].text;
+//                [MBProgressHUD showMessage:@"更新群组名称成功" view:self.view];
+//              });
+//            }else {
+//              [MBProgressHUD showMessage:@"更新群组名称失败" view:self.view];
+//            }
+//          }];
+//        }else {
+//          [MBProgressHUD showMessage:@"更新群组名称失败" view:self.view];
+//        }
+//      }];
 
     }
   }
@@ -473,10 +506,10 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 - (void)reloadAddBtnAndDeleteBtnFrame {
   NSInteger n = 0;
   NSInteger width = (self.view.bounds.size.width - 4* 56)/5;
-  if ([self.sendMessageCtl.groupInfo.groupOwner longLongValue] != [JMSGUser getMyInfo].uid) {
-    n = 1;
-  }else {
+  if ([self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username]) {
     n = 2;
+  }else {
+    n = 1;
   }
   
   UIButton *addBtn = (UIButton *)[_headView viewWithTag:10000];
@@ -518,10 +551,10 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 #pragma mark --计算row的行数
 - (NSInteger)getRowFromGroupData {
   NSInteger n = 0;
-  if ([_groupData count] == 1 ||[self.sendMessageCtl.groupInfo.groupOwner longLongValue] != [JMSGUser getMyInfo].uid ) {
-    n = 1;
-  }else {
+  if ([_groupData count] == 1 ||[self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username ]) {
     n = 2;
+  }else {
+    n = 1;
   }
   NSInteger row = ([_groupData count] + n)/4;
   NSInteger remainderNumber = ([_groupData count] + n)%4;

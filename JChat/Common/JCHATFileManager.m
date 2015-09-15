@@ -10,7 +10,7 @@
 
 static NSString *filePath = nil;
 @implementation JCHATFileManager
-
+//TODO:
 + (BOOL)initWithFilePath{
   NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
   NSString *docDir = paths[0];

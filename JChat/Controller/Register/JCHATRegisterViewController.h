@@ -12,7 +12,7 @@
 @interface JCHATRegisterViewController : UIViewController
 
 @property(weak, nonatomic) IBOutlet UIButton *registerBtn;
-@property(weak, nonatomic) IBOutlet UITextField *accountField;
-@property(weak, nonatomic) IBOutlet UITextField *passwordField;
+@property(weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property(weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end

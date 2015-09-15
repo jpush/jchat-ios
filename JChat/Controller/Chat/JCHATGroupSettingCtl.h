@@ -17,5 +17,5 @@
 @property (nonatomic,strong) JCHATChatTable *groupTab;
 @property (nonatomic,strong) JMSGConversation *conversation;
 @property (nonatomic,strong) JCHATSendMessageViewController *sendMessageCtl;
-
+@property (nonatomic,strong) NSMutableArray *groupData;
 @end
