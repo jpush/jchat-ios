@@ -574,7 +574,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     if (indexPath.row == 1) {
         UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"清空聊天记录" message:@""
                                                          delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        alerView.tag=100;
+        alerView.tag = 100;
         [alerView show];
     }
   
