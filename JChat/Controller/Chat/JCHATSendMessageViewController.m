@@ -47,12 +47,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 @implementation JCHATSendMessageViewController
 
-- (IBAction)click_to_send_message:(id)sender {
-  
-  
-  
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.automaticallyAdjustsScrollViewInsets = NO;
@@ -317,13 +311,18 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 #pragma mark --收到消息
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
-  if ([_conversation.target isEqualToUser:message.class]) {
-    
-  }
+//  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
+//    if ([_conversation.target isEqualToUser:message.fromUser]) {
+//      
+//    } else {
+//      return;
+//    }
+//  }
   DDLogDebug(@"Event - receiveMessageNotification");
-
+  NSLog(@"huangmin  receive the message %@",message);
   JPIMMAINTHEAD((^{
     [_JMSgMessageDic setObject:message forKey:message.msgId];
+    
     DDLogDebug(@"The received msg - %@", message);
     if (!message) {
       DDLogWarn(@"get the nil message .");
@@ -451,8 +450,13 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     [_JMSgMessageDic setObject:message forKey:message.msgId];
     JCHATChatModel *model = [[JCHATChatModel alloc] init];
     [model setChatModelWith:message conversationType:_conversation];
+    if (message.contentType == kJMSGContentTypeImage) {
+      [_imgDataArr addObject:model];
+      model.photoIndex = [_imgDataArr count] - 1;
+    }
     model.photoIndex = [_imgDataArr count] -1;
     model.sendFlag = YES;
+    model.isSending = NO;
     [self dataMessageShowTime:message.timestamp];
     [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
     [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
@@ -587,6 +591,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   }
   [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
+  NSLog(@"huangmin   send imagemessage %@",message);
   model.messageStatus = kJMSGMessageStatusSending;
   [_imgDataArr addObject:model];
   model.photoIndex = [_imgDataArr count] - 1;
@@ -1065,7 +1070,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
       photo.url = [NSURL fileURLWithPath:url]; // 图片路径
     }else {
       if (messageObject.pictureThumbImgPath == nil) {
-        photo.url = messageObject.pictureThumbImgPath;
+        photo.url = [NSURL fileURLWithPath:messageObject.pictureThumbImgPath];
       }else {
         photo.url = [NSURL fileURLWithPath:url]; // 图片路径
       }

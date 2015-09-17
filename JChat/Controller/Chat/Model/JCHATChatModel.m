@@ -53,7 +53,7 @@
       _pictureThumbImgPath = ((JMSGImageContent *)message.content).thumbImagePath;
       _pictureImgPath = ((JMSGImageContent *)message.content).largeImagePath;
         __weak __typeof(self)weakSelf = self;
-      [message thumbImageData:^(id resultObject, NSError *error) {
+      [((JMSGImageContent *)message.content) thumbImageData:^(id resultObject, NSError *error) {
         if (error == nil) {
 
           _mediaData = resultObject;
@@ -68,7 +68,7 @@
     {
       _voicePath = ((JMSGVoiceContent *)message.content).voicePath;
       _voiceTime = [NSString stringWithFormat:@"%@",((JMSGVoiceContent *)message.content).duration];
-      [message voiceData:^(id resultObject, NSError *error) {
+      [((JMSGVoiceContent *)message.content) voiceData:^(id resultObject, NSError *error) {
         if (error == nil) {
           _mediaData = resultObject;
         }else {

@@ -300,7 +300,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
     // 这条消息之前的状态是下载失败，则先重新下载
     self.message = [self.conversation messageWithMessageId:self.model.messageId];
-    [self.message voiceData:^(id resultObject, NSError *error) {
+    [((JMSGVoiceContent *)self.message.content) voiceData:^(id resultObject, NSError *error) {
       if (error == nil) {
 
         if (resultObject != nil) {
