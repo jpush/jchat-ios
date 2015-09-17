@@ -223,24 +223,23 @@
 //  }else {
 //    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
 //  }
-  if (chatModel.avatar) {
-//    [self.headView setImage:[UIImage imageWithData:chatModel.avatar]];
-    
-    typeof(self) __weak weakSelf = self;
-    [[chatModel.conversation messageWithMessageId:chatModel.messageId] thumbImageData:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        JPIMMAINTHEAD(^{
-          [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
-        });
-        
-      }else {
-        DDLogDebug(@"Action -- get thumbavatar fail");
-      }
-    }];
 
-  }else {
+//    [self.headView setImage:[UIImage imageWithData:chatModel.avatar]];
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-  }
+  NSLog(@"huangmin  message  %@",_model.message);
+    typeof(self) __weak weakSelf = self;
+    [_model.message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
+            if (error == nil) {
+              JPIMMAINTHEAD(^{
+                [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
+              });
+      
+            }else {
+              DDLogDebug(@"Action -- get thumbavatar fail");
+            }
+          }];
+
+
   
   [self updateFrame];
   if (!_model.sendFlag) {

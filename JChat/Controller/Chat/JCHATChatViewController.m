@@ -269,6 +269,7 @@
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
   DDLogDebug(@"Action -- onReceivemessage %@",message);
+  NSLog(@"huangmin   message.fromuser   %@",message.fromUser);
   [self getConversationList];
 }
 

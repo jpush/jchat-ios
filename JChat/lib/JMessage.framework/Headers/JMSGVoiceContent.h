@@ -40,6 +40,17 @@ JMSG_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithVoiceData:(NSData *)data
                     voiceDuration:(NSNumber *)duration;
 
+/*!
+ @abstract 获取图片消息的缩略图数据
+ 
+ @param completionHandler 结果回调。返回正常时 resultObject 内容是缩略图数据，类型是 NSData
+ 
+ @discussion
+ 如果本地还没有语音数据，会发起网络请求下载。下载完后再回调。
+ */
+- (void)voiceData:(JMSGCompletionHandler)handler;
+
+
 JMSG_ASSUME_NONNULL_END
 
 @end

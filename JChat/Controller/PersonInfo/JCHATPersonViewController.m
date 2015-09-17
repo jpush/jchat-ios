@@ -91,7 +91,7 @@
 
   _titleArr = @[@"用户名", @"性别", @"地区", @"个性签名"];
   _imgArr = @[@"wo_20", @"gender", @"location_21", @"signature"];
-  _pickerDataArr = @[@"男", @"女",@"未知"];
+  _pickerDataArr = @[@"男", @"女"];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -112,8 +112,10 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
   if (component == 0 && row ==0) {
     _genderNumber = [NSNumber numberWithInt:1];
+    _infoArr[1] = @"男";
   }else if (component == 0 && row == 1) {
     _genderNumber = [NSNumber numberWithInt:2];
+    _infoArr[1] = @"女";
   }else {
     _genderNumber = [NSNumber numberWithInt:0];
   }

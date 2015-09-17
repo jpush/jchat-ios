@@ -17,10 +17,10 @@
 #import <JMessage/JMSGMessage.h>
 #import <JMessage/JMSGConversation.h>
 #import <JMessage/JMSGAbstractContent.h>
+#import <JMessage/JMSGMediaAbstractContent.h>
 #import <JMessage/JMSGCustomContent.h>
 #import <JMessage/JMSGEventContent.h>
 #import <JMessage/JMSGImageContent.h>
-#import <JMessage/JMSGMediaContent.h>
 #import <JMessage/JMSGTextContent.h>
 #import <JMessage/JMSGVoiceContent.h>
 #import <JMessage/JMessageDelegate.h>

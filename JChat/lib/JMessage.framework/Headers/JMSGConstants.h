@@ -38,14 +38,14 @@ typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
  */
 typedef void (^JMSGMediaUploadProgressHandler)(float percent);
 
-//generic
+// generic
 #if __has_feature(objc_generics) || __has_extension(objc_generics)
 #  define JMSG_GENERIC(...) <__VA_ARGS__>
 #else
 #  define JMSG_GENERIC(...)
 #endif
 
-//nullable
+// nullable
 #if __has_feature(nullability)
 #  define JMSG_NONNULL __nonnull
 #  define JMSG_NULLABLE __nullable

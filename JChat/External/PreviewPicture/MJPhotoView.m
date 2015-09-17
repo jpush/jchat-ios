@@ -91,7 +91,7 @@
                 _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
                 if (_photo.message.messageId) {
                   JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
-                  [message largeImageDataWithProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                  [((JMSGImageContent *)message.content) largeImageDataWithProgress:progress completionHandler:^(id resultObject, NSError *error) {
                     if (error == nil) {
                       JPIMLog(@"下载大图 success");
                       _photo.url = resultObject;
@@ -140,17 +140,23 @@
         __weak MJPhoto *photo = _photo;
             if (_photo.message.messageId) {
               JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
-              [message largeImageDataWithProgress:progress completionHandler:^(id resultObject, NSError *error) {
+              [((JMSGImageContent *)message.content) largeImageDataWithProgress:progress completionHandler:^(id resultObject, NSError *error) {
+                __strong __typeof(photo)strongPhoto = photo;
                 if (error == nil) {
                   JPIMLog(@"下载大图 success");
-                  _photo.url = resultObject;
-                  _photo.message.pictureImgPath = [(NSURL *)resultObject path];
-                  [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                    photo.image = image;
-                    // 调整frame参数
-                    [photoView photoDidFinishLoadWithImage:image];
-                    
-                  }];                                    // 调整frame参数
+//                  _photo.url = resultObject;
+                  
+                  strongPhoto.image = [UIImage imageWithData:resultObject];
+                  [photoView photoDidFinishLoadWithImage:strongPhoto.image];
+                  _imageView.image = strongPhoto.image;
+                  //                  _photo.message.pictureImgPath = [(NSURL *)resultObject path];
+//                  [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+//                    photo.image = image;
+//                    // 调整frame参数
+//                    [photoView photoDidFinishLoadWithImage:image];
+//                    
+//                  }];                                    // 调整frame参数
+                  
                 }else {
                   JPIMLog(@"下载大图 error");
                   _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];

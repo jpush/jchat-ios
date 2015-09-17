@@ -12,6 +12,17 @@
 #import <Foundation/Foundation.h>
 #import <JMessage/JMSGAbstractContent.h>
 
+/*!
+ * @abstract 定制内容类型
+ *
+ * @discussion 用于自定义消息内容类型.
+ *
+ * 建议只在基本类型 (TextContent, VoiceContent, ImageContent) 不满足使用的情况才使用此类型.
+ *
+ * 所有的内容类型都带有 extras 可附加字段信息, 从而都具备一定的定制能力.
+ * 比如如果需要基于图片做简单定制, 建议基于 ImageContent 再附加 extra 的方式.
+ *
+ */
 @interface JMSGCustomContent : JMSGAbstractContent <NSCopying>
 
 JMSG_ASSUME_NONNULL_BEGIN
