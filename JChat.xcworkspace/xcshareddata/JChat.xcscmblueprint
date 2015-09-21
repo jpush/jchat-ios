@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "396435B0827D44B283A1A15290817D95EFFC201D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "396435B0827D44B283A1A15290817D95EFFC201D" : 0,
+    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7CC404CF-6B62-4A74-BD7F-13A07CFA183E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "396435B0827D44B283A1A15290817D95EFFC201D" : "jchat-ios",
+    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : "jchat-iosJChat\/External\/MBProgressHUD"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "JChat",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "JChat.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/huangminlinux\/jchat-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "396435B0827D44B283A1A15290817D95EFFC201D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/168.168.1.183\/svn\/iOS",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282"
+    }
+  ]
+}

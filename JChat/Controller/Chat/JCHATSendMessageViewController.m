@@ -342,6 +342,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
     JCHATChatModel *model = [[JCHATChatModel alloc] init];
     [model setChatModelWith:message conversationType:_conversation];
+    if (message.contentType == kJMSGContentTypeImage) {
+        [_imgDataArr addObject:model];
+    }
     model.photoIndex = [_imgDataArr count] -1;
     [self addmessageShowTimeData:message.timestamp];
     model.sendFlag = YES;
@@ -418,7 +421,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 #pragma mark --添加message
 - (void)addMessage:(JCHATChatModel *)model {
   [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
+  NSLog(@"houangmin   _messageDic idkey  %@",_messageDic);
   [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
+  NSLog(@"houangmin   _messageDic idkey  %@",_messageDic);
+  //  NSLog(@"huangmin  _messageDic[JChatMessage] %@",)
+//  [self performSelector:@selector(addCellToTabel) withObject:nil afterDelay:1];
   [self addCellToTabel];
 }
 
@@ -454,7 +461,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
       [_imgDataArr addObject:model];
       model.photoIndex = [_imgDataArr count] - 1;
     }
-    model.photoIndex = [_imgDataArr count] -1;
     model.sendFlag = YES;
     model.isSending = NO;
     [self dataMessageShowTime:message.timestamp];
@@ -583,12 +589,11 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   JMSGImageContent *imageContent = [[JMSGImageContent alloc] initWithImageData:UIImagePNGRepresentation(img)];
   model.mediaData = UIImagePNGRepresentation(img);
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    model.targetId = ((JMSGUser *)(_conversation.target)).username;
     message = [JMSGMessage createSingleMessageWithContent:imageContent username:((JMSGUser *)_conversation.target).username];
-  }else {
-    model.targetId = ((JMSGGroup *)(_conversation.target)).gid;
+  } else {
     message = [JMSGMessage createGroupMessageWithContent:imageContent groupId:((JMSGGroup *)_conversation.target).gid];
   }
+  
   [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
   NSLog(@"huangmin   send imagemessage %@",message);
@@ -598,7 +603,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   [_JMSgMessageDic setObject:message forKey:message.msgId];
   model.imageSize = [model getImageSize];
   [self addMessage:model];
-  
+
+
 }
 
 
@@ -836,9 +842,14 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 - (void)addCellToTabel {
-  NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
-  [_messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+//  NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
+//  [_messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+  [_messageTableView reloadData];
   [self scrollToEnd];
+  
+//  dispatch_async(dispatch_get_main_queue(), ^{
+//
+//  });
 }
 
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model
