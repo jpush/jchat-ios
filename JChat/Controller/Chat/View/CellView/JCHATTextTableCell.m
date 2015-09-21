@@ -29,7 +29,7 @@
     self.chatView = [UIImageView new];
 
     self.headImgView = [UIImageView new];
-    
+    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
     self.stateView =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
@@ -71,8 +71,9 @@
   _message = model.message;
   typeof(self) __weak weakSelf = self;
   JMSGUser *tmpUser = _message.fromUser;
-
+  
   [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
+    NSLog(@"huangmin dashuai in");
     if (error == nil) {
       JPIMMAINTHEAD(^{
         if (resultObject !=nil) {
@@ -83,7 +84,7 @@
       DDLogDebug(@"Action -- get thumbavatar fail");
     }
   }];
-  
+    NSLog(@"huangmin dashuai out");
 //  if (model.avatar != nil) {
 ////    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
 //    typeof(self) __weak weakSelf = self;
