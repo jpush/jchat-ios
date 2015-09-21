@@ -29,7 +29,7 @@
     self.chatView = [UIImageView new];
 
     self.headImgView = [UIImageView new];
-    
+    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
     self.stateView =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];

@@ -263,11 +263,22 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   _message = message;
   [self.stateView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
   self.model = model;
-  if (model.avatar != nil) {
-    [self.headView setImage:[UIImage imageWithData:model.avatar]];
-  }else {
-    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-  }
+
+  typeof(self) __weak weakSelf = self;
+  JMSGUser *tmpUser = _message.fromUser;
+  
+  [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
+    NSLog(@"huangmin dashuai in");
+    if (error == nil) {
+      JPIMMAINTHEAD(^{
+        if (resultObject !=nil) {
+          [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
+        }
+      });
+    }else {
+      DDLogDebug(@"Action -- get thumbavatar fail");
+    }
+  }];
   self.indexPath = indexPath;
   if ([model.voiceTime rangeOfString:@"''"].location != NSNotFound) {
     self.voiceTimeLable.text = model.voiceTime;
