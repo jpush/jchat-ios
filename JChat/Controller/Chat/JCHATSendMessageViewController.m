@@ -182,7 +182,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     group = self.conversation.target;
     _userArr = [NSMutableArray arrayWithArray:[group memberArray]];
     [self isContantMeWithUserArr:_userArr];
-    [self getAllMessage];
+    if (getMesageFlag) {
+      [self getAllMessage];      
+    }
+
   }else {
     if (getMesageFlag) {
       [self getAllMessage];
@@ -420,10 +423,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 #pragma mark --添加message
 - (void)addMessage:(JCHATChatModel *)model {
+  
   [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
-  NSLog(@"houangmin   _messageDic idkey  %@",_messageDic);
+  NSLog(@"houangmin   _messageDic idkey  %ld",[_messageDic[JCHATMessageIdKey] count]);
   [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
-  NSLog(@"houangmin   _messageDic idkey  %@",_messageDic);
+  NSLog(@"houangmin   _messageDic idkey  %ld",[_messageDic[JCHATMessageIdKey] count]);
   //  NSLog(@"huangmin  _messageDic[JChatMessage] %@",)
 //  [self performSelector:@selector(addCellToTabel) withObject:nil afterDelay:1];
   [self addCellToTabel];
@@ -842,14 +846,9 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 - (void)addCellToTabel {
-//  NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
-//  [_messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-  [_messageTableView reloadData];
+  NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
+  [_messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
   [self scrollToEnd];
-  
-//  dispatch_async(dispatch_get_main_queue(), ^{
-//
-//  });
 }
 
 #pragma mark ---比较和上一条消息时间超过5分钟之内增加时间model

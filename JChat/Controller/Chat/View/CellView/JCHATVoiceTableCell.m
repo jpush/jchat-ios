@@ -30,6 +30,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+  self.backgroundColor = [UIColor redColor];
   if (self) {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     chatBgViewWidth = 60;
