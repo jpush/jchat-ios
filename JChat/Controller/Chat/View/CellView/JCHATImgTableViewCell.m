@@ -227,7 +227,6 @@
   }
   self.delegate = (id)controler;
   self.cellIndex = indexPath;
-  [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
   NSLog(@"huangmin  message  %@",_model.message);
     typeof(self) __weak weakSelf = self;
     [_model.message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
