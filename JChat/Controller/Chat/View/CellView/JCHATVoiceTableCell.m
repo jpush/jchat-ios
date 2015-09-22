@@ -264,9 +264,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   [self.stateView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
   self.model = model;
 
+  [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
   typeof(self) __weak weakSelf = self;
   JMSGUser *tmpUser = _message.fromUser;
-  
   [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
     NSLog(@"huangmin dashuai in");
     if (error == nil) {

@@ -120,7 +120,10 @@
 
 
 -(CGSize)getImageSize {
-
+  if (self.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
+    self.imageSize = CGSizeMake(77, 57);
+    return self.imageSize;
+  }
   UIImage *img;
   if ([[NSFileManager defaultManager] fileExistsAtPath:self.pictureThumbImgPath]) {
     img = [UIImage imageWithContentsOfFile:self.pictureThumbImgPath];
