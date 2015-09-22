@@ -68,20 +68,23 @@
   _model = model;
   self.delegate = delegate;
 
+  [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
   _message = model.message;
   typeof(self) __weak weakSelf = self;
   JMSGUser *tmpUser = _message.fromUser;
-  
   [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
     NSLog(@"huangmin dashuai in");
     if (error == nil) {
       JPIMMAINTHEAD(^{
         if (resultObject !=nil) {
           [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
+        } else {
+          [weakSelf.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
         }
       });
     }else {
       DDLogDebug(@"Action -- get thumbavatar fail");
+      [weakSelf.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
     }
   }];
     NSLog(@"huangmin dashuai out");

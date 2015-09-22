@@ -76,6 +76,7 @@
     [self addSubview:self.sendFailView];
     [self.sendFailView setUserInteractionEnabled:YES];
     [self.sendFailView setImage:[UIImage imageNamed:@"fail05"]];
+    
     [self headAddGesture];
     [self initAutoLayout];
   }
@@ -105,6 +106,7 @@
     make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(-15);
   }];
   [self.downLoadIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(20, 20));
     make.center.mas_equalTo(self.pictureImgView);
   }];
 }
@@ -176,26 +178,15 @@
         __weak typeof(self)weakSelf = self;
         if (!self.sendFailImgMessage) {
          self.sendFailImgMessage = [self.conversation messageWithMessageId:self.model.messageId];
-//            [self.conversation getMessage:self.model.messageId completionHandler:^(id resultObject, NSError *error) {
-//                if (error == nil) {
-//                    weakSelf.sendFailImgMessage = resultObject;
-//                    weakSelf.message = resultObject;
-//                    weakSelf.sendFailImgMessage.progressCallback=^(float percent){
-//                      weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
-//                    };
-//                    self.sendFailImgMessage.conversationType = self.conversation.chatType;
-//                    [JMSGMessage sendMessage:self.sendFailImgMessage];
-//                }else {
-//                    NSLog(@"获取消息失败!");
-//                }
-//            }];
+
         }else {
-//            self.sendFailImgMessage.progressCallback=^(float percent){
-//                weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
-//            };
           self.sendFailImgMessage.uploadHandler = ^(float percent){
-                            weakSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
-                        };
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            NSLog(@"huangmin  percent number is %f",percent*100);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                            strongSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
+            });
+          };
           [JMSGMessage sendMessage:self.sendFailImgMessage];
         }
     }
@@ -228,8 +219,9 @@
   self.delegate = (id)controler;
   self.cellIndex = indexPath;
   NSLog(@"huangmin  message  %@",_model.message);
-    typeof(self) __weak weakSelf = self;
-    [_model.message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
+  [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+  typeof(self) __weak weakSelf = self;
+  [_model.message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
             if (error == nil) {
               JPIMMAINTHEAD(^{
                 [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
@@ -263,7 +255,11 @@
   self.model.messageId = _message.msgId;
   __weak typeof(self) weakSelf = self;
   _message.uploadHandler = ^(float percent) {
-    weakSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      NSLog(@"huangmin    the percent value  %d%%  %@",(int) percent * 100,strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
+      strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
+    });
   };
 //  if (self.conversation.chatType == kJMSGConversationTypeSingle) {
 //    _message.conversationType = kJMSGConversationTypeSingle;
@@ -285,8 +281,8 @@
       JPIMLog(@"Action");
       [self.downLoadIndicatorView setHidden:NO];
       [self.downLoadIndicatorView startAnimating];
-      [self.conversation messageWithMessageId:self.model.messageId];
-
+      JMSGMessage *imageReceiveFailMessage = [self.conversation messageWithMessageId:self.model.messageId];
+      NSLog(@"huangmin  %@",imageReceiveFailMessage);
     }else {
       if (self.delegate && [self.delegate respondsToSelector:@selector(tapPicture:tapView:tableViewCell:)]) {
         [self.delegate tapPicture:self.cellIndex tapView:(UIImageView *)gesture.view tableViewCell:self];
@@ -300,87 +296,51 @@
     [self updateFrame];
 }
 
-- (void)updateFrame
-{
-    NSInteger imgHeight = 0;
-    NSInteger imgWidth = 0;
-    [self.percentLabel setHidden:NO];
-    if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
-//      imgHeight = [UIImage imageNamed:@"receiveFail"].size.height;
-//      imgWidth = [UIImage imageNamed:@"receiveFail"].size.width;
-//      [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
-      [self.downLoadIndicatorView setCenter:CGPointMake(self.pictureImgView.frame.size.width/2, self.pictureImgView.frame.size.height/2)];
-    } else {
-      [self.downLoadIndicatorView setHidden:YES];
-      _model.isSending = NO;
-      __block UIImage *showImg;
-
-      if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
+- (void)updateFrame {
+  NSInteger imgHeight = 0;
+  NSInteger imgWidth = 0;
+  [self.percentLabel setHidden:NO];
+  if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
+    [self.downLoadIndicatorView setCenter:CGPointMake(self.pictureImgView.frame.size.width/2, self.pictureImgView.frame.size.height/2)];
+  } else {
+    [self.downLoadIndicatorView setHidden:YES];
+    _model.isSending = NO;
+    __block UIImage *showImg;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:self.model.pictureThumbImgPath]) {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
-        });
-      } else if (((JMSGImageContent *)self.message.content).thumbImagePath) {
-        showImg = [UIImage imageWithContentsOfFile:((JMSGImageContent *)self.message.content).thumbImagePath];
-      } else {
-        showImg = [UIImage imageNamed:@"receiveFail"];
-      }
-
-      imgHeight = _model.imageSize.height;
-      imgWidth = _model.imageSize.width;
-    }
-    if (self.model.messageStatus == kJMSGMessageStatusSending || self.model.messageStatus == kJMSGMessageStatusReceiving) {
-        [self.circleView setHidden:NO];
-        [self.sendFailView setHidden:YES];
-    } else if (self.model.messageStatus == kJMSGMessageStatusSendSucceed || self.model.messageStatus == kJMSGMessageStatusReceiveSucceed)
-    {
-        [self.circleView setHidden:YES];
-        [self.sendFailView setHidden:YES];
-        [self.percentLabel setHidden:YES];
-    } else if (self.model.messageStatus == kJMSGMessageStatusSendFailed)
-    {
-        [self.circleView setHidden:YES];
-        [self.sendFailView setHidden:NO];
+        showImg = [UIImage imageWithContentsOfFile:self.model.pictureThumbImgPath];
+      });
+    } else if (((JMSGImageContent *)self.message.content).thumbImagePath) {
+      showImg = [UIImage imageWithContentsOfFile:((JMSGImageContent *)self.message.content).thumbImagePath];
     } else {
-        [self.circleView setHidden:YES];
-        [self.sendFailView setHidden:YES];
+      showImg = [UIImage imageNamed:@"receiveFail"];
     }
-//    UIImage *img=nil;//!
+
+  }
   
-//  [self.headView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
-//  [self.pictureImgView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
-////  [self.contentImgView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
-//  [self.percentLabel mas_remakeConstraints:^(MASConstraintMaker *make) {}];
-//  [self.circleView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
-//  [self.downLoadIndicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {}];
-  
+  imgHeight = _model.imageSize.height;
+  imgWidth = _model.imageSize.width;
+  if (self.model.messageStatus == kJMSGMessageStatusSending || self.model.messageStatus == kJMSGMessageStatusReceiving) {
+    [self.circleView setHidden:NO];
+    [self.sendFailView setHidden:YES];
+  } else if (self.model.messageStatus == kJMSGMessageStatusSendSucceed || self.model.messageStatus == kJMSGMessageStatusReceiveSucceed)
+  {
+    [self.circleView setHidden:YES];
+    [self.sendFailView setHidden:YES];
+    [self.percentLabel setHidden:YES];
+  } else if (self.model.messageStatus == kJMSGMessageStatusSendFailed)
+  {
+    [self.circleView setHidden:YES];
+    [self.sendFailView setHidden:NO];
+  } else {
+    [self.circleView setHidden:YES];
+    [self.sendFailView setHidden:YES];
+  }
 
   if (self.model.isMyMessage) {//myself
     img =[UIImage imageNamed:@"mychatBg"];
-    
-    //      [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
-    //        make.right.mas_equalTo(self).with.offset(-5);
-    //        make.top.mas_equalTo(self);
-    //      }];
-    //      [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
-    //        make.centerY.mas_equalTo(self);
-    //        make.right.mas_equalTo(self.headView.mas_left).with.offset(-5);
-    //      }];
-    //
-    //      [self.circleView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(20, 20));
-    //        make.centerY.mas_equalTo(self);
-    //        make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(-15);
-    //      }];
-    //      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(17, 15));
-    //        make.centerY.mas_equalTo(self);
-    //        make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(-15);
-    //      }];
-    //      [self.downLoadIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.center.mas_equalTo(self.pictureImgView);
-    //      }];
+
     [self.headView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
       make.right.mas_equalTo(self).with.offset(-5);
@@ -402,45 +362,14 @@
       make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(-15);
     }];
     [self.downLoadIndicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+      make.size.mas_equalTo(CGSizeMake(20, 20));
       make.center.mas_equalTo(self.pictureImgView);
     }];
     
+    
   } else {
     img =[UIImage imageNamed:@"otherChatBg"];
-    
-    //      [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
-    //        make.left.mas_equalTo(self).with.offset(5);
-    //        make.top.mas_equalTo(self);
-    //      }];
-    //
-    //      [self.pictureImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(imgWidth, imgHeight));
-    //        make.left.mas_equalTo(self.headView.mas_right).with.offset(5);
-    //        make.centerY.mas_equalTo(self);
-    //      }];
-    //
-    //      [self.circleView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(20, 20));
-    //        make.left.mas_equalTo(self.pictureImgView.mas_right).with.offset(5);
-    //        make.centerY.mas_equalTo(self);
-    //      }];
-    //
-    //      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        make.size.mas_equalTo(CGSizeMake(17, 15));
-    //        make.left.mas_equalTo(self.pictureImgView.mas_right).with.offset(5);
-    //        make.centerY.mas_equalTo(self);
-    //      }];
-    //    }
-    //
-    //    [self.percentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-    //      make.size.mas_equalTo(CGSizeMake(50, 50));
-    //      make.center.mas_equalTo(self.pictureImgView);
-    //    }];
-    //
-    //    [self.downLoadIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //      make.center.mas_equalTo(self.pictureImgView);
-    //    }];
+
     NSLog(@"huangmin  aself.frame.size.width %f",self.frame.size.width);
     [self.headView mas_updateConstraints:^(MASConstraintMaker *make) {
       make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
@@ -463,36 +392,23 @@
       make.right.mas_equalTo(self.pictureImgView.mas_left).with.offset(imgWidth + 15);
     }];
     [self.downLoadIndicatorView mas_updateConstraints:^(MASConstraintMaker *make) {
+      make.size.mas_equalTo(CGSizeMake(20, 20));
       make.center.mas_equalTo(self.pictureImgView);
     }];
   }
-    [self.percentLabel setFrame:CGRectMake(0, 0, 50, 50)];
-//    [self.percentLabel setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
-    [self.percentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.size.mas_equalTo(CGSizeMake(50, 50));
-//      make.center.mas_equalTo(self.contentImgView);
-      make.center.mas_equalTo(self.pictureImgView);
-    }];
-//    [self.downLoadIndicatorView setCenter:CGPointMake(self.contentImgView.frame.size.width/2, self.contentImgView.frame.size.height/2)];
-    [self.downLoadIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-//      make.center.mas_equalTo(self.contentImgView);
-      make.center.mas_equalTo(self.pictureImgView);
-    }];
+
+  [self.percentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(50, 50));
+    make.center.mas_equalTo(self.pictureImgView);
+  }];
+
+  [self.downLoadIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.size.mas_equalTo(CGSizeMake(20, 20));//!
+    make.center.mas_equalTo(self.pictureImgView);
+  }];
   CALayer *imagemask = [CALayer layer];
-//  img =[img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];//(28, 20, 28, 20)
   imagemask.contents = (__bridge id)(img.CGImage);
 
-//  self.pictureImgView.layer.mask = imagemask;
-  
-//  img = [img resizableImageWithCapInsets:UIEdgeInsetsMake(<#CGFloat top#>, <#CGFloat left#>, <#CGFloat bottom#>, <#CGFloat right#>)]
-//  UIGraphicsBeginImageContext(self.pictureImgView.frame.size);
-//  // 绘制改变大小的图片
-//  [img drawInRect:CGRectMake(0, 0, self.pictureImgView.frame.size.width, self.pictureImgView.frame.size.height)];
-//  // 从当前context中创建一个改变大小后的图片
-//  UIImage* newImg = UIGraphicsGetImageFromCurrentImageContext();
-//  // 使当前的context出堆栈
-//  UIGraphicsEndImageContext();
-//    [self.pictureImgView setImage:newImg];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

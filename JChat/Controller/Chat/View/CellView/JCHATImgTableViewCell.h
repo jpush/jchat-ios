@@ -28,7 +28,7 @@
 }
 @property (strong, nonatomic)  NSIndexPath *cellIndex;
 @property (assign, nonatomic)  id <PictureDelegate> delegate;
-@property (strong, nonatomic)  UIImageView *contentImgView;
+//@property (strong, nonatomic)  UIImageView *contentImgView;
 @property (strong, nonatomic)  JCHATChatModel *model;
 @property (strong, nonatomic)  UILabel *percentLabel;
 @property (strong, nonatomic)  UIImageView *headView;

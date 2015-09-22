@@ -321,6 +321,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 //      return;
 //    }
 //  }
+  if ([self.conversation isMessageForThisConversation:message]) {
+    return;
+  }
   DDLogDebug(@"Event - receiveMessageNotification");
   NSLog(@"huangmin  receive the message %@",message);
   JPIMMAINTHEAD((^{
@@ -351,6 +354,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     model.photoIndex = [_imgDataArr count] -1;
     [self addmessageShowTimeData:message.timestamp];
     model.sendFlag = YES;
+    model.readState = NO;
     [self addMessage:model];
   }));
 }
