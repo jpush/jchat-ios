@@ -449,7 +449,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       [MBProgressHUD showMessage:@"更新群组名称" toView:self.view];
       typeof(self) __weak weakSelf = self;
       JMSGGroup *updateTmpGroup = ((JMSGGroup *)(self.conversation.target));
-      updateTmpGroup.
       [JMSGGroup updateGroupInfoWithGroup:((JMSGGroup *)(self.conversation.target)) completionHandler:^(id resultObject, NSError *error) {
         typeof(weakSelf) __strong strongSelf = weakSelf;
         if (error == nil) {
