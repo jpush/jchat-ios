@@ -15,14 +15,16 @@
 {
   self = [super init];
   if (self) {
-    self.readState = YES;
-    self.sendFlag = YES;
-    self.isSending = NO;
+    _readState = YES;
+    _sendFlag = YES;
+    _isSending = NO;
+    _isTime = NO;
   }
   return self;
 }
 
 -(void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation {
+  _fromUser = message.fromUser;
   _message = message;
   _chatType = conversation.conversationType;
   _messageId = message.msgId;
@@ -52,13 +54,21 @@
     {
       _pictureThumbImgPath = ((JMSGImageContent *)message.content).thumbImagePath;
       _pictureImgPath = ((JMSGImageContent *)message.content).largeImagePath;
-        __weak __typeof(self)weakSelf = self;
-      [((JMSGImageContent *)message.content) thumbImageData:^(id resultObject, NSError *error) {
-        if (error == nil) {
 
-          _mediaData = resultObject;
-          [weakSelf getImageSize];
-        }else {
+//      [((JMSGImageContent *)message.content) thumbImageData:^(id resultObject, NSError *error) {
+//        if (error == nil) {
+//
+//          _mediaData = resultObject;
+//          [weakSelf getImageSize];
+//        }else {
+//          DDLogDebug(@"get thumbImageData fail,with error %@",error);
+//        }
+//      }];
+      [((JMSGImageContent *)message.content) thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
+        if (error == nil) {
+          _mediaData = data;
+          [self getImageSize];
+        } else {
           DDLogDebug(@"get thumbImageData fail,with error %@",error);
         }
       }];
@@ -68,13 +78,14 @@
     {
       _voicePath = ((JMSGVoiceContent *)message.content).voicePath;
       _voiceTime = [NSString stringWithFormat:@"%@",((JMSGVoiceContent *)message.content).duration];
-      [((JMSGVoiceContent *)message.content) voiceData:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          _mediaData = resultObject;
-        }else {
-          DDLogDebug(@"get message voiceData fail");
-        }
-      }];
+      
+//      [((JMSGVoiceContent *)message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
+//        if (error == nil) {
+//          _mediaData = data;
+//        }else {
+//          DDLogDebug(@"get message voiceData fail with error %@",error);
+//        }
+//      }];
     }
       break;
     case kJMSGContentTypeEventNotification:
@@ -87,11 +98,19 @@
   }
   
   __weak __typeof(self)weakSelf = self;
-  [message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
+//  [message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      __strong __typeof(weakSelf)strongSelf = weakSelf;
+//      strongSelf.avatar = resultObject;
+//    }else {
+//      DDLogDebug(@"get thumbAvatarData fail with error %@",error);
+//    }
+//  }];
+  [message.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
       __strong __typeof(weakSelf)strongSelf = weakSelf;
-      strongSelf.avatar = resultObject;
-    }else {
+      strongSelf.avatar = data;
+    } else {
       DDLogDebug(@"get thumbAvatarData fail with error %@",error);
     }
   }];
@@ -99,7 +118,7 @@
 }
 
 -(float )getTextHeight {
-  if (self.type == kJMSGContentTypeText || self.type == kJMSGContentTypeEventNotification || self.type == kJMSGContentTypeTime) {
+  if (self.type == kJMSGContentTypeText || self.type == kJMSGContentTypeEventNotification) {
     UIFont *font =[UIFont systemFontOfSize:18];
     CGSize maxSize = CGSizeMake(200, 2000);
     

@@ -178,20 +178,18 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       }else {
         personView.headViewBtn.tag = 1000 + i*4+j;
         __block JMSGUser *user = [_groupData objectAtIndex:i*4+j];
-//        [JMSGUser userInfoArrayWithUsernameArray:@[((JMSGGroup *)_conversation.target).gid/*user.username*/] completionHandler:^(id resultObject, NSError *error) {
-//            user = resultObject[0];
-//        }];
-          [user thumbAvatarData:^(id resultObject, NSError *error) {
-            if (error == nil) {
-              if (resultObject == nil) {
-                [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
-              }else {
-                [personView.headViewBtn setImage:[UIImage imageWithData:resultObject] forState:UIControlStateNormal];
-              }
+        
+        [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+          if (error == nil) {
+            if (data == nil) {
+              [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
             }else {
-              DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
+              [personView.headViewBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
             }
-          }];
+          }else {
+            DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
+          }
+        }];
         
         if (user.nickname && ![user.nickname isEqualToString:@"(null)"] && ![user.nickname isEqualToString:@""]) {
           personView.memberLable.text = user.nickname;
@@ -450,11 +448,13 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       
       [MBProgressHUD showMessage:@"更新群组名称" toView:self.view];
       typeof(self) __weak weakSelf = self;
-
+      JMSGGroup *updateTmpGroup = ((JMSGGroup *)(self.conversation.target));
+      updateTmpGroup.
       [JMSGGroup updateGroupInfoWithGroup:((JMSGGroup *)(self.conversation.target)) completionHandler:^(id resultObject, NSError *error) {
         typeof(weakSelf) __strong strongSelf = weakSelf;
         if (error == nil) {
           JPIMMAINTHEAD(^{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             JCHATGroupSettingCell * cell = (JCHATGroupSettingCell *)[_groupTab cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             cell.groupName.text = [alertView textFieldAtIndex:0].text;
 //            strongSelf.conversation. = [alertView textFieldAtIndex:0].text;

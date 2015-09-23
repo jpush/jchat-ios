@@ -44,6 +44,7 @@ playVoiceDelegate>
 @property(assign, nonatomic) BOOL continuePlayer;
 @property(assign, nonatomic) id <playVoiceDelegate> delegate;
 @property(strong, nonatomic) JMSGMessage *message;
+@property(strong, nonatomic) NSString *headViewFlag;
 
 - (void)playVoice;
 

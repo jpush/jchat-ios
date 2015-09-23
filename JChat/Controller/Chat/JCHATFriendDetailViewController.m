@@ -79,16 +79,16 @@
       return;
     }
     JMSGUser *user = resultObject[0];
-    [user thumbAvatarData:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        if (resultObject != nil) {
-          [_headView setImage:[UIImage imageWithData:resultObject]];
-        }else {
-          [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-        }
-      }else {
-        DDLogDebug(@"JCHATFriendDetailVC  thumbAvatarData fail");
-      }
+    [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+            if (error == nil) {
+              if (data != nil) {
+                [_headView setImage:[UIImage imageWithData:data]];
+              }else {
+                [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+              }
+            }else {
+              DDLogDebug(@"JCHATFriendDetailVC  thumbAvatarData fail");
+            }
     }];
     if (user.nickname) {
       _nameLabel.text = user.nickname;

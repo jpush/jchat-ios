@@ -61,7 +61,7 @@
 //    // 消息展示出来时，调用发文本消息
 //    [self sendTextMessage:model.messageId];
 //  }
-  
+  self.headViewFlag = model.fromUser.username;
   self.headImgView.layer.cornerRadius = 23;
   self.conversation = model.conversation;
   [self.headImgView.layer setMasksToBounds:YES];
@@ -69,43 +69,26 @@
   self.delegate = delegate;
 
   [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-  _message = model.message;
+  _fromUser = model.fromUser;
   typeof(self) __weak weakSelf = self;
-  JMSGUser *tmpUser = _message.fromUser;
-  [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
-    NSLog(@"huangmin dashuai in");
-    if (error == nil) {
-      JPIMMAINTHEAD(^{
-        if (resultObject !=nil) {
-          [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
-        } else {
-          [weakSelf.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-        }
-      });
-    }else {
-      DDLogDebug(@"Action -- get thumbavatar fail");
-      [weakSelf.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-    }
-  }];
-    NSLog(@"huangmin dashuai out");
-//  if (model.avatar != nil) {
-////    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
-//    typeof(self) __weak weakSelf = self;
-//
-//    
-//    [[model.conversation messageWithMessageId:model.messageId].fromUser thumbAvatarData:^(id resultObject, NSError *error) {
-//      if (error == nil) {
-//        JPIMMAINTHEAD(^{
-//          [weakSelf.headImgView setImage:[UIImage imageWithData:resultObject]];
-//        });
-//        
-//      }else {
-//        DDLogDebug(@"Action -- get thumbavatar fail");
-//      }
-//    }];
-//  }else {
-//    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-//  }
+  if (model.avatar == nil) {
+    [_fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+      if (error == nil) {
+        JPIMMAINTHEAD(^{
+          if ([objectId isEqualToString:self.headViewFlag]) {
+            [weakSelf.headImgView setImage:[UIImage imageWithData:data]];
+          } else {
+            DDLogDebug(@"该头像是异步乱序的头像");
+          }
+        });
+      } else {
+        DDLogDebug(@"Action -- get thumbavatar fail");
+      }
+    }];
+  } else {
+    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
+  }
+
   [self creadBuddleChatView];
 }
 
@@ -287,9 +270,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.stateView startAnimating];
     if (!_sendFailMessage) {
 //      _sendFailMessage = [self.conversation messageWithMessageId:_model.messageId];
-      _message = _model.message;//!!
-      _message = _sendFailMessage;
-      [JMSGMessage sendMessage:_message];
+
+      [JMSGMessage sendMessage:_model.message];
 //      if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
 //        [JMSGMessage sendMessage:<#(JMSGMessage *)#>]
 //      }else {

@@ -596,16 +596,19 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   __block JCHATChatModel *model = [[JCHATChatModel alloc] init];
   JMSGImageContent *imageContent = [[JMSGImageContent alloc] initWithImageData:UIImagePNGRepresentation(img)];
   model.mediaData = UIImagePNGRepresentation(img);
-  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    message = [JMSGMessage createSingleMessageWithContent:imageContent username:((JMSGUser *)_conversation.target).username];
-  } else {
-    message = [JMSGMessage createGroupMessageWithContent:imageContent groupId:((JMSGGroup *)_conversation.target).gid];
-  }
-  
+//  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
+////    message = [JMSGMessage createSingleMessageWithContent:imageContent username:((JMSGUser *)_conversation.target).username];
+//    message = [_conversation createMessageWithContent:imageContent];
+//  } else {
+//    message = [JMSGMessage createGroupMessageWithContent:imageContent groupId:((JMSGGroup *)_conversation.target).gid];
+//    message = [_conversation]
+//  }//!
+  message = [_conversation createMessageWithContent:imageContent];
   [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
   NSLog(@"huangmin   send imagemessage %@",message);
   model.messageStatus = kJMSGMessageStatusSending;
+  model.isSending = YES;
   [_imgDataArr addObject:model];
   model.photoIndex = [_imgDataArr count] - 1;
   [_JMSgMessageDic setObject:message forKey:message.msgId];
@@ -821,16 +824,17 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   JMSGMessage *message = nil;
   JMSGTextContent *textContent = [[JMSGTextContent alloc] initWithText:text];
   __block JCHATChatModel *model = [[JCHATChatModel alloc] init];
-  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    model.targetId = ((JMSGUser *)_conversation.target).username;
-    message = [JMSGMessage createSingleMessageWithContent:textContent username:model.targetId];
-    NSLog(@"huagnmin    conversation target   %@    ",_conversation);
-    NSLog(@"需要发送的message  是  %@",message);
-  }else {
-
-    model.targetId = ((JMSGGroup *)_conversation.target).gid;
-    message = [JMSGMessage createGroupMessageWithContent:textContent groupId:model.targetId];
-  }
+//  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
+//    model.targetId = ((JMSGUser *)_conversation.target).username;
+//    message = [JMSGMessage createSingleMessageWithContent:textContent username:model.targetId];
+//    NSLog(@"huagnmin    conversation target   %@    ",_conversation);
+//    NSLog(@"需要发送的message  是  %@",message);
+//  }else {
+//
+//    model.targetId = ((JMSGGroup *)_conversation.target).gid;
+//    message = [JMSGMessage createGroupMessageWithContent:textContent groupId:model.targetId];
+//  }
+  message = [_conversation createMessageWithContent:textContent];//!
   NSLog(@"huagnmin    conversation target   %@    ",_conversation);
   NSLog(@"需要发送的message  是  %@",message);
   [self addmessageShowTimeData:message.timestamp];
@@ -860,7 +864,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   NSString *messageId = [_messageDic[JCHATMessageIdKey] lastObject];
   JCHATChatModel *lastModel =_messageDic[JCHATMessage][messageId];
   NSTimeInterval timeInterVal = [timeNumber longLongValue];
-  if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.type != kJMSGContentTypeTime) {
+  if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.isTime == NO) {
     NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
     NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
     NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
@@ -879,14 +883,14 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   NSString *messageId = [_messageDic[JCHATMessageIdKey] lastObject];
   JCHATChatModel *lastModel =_messageDic[JCHATMessage][messageId];
   NSTimeInterval timeInterVal = [timeNumber longLongValue];
-  if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.type != kJMSGContentTypeTime) {
+  if ([_messageDic[JCHATMessageIdKey] count]>0 && lastModel.isTime == NO) {
     NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
     NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
     NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
     if (fabs(timeBetween) > interval) {
       JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
       timeModel.messageId = [self getTimeId];
-      timeModel.type = kJMSGContentTypeTime;
+      timeModel.isTime = YES;
       timeModel.messageTime = @(timeInterVal);
       timeModel.contentHeight = [timeModel getTextHeight];//!
       [_messageDic[JCHATMessage] setObject:timeModel forKey:timeModel.messageId];
@@ -895,7 +899,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   }else if ([_messageDic[JCHATMessageIdKey] count] ==0) {//首条消息显示时间
     JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
     timeModel.messageId = [self getTimeId];
-    timeModel.type = kJMSGContentTypeTime;
+    timeModel.isTime = YES;
     timeModel.messageTime = @(timeInterVal);
     timeModel.contentHeight = [timeModel getTextHeight];//!
     [_messageDic[JCHATMessage] setObject:timeModel forKey:timeModel.messageId];
@@ -908,7 +912,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 - (void)addTimeData:(NSTimeInterval)timeInterVal {
   JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
   timeModel.messageId = [self getTimeId];
-  timeModel.type = kJMSGContentTypeTime;
+  timeModel.isTime = YES;
   timeModel.messageTime = @(timeInterVal);
   timeModel.contentHeight = [timeModel getTextHeight];//!
   [self addMessage:timeModel];
@@ -930,7 +934,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
   JCHATChatModel *model = _messageDic[JCHATMessage][messageId ];
-  if (model.type == kJMSGContentTypeText || model.type == kJMSGContentTypeTime ||  model.type ==kJMSGContentTypeEventNotification) {
+  if (model.type == kJMSGContentTypeText || model.isTime == YES ||  model.type ==kJMSGContentTypeEventNotification) {
     return model.contentHeight +8;
   } else if (model.type == kJMSGContentTypeImage) {
     if (model.imageSize.height == 0) {
@@ -1012,7 +1016,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     JMSGMessage *voiceMessage = _JMSgMessageDic[model.messageId];
     [cell setCellData:model delegate:self message:voiceMessage indexPath:indexPath];
     return cell;
-  }else if (model.type == kJMSGContentTypeTime || model.type == kJMSGContentTypeEventNotification) {
+  }else if (model.isTime == YES || model.type == kJMSGContentTypeEventNotification) {
     static NSString *cellIdentifier = @"timeCell";
     JCHATShowTimeCell *cell = (JCHATShowTimeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
@@ -1196,11 +1200,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   model.messageId = voiceMessage.msgId;
   JMSGVoiceContent *voiceContent = [[JMSGVoiceContent alloc] initWithVoiceData:[NSData dataWithContentsOfFile:voicePath] voiceDuration:[NSNumber numberWithInteger:[voiceDuration integerValue]]];
 
-  if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
-    voiceMessage = [JMSGMessage createSingleMessageWithContent:voiceContent username:((JMSGUser *)(_conversation.target)).username];
-  }else {
-    voiceMessage = [JMSGMessage createGroupMessageWithContent:voiceContent groupId:((JMSGGroup *)(_conversation.target)).gid];
-  }
+//  if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
+//    voiceMessage = [JMSGMessage createSingleMessageWithContent:voiceContent username:((JMSGUser *)(_conversation.target)).username];
+//  }else {
+//    voiceMessage = [JMSGMessage createGroupMessageWithContent:voiceContent groupId:((JMSGGroup *)(_conversation.target)).gid];
+//  }
+  voiceMessage = [_conversation createMessageWithContent:voiceContent];//!
 //  model.messageTime = voiceMessage.timestamp;
   [model setChatModelWith:voiceMessage conversationType:_conversation];
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.msgId];

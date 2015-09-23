@@ -118,10 +118,11 @@
 
   JMSGUser *user = [JMSGUser myInfo];
   [_bgView updataNameLable];
-  [user largeAvatarData:^(id resultObject, NSError *error) {
+
+  [user largeAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
-      if (resultObject != nil) {
-        _bgView.originImage = [UIImage imageWithData:resultObject];
+      if (data != nil) {
+        _bgView.originImage = [UIImage imageWithData:data];
       }else {
         _bgView.originImage = [UIImage imageNamed:@"wo.png"];
       }
@@ -131,10 +132,10 @@
     }
   }];
   
-  [user thumbAvatarData:^(id resultObject, NSError *error) {
+  [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
-      if (resultObject != nil) {
-        _bgView.originImage = [UIImage imageWithData:resultObject];
+      if (data != nil) {
+        _bgView.originImage = [UIImage imageWithData:data];
       }else {
         _bgView.originImage = [UIImage imageNamed:@"wo.png"];
       }

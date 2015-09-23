@@ -98,15 +98,13 @@
   [self.headView.layer setMasksToBounds:YES];
   if (conversation.conversationType == kJMSGConversationTypeSingle) {
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-    self.nickName.text = ((JMSGUser *)conversation.target).nickname?:((JMSGUser *)conversation.target).username;
   } else {
     [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
-    self.nickName.text = ((JMSGGroup *)conversation.target).gid;
   }
+  self.nickName.text =conversation.title;
   [conversation avatarData:^(id resultObject, NSError *error) {
     [self.headView setImage:[UIImage imageWithData:resultObject]];
   }];
-  
 
   if ([conversation.unreadCount integerValue] > 0) {
     [self.messageNumberLabel setHidden:NO];

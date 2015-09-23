@@ -42,19 +42,18 @@
   [_headView setUserInteractionEnabled:YES];
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeadClick)];
   [_headView addGestureRecognizer:gesture];
-  
-  [((JMSGUser *)self.conversation.target) thumbAvatarData:^(id resultObject, NSError *error) {
-        if (error == nil) {
-          if (resultObject == nil) {
-            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-          }else {
-            [_headView setImage:[UIImage imageWithData:resultObject]];
-          }
-        }else {
-          DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
-        }
-  }];
 
+  [((JMSGUser *)self.conversation.target) thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+            if (error == nil) {
+              if (data == nil) {
+                [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+              }else {
+                [_headView setImage:[UIImage imageWithData:data]];
+              }
+            }else {
+              DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
+            }
+  }];
   [_headView.layer setMasksToBounds:YES];
   [_headView.layer setCornerRadius:23];
   [tableHeadView addSubview:_headView];
@@ -188,13 +187,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-  [self.chatUser thumbAvatarData:^(id resultObject, NSError *error) {
+  [super viewWillAppear:YES];
+
+  [self.chatUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
-      if (resultObject == nil) {
+      if (data == nil) {
         [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
       }else {
-        [_headView setImage:[UIImage imageWithData:resultObject]];
+        [_headView setImage:[UIImage imageWithData:data]];
       }
     }else {
       DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");

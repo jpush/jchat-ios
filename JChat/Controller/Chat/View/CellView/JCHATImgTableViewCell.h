@@ -26,19 +26,20 @@
 @interface JCHATImgTableViewCell : UITableViewCell<UIAlertViewDelegate>{
   UIImage *img;
 }
-@property (strong, nonatomic)  NSIndexPath *cellIndex;
-@property (assign, nonatomic)  id <PictureDelegate> delegate;
+@property (strong, nonatomic) NSIndexPath *cellIndex;
+@property (assign, nonatomic) id <PictureDelegate> delegate;
 //@property (strong, nonatomic)  UIImageView *contentImgView;
-@property (strong, nonatomic)  JCHATChatModel *model;
-@property (strong, nonatomic)  UILabel *percentLabel;
-@property (strong, nonatomic)  UIImageView *headView;
-@property (nonatomic,strong)   UIActivityIndicatorView *circleView;
-@property (strong, nonatomic)  UIImageView *pictureImgView;
-@property (nonatomic,strong)   UIImageView *sendFailView;
-@property (nonatomic,strong)   JMSGMessage *sendFailImgMessage;
-@property (nonatomic,strong)   JMSGConversation *conversation;
-@property (nonatomic,strong)   UIActivityIndicatorView *downLoadIndicatorView;
-@property (strong, nonatomic)  JMSGMessage *message;
+@property (strong, nonatomic) JCHATChatModel *model;
+@property (strong, nonatomic) UILabel *percentLabel;
+@property (strong, nonatomic) UIImageView *headView;
+@property (strong, nonatomic) UIActivityIndicatorView *circleView;
+@property (strong, nonatomic) UIImageView *pictureImgView;
+@property (strong, nonatomic) UIImageView *sendFailView;
+@property (strong, nonatomic) JMSGMessage *sendFailImgMessage;
+@property (strong, nonatomic) JMSGConversation *conversation;
+@property (strong, nonatomic) UIActivityIndicatorView *downLoadIndicatorView;
+@property (strong, nonatomic) JMSGMessage *message;
+@property (strong, nonatomic) NSString *headViewFlag;
 -(void)sendImageMessage;
 
 -(void)setCellData :(UIViewController *)controler
