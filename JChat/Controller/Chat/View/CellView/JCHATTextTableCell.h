@@ -15,18 +15,19 @@
 @end
 
 @interface JCHATTextTableCell : UITableViewCell<UIAlertViewDelegate,JMessageDelegate>
-@property (assign, nonatomic) BOOL isMe;
-@property (strong, nonatomic) JCHATChatModel *model;
-@property (nonatomic,strong)  UIActivityIndicatorView *stateView;
-@property (strong, nonatomic)  UIImageView *sendFailView;
-@property (nonatomic,strong)   UIImageView *chatView;
-@property (nonatomic,strong)   UIImageView *chatbgView;
-@property (nonatomic,strong)   UIImageView *headImgView;
-@property (nonatomic,strong)   UILabel *contentLabel;
-@property (assign, nonatomic)  id<selectHeadViewDelegate> delegate;
-@property (nonatomic,strong)   JMSGMessage *sendFailMessage;
-@property (nonatomic,strong)   JMSGConversation *conversation;
-@property (nonatomic,strong)   JMSGMessage *message;
+@property (nonatomic, assign) BOOL isMe;
+@property (nonatomic, strong) JCHATChatModel *model;
+@property (nonatomic, strong) UIActivityIndicatorView *stateView;
+@property (nonatomic, strong) UIImageView *sendFailView;
+@property (nonatomic, strong) UIImageView *chatView;
+@property (nonatomic, strong) UIImageView *chatbgView;
+@property (nonatomic, strong) UIImageView *headImgView;
+@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, assign) id<selectHeadViewDelegate> delegate;
+@property (nonatomic, strong) JMSGMessage *sendFailMessage;
+@property (nonatomic, strong) JMSGConversation *conversation;
+@property (nonatomic, strong) JMSGUser *fromUser;
+@property (nonatomic, strong) NSString *headViewFlag;
 
 - (void)setCellData:(JCHATChatModel *)model delegate:(id )delegate;
 
