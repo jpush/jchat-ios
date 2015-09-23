@@ -39,9 +39,9 @@
 
     [self setUserInteractionEnabled:YES];
     [self.pictureImgView setUserInteractionEnabled:YES];
-    UIImage *img=nil;
-    img =[UIImage imageNamed:@"mychatBg"];
-    UIImage *newImg =[img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
+    UIImage *tmpImg=nil;
+    tmpImg =[UIImage imageNamed:@"mychatBg"];
+    UIImage *newImg =[tmpImg resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
     [self.pictureImgView setImage:newImg];
     [self.pictureImgView setBackgroundColor:[UIColor clearColor]];
     
@@ -201,6 +201,7 @@
 - (void)setCellData :(UIViewController *)controler chatModel :(JCHATChatModel *)chatModel message:(JMSGMessage *)message indexPath :(NSIndexPath *)indexPath {
   self.conversation = chatModel.conversation;
   self.model = chatModel;
+  self.headViewFlag = chatModel.fromUser.username;
   _message= message;
   if (_model.isSending) {
     self.pictureImgView.alpha = 0.5;
@@ -218,20 +219,29 @@
   }
   self.delegate = (id)controler;
   self.cellIndex = indexPath;
-  NSLog(@"huangmin  message  %@",_model.message);
+  NSLog(@"huangmin  message  %@",_model.fromUser);
   [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
   typeof(self) __weak weakSelf = self;
-  [_model.message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
-            if (error == nil) {
-              JPIMMAINTHEAD(^{
-                [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
-              });
-      
-            }else {
-              DDLogDebug(@"Action -- get thumbavatar fail");
-            }
-          }];
+  
+  if (_model.avatar == nil) {
+    [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+      if (error == nil) {
+        JPIMMAINTHEAD(^{
+          if ([objectId isEqualToString:self.headViewFlag]) {
+            [weakSelf.headView setImage:[UIImage imageWithData:data]];
+          } else {
+            DDLogDebug(@"该头像是异步乱序的头像");
+          }
+        });
+      } else {
+        DDLogDebug(@"Action -- get thumbavatar fail");
+      }
+    }];
+  } else {
+    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
+  }
 
+  
   dispatch_async(dispatch_get_main_queue(),^{
     [self updateFrame];
   });

@@ -12,13 +12,13 @@
 
 @interface JCHATChatModel : NSObject
 @property (nonatomic, strong) JMSGMessage * message;
+@property (nonatomic, strong) JMSGUser *fromUser;
 @property (nonatomic, strong) NSString *messageId;
 @property (nonatomic, strong) NSString *targetId;
 //@property (nonatomic,strong)  id target;
 
 @property (nonatomic, strong) NSString *fromId;
 @property (nonatomic, strong) NSData   *mediaData;
-//@property (nonatomic,strong)   NSString *avatar;
 @property (nonatomic, strong) NSData *avatar;
 @property (nonatomic, strong) NSString *displayName;
 @property (nonatomic, strong) NSString *chatContent;
@@ -38,6 +38,7 @@
 @property (nonatomic, assign) BOOL isSending;
 @property (nonatomic, assign) float contentHeight;
 @property (nonatomic, assign) CGSize imageSize;
+@property (nonatomic, assign) BOOL isTime;
 -(float)getTextHeight;
 -(CGSize)getImageSize;
 

@@ -168,7 +168,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  @discussion 需要展示缩略图时使用。
  如果本地已经有文件，则会返回本地，否则会从服务器上下载。
  */
-- (void)thumbAvatarData:(JMSGCompletionHandler)handler;
+- (void)thumbAvatarData:(JMSGAsyncDataHandler)handler;
 
 /*!
  @abstract 获取头像大图文件数据
@@ -178,7 +178,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  @discussion 需要展示大图图时使用
  如果本地已经有文件，则会返回本地，否则会从服务器上下载。
  */
-- (void)largeAvatarData:(JMSGCompletionHandler)handler;
+- (void)largeAvatarData:(JMSGAsyncDataHandler)handler;
 
 /*!
  @abstract 用户展示名

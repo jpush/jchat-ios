@@ -259,26 +259,45 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
             message:(JMSGMessage *)message
           indexPath:(NSIndexPath *)indexPath {
   self.conversation = model.conversation;
+  self.headViewFlag = model.fromUser.username;
   self.delegate = delegate;
-  _message = message;
   [self.stateView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
   self.model = model;
 
   [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-  typeof(self) __weak weakSelf = self;
-  JMSGUser *tmpUser = _message.fromUser;
-  [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
-    NSLog(@"huangmin dashuai in");
-    if (error == nil) {
-      JPIMMAINTHEAD(^{
-        if (resultObject !=nil) {
-          [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
-        }
-      });
-    }else {
-      DDLogDebug(@"Action -- get thumbavatar fail");
-    }
-  }];
+//  typeof(self) __weak weakSelf = self;
+//  JMSGUser *tmpUser = _message.fromUser;
+//  [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
+//    NSLog(@"huangmin dashuai in");
+//    if (error == nil) {
+//      JPIMMAINTHEAD(^{
+//        if (resultObject !=nil) {
+//          [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
+//        }
+//      });
+//    }else {
+//      DDLogDebug(@"Action -- get thumbavatar fail");
+//    }
+//  }];
+  _message = model.message;
+  if (_model.avatar == nil) {
+    [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+      if (error == nil) {
+        JPIMMAINTHEAD(^{
+          if ([objectId isEqualToString:self.headViewFlag]) {
+            [self.headView setImage:[UIImage imageWithData:data]];
+          } else {
+            DDLogDebug(@"该头像是异步乱序的头像");
+          }
+        });
+      } else {
+        DDLogDebug(@"Action -- get thumbavatar fail");
+      }
+    }];
+  } else {
+    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
+  }
+  
   self.indexPath = indexPath;
   if ([model.voiceTime rangeOfString:@"''"].location != NSNotFound) {
     self.voiceTimeLable.text = model.voiceTime;
@@ -312,25 +331,25 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
     // 这条消息之前的状态是下载失败，则先重新下载
     self.message = [self.conversation messageWithMessageId:self.model.messageId];
-    [((JMSGVoiceContent *)self.message.content) voiceData:^(id resultObject, NSError *error) {
-      if (error == nil) {
 
-        if (resultObject != nil) {
-          self.model.mediaData = resultObject;
-          self.model.messageStatus = kJMSGMessageStatusReceiveSucceed;
-          status =  @"下载语音成功";
-          DDLogDebug(@"%@ -%@", status, [(NSURL *) resultObject path]);
-          [self playVoice];
-          [MBProgressHUD showMessage:status view:self];
-        }
-      }else {
-        DDLogDebug(@"Action  voiceData");
-        status = @"获取消息失败。。。";
-        [MBProgressHUD showMessage:status view:self];
-      }
-
+    [((JMSGVoiceContent *)self.message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
+            if (error == nil) {
+      
+              if (data != nil) {
+                self.model.mediaData = data;
+                self.model.messageStatus = kJMSGMessageStatusReceiveSucceed;
+                status =  @"下载语音成功";
+                DDLogDebug(@"%@ -%@", status, [(NSURL *) data path]);
+                [self playVoice];
+                [MBProgressHUD showMessage:status view:self];
+              }
+            }else {
+              DDLogDebug(@"Action  voiceData");
+              status = @"获取消息失败。。。";
+              [MBProgressHUD showMessage:status view:self];
+            }
+      
     }];
-
     return;
   }
   

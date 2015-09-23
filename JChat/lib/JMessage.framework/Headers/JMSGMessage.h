@@ -49,12 +49,12 @@ JMSG_ASSUME_NONNULL_BEGIN
 ///----------------------------------------------------
 
 /*!
- @abstract 创建单聊消息（快捷接口）
-
- @param content 消息内容对象
- @param username 单聊用户 username
-
- @discussion 不关心会话时的直接创建聊天消息的接口。一般建议使用 JMSGConversation -> createMessageWithContent:
+ * @abstract 创建单聊消息（快捷接口）
+ *
+ * @param content 消息内容对象
+ * @param username 单聊用户 username
+ *
+ * @discussion 不关心会话时的直接创建聊天消息的接口。一般建议使用 JMSGConversation -> createMessageWithContent:
  */
 + (JMSGMessage *)createSingleMessageWithContent:(JMSGAbstractContent *)content
                                        username:(NSString *)username;

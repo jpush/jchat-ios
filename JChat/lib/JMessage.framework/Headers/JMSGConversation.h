@@ -17,8 +17,8 @@
 @class JMSGImageContent;
 
 /*!
- @typedef
- @abstract 会话类型 - 单聊、群聊
+ * @typedef
+ * @abstract 会话类型 - 单聊、群聊
  */
 typedef NS_ENUM(NSInteger, JMSGConversationType) {
   kJMSGConversationTypeSingle = 1,
@@ -26,29 +26,28 @@ typedef NS_ENUM(NSInteger, JMSGConversationType) {
 };
 
 /*!
- @typedef
- @abstract 消息内容类型 - 文本、语音、图片等
+ * @typedef
+ * @abstract 消息内容类型 - 文本、语音、图片等
  */
 typedef NS_ENUM(NSInteger, JMSGContentType) {
-  kJMSGContentTypeUnknown = 0,  // 文本消息（不知道类型的消息）
-  kJMSGContentTypeText,         // 文本消息
-  kJMSGContentTypeImage,        // 图片消息
-  kJMSGContentTypeVoice,        // 语音消息
-  kJMSGContentTypeCustom,       // 自定义消息
-  kJMSGContentTypeEventNotification, // 事件通知消息。服务器端下发的事件通知，本地展示为这个类型的消息展示出来
-  kJMSGContentTypeTime,         // 会话时间。UI 层可用于展示会话时间。SDK 暂未做处理。
+  kJMSGContentTypeUnknown = 0,  // 不知道类型的消息: 上层应提示升级之类
+  kJMSGContentTypeText = 1,         // 文本消息
+  kJMSGContentTypeImage = 2,        // 图片消息
+  kJMSGContentTypeVoice = 3,        // 语音消息
+  kJMSGContentTypeCustom = 4,       // 自定义消息
+  kJMSGContentTypeEventNotification = 5, // 事件通知消息。服务器端下发的事件通知，本地展示为这个类型的消息展示出来
 };
 
 /*!
- @typedef
- @abstract 消息状态
+ * @typedef
+ * @abstract 消息状态
  */
 typedef NS_ENUM(NSInteger, JMSGMessageStatus) {
   /// Send Message
-  kJMSGMessageStatusSendDraft = 0,
-  kJMSGMessageStatusSending = 1,
-  kJMSGMessageStatusSendUploadSucceed = 2,
-  kJMSGMessageStatusSendUploadFailed = 3,
+  kJMSGMessageStatusSendDraft = 0,    // 消息创建时的初始状态
+  kJMSGMessageStatusSending = 1,      // 消息正在发送过程中. UI 一般显示进度条
+  kJMSGMessageStatusSendUploadFailed = 2,   //
+  kJMSGMessageStatusSendUploadSucceed = 3,  //
   kJMSGMessageStatusSendFailed = 4,
   kJMSGMessageStatusSendSucceed = 5,
   /// Received Message

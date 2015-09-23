@@ -48,7 +48,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  @discussion
  如果本地还没有语音数据，会发起网络请求下载。下载完后再回调。
  */
-- (void)voiceData:(JMSGCompletionHandler)handler;
+- (void)voiceData:(JMSGAsyncDataHandler)handler;
 
 
 JMSG_ASSUME_NONNULL_END

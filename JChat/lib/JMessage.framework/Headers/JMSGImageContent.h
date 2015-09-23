@@ -45,7 +45,7 @@
  @discussion 一般在预览图片大图时，要用此接口。
  */
 - (void)largeImageDataWithProgress:(NSProgress * JMSG_NULLABLE)progress
-                 completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+                 completionHandler:(JMSGAsyncDataHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 获取图片消息的缩略图数据
@@ -55,7 +55,7 @@
  @discussion 展示缩略时调用此接口，获取缩略图数据。
  如果本地还没有图片，会发起网络请求下载。下载完后再回调。
  */
-- (void)thumbImageData:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+- (void)thumbImageData:(JMSGAsyncDataHandler JMSG_NULLABLE)handler;
 
 
 
