@@ -15,45 +15,59 @@
 #import <Foundation/Foundation.h>
 
 
-#pragma mark - macros
-
-#define JMSG_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
+///----------------------------------------------------
+/// @name type & define
+///----------------------------------------------------
 
 /*!
  @abstract 异步回调 block
 
  @discussion 大多数异步 API 都会以过个 block 回调。
- 如果调用出错，则 error 不为空，可根据 error.code 来获取错误码。该错误码 JMessage 相关文档里有详细的定义。
- 如果返回正常，则 error 为空。从 resultObject 去获取相应的返回。每个 API 的定义上都会有进一步的定义。
+
+ - 如果调用出错，则 error 不为空，可根据 error.code 来获取错误码。该错误码 JMessage 相关文档里有详细的定义。
+ - 如果返回正常，则 error 为空。从 resultObject 去获取相应的返回。每个 API 的定义上都会有进一步的定义。
+
  */
 typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
 
 /*!
- * @abstract 数据返回的异步回调
+ * @abstract 空的 CompletionHandler.
  *
- * @discussion
- */
-typedef void (^JMSGAsyncDataHandler)(NSData *data, NSString *objectId, NSError *error);
-
-/*!
- @abstract 空的回调 block
+ * @discussion 用于不需要进行处理时.
  */
 #define JMSG_NULL_COMPLETION_BLOCK ^(id resultObject, NSError *error){}
 
 /*!
- @abstract 媒体上传进度 block
- @discussion 在发送消息时，可向 JMSGMessage 对象设置此 block，从而可以得到上传的进度
+ * @abstract 数据返回的异步回调
+ *
+ * @discussion 专用于数据返回 API.
+ *
+ * - objectId 当前数据的ID标识.
+ *   - 消息里返回 voice/image 的 media data 时, objectId 是 msgId;
+ *   - 用户里返回 avatar 头像数据时, objectId 是 username.
+ *
+ */
+typedef void (^JMSGAsyncDataHandler)(NSData *data, NSString *objectId, NSError *error);
+
+/*!
+ * @abstract 媒体上传进度 block
+ *
+ * @discussion 在发送消息时，可向 JMSGMessage 对象设置此 block，从而可以得到上传的进度
  */
 typedef void (^JMSGMediaUploadProgressHandler)(float percent);
 
-// generic
+/*!
+ * @abstract Generic 泛型
+ */
 #if __has_feature(objc_generics) || __has_extension(objc_generics)
 #  define JMSG_GENERIC(...) <__VA_ARGS__>
 #else
 #  define JMSG_GENERIC(...)
 #endif
 
-// nullable
+/*!
+ * @abstract nullable 用于定义某属性或者变量是否可允许为空
+ */
 #if __has_feature(nullability)
 #  define JMSG_NONNULL __nonnull
 #  define JMSG_NULLABLE __nullable
@@ -78,12 +92,72 @@ typedef void (^JMSGMediaUploadProgressHandler)(float percent);
 #  define JMSG_ASSUME_NONNULL_END
 #endif
 
-#pragma mark - Error Definitions
+
+///----------------------------------------------------
+/// @name enums
+///----------------------------------------------------
+
+/*!
+ * @typedef
+ * @abstract 会话类型 - 单聊、群聊
+ */
+typedef NS_ENUM(NSInteger, JMSGConversationType) {
+  kJMSGConversationTypeSingle = 1,
+  kJMSGConversationTypeGroup = 2,
+};
+
+/*!
+ * @typedef
+ * @abstract 消息内容类型 - 文本、语音、图片等
+ */
+typedef NS_ENUM(NSInteger, JMSGContentType) {
+  kJMSGContentTypeUnknown = 0,  // 不知道类型的消息: 上层应提示升级之类
+  kJMSGContentTypeText = 1,         // 文本消息
+  kJMSGContentTypeImage = 2,        // 图片消息
+  kJMSGContentTypeVoice = 3,        // 语音消息
+  kJMSGContentTypeCustom = 4,       // 自定义消息
+  kJMSGContentTypeEventNotification = 5, // 事件通知消息。服务器端下发的事件通知，本地展示为这个类型的消息展示出来
+};
+
+/*!
+ * @typedef
+ * @abstract 消息状态
+ */
+typedef NS_ENUM(NSInteger, JMSGMessageStatus) {
+  /// Send Message
+      kJMSGMessageStatusSendDraft = 0,    // 消息创建时的初始状态
+  kJMSGMessageStatusSending = 1,      // 消息正在发送过程中. UI 一般显示进度条
+  kJMSGMessageStatusSendUploadFailed = 2,   //
+  kJMSGMessageStatusSendUploadSucceed = 3,  //
+  kJMSGMessageStatusSendFailed = 4,
+  kJMSGMessageStatusSendSucceed = 5,
+  /// Received Message
+      kJMSGMessageStatusReceiving = 6,
+  kJMSGMessageStatusReceiveDownloadFailed = 7,
+  kJMSGMessageStatusReceiveSucceed = 8,
+};
+
 
 /*!
  @typedef
- @abstract JMessage SDK 的错误码汇总
- @discussion 错误码以 86 打头，都为 iOS SDK 内部的错误码
+ @abstract 上传文件的类型
+ */
+typedef NS_ENUM(NSInteger, JMSGFileType) {
+  kJMSGFileTypeUnknown,
+  kJMSGFileTypeImage,
+  kJMSGFileTypeVoice,
+};
+
+
+///----------------------------------------------------
+/// @name errors
+///----------------------------------------------------
+
+/*!
+ * @typedef
+ * @abstract JMessage SDK 的错误码汇总
+ *
+ * @discussion 错误码以 86 打头，都为 iOS SDK 内部的错误码
  */
 typedef NS_ENUM(NSInteger, JMSGSDKErrorCode) {
 
@@ -196,8 +270,9 @@ typedef NS_ENUM(NSUInteger, JMSGTcpErrorCode) {
 };
 
 
-
-#pragma mark - Global Keys 
+///----------------------------------------------------
+/// @name Global keys 全局静态变量定义
+///----------------------------------------------------
 
 // General key
 

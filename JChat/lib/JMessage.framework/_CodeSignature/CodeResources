@@ -10,11 +10,11 @@
 		</data>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		+dIvjg3Sf1g2wtrS6mwg0L8dqIg=
+		+Xr6oXmfGgkgUYhbZnFVO5T63Hk=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		a8nU9sY22tCbwREcsCEy4WjM94w=
+		QDxuqTAUkb3O3JfTb4Jvo8lCecU=
 		</data>
 		<key>Headers/JMSGConversationDelegate.h</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		3Lr7qNtQkOwAe9gK898RgIYNEWI=
+		WVOs/S29e7C8b1EZ+eAEFFDUthE=
 		</data>
 		<key>Headers/JMSGMessageDelegate.h</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		F99Dltd9fVeoZPcD0/9IregTr9c=
+		sLec3khyLaFBchwpT7D7AeMpD98=
 		</data>
 		<key>Headers/JMSGVoiceContent.h</key>
 		<data>
@@ -70,7 +70,7 @@
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		F8yfN+Gs0bobdsAhwfmc5DlThqg=
+		uYkOkt805HUr/+Z16JYEBooAXGk=
 		</data>
 		<key>Headers/JMessageDelegate.h</key>
 		<data>
@@ -97,11 +97,11 @@
 		</data>
 		<key>Headers/JMSGConstants.h</key>
 		<data>
-		+dIvjg3Sf1g2wtrS6mwg0L8dqIg=
+		+Xr6oXmfGgkgUYhbZnFVO5T63Hk=
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		a8nU9sY22tCbwREcsCEy4WjM94w=
+		QDxuqTAUkb3O3JfTb4Jvo8lCecU=
 		</data>
 		<key>Headers/JMSGConversationDelegate.h</key>
 		<data>
@@ -133,7 +133,7 @@
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		3Lr7qNtQkOwAe9gK898RgIYNEWI=
+		WVOs/S29e7C8b1EZ+eAEFFDUthE=
 		</data>
 		<key>Headers/JMSGMessageDelegate.h</key>
 		<data>
@@ -149,7 +149,7 @@
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		F99Dltd9fVeoZPcD0/9IregTr9c=
+		sLec3khyLaFBchwpT7D7AeMpD98=
 		</data>
 		<key>Headers/JMSGVoiceContent.h</key>
 		<data>
@@ -157,7 +157,7 @@
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		F8yfN+Gs0bobdsAhwfmc5DlThqg=
+		uYkOkt805HUr/+Z16JYEBooAXGk=
 		</data>
 		<key>Headers/JMessageDelegate.h</key>
 		<data>

@@ -12,9 +12,9 @@
 #import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
 
-/**
-*  更新用户信息类型
-*/
+/*!
+ * @abstract 更新用户字段
+ */
 typedef NS_ENUM(NSUInteger, JMSGUserField) {
   kJMSGUserFieldsNickname = 0,
   kJMSGUserFieldsBirthday = 1,
@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserField) {
 };
 
 /*!
- *
+ * @abstract 用户性别
  */
 typedef NS_ENUM(NSUInteger, JMSGUserGender) {
   kJMSGUserGenderUnknown = 0,

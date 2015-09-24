@@ -30,7 +30,7 @@
   _messageId = message.msgId;
   _fromId = message.fromUser.username;
   _type = message.contentType;
-  _isMyMessage = ![message isReceivedSide];
+  _isMyMessage = ![message isReceived];
   _messageStatus = message.status;
   _messageTime = message.timestamp;
   _sendFlag = NO;
@@ -79,13 +79,13 @@
       _voicePath = ((JMSGVoiceContent *)message.content).voicePath;
       _voiceTime = [NSString stringWithFormat:@"%@",((JMSGVoiceContent *)message.content).duration];
       
-//      [((JMSGVoiceContent *)message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
-//        if (error == nil) {
-//          _mediaData = data;
-//        }else {
-//          DDLogDebug(@"get message voiceData fail with error %@",error);
-//        }
-//      }];
+      [((JMSGVoiceContent *)message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
+        if (error == nil) {
+          _mediaData = data;
+        }else {
+          DDLogDebug(@"get message voiceData fail with error %@",error);
+        }
+      }];
     }
       break;
     case kJMSGContentTypeEventNotification:

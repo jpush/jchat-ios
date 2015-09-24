@@ -16,56 +16,6 @@
 @class JMSGAbstractContent;
 @class JMSGImageContent;
 
-/*!
- * @typedef
- * @abstract 会话类型 - 单聊、群聊
- */
-typedef NS_ENUM(NSInteger, JMSGConversationType) {
-  kJMSGConversationTypeSingle = 1,
-  kJMSGConversationTypeGroup = 2,
-};
-
-/*!
- * @typedef
- * @abstract 消息内容类型 - 文本、语音、图片等
- */
-typedef NS_ENUM(NSInteger, JMSGContentType) {
-  kJMSGContentTypeUnknown = 0,  // 不知道类型的消息: 上层应提示升级之类
-  kJMSGContentTypeText = 1,         // 文本消息
-  kJMSGContentTypeImage = 2,        // 图片消息
-  kJMSGContentTypeVoice = 3,        // 语音消息
-  kJMSGContentTypeCustom = 4,       // 自定义消息
-  kJMSGContentTypeEventNotification = 5, // 事件通知消息。服务器端下发的事件通知，本地展示为这个类型的消息展示出来
-};
-
-/*!
- * @typedef
- * @abstract 消息状态
- */
-typedef NS_ENUM(NSInteger, JMSGMessageStatus) {
-  /// Send Message
-  kJMSGMessageStatusSendDraft = 0,    // 消息创建时的初始状态
-  kJMSGMessageStatusSending = 1,      // 消息正在发送过程中. UI 一般显示进度条
-  kJMSGMessageStatusSendUploadFailed = 2,   //
-  kJMSGMessageStatusSendUploadSucceed = 3,  //
-  kJMSGMessageStatusSendFailed = 4,
-  kJMSGMessageStatusSendSucceed = 5,
-  /// Received Message
-  kJMSGMessageStatusReceiving = 6,
-  kJMSGMessageStatusReceiveDownloadFailed = 7,
-  kJMSGMessageStatusReceiveSucceed = 8,
-};
-
-
-/*!
- @typedef
- @abstract 上传文件的类型
- */
-typedef NS_ENUM(NSInteger, JMSGFileType) {
-  kJMSGFileTypeUnknown,
-  kJMSGFileTypeImage,
-  kJMSGFileTypeVoice,
-};
 
 @interface JMSGConversation : NSObject
 
@@ -270,8 +220,8 @@ JMSG_ASSUME_NONNULL_BEGIN
 
  @discussion 对于图片消息，因为 SDK 要做缩图有一定的性能损耗，图片文件很大时存储落地也会较慢。所以创建图片消息，建议使用这个异步接口。
  */
-- (void)createMessageAyncWithImageContent:(JMSGImageContent *)content
-                        completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+- (void)createMessageAsyncWithImageContent:(JMSGImageContent *)content
+                         completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  @abstract 发送消息（已经创建好对象的）
