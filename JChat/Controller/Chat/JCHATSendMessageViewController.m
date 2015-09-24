@@ -552,12 +552,14 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   NSArray *temp_MediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
   picker.mediaTypes = temp_MediaTypes;
   picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+
   [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark --调用相机
 -(void)cameraClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+  
   if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     NSString *requiredMediaType = ( NSString *)kUTTypeImage;
