@@ -37,13 +37,16 @@ JMSG_ASSUME_NONNULL_BEGIN
                 memberArray:(NSArray JMSG_GENERIC(__kindof NSString *)* JMSG_NULLABLE)usernameArray
           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
-/**
-*  更新群组信息
-*
-*  @param handler       异步回调 Block。
-*         Handler 里 resultObject 是更新后的群组信息，其内容类型是 JMSGGroup。
-*/
-+ (void)updateGroupInfoWithGroup:(JMSGGroup *)group
+/*!
+ * @abstract 更新群组信息
+ *
+ * @param groupName
+ * @param handler       异步回调 Block。
+ *         Handler 里 resultObject 是更新后的群组信息，其内容类型是 JMSGGroup。
+ */
++ (void)updateGroupInfoWithGroupId:(NSString *)groupId
+                              name:(NSString *)groupName
+                       description:(NSString *)groupDesc
                completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /**

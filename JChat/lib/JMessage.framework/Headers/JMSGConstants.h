@@ -203,7 +203,7 @@ typedef NS_ENUM(NSInteger, JMSGSDKErrorCode) {
 
   kJMSGErrorSDKParamUsernameInvalid = 863001, // 用户名不合法
   kJMSGErrorSDKParamPasswordInvalid = 863002, // 用户密码不合法
-
+  kJMSGErrorSDKParamAvatarNil = 86303,        // 用户头像属性为空
 
   /// Media Resource - 864
 

@@ -321,7 +321,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 //      return;
 //    }
 //  }
-  if ([self.conversation isMessageForThisConversation:message]) {
+  if (![self.conversation isMessageForThisConversation:message]) {
     return;
   }
   DDLogDebug(@"Event - receiveMessageNotification");
@@ -628,8 +628,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 #pragma mark --add Delegate
 - (void)addDelegate {
-//  [JMessage addDelegate:self withConversation:self.conversation];
-  [JMessage addDelegate:self withConversation:nil];
+  [JMessage addDelegate:self withConversation:self.conversation];
+//  [JMessage addDelegate:self withConversation:nil];
 }
 #pragma mark --加载通知
 -(void)addNotification{
@@ -1000,7 +1000,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }else if(model.type == kJMSGContentTypeImage)
   {
     static NSString *cellIdentifier = @"imgCell";
-    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     if (cell == nil) {
       cell = [[JCHATImgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }

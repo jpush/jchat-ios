@@ -152,12 +152,13 @@ JMSG_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign, readonly) JMSGUserGender gender;
 
 /*!
- @abstract 生日
+ * @abstract 生日
  */
 @property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE birthday;
+
 @property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE region;
+
 @property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE signature;
-@property(nonatomic, copy, readonly) NSString * cTime;
 
 
 /*!
