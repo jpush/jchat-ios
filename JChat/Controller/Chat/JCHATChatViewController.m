@@ -102,9 +102,7 @@
   // 用 searchbar 初始化 SearchDisplayController
   // 并把 searchDisplayController 和当前 controller 关联起来
   searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-  // searchResultsDataSource 就是 UITableViewDataSource
   searchDisplayController.searchResultsDataSource = self;
-  // searchResultsDelegate 就是 UITableViewDelegate
   searchDisplayController.searchResultsDelegate = self;
   
   _addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 1, 100, 100)];
@@ -119,6 +117,7 @@
 
   [self addBtn];
   [self addDelegate];
+  [self getConversationList];
 }
 
 - (void)addDelegate {
@@ -239,6 +238,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
+  [self getConversationList];
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
     //    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   }
@@ -277,10 +277,14 @@
   [self getConversationList];
 }
 
+- (void)onGroupInfoChanged:(JMSGGroup *)group {
+  [self getConversationList];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   DDLogDebug(@"Action - viewDidAppear");
   [super viewDidAppear:YES];
-  [self getConversationList];
+//  [self getConversationList];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

@@ -97,7 +97,18 @@
   self.headView.layer.cornerRadius = 23;
   [self.headView.layer setMasksToBounds:YES];
   if (conversation.conversationType == kJMSGConversationTypeSingle) {
-    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+    [conversation.target thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+      if (error == nil) {
+        if (data != nil) {
+          [self.headView setImage:[UIImage imageWithData:data]];
+        } else {
+          [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+        }
+      } else {
+        DDLogDebug(@"fail to get thumbAvatarData");
+      }
+
+    }];
   } else {
     [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
   }
@@ -120,28 +131,8 @@
   } else {
     self.time.text = @"";
   }
-  
-//  if (conversation.latestMessage.contentType == kJMSGContentTypeUnknown) {
-//    self.message.text = @"";
-//    return;
-//  }
+
   self.message.text = conversation.latestMessageContentText;
-//  switch (conversation.latestMessage.contentType) {
-//    case kJMSGContentTypeText:
-//      self.message.text = [conversation latestMessageContentText];
-//      break;
-//    case kJMSGContentTypeImage:
-//      self.message.text = @"[图片]";
-//      break;
-//    case kJMSGContentTypeVoice:
-//      self.message.text = @"[语音]";
-//      break;
-//    case kJMSGContentTypeEventNotification:
-//      self.message.text = [((JMSGEventContent *)conversation.latestMessage.content) showEventNotification];
-//      break;
-//    default:
-//      break;
-//  }
 }
 
 

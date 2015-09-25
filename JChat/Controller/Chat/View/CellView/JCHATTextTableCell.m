@@ -49,6 +49,10 @@
   return self;
 }
 
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage addDelegate:self withConversation:converstion];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
   // Configure the view for the selected state
@@ -111,8 +115,6 @@
 }
 - (void)creadBuddleChatView
 {
-  
-  
   [self deleteAllConstrait];
   
   if (_model.type == kJMSGContentTypeText) {
@@ -269,8 +271,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     if (!_sendFailMessage) {
-//      _sendFailMessage = [self.conversation messageWithMessageId:_model.messageId];
-
       [JMSGMessage sendMessage:_model.message];
 //      if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
 //        [JMSGMessage sendMessage:<#(JMSGMessage *)#>]
@@ -311,5 +311,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)dealloc {
   DDLogDebug(@"Action -- dealloc");
+  [JMessage removeDelegate:self];
 }
 @end
