@@ -231,7 +231,9 @@ typedef NS_ENUM(NSInteger, JMSGSDKErrorCode) {
 
   kJMSGErrorSDKParamGroupGroupIdInvalid = 867001, // GroupId 错误
   kJMSGErrorSDKParamGroupGroupInfoInvalid = 867002, // Group 其他信息不对
-
+  
+  // Media - 868
+  kJMSGErrorMediaCrcInvalid = 868001,   // crc32 错误
 };
 
 /*!

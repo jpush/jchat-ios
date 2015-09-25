@@ -35,32 +35,24 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     chatBgViewWidth = 60;
     [self setBackgroundColor:[UIColor clearColor]];
-//    self.voiceTimeLable = [[UILabel alloc] init];
+
     self.voiceTimeLable = [UILabel new];
-//    self.voiceBgView = [[UIImageView alloc] init];
     self.voiceBgView = [UIImageView new];
-    
     [self.voiceBgView setBackgroundColor:[UIColor clearColor]];
     [self addSubview:self.voiceBgView];
     
-//    self.headView = [[UIImageView alloc] init];
     self.headView = [UIImageView new];
     [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
-    [self addSubview:self.headView];
-
     self.headView.layer.cornerRadius = 23;
     [self.headView.layer setMasksToBounds:YES];
+    [self addSubview:self.headView];
     
-//    self.voiceImgView = [[UIImageView alloc] init];
     self.voiceImgView = [UIImageView new];
     [self.voiceImgView setBackgroundColor:[UIColor clearColor]];
     [self.voiceImgView setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
     [self addSubview:self.voiceTimeLable];
-//    [self.voiceImgView setFrame:CGRectMake(30, 5, 9, 30)];//!
-
     
     [self.voiceTimeLable setBackgroundColor:[UIColor clearColor]];
-//    [self.voiceTimeLable setFrame:CGRectMake(5, 5, 45, 30)];
     [self.voiceTimeLable setTextColor:UIColorFromRGB(0x636363)];
     self.voiceTimeLable.textAlignment = NSTextAlignmentLeft;
     self.voiceTimeLable.font = [UIFont systemFontOfSize:18];
@@ -71,7 +63,6 @@
     img = [UIImage imageNamed:@"mychatBg"];
     UIImage *newImg = [img resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
     [self.voiceBgView setImage:newImg];
-//    [self.voiceBgView setFrame:CGRectMake(kApplicationWidth - 70, 0, 100, 60)];
     self.voiceBgView.layer.cornerRadius = 6;
     [self.voiceBgView.layer setMasksToBounds:YES];
     
@@ -109,40 +100,42 @@
   return self;
 }
 
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage addDelegate:self withConversation:converstion];
+}
+
 #pragma mark --发送消息响应
-//- (void)sendMessageResponse:(NSNotification *)response {
-//  DDLogDebug(@"Event - sendMessageResponse");
-//  
-//  JPIMMAINTHEAD(^{
-//    [self.stateView stopAnimating];
-//    
-//    NSDictionary *responseDic = [response userInfo];
-//    NSError *error = responseDic[KEY_ERROR];
-//    JMSGMessage *message = responseDic[JMSGSendMessageObject];
-//    
-//    if (![message.messageId isEqualToString:_message.messageId]) {
-//      DDLogWarn(@"The response msgId is not for this cell");
-//      return;
-//    }
-//    
-//    if (error == nil) {
-//      DDLogVerbose(@"VoiceMessage response - %@", message);
-//      self.model.messageStatus = kJMSGStatusSendSucceed;
-//      [self.sendFailView setHidden:YES];
-//      [self.stateView stopAnimating];
-//      [self.stateView setHidden:YES];
-//    } else {
-//      DDLogDebug(@"VoiceMessage response error - %@", error);
-//      self.model.messageStatus = kJMSGStatusSendFail;
-//      [self.sendFailView setHidden:NO];
-//      [self.stateView stopAnimating];
-//      [self.stateView setHidden:YES];
-//      _voiceFailMessage = message;
-//    }
-//    
-//    [self updateFrame];
-//  });
-//}
+- (void)onSendMessageResponse:(JMSGMessage *)message error:(NSError *)error {
+  DDLogDebug(@"Event - sendMessageResponse");
+
+  JPIMMAINTHEAD(^{
+    if (message.contentType != kJMSGContentTypeVoice) {
+      return;
+    }
+    [self.stateView stopAnimating];
+    if (![message.msgId isEqualToString:_message.msgId]) {
+      DDLogWarn(@"The response msgId is not for this cell");
+      return;
+    }
+    
+    if (error == nil) {
+      DDLogVerbose(@"VoiceMessage response - %@", message);
+      self.model.messageStatus = kJMSGMessageStatusSendSucceed;
+      [self.sendFailView setHidden:YES];
+      [self.stateView stopAnimating];
+      [self.stateView setHidden:YES];
+    } else {
+      DDLogDebug(@"VoiceMessage response error - %@", error);
+      self.model.messageStatus = kJMSGMessageStatusSendFailed;
+      [self.sendFailView setHidden:NO];
+      [self.stateView stopAnimating];
+      [self.stateView setHidden:YES];
+      _voiceFailMessage = message;
+    }
+    
+    [self updateFrame];
+  });
+}
 
 #pragma mark -- 语音时长算法
 - (float)getLengthWithDuration:(NSInteger)duration {
@@ -569,5 +562,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   
 }
 
-
+- (void)dealloc {
+  [JMessage removeDelegate:self];
+}
 @end

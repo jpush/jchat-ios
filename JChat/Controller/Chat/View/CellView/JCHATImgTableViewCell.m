@@ -83,6 +83,10 @@
   return self;
 }
 
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage addDelegate:self withConversation:converstion];
+}
+
 - (void)initAutoLayout {
   [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
     make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
@@ -113,44 +117,42 @@
 
 
 #pragma mark --发送消息响应
-//- (void)sendMessageResponse:(NSNotification *)response {
-//  DDLogDebug(@"Event - sendMessageResponse");
-//
-//  JPIMMAINTHEAD(^{
-//        NSDictionary *responseDic = [response userInfo];
-//        NSError *error = [responseDic objectForKey:JMSGSendMessageError];
-//        JMSGImageMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
-//        if (error == nil) {
-//        }else {
-//            JPIMLog(@"Sent voiceMessage Response error:%@",error);
-//        }
-//        if (![message.messageId isEqualToString:_message.messageId]) {
-//            return ;
-//        }
-//        [self.circleView stopAnimating];
-////        self.contentImgView.alpha = 1;
-//        self.pictureImgView.alpha = 1;
-//        _model.isSending = NO;
-//        if (error == nil) {
-//            self.model.messageStatus = kJMSGStatusSendSucceed;
-//            [self.sendFailView setHidden:YES];
-//            [self.circleView stopAnimating];
-//            [self.circleView setHidden:YES];
-//        }else {
-//            self.model.messageStatus = kJMSGStatusSendFail;
-//            [self.sendFailView setHidden:NO];
-//            [self.circleView stopAnimating];
-//            [self.circleView setHidden:YES];
-//            _sendFailImgMessage = [message copy];
-//        }
-//        [self updateFrame];
-//
-//    });
-//}
+- (void)onSendMessageResponse:(JMSGMessage *)message error:(NSError *)error {
+
+  JPIMMAINTHEAD(^{
+    DDLogDebug(@"Event - sendMessageResponse");
+    if (message.contentType != kJMSGContentTypeImage) {
+    return;
+    }
+    if (error == nil) {
+    }else {
+      JPIMLog(@"Sent voiceMessage Response error:%@",error);
+    }
+    if (![message.msgId isEqualToString:_message.msgId]) {
+      return ;
+    }
+    [self.circleView stopAnimating];
+    self.pictureImgView.alpha = 1;
+    _model.isSending = NO;
+    if (error == nil) {
+      self.model.messageStatus = kJMSGMessageStatusSendSucceed;
+      [self.sendFailView setHidden:YES];
+      [self.circleView stopAnimating];
+      [self.circleView setHidden:YES];
+    }else {
+      self.model.messageStatus = kJMSGMessageStatusSendFailed;
+      [self.sendFailView setHidden:NO];
+      [self.circleView stopAnimating];
+      [self.circleView setHidden:YES];
+      _sendFailImgMessage = [message copy];
+    }
+    [self updateFrame];
+    
+  });
+}
 
 - (void)headAddGesture {
     [self.headView setUserInteractionEnabled:YES];
-//    [self.contentImgView setUserInteractionEnabled:YES];
     [self.pictureImgView setUserInteractionEnabled:YES];
 
     UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushPersonInfoCtlClick)];
@@ -271,14 +273,7 @@
       strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
     });
   };
-//  if (self.conversation.chatType == kJMSGConversationTypeSingle) {
-//    _message.conversationType = kJMSGConversationTypeSingle;
-//  }else {
-//    _message.conversationType = kJMSGConversationTypeGroup;
-//  }
-//  _message.targetId = self.model.targetId;
-//  _message.mediaData = self.model.mediaData;
-  
+
   DDLogVerbose(@"The imageMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
 }
@@ -425,6 +420,10 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)dealloc {
+  [JMessage removeDelegate:self];
 }
 
 @end
