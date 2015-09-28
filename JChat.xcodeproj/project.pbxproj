@@ -354,6 +354,7 @@
 		6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
+		628107771BB5711700F1D925 /* TestImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 628107761BB5711700F1D925 /* TestImageView.m */; settings = {ASSET_TAGS = (); }; };
 		8FE536821B3AAD6200EFC8CE /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE536811B3AAD6200EFC8CE /* JMessage.framework */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
@@ -834,6 +835,8 @@
 		6039BF128CC5C5BE6823314B /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
 		6039BF638019C00F541E859F /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
 		6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
+		628107751BB5711700F1D925 /* TestImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestImageView.h; sourceTree = "<group>"; };
+		628107761BB5711700F1D925 /* TestImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestImageView.m; sourceTree = "<group>"; };
 		8F8840A41B159E7500BDC126 /* JChat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JChat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8840A71B159E7500BDC126 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FE536811B3AAD6200EFC8CE /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = JChat/lib/JMessage.framework; sourceTree = "<group>"; };
@@ -1024,6 +1027,8 @@
 				187181CA1AFB80BF00FB3168 /* JCHATShowTimeCell.xib */,
 				44B2813D1B72F2D2009EB372 /* JCHATTextTableCell.h */,
 				44B2813E1B72F2D2009EB372 /* JCHATTextTableCell.m */,
+				628107751BB5711700F1D925 /* TestImageView.h */,
+				628107761BB5711700F1D925 /* TestImageView.m */,
 				44C3E91F1B6DE90D00D3D825 /* JCHATVoiceTableCell.h */,
 				44C3E9201B6DE90D00D3D825 /* JCHATVoiceTableCell.m */,
 				443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */,
@@ -2082,6 +2087,7 @@
 				6039B1E2972C3E3FC1CE0676 /* MKAnnotationView+WebCache.m in Sources */,
 				6039B1A899F5B6D5B108EBF8 /* NSData+GIF.m in Sources */,
 				6039B9EE9A8283C9A2F5E205 /* SDImageCache.m in Sources */,
+				628107771BB5711700F1D925 /* TestImageView.m in Sources */,
 				6039BE427413C75524B44247 /* SDWebImageCompat.m in Sources */,
 				6039BCCABEE11E0FAF50C41F /* SDWebImageDecoder.m in Sources */,
 				6039B890095007FA4FC2A231 /* SDWebImageDownloader.m in Sources */,

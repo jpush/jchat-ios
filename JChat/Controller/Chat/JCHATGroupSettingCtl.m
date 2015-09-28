@@ -181,13 +181,10 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         
         [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
           if (error == nil) {
-            if (data == nil) {
-              [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
-            }else {
-              [personView.headViewBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
-            }
+            [personView.headViewBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
           }else {
             DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
+            [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
           }
         }];
         
@@ -289,7 +286,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         personView.memberLable.text = @"";
         if (i <= [_groupData count] -1) {
             personView.headViewBtn.tag = 1000+i;
-          JMSGUser *user = [_groupData objectAtIndex:i];
+          JMSGUser *user = _groupData[i];
           if (user.nickname) {
             personView.memberLable.text = user.nickname;
           }else {

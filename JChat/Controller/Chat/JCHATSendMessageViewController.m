@@ -314,13 +314,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 #pragma mark --收到消息
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
-//  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-//    if ([_conversation.target isEqualToUser:message.fromUser]) {
-//      
-//    } else {
-//      return;
-//    }
-//  }
   if (![self.conversation isMessageForThisConversation:message]) {
     return;
   }
@@ -336,12 +329,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
     
     if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-//      if (![((JMSGUser *)message.target).username isEqualToString:self.user.username]) {
-//        // FIXME - This condition should be done by SDK.
-//        DDLogWarn(@"It's single chat, but the targetId of the msg is not me. Throw away.");
-//        return;
-//      }
-//      if{}
     } else if (![((JMSGGroup *)_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
       DDLogWarn(@"It's group chat, but the targetId of the msg is not group. Throw away.");
       return;
@@ -357,6 +344,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     model.readState = NO;
     [self addMessage:model];
   }));
+}
+
+- (void)onGroupInfoChanged:(JMSGGroup *)group {
+  NSLog(@"huangmin group info changed  %@",group);
 }
 
 #pragma marks -- UIAlertViewDelegate --
@@ -432,8 +423,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   NSLog(@"houangmin   _messageDic idkey  %ld",[_messageDic[JCHATMessageIdKey] count]);
   [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
   NSLog(@"houangmin   _messageDic idkey  %ld",[_messageDic[JCHATMessageIdKey] count]);
-  //  NSLog(@"huangmin  _messageDic[JChatMessage] %@",)
-//  [self performSelector:@selector(addCellToTabel) withObject:nil afterDelay:1];
   [self addCellToTabel];
 }
 
@@ -458,7 +447,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   DDLogDebug(@"Action - getAllMessage");
   __block NSMutableArray * arrList = [[NSMutableArray alloc] init];
   [self cleanMessageCache];
-  [arrList addObjectsFromArray:[[[_conversation messageArrayFromNewestWithOffset:@0 limit:@200] reverseObjectEnumerator] allObjects]];
+  [arrList addObjectsFromArray:[[[_conversation messageArrayFromNewestWithOffset:nil limit:nil] reverseObjectEnumerator] allObjects]];
 
   for (NSInteger i=0; i< [arrList count]; i++) {
     JMSGMessage *message = [arrList objectAtIndex:i];
@@ -936,8 +925,11 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *messageId = _messageDic[JCHATMessageIdKey][indexPath.row];
   JCHATChatModel *model = _messageDic[JCHATMessage][messageId ];
-  if (model.type == kJMSGContentTypeText || model.isTime == YES ||  model.type ==kJMSGContentTypeEventNotification) {
-    return model.contentHeight +8;
+  if (model.type == kJMSGContentTypeEventNotification || model.isTime == YES) {
+    return 22;
+  }
+  if (model.type == kJMSGContentTypeText) {
+    return model.contentHeight + 8;
   } else if (model.type == kJMSGContentTypeImage) {
     if (model.imageSize.height == 0) {
       model.imageSize = [model getImageSize];
@@ -1000,10 +992,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }else if(model.type == kJMSGContentTypeImage)
   {
     static NSString *cellIdentifier = @"imgCell";
-//    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+//    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
       cell = [[JCHATImgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+      [cell setupMessageDelegateWithConversation:_conversation];
     }
     JMSGMessage *imgMessage = _JMSgMessageDic[model.messageId];
     [cell setCellData:self chatModel:model message:imgMessage indexPath:indexPath];
@@ -1014,6 +1007,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     JCHATVoiceTableCell *cell = (JCHATVoiceTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
       cell = [[JCHATVoiceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+      [cell setupMessageDelegateWithConversation:_conversation];
     }
     
     JMSGMessage *voiceMessage = _JMSgMessageDic[model.messageId];
@@ -1028,7 +1022,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     if (model.type == kJMSGContentTypeEventNotification) {
       cell.messageTimeLabel.text = model.chatContent;
-      //        [cell setCellData:model];
     }else {
       cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
     }

@@ -12,6 +12,7 @@
 #import "Masonry.h"
 #define headHeight 46
 
+#import "TestImageView.h"
 
 @implementation JCHATImgTableViewCell
 
@@ -53,8 +54,8 @@
     self.percentLabel.hidden = NO;
     self.percentLabel.font =[UIFont systemFontOfSize:18];
     self.percentLabel.textAlignment=NSTextAlignmentCenter;
-    self.percentLabel.textColor=[UIColor whiteColor];
-    [self.percentLabel setBackgroundColor:[UIColor clearColor]];
+    self.percentLabel.textColor=[UIColor redColor];
+    [self.percentLabel setBackgroundColor:[UIColor blueColor]];
     
     [self.pictureImgView addSubview:self.percentLabel];
     
@@ -81,6 +82,10 @@
     [self initAutoLayout];
   }
   return self;
+}
+
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage addDelegate:self withConversation:converstion];
 }
 
 - (void)initAutoLayout {
@@ -113,44 +118,42 @@
 
 
 #pragma mark --发送消息响应
-//- (void)sendMessageResponse:(NSNotification *)response {
-//  DDLogDebug(@"Event - sendMessageResponse");
-//
-//  JPIMMAINTHEAD(^{
-//        NSDictionary *responseDic = [response userInfo];
-//        NSError *error = [responseDic objectForKey:JMSGSendMessageError];
-//        JMSGImageMessage *message = [responseDic objectForKey:JMSGSendMessageObject];
-//        if (error == nil) {
-//        }else {
-//            JPIMLog(@"Sent voiceMessage Response error:%@",error);
-//        }
-//        if (![message.messageId isEqualToString:_message.messageId]) {
-//            return ;
-//        }
-//        [self.circleView stopAnimating];
-////        self.contentImgView.alpha = 1;
-//        self.pictureImgView.alpha = 1;
-//        _model.isSending = NO;
-//        if (error == nil) {
-//            self.model.messageStatus = kJMSGStatusSendSucceed;
-//            [self.sendFailView setHidden:YES];
-//            [self.circleView stopAnimating];
-//            [self.circleView setHidden:YES];
-//        }else {
-//            self.model.messageStatus = kJMSGStatusSendFail;
-//            [self.sendFailView setHidden:NO];
-//            [self.circleView stopAnimating];
-//            [self.circleView setHidden:YES];
-//            _sendFailImgMessage = [message copy];
-//        }
-//        [self updateFrame];
-//
-//    });
-//}
+- (void)onSendMessageResponse:(JMSGMessage *)message error:(NSError *)error {
+
+  JPIMMAINTHEAD(^{
+    DDLogDebug(@"Event - sendMessageResponse");
+    if (message.contentType != kJMSGContentTypeImage) {
+    return;
+    }
+    if (error == nil) {
+    }else {
+      JPIMLog(@"Sent voiceMessage Response error:%@",error);
+    }
+    if (![message.msgId isEqualToString:_message.msgId]) {
+      return ;
+    }
+    [self.circleView stopAnimating];
+    self.pictureImgView.alpha = 1;
+    _model.isSending = NO;
+    if (error == nil) {
+      self.model.messageStatus = kJMSGMessageStatusSendSucceed;
+      [self.sendFailView setHidden:YES];
+      [self.circleView stopAnimating];
+      [self.circleView setHidden:YES];
+    }else {
+      self.model.messageStatus = kJMSGMessageStatusSendFailed;
+      [self.sendFailView setHidden:NO];
+      [self.circleView stopAnimating];
+      [self.circleView setHidden:YES];
+      _sendFailImgMessage = [message copy];
+    }
+    [self updateFrame];
+    
+  });
+}
 
 - (void)headAddGesture {
     [self.headView setUserInteractionEnabled:YES];
-//    [self.contentImgView setUserInteractionEnabled:YES];
     [self.pictureImgView setUserInteractionEnabled:YES];
 
     UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushPersonInfoCtlClick)];
@@ -184,7 +187,7 @@
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             NSLog(@"huangmin  percent number is %f",percent*100);
             dispatch_async(dispatch_get_main_queue(), ^{
-                            strongSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)percent*100];
+                            strongSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)(percent*100)];
             });
           };
           [JMSGMessage sendMessage:self.sendFailImgMessage];
@@ -208,6 +211,7 @@
   }else {
     self.pictureImgView.alpha = 1;
   }
+  
   [self.circleView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
   if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
     [self.pictureImgView setImage:[UIImage imageNamed:@"receiveFail"]];
@@ -220,26 +224,29 @@
   self.delegate = (id)controler;
   self.cellIndex = indexPath;
   NSLog(@"huangmin  message  %@",_model.fromUser);
-  [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
   typeof(self) __weak weakSelf = self;
-  
-  if (_model.avatar == nil) {
+          [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];  
+//  if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
-        JPIMMAINTHEAD(^{
+//        JPIMMAINTHEAD(^{
           if ([objectId isEqualToString:self.headViewFlag]) {
             [weakSelf.headView setImage:[UIImage imageWithData:data]];
+//            [weakSelf.headView testSetImage:[UIImage imageWithData:data]];
           } else {
             DDLogDebug(@"该头像是异步乱序的头像");
           }
-        });
+//        });
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
+//        JPIMMAINTHEAD(^{
+          [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//        });
       }
     }];
-  } else {
-    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
-  }
+//  } else {
+//    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
+//  }
 
   
   dispatch_async(dispatch_get_main_queue(),^{
@@ -267,18 +274,12 @@
   _message.uploadHandler = ^(float percent) {
     dispatch_async(dispatch_get_main_queue(), ^{
       __strong __typeof(weakSelf)strongSelf = weakSelf;
-      NSLog(@"huangmin    the percent value  %d%%  %@",(int) percent * 100,strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
-      strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int) percent * 100];
+      NSLog(@"huangmin    the percent value  %d%%  %@",(int)(percent * 100),strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
+      strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
+      [strongSelf.percentLabel setNeedsDisplay];
+      NSLog(@"%@",strongSelf.percentLabel.text);
     });
   };
-//  if (self.conversation.chatType == kJMSGConversationTypeSingle) {
-//    _message.conversationType = kJMSGConversationTypeSingle;
-//  }else {
-//    _message.conversationType = kJMSGConversationTypeGroup;
-//  }
-//  _message.targetId = self.model.targetId;
-//  _message.mediaData = self.model.mediaData;
-  
   DDLogVerbose(@"The imageMessage - %@", _message);
   [JMSGMessage sendMessage:_message];
 }
@@ -334,6 +335,7 @@
   if (self.model.messageStatus == kJMSGMessageStatusSending || self.model.messageStatus == kJMSGMessageStatusReceiving) {
     [self.circleView setHidden:NO];
     [self.sendFailView setHidden:YES];
+    [self.percentLabel setHidden:NO];
   } else if (self.model.messageStatus == kJMSGMessageStatusSendSucceed || self.model.messageStatus == kJMSGMessageStatusReceiveSucceed)
   {
     [self.circleView setHidden:YES];
@@ -343,10 +345,11 @@
   {
     [self.circleView setHidden:YES];
     [self.sendFailView setHidden:NO];
+    [self.percentLabel setHidden:YES];
   } else {
     [self.circleView setHidden:YES];
     [self.sendFailView setHidden:YES];
-  }
+    [self.percentLabel setHidden:YES];  }
 
   if (self.model.isMyMessage) {//myself
     img =[UIImage imageNamed:@"mychatBg"];
@@ -425,6 +428,10 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)dealloc {
+  [JMessage removeDelegate:self];
 }
 
 @end

@@ -26,7 +26,7 @@
 @end
 
 @interface JCHATVoiceTableCell : UITableViewCell<XHAudioPlayerHelperDelegate,
-playVoiceDelegate>
+playVoiceDelegate,JMSGMessageDelegate>
 
 @property(strong, nonatomic) UIImageView *voiceBgView;
 @property(strong, nonatomic) UILabel *voiceTimeLable;
@@ -51,9 +51,12 @@ playVoiceDelegate>
 - (void)setCellData:(JCHATChatModel *)model
            delegate:(id <playVoiceDelegate>)delegate
             message:(JMSGMessage *)message
-          indexPath:(NSIndexPath *)indexPath;
+          indexPath:(NSIndexPath *)indexPath
+;
 
 - (void)sendVoiceMessage;
+
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion;
 
 
 

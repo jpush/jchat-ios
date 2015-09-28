@@ -49,6 +49,10 @@
   return self;
 }
 
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage addDelegate:self withConversation:converstion];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
   // Configure the view for the selected state
@@ -69,23 +73,30 @@
   self.delegate = delegate;
 
   [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+  
   _fromUser = model.fromUser;
-  typeof(self) __weak weakSelf = self;
+
   if (model.avatar == nil) {
     [_fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
-        JPIMMAINTHEAD(^{
+//        JPIMMAINTHEAD(^{
           if ([objectId isEqualToString:self.headViewFlag]) {
-            [weakSelf.headImgView setImage:[UIImage imageWithData:data]];
+            [self.headImgView setImage:[UIImage imageWithData:data]];
           } else {
             DDLogDebug(@"该头像是异步乱序的头像");
           }
-        });
+//        });
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
+        [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//        JPIMMAINTHEAD(^{
+
+//        });
       }
     }];
   } else {
+//    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
+//    NSURL *url = [NSURL URLWithString:model.avatar];
     [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
   }
 
@@ -111,8 +122,6 @@
 }
 - (void)creadBuddleChatView
 {
-  
-  
   [self deleteAllConstrait];
   
   if (_model.type == kJMSGContentTypeText) {
@@ -269,8 +278,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     if (!_sendFailMessage) {
-//      _sendFailMessage = [self.conversation messageWithMessageId:_model.messageId];
-
       [JMSGMessage sendMessage:_model.message];
 //      if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
 //        [JMSGMessage sendMessage:<#(JMSGMessage *)#>]
@@ -311,5 +318,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)dealloc {
   DDLogDebug(@"Action -- dealloc");
+  [JMessage removeDelegate:self];
 }
 @end

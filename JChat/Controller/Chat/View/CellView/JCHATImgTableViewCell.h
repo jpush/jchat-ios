@@ -23,7 +23,7 @@
 //                          index:(NSInteger)index;
 @end
 
-@interface JCHATImgTableViewCell : UITableViewCell<UIAlertViewDelegate>{
+@interface JCHATImgTableViewCell : UITableViewCell<UIAlertViewDelegate,JMessageDelegate>{
   UIImage *img;
 }
 @property (strong, nonatomic) NSIndexPath *cellIndex;
@@ -47,5 +47,6 @@
             message:(JMSGMessage *)message
          indexPath :(NSIndexPath *)indexPath;
 
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion;
 
 @end

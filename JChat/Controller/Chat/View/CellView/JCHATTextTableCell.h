@@ -31,5 +31,5 @@
 
 - (void)setCellData:(JCHATChatModel *)model delegate:(id )delegate;
 
-
+- (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion;
 @end
