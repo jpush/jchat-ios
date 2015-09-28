@@ -226,7 +226,7 @@
   NSLog(@"huangmin  message  %@",_model.fromUser);
   typeof(self) __weak weakSelf = self;
           [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];  
-//  if (_model.avatar == nil) {
+  if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
 //        JPIMMAINTHEAD(^{
@@ -244,9 +244,9 @@
 //        });
       }
     }];
-//  } else {
-//    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
-//  }
+  } else {
+    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
+  }
 
   
   dispatch_async(dispatch_get_main_queue(),^{
