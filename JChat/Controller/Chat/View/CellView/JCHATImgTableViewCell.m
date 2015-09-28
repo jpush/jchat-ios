@@ -55,7 +55,7 @@
     self.percentLabel.font =[UIFont systemFontOfSize:18];
     self.percentLabel.textAlignment=NSTextAlignmentCenter;
     self.percentLabel.textColor=[UIColor redColor];
-    [self.percentLabel setBackgroundColor:[UIColor blueColor]];
+    [self.percentLabel setBackgroundColor:[UIColor clearColor]];
     
     [self.pictureImgView addSubview:self.percentLabel];
     
