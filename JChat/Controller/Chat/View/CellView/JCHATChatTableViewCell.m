@@ -106,6 +106,7 @@
         }
       } else {
         DDLogDebug(@"fail to get thumbAvatarData");
+        [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
       }
 
     }];
