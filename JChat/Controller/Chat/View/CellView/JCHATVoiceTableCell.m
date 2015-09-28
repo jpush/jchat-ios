@@ -257,21 +257,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   [self.stateView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
   self.model = model;
 
-  [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-//  typeof(self) __weak weakSelf = self;
-//  JMSGUser *tmpUser = _message.fromUser;
-//  [tmpUser thumbAvatarData:^(id resultObject, NSError *error) {
-//    NSLog(@"huangmin dashuai in");
-//    if (error == nil) {
-//      JPIMMAINTHEAD(^{
-//        if (resultObject !=nil) {
-//          [weakSelf.headView setImage:[UIImage imageWithData:resultObject]];
-//        }
-//      });
-//    }else {
-//      DDLogDebug(@"Action -- get thumbavatar fail");
-//    }
-//  }];
   _message = model.message;
   if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
@@ -285,6 +270,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         });
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
+        JPIMMAINTHEAD(^{
+        [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+        });
       }
     }];
   } else {

@@ -992,7 +992,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   }else if(model.type == kJMSGContentTypeImage)
   {
     static NSString *cellIdentifier = @"imgCell";
-    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+//    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
       cell = [[JCHATImgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
       [cell setupMessageDelegateWithConversation:_conversation];
