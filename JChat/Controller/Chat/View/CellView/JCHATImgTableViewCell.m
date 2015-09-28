@@ -54,7 +54,7 @@
     self.percentLabel.hidden = NO;
     self.percentLabel.font =[UIFont systemFontOfSize:18];
     self.percentLabel.textAlignment=NSTextAlignmentCenter;
-    self.percentLabel.textColor=[UIColor redColor];
+    self.percentLabel.textColor=[UIColor whiteColor];
     [self.percentLabel setBackgroundColor:[UIColor clearColor]];
     
     [self.pictureImgView addSubview:self.percentLabel];
@@ -229,32 +229,28 @@
   if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
-//        JPIMMAINTHEAD(^{
           if ([objectId isEqualToString:self.headViewFlag]) {
             [weakSelf.headView setImage:[UIImage imageWithData:data]];
-//            [weakSelf.headView testSetImage:[UIImage imageWithData:data]];
           } else {
             DDLogDebug(@"该头像是异步乱序的头像");
           }
-//        });
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
-//        JPIMMAINTHEAD(^{
           [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-//        });
       }
     }];
   } else {
     [self.headView setImage:[UIImage imageWithData:_model.avatar]];
   }
 
-  
-  dispatch_async(dispatch_get_main_queue(),^{
-    [self updateFrame];
-  });
+  [self updateFrame];
 
   if (!_model.sendFlag) {
     _model.sendFlag = YES;
+    [self.circleView setHidden:NO];
+    [self.circleView startAnimating];
+    [self.percentLabel setHidden:NO];
+    self.pictureImgView.alpha = 0.5;
     [self sendImageMessage];
     
   }
@@ -263,10 +259,6 @@
 #pragma mark --上传图片
 - (void)sendImageMessage {
   DDLogDebug(@"Action - sendImageMessage");
-  [self.circleView setHidden:NO];
-  [self.circleView startAnimating];
-//  self.contentImgView.alpha = 0.5;
-  self.pictureImgView.alpha = 0.5;
   _model.isSending = YES;
   self.model.messageStatus = kJMSGMessageStatusSending;
   self.model.messageId = _message.msgId;
@@ -276,7 +268,7 @@
       __strong __typeof(weakSelf)strongSelf = weakSelf;
       NSLog(@"huangmin    the percent value  %d%%  %@",(int)(percent * 100),strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
       strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
-      [strongSelf.percentLabel setNeedsDisplay];
+//      [strongSelf.percentLabel setNeedsDisplay];
       NSLog(@"%@",strongSelf.percentLabel.text);
     });
   };
@@ -310,7 +302,7 @@
 - (void)updateFrame {
   NSInteger imgHeight = 0;
   NSInteger imgWidth = 0;
-  [self.percentLabel setHidden:NO];
+
   if (self.model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
     [self.downLoadIndicatorView setCenter:CGPointMake(self.pictureImgView.frame.size.width/2, self.pictureImgView.frame.size.height/2)];
   } else {
