@@ -73,23 +73,30 @@
   self.delegate = delegate;
 
   [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+  
   _fromUser = model.fromUser;
-  typeof(self) __weak weakSelf = self;
+
   if (model.avatar == nil) {
     [_fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
-        JPIMMAINTHEAD(^{
+//        JPIMMAINTHEAD(^{
           if ([objectId isEqualToString:self.headViewFlag]) {
-            [weakSelf.headImgView setImage:[UIImage imageWithData:data]];
+            [self.headImgView setImage:[UIImage imageWithData:data]];
           } else {
             DDLogDebug(@"该头像是异步乱序的头像");
           }
-        });
+//        });
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
+        [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+//        JPIMMAINTHEAD(^{
+
+//        });
       }
     }];
   } else {
+//    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
+//    NSURL *url = [NSURL URLWithString:model.avatar];
     [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
   }
 
