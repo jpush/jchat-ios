@@ -145,4 +145,14 @@ typedef NS_ENUM(NSInteger, JCHATErrorCode) {
 #define kTableviewCellClickColor UIColorFromRGB(0xdddddd)
 
 
+//static const
+static NSString * const st_contactsViewController = @"JCHATContactsViewController";
+static NSString * const st_chatViewControllerTittle = @"会话";
+static const NSInteger st_chatTabTag = 10;
+
+static NSString * const st_contactsTabTitle = @"通讯录";
+static NSInteger const st_contactsTabTag = 11;
+
+static NSString * const st_settingTabTitle = @"我";
+static NSInteger const st_settingTag = 12;
 

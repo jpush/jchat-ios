@@ -97,16 +97,23 @@
     [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
     __block JMSGGroup *group =nil;
     typeof(self) __weak weakSelf = self;
-
-    [JMSGGroup createGroupWithName:[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] description:@"" memberArray:@[[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+    NSLog(@"huangmin merbers %@",@[[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text].description);
+    [JMSGGroup createGroupWithName:[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] description:@"" memberArray:@[((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       typeof(weakSelf) __strong strongSelf = weakSelf;
+      group = (JMSGGroup *)resultObject;
       if (error == nil) {
         [MBProgressHUD showMessage:@"创建群成功" view:self.view];
-        strongSelf.sendMessageCtl.conversation = resultObject;
-        strongSelf.sendMessageCtl.targetName = group.name;
-        strongSelf.sendMessageCtl.title = group.name;
-        [strongSelf.navigationController popViewControllerAnimated:YES];
+        [JMSGConversation createGroupConversationWithGroupId:group.gid completionHandler:^(id resultObject, NSError *error) {
+          JMSGConversation *groupConversation = (JMSGConversation *)resultObject;
+          strongSelf.sendMessageCtl.conversation = groupConversation;
+          strongSelf.sendMessageCtl.targetName = group.name;
+          strongSelf.sendMessageCtl.title = group.name;
+          [strongSelf.sendMessageCtl setupView];
+          [strongSelf.navigationController popViewControllerAnimated:YES];
+        }];//[JMSGConversation groupConversationWithGroupId:group.gid];
+        
+
       }else {
         [MBProgressHUD showMessage:@"创建群失败" view:self.view];
       }
