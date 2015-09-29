@@ -239,8 +239,6 @@
 		18B8FDA91B3D23DB00538C00 /* receiveFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B8FDA81B3D23DB00538C00 /* receiveFail@2x.png */; };
 		18B8FDAB1B3D240500538C00 /* receiveFail@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B8FDAA1B3D240500538C00 /* receiveFail@3x.png */; };
 		443304AA1B5F37A500430840 /* CExpandHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 443304A91B5F37A500430840 /* CExpandHeader.m */; };
-		443E40F31B53BD2A00F46651 /* JCHATMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */; };
-		443E40F41B53BD2A00F46651 /* JCHATMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */; };
 		443E40F71B53BD6C00F46651 /* JCHATMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */; };
 		445048EC1B660C8A0005D818 /* ViewUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048EB1B660C8A0005D818 /* ViewUtil.m */; };
 		445048F61B671D680005D818 /* JCHATAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 445048F51B671D680005D818 /* JCHATAvatarView.m */; };
@@ -666,9 +664,6 @@
 		2E5FD764EC422CFC7BB8C437 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		443304A81B5F37A500430840 /* CExpandHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CExpandHeader.h; sourceTree = "<group>"; };
 		443304A91B5F37A500430840 /* CExpandHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CExpandHeader.m; sourceTree = "<group>"; };
-		443E40F01B53BD2900F46651 /* JCHATMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageViewController.h; sourceTree = "<group>"; };
-		443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageViewController.m; sourceTree = "<group>"; };
-		443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATMessageViewController.xib; sourceTree = "<group>"; };
 		443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageTableViewCell.h; sourceTree = "<group>"; };
 		443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageTableViewCell.m; sourceTree = "<group>"; };
 		445048EA1B660C8A0005D818 /* ViewUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewUtil.h; sourceTree = "<group>"; };
@@ -956,9 +951,6 @@
 				187181AD1AFB80BF00FB3168 /* JCHATSendMessageViewController.h */,
 				187181AE1AFB80BF00FB3168 /* JCHATSendMessageViewController.m */,
 				187181AF1AFB80BF00FB3168 /* JCHATSendMessageViewController.xib */,
-				443E40F01B53BD2900F46651 /* JCHATMessageViewController.h */,
-				443E40F11B53BD2A00F46651 /* JCHATMessageViewController.m */,
-				443E40F21B53BD2A00F46651 /* JCHATMessageViewController.xib */,
 				187181B01AFB80BF00FB3168 /* Model */,
 				187181B51AFB80BF00FB3168 /* View */,
 			);
@@ -1861,7 +1853,6 @@
 				187183FA1AFB80C000FB3168 /* RecordingSignal008@2x.png in Resources */,
 				187183CC1AFB80C000FB3168 /* login_15@3x.png in Resources */,
 				44C3E9711B7096BC00D3D825 /* login_19_pre@3x.png in Resources */,
-				443E40F41B53BD2A00F46651 /* JCHATMessageViewController.xib in Resources */,
 				1871840A1AFB80C000FB3168 /* loginOut_17@3x.png in Resources */,
 				1871840E1AFB80C000FB3168 /* signature@3x.png in Resources */,
 				187183C21AFB80C000FB3168 /* login_11@2x.png in Resources */,
@@ -2105,7 +2096,6 @@
 				6039BA26BAC5EB168B9D4259 /* JCHATCustomFormatter.m in Sources */,
 				6039BB20C8E8F0ECFF502423 /* NSObject+TimeConvert.m in Sources */,
 				6039B9D106B00CBB96BF9458 /* NSString+MessageInputView.m in Sources */,
-				443E40F31B53BD2A00F46651 /* JCHATMessageViewController.m in Sources */,
 				6039B153AA857246253DD2EC /* UIImage +ResizeMagick.m in Sources */,
 				6039BCEF611ABE72279A91BE /* JCHATFileManager.m in Sources */,
 				44C3E9181B6B7A1E00D3D825 /* MASLayoutConstraint.m in Sources */,

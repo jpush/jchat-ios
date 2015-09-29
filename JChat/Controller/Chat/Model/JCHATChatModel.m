@@ -98,14 +98,6 @@
   }
   
   __weak __typeof(self)weakSelf = self;
-//  [message.fromUser thumbAvatarData:^(id resultObject, NSError *error) {
-//    if (error == nil) {
-//      __strong __typeof(weakSelf)strongSelf = weakSelf;
-//      strongSelf.avatar = resultObject;
-//    }else {
-//      DDLogDebug(@"get thumbAvatarData fail with error %@",error);
-//    }
-//  }];
   [message.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
       __strong __typeof(weakSelf)strongSelf = weakSelf;

@@ -29,12 +29,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                                                     UIUserNotificationTypeAlert)
                                         categories:nil];
   [self registerJPushStatusNotification];
-  
+
   [self umengTrack];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   [self.window makeKeyAndVisible];
-  [self setupMainTabBar];//TODO:CHANGE INIT name
+  [self setupMainTabBar];
   [self setupRootView];
   
   [JCHATFileManager initWithFilePath];//demo 初始化存储路径
@@ -287,35 +287,40 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 -(void)setupMainTabBar {
   self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
   self.tabBarCtl.loginIdentify = kFirstLogin;
-  NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"],
-                               [UIImage imageNamed:@"menu_18.png"], [UIImage imageNamed:@"menu_13.png"], nil];
+  NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25"],
+                               [UIImage imageNamed:@"menu_18"], [UIImage imageNamed:@"menu_13.png"], nil];
   
   JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController" bundle:nil];
   UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewController];
 
   
   //聊天
-  chatViewController.navigationItem.title = @"会话";//static const
-  UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:@"会话"
-                                                        image:normalImageArray[0]
-                                                          tag:10];
-  [chatTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_25"]//FIXME: 修改图片名字， 图片格式
-        withFinishedUnselectedImage:[UIImage imageNamed:@"menu_23"]];
+  chatViewController.navigationItem.title = st_chatViewControllerTittle;
+//  UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:st_chatViewControllerTittle
+//                                                        image:normalImageArray[0]
+//                                                          tag:st_chatTabTag];
+//  [chatTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_25"]//FIXME: 修改图片名字， 图片格式
+//        withFinishedUnselectedImage:[UIImage imageNamed:@"menu_23"]];
+//  [chatTab initWithTitle:<#(nullable NSString *)#> image:<#(nullable UIImage *)#> selectedImage:<#(nullable UIImage *)#>]//initWithTitle:image:selectedImage:.
+  UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:st_chatViewControllerTittle image:[UIImage imageNamed:@"menu_25"] selectedImage:[UIImage imageNamed:@"menu_23"]];
+  chatTab.tag = st_chatTabTag;
   chatNav.tabBarItem = chatTab;
   
   //联系人
   JCHATContactsViewController *contactsViewController = [[JCHATContactsViewController alloc]
-                                                         initWithNibName:@"JCHATContactsViewController" bundle:nil];//TODO: static const
+                                                         initWithNibName:@"JCHATContactsViewController" bundle:nil];
   UINavigationController *contactsNav = [[UINavigationController alloc]
                                          initWithRootViewController:contactsViewController];
   
-  contactsViewController.navigationItem.title=@"通讯录";
-  UITabBarItem *contractsTab = [[UITabBarItem alloc] initWithTitle:@"通讯录"
-                                                             image:normalImageArray[1]//TODO:
-                                                               tag:11];//TODO: 1.ERROR NAME 2.tag 用常量
-  [contractsTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_18"]
-             withFinishedUnselectedImage:[UIImage imageNamed:@"menu_16"]];
-  contactsNav.tabBarItem = contractsTab;
+  contactsViewController.navigationItem.title=st_contactsTabTitle;
+//  UITabBarItem *contactsTab = [[UITabBarItem alloc] initWithTitle:st_contactsTabTitle
+//                                                             image:normalImageArray[1]
+//                                                               tag:st_contactsTabTag];
+//  [contactsTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_18"]
+//             withFinishedUnselectedImage:[UIImage imageNamed:@"menu_16"]];
+  UITabBarItem *contactsTab = [[UITabBarItem alloc] initWithTitle:st_contactsTabTitle image:[UIImage imageNamed:@"menu_16"] selectedImage:[UIImage imageNamed:@"menu_16"]];
+  contactsTab.tag = st_contactsTabTag;
+  contactsNav.tabBarItem = contactsTab;
   
   //设置
   JCHATUserInfoViewController *settingViewController = [[JCHATUserInfoViewController alloc]
@@ -323,12 +328,14 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
   UINavigationController *settingNav = [[UINavigationController alloc]
                                         initWithRootViewController:settingViewController];
   
-  settingViewController.navigationItem.title = @"我";
-  UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:@"我"
-                                                           image:[normalImageArray objectAtIndex:2]
-                                                             tag:12];
-  [settingTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_13"]
-           withFinishedUnselectedImage:[UIImage imageNamed:@"menu_12"]];
+  settingViewController.navigationItem.title = st_settingTabTitle;
+//  UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:st_settingTabTitle
+//                                                           image:normalImageArray[2]
+//                                                             tag:st_settingTag];
+//  [settingTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_13"]
+//           withFinishedUnselectedImage:[UIImage imageNamed:@"menu_12"]];
+  UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:st_settingTabTitle image:[UIImage imageNamed:@"menu_13"] selectedImage:[UIImage imageNamed:@"menu_12"]];
+  settingTab.tag = st_contactsTabTag;
   settingNav.tabBarItem = settingTab;
   //TODO:uicolor define
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -338,7 +345,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                      titleHighlightedColor, NSForegroundColorAttributeName,
                                                      nil] forState:UIControlStateSelected];
-  UIImage *tabBarBackground = [UIImage imageNamed:@"bar"];//TODO: name  bar
+  UIImage *tabBarBackground = [UIImage imageNamed:@"bar"];
   
   [[UITabBar appearance] setBackgroundImage:[tabBarBackground resizableImageWithCapInsets:UIEdgeInsetsZero]];
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
