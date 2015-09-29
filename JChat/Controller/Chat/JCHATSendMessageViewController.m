@@ -35,9 +35,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
 @private
   NSMutableArray *_imgDataArr;
-  __block JMSGConversation *_conversation;
+  __block JMSGConversation *_conversation;//
   NSMutableDictionary *_messageDic;
-  __block NSMutableArray *_userArr;
+  __block NSMutableArray *_userArr;//
   NSMutableDictionary *_JMSgMessageDic;
   UIButton *_rightBtn;
 }
@@ -65,37 +65,39 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   } else {
     DDLogWarn(@"聊天未知错误 - 非单聊，且无会话。");
   }
+//  [self getAllMessage];
+//  if (!_conversation) {
+//    if (_user) {
+//      DDLogDebug(@"No conversation - to create single");
+//      __weak typeof(self) weakSelf = self;
+//      [JMSGConversation createSingleConversationWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
+//        _conversation = (JMSGConversation *) resultObject;
+////        weakSelf.title = _conversation.title;
+//        [_conversation clearUnreadCount];//!!
+//      }];
+//    } else {
+//      DDLogWarn(@"No conversation - no create group yet.");
+//    }
+//  } else {
+//    DDLogDebug(@"Conversation existed.");
+//  }
+//  
+//  if (_conversation && _conversation.conversationType == kJMSGConversationTypeGroup) {
+//    self.title = _conversation.title;
+//    _groupInfo = _conversation.target;
+//    [_conversation clearUnreadCount];
+//  } else {
+//    if (!_user) {
+//      _user = _conversation.target;
+//    }else {
+//    }
+//  }
   
-  if (!_conversation) {
-    if (_user) {
-      DDLogDebug(@"No conversation - to create single");
-      __weak typeof(self) weakSelf = self;
-      [JMSGConversation createSingleConversationWithUsername:self.user.username completionHandler:^(id resultObject, NSError *error) {
-        _conversation = (JMSGConversation *) resultObject;
-        weakSelf.title = _conversation.title;
-        [_conversation clearUnreadCount];
-      }];
-    } else {
-      DDLogWarn(@"No conversation - no create group yet.");
-    }
-  } else {
-    DDLogDebug(@"Conversation existed.");
-  }
-  if (_conversation && _conversation.conversationType == kJMSGConversationTypeGroup) {
-    self.title = _conversation.title;
-    _groupInfo = _conversation.target;
-  } else {
-    if (!_user) {
-      _user = _conversation.target;
-    }else {
-    }
-  }
-  [self initView];
-  [self getGroupMemberListWithGetMessageFlag:YES];
+  [self setupView];
   [self addNotification];
   [self sendInfoRequest];
   [self addDelegate];
-
+  [self getGroupMemberListWithGetMessageFlag:YES];
 
 }
 
@@ -117,6 +119,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       [_messageTableView reloadData];
     }
   }
+
+
+  [self scrollToBottomAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -128,7 +133,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 
 
--(void)initView {
+-(void)setupView {
   [self initNavigation];
   [self initComponentView];
 }
@@ -164,6 +169,18 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }else {
     [_rightBtn setImage:[UIImage imageNamed:@"dialogue_nav_a_"] forState:UIControlStateNormal];
   }
+  
+  if (_conversation && _conversation.conversationType == kJMSGConversationTypeGroup) {
+    self.title = _conversation.title;
+    _groupInfo = _conversation.target;
+    [_conversation clearUnreadCount];
+  }
+  
+  if (_conversation && _conversation.conversationType == kJMSGConversationTypeSingle) {
+      _user = _conversation.target;
+    
+  }
+  
   [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
   
@@ -262,7 +279,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 - (void)onSendMessageResponse:(JMSGMessage *)message
                         error:(NSError *)error {
   DDLogDebug(@"Event - sendMessageResponse");
-  if (error == nil) {
+  if (error == nil) {//!
+
   } else {
     DDLogDebug(@"Sent response error - %@", error);
     NSString *alert = @"发消息返回错误";
@@ -466,7 +484,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   }
   [_messageTableView reloadData];
   if ([_messageDic[JCHATMessageIdKey] count] != 0) {
-    [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    [_messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
   }
   
 }
@@ -520,7 +538,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
     detailsInfoCtl.chatUser = self.user;
-    detailsInfoCtl.conversation = self.conversation;
+    detailsInfoCtl.conversation = _conversation;
     detailsInfoCtl.sendMessageCtl = self;
     detailsInfoCtl.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:detailsInfoCtl animated:YES];
@@ -815,19 +833,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   JMSGMessage *message = nil;
   JMSGTextContent *textContent = [[JMSGTextContent alloc] initWithText:text];
   __block JCHATChatModel *model = [[JCHATChatModel alloc] init];
-//  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-//    model.targetId = ((JMSGUser *)_conversation.target).username;
-//    message = [JMSGMessage createSingleMessageWithContent:textContent username:model.targetId];
-//    NSLog(@"huagnmin    conversation target   %@    ",_conversation);
-//    NSLog(@"需要发送的message  是  %@",message);
-//  }else {
-//
-//    model.targetId = ((JMSGGroup *)_conversation.target).gid;
-//    message = [JMSGMessage createGroupMessageWithContent:textContent groupId:model.targetId];
-//  }
+
   message = [_conversation createMessageWithContent:textContent];//!
-  NSLog(@"huagnmin    conversation target   %@    ",_conversation);
-  NSLog(@"需要发送的message  是  %@",message);
   [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
   [_JMSgMessageDic setObject:message forKey:message.msgId];
@@ -1349,12 +1356,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Previte Method
 
 - (BOOL)shouldAllowScroll {
-  //    if (self.isUserScrolling) {
-  //        if ([self.delegate respondsToSelector:@selector(shouldPreventScrollToBottomWhileUserScrolling)]
-  //            && [self.delegate shouldPreventScrollToBottomWhileUserScrolling]) {
-  //            return NO;
-  //        }
-  //    }
+//      if (self.isUserScrolling) {
+//          if ([self.delegate respondsToSelector:@selector(shouldPreventScrollToBottomWhileUserScrolling)]
+//              && [self.delegate shouldPreventScrollToBottomWhileUserScrolling]) {
+//              return NO;
+//          }
+//      }
   return YES;
 }
 
