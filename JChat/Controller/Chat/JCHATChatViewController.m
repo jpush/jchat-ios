@@ -91,7 +91,7 @@
   _rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [_rightBarButton setFrame:CGRectMake(0, 0, 30, 30)];
   [_rightBarButton addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-  [_rightBarButton setImage:[UIImage imageNamed:@"add_37"] forState:UIControlStateNormal];
+  [_rightBarButton setImage:[UIImage imageNamed:@"createConversation"] forState:UIControlStateNormal];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarButton];//为导航栏添加右侧按钮
   UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
   searchBar.placeholder = @"搜索";

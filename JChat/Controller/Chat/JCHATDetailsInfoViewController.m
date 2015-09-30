@@ -85,7 +85,11 @@
 
 #pragma mark -- 加入好友到群
 - (void)addFriend {
-  UIAlertView *alerView = [[UIAlertView alloc]initWithTitle:@"添加好友到群" message:@"输入好友的用户名" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+  UIAlertView *alerView = [[UIAlertView alloc]initWithTitle:@"添加好友到群"
+                                                    message:@"输入好友的用户名"
+                                                   delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          otherButtonTitles:@"确定", nil];
   alerView.alertViewStyle =UIAlertViewStylePlainTextInput;
   [alerView show];
 }

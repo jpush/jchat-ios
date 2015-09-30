@@ -188,7 +188,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  @abstract 创建消息对象
 
  @param content 消息的内容对象。当前直接的内容对象有:
-  JMSGTextContent, JMSGImageContent, JMSGVoiceContent, JMSGCustomContent
+ JMSGTextContent, JMSGImageContent, JMSGVoiceContent, JMSGCustomContent
 
  @return JMSGMessage对象。该对象里包含了 content。
 
@@ -295,12 +295,15 @@ JMSG_ASSUME_NONNULL_BEGIN
 /*!
  @abstract 从服务器端刷新会话信息
 
- @discussion 会话信息的 title/avatarPath 对于单聊来自于 UserInfo，对于群聊来自于 GroupInfo。
- 建议在进入聊天界面时，调用此接口，来更新会话界面。 如果有更新，SDK 会发出 JMSGConversationInfoChangedNotification
+ @param handler 结果回调。返回正常时 resultObject 为当前 conversation 对象.
+
+ @discussion 会话信息的 title/avatar 信息, 单聊来自于 UserInfo，对于群聊来自于 GroupInfo。
+ 建议在进入聊天界面时，调用此接口，来更新会话属性。
+ 典型的情况是, 此接口返回时, 刷新单聊界面顶部的会话标题. (有可能聊天对方昵称改变了, 或者群组名称改变了, 聊天标题需要刷新)
 
  此接口供暂时使用。JMessage 整体的 Sync 机制生效后，将不需要客户端主动去刷新信息。
  */
-- (void)refreshFromServer;
+- (void)refreshTargetInfoFromServer:(JMSGCompletionHandler)handler;
 
 ///----------------------------------------------------
 /// @name Class Normal 类基本方法

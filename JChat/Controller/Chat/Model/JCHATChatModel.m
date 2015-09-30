@@ -30,7 +30,7 @@
   _messageId = message.msgId;
   _fromId = message.fromUser.username;
   _type = message.contentType;
-  _isMyMessage = ![message isReceived];
+  _isReceived = [message isReceived];
   _messageStatus = message.status;
   _messageTime = message.timestamp;
   _sendFlag = NO;

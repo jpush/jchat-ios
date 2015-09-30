@@ -1,21 +1,24 @@
 #import <Foundation/Foundation.h>
 
-
+/*!
+ * @abstract 会话相关变更通知
+ */
 @protocol JMSGConversationDelegate <NSObject>
 
-@optional
 /*!
- @abstract conversation changed 一般需要刷新conversation的相关信息(title,thumb)
- @discussion conversation为变更的conversation对象,通过isEqual来判断是否是当前会话
-
- 如果在会话列表页，刷新整个列表； 如果在聊天界面，刷新聊天标题。
+ * @abstract 会话信息变更通知
+ * @discussion 当前有二个属性: 会话标题(title), 会话图标
+ *
+ * 收到此通知后, 建议处理: 如果 App 当前在会话列表页，刷新整个列表；如果在聊天界面，刷新聊天标题。
  */
+@optional
 - (void)onConversationChanged:(JMSGConversation *)conversation;
 
-@optional
 /*!
-  当前剩余的全局未读数
+ * @abstract 当前剩余的全局未读数
  */
+@optional
 - (void)onUnreadChanged:(NSUInteger)newCount;
 
 @end
+
