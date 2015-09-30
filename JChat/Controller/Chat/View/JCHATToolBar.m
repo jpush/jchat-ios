@@ -329,17 +329,10 @@
   [super awakeFromNib];
   
   _toolbar = NIB(JCHATToolBar);
-
-//  _toolbar.frame =CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    _toolbar.frame =CGRectMake(0, 0, 200, self.frame.size.height);
+  _toolbar.frame =CGRectMake(0, 0, 200, self.frame.size.height);
   _toolbar.backgroundColor = [UIColor yellowColor];
-  
 
-
-//  [_toolbar drawRect:_toolbar.frame];
-
-//  _toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  [self addSubview:_toolbar];
+//  [self addSubview:_toolbar];
 
 }
 

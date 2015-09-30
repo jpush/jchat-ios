@@ -44,7 +44,6 @@
 
 -(void)setCellData :(UIViewController *)controler
          chatModel :(JCHATChatModel *)chatModel
-            message:(JMSGMessage *)message
          indexPath :(NSIndexPath *)indexPath;
 
 - (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion;

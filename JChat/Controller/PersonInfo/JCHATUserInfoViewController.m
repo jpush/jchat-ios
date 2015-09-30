@@ -325,13 +325,6 @@
     DDLogDebug(@"Logout anyway.");
     
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-//    if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
-//      [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
-//    } else {
-//      JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
-//      loginCtl.hidesBottomBarWhenPushed = YES;
-//      [self.navigationController pushViewController:loginCtl animated:YES];
-//    }
     [appDelegate.tabBarCtl setSelectedIndex:0];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [JMSGUser logout:^(id resultObject, NSError *error) {
