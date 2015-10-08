@@ -90,45 +90,47 @@
     [JMSGUser registerWithUsername:username
                           password:password
                  completionHandler:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"注册成功！" toView:self.view];
-        [JMSGUser loginWithUsername:username
-                           password:password
-                  completionHandler:^(id resultObject, NSError *error) {
-                    if (error == nil) {
-                      [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
-                      [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
-                      
-                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                      JCHATSetDetailViewController *detailVC = [[JCHATSetDetailViewController alloc] init];
-                      [self.navigationController pushViewController:detailVC animated:YES];
-                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    } else {
-                      NSString *alert = @"用户登录失败";
-                      if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
-                        alert = @"用户名不存在";
-                      } else if (error.code == JCHAT_ERROR_USER_WRONG_PASSWORD) {
-                        alert = @"密码错误！";
-                      } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
-                        alert = @"用户名或者密码不合法！";
-                      }
-                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                      [MBProgressHUD showMessage:alert view:self.view];
-                      DDLogError(alert);
-                    }
-                  }];
-      } else {
-        NSString *alert = @"注册失败";
-        if (error.code == JCHAT_ERROR_REGISTER_EXIST) {
-          alert = @"用户已经存在！";
-        } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
-          alert = @"用户名或者密码不合法";
-        }
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:alert toView:self.view];
-      }
-    }];
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                     if (error == nil) {
+                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                       [MBProgressHUD showSuccess:@"注册成功！" toView:self.view];
+                       [JMSGUser loginWithUsername:username
+                                          password:password
+                                 completionHandler:^(id resultObject, NSError *error) {
+                                   if (error == nil) {
+                                     [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
+                                     [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                                     
+                                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                     JCHATSetDetailViewController *detailVC = [[JCHATSetDetailViewController alloc] init];
+                                     [self.navigationController pushViewController:detailVC animated:YES];
+                                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                   } else {
+                                     NSString *alert = @"用户登录失败";
+                                     if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
+                                       alert = @"用户名不存在";
+                                     } else if (error.code == JCHAT_ERROR_USER_WRONG_PASSWORD) {
+                                       alert = @"密码错误！";
+                                     } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
+                                       alert = @"用户名或者密码不合法！";
+                                     }
+                                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                     [MBProgressHUD showMessage:alert view:self.view];
+                                     DDLogError(alert);
+                                   }
+                                 }];
+                     } else {
+                       NSString *alert = @"注册失败";
+                       if (error.code == JCHAT_ERROR_REGISTER_EXIST) {
+                         alert = @"用户已经存在！";
+                       } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
+                         alert = @"用户名或者密码不合法";
+                       }
+                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                       [MBProgressHUD showSuccess:alert toView:self.view];
+                     }
+                   });
+                 }];
   }
 }
 

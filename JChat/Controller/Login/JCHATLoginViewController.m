@@ -103,37 +103,39 @@
     [JMSGUser loginWithUsername:username
                        password:password
               completionHandler:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
-        AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-        [appDelegate.tabBarCtl setSelectedIndex:0];
-        // 显示登录状态？
-//        if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kHaveLogin]) {
-//          [self.navigationController popViewControllerAnimated:YES];
-//        } else {
-//          [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
-//          pushFlag = NO;
-//        }
-//        [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
-        appDelegate.window.rootViewController = appDelegate.tabBarCtl;
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
-        [self userLoginSave];
-      } else {
-        NSString *alert = @"用户登录失败";
-        if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
-          alert = @"用户名不存在";
-        } else if (error.code == JCHAT_ERROR_USER_WRONG_PASSWORD) {
-          alert = @"密码错误！";
-        } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
-          alert = @"用户名或者密码不合法！";
-        }
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showMessage:alert view:self.view];
-        DDLogError(alert);
-      }
-    }];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                  if (error == nil) {
+                    [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+                    [appDelegate.tabBarCtl setSelectedIndex:0];
+                    // 显示登录状态？
+                    //        if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kHaveLogin]) {
+                    //          [self.navigationController popViewControllerAnimated:YES];
+                    //        } else {
+                    //          [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
+                    //          pushFlag = NO;
+                    //        }
+                    //        [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
+                    appDelegate.window.rootViewController = appDelegate.tabBarCtl;
+                    
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
+                    [self userLoginSave];
+                  } else {
+                    NSString *alert = @"用户登录失败";
+                    if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
+                      alert = @"用户名不存在";
+                    } else if (error.code == JCHAT_ERROR_USER_WRONG_PASSWORD) {
+                      alert = @"密码错误！";
+                    } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
+                      alert = @"用户名或者密码不合法！";
+                    }
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [MBProgressHUD showMessage:alert view:self.view];
+                    DDLogError(alert);
+                  }
+                });
+              }];
   }
 }
 
