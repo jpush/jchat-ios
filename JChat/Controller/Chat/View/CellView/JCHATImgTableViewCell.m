@@ -247,35 +247,43 @@
   }
 
   [self updateFrame];
-
+  
   if (!_model.sendFlag) {
     _model.sendFlag = YES;
     [self.circleView setHidden:NO];
     [self.circleView startAnimating];
     [self.percentLabel setHidden:NO];
     self.pictureImgView.alpha = 0.5;
-    [self sendImageMessage];
+//    [self sendImageMessage];
+    _message.uploadHandler = ^(float percent) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        NSLog(@"huangmin    the percent value  %d%%  %@",(int)(percent * 100),strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
+        strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
+        NSLog(@"%@",strongSelf.percentLabel.text);
+      });
+    };
   }
 }
 
 #pragma mark --上传图片
-- (void)sendImageMessage {
-  DDLogDebug(@"Action - sendImageMessage");
-  _model.isSending = YES;
-  self.model.messageStatus = kJMSGMessageStatusSending;
-  self.model.messageId = _message.msgId;
-  __weak typeof(self) weakSelf = self;
-  _message.uploadHandler = ^(float percent) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      __strong __typeof(weakSelf)strongSelf = weakSelf;
-      NSLog(@"huangmin    the percent value  %d%%  %@",(int)(percent * 100),strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
-      strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
-      NSLog(@"%@",strongSelf.percentLabel.text);
-    });
-  };
-  DDLogVerbose(@"The imageMessage - %@", _message);
-  [JMSGMessage sendMessage:_message];
-}
+//- (void)sendImageMessage {
+//  DDLogDebug(@"Action - sendImageMessage");
+//  _model.isSending = YES;
+//  self.model.messageStatus = kJMSGMessageStatusSending;
+//  self.model.messageId = _message.msgId;
+//  __weak typeof(self) weakSelf = self;
+//  _message.uploadHandler = ^(float percent) {
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//      __strong __typeof(weakSelf)strongSelf = weakSelf;
+//      NSLog(@"huangmin    the percent value  %d%%  %@",(int)(percent * 100),strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
+//      strongSelf.percentLabel.text = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
+//      NSLog(@"%@",strongSelf.percentLabel.text);
+//    });
+//  };
+//  DDLogVerbose(@"The imageMessage - %@", _message);
+//  [JMSGMessage sendMessage:_message];
+//}
 
 - (void)tapPicture:(UIGestureRecognizer *)gesture {
   
