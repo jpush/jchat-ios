@@ -286,11 +286,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   } else {
     [self.voiceImgView setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying"]];
   }
-  if (!_model.sendFlag) {
-    _model.sendFlag = YES;
-    // 展示这一条消息时检查状态，从而发送
-    [self sendVoiceMessage];
-  }
+//  if (!_model.sendFlag) {
+//    _model.sendFlag = YES;
+//    // 展示这一条消息时检查状态，从而发送
+//    [self sendVoiceMessage];
+//  }
   [self getLengthWithDuration:[model.voiceTime integerValue]];
   [self updateFrame];
 }
@@ -376,14 +376,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 #pragma mark-上传语音
-- (void)sendVoiceMessage {
-  DDLogDebug(@"Action - sendVoiceMessage");
-  [self.stateView setHidden:NO];
-  [self.stateView startAnimating];
-  self.model.messageStatus = kJMSGMessageStatusSending;
-  DDLogVerbose(@"The voiceMessage - %@", _message);
-  [JMSGMessage sendMessage:_message];
-}
+//- (void)sendVoiceMessage {
+//  DDLogDebug(@"Action - sendVoiceMessage");
+//  [self.stateView setHidden:NO];
+//  [self.stateView startAnimating];
+//  self.model.messageStatus = kJMSGMessageStatusSending;
+//  DDLogVerbose(@"The voiceMessage - %@", _message);
+//  [JMSGMessage sendMessage:_message];
+//}
 
 - (void)layoutSubviews {
   [self updateFrame];
@@ -396,7 +396,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   } else {
     [self.readView setHidden:NO];
   }
-  if (self.model.messageStatus == kJMSGMessageStatusSending) {
+  if (self.model.messageStatus == kJMSGMessageStatusSending || self.model.messageStatus == kJMSGMessageStatusSendDraft) {
     [self.stateView setHidden:NO];
     [self.sendFailView setHidden:YES];
   } else if (self.model.messageStatus == kJMSGMessageStatusSending) {

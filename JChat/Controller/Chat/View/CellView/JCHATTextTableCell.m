@@ -66,10 +66,10 @@
 //    // 消息展示出来时，调用发文本消息
 //    [self sendTextMessage:model.messageId];
 //  }
-  if (!model.sendFlag) {
-    model.sendFlag = YES;
-    [self sendTextMessage:model.message];
-  }
+//  if (!model.sendFlag) {
+//    model.sendFlag = YES;
+//    [self sendTextMessage:model.message];
+//  }
   self.headViewFlag = model.fromUser.username;
   self.headImgView.layer.cornerRadius = 23;
   self.conversation = model.conversation;
@@ -295,13 +295,13 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 #pragma mark sendMessage
-- (void)sendTextMessage:(JMSGMessage *)message{
-  DDLogDebug(@"Action - sendTextMessage");
-  DDLogVerbose(@"The message:%@", message);
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    [JMSGMessage sendMessage:message];
-  });
-}
+//- (void)sendTextMessage:(JMSGMessage *)message{
+//  DDLogDebug(@"Action - sendTextMessage");
+//  DDLogVerbose(@"The message:%@", message);
+//  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    [JMSGMessage sendMessage:message];
+//  });
+//}
 
 #pragma mark --JMessageDelegate
 - (void)onSendMessageResponse:(JMSGMessage *)message

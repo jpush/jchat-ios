@@ -549,6 +549,8 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   JMSGImageContent *imageContent = [[JMSGImageContent alloc] initWithImageData:UIImagePNGRepresentation(img)];
   model.mediaData = UIImagePNGRepresentation(img);
   message = [_conversation createMessageWithContent:imageContent];
+  [_conversation sendMessage:message];
+  
   [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
   model.messageStatus = kJMSGMessageStatusSending;
@@ -698,8 +700,9 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   JMSGMessage *message = nil;
   JMSGTextContent *textContent = [[JMSGTextContent alloc] initWithText:text];
   JCHATChatModel *model = [[JCHATChatModel alloc] init];
-
+  
   message = [_conversation createMessageWithContent:textContent];//!
+  [_conversation sendMessage:message];
   [self addmessageShowTimeData:message.timestamp];
   [model setChatModelWith:message conversationType:_conversation];
   [self addMessage:model];
@@ -1081,6 +1084,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                                                                  voiceDuration:[NSNumber numberWithInteger:[voiceDuration integerValue]]];
 
   voiceMessage = [_conversation createMessageWithContent:voiceContent];//!
+  [_conversation sendMessage:voiceMessage];
   [model setChatModelWith:voiceMessage conversationType:_conversation];
   [JCHATFileManager deleteFile:voicePath];
   [self addMessage:model];
