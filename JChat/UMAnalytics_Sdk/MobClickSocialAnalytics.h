@@ -70,7 +70,7 @@ extern MobClickSocialTypeString const MobClickSocialTypeYxtimeline;          //�
  
  @return 微博对象
  */
--(id)initWithPlatformType:(MobClickSocialTypeString)platformType weiboId:(NSString *)weiboId usid:(NSString *)usid param:(NSDictionary *)param;
+- (id)initWithPlatformType:(MobClickSocialTypeString)platformType weiboId:(NSString *)weiboId usid:(NSString *)usid param:(NSDictionary *)param;
 
 @end
 
@@ -108,5 +108,5 @@ typedef void (^MobClickSocialAnalyticsCompletion)(NSDictionary * response, NSErr
  @parma completion 发送完成的事件处理block
  
  */
-+(void)postWeiboCounts:(NSArray *)weibos appKey:(NSString *)appKey topic:(NSString *)topic completion:(MobClickSocialAnalyticsCompletion)completion;
++ (void)postWeiboCounts:(NSArray *)weibos appKey:(NSString *)appKey topic:(NSString *)topic completion:(MobClickSocialAnalyticsCompletion)completion;
 @end

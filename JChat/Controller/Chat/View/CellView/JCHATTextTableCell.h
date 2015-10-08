@@ -11,7 +11,7 @@
 #import <JMessage/JMessage.h>
 
 @protocol selectHeadViewDelegate <NSObject>
--(void)selectHeadView:(JCHATChatModel *)model;
+- (void)selectHeadView:(JCHATChatModel *)model;
 @end
 
 @interface JCHATTextTableCell : UITableViewCell<UIAlertViewDelegate,JMessageDelegate>
@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UIActivityIndicatorView *stateView;
 @property (nonatomic, strong) UIImageView *sendFailView;
 @property (nonatomic, strong) UIImageView *chatView;
-@property (nonatomic, strong) UIImageView *chatbgView;
+//@property (nonatomic, strong) UIImageView *chatbgView;
 @property (nonatomic, strong) UIImageView *headImgView;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, assign) id<selectHeadViewDelegate> delegate;

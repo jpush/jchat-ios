@@ -11,8 +11,8 @@
 
 @protocol MJPhotoToolbarDelegate <NSObject>
 
--(void)DeleteThisImage:(NSInteger)ThisImageIndex;
--(void)downLoadThisImage:(NSInteger)ThisImageIndex;
+- (void)DeleteThisImage:(NSInteger)ThisImageIndex;
+- (void)downLoadThisImage:(NSInteger)ThisImageIndex;
 
 @end
 

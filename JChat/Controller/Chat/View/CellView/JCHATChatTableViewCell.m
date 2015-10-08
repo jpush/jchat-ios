@@ -11,7 +11,7 @@
 
 @implementation JCHATChatTableViewCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     NSInteger height =0;
@@ -22,7 +22,7 @@
     }
 
     NSInteger width = (NSInteger) kApplicationWidth;
-    self.headView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"headDefalt_34"]];
+    self.headView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"headDefalt"]];
     [self.headView setFrame:CGRectMake(5, height/2 - 46/2, 46, 46)];
     [self addSubview:self.headView];
     
@@ -84,7 +84,7 @@
   }
 }
 
--(void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
   
   [super setHighlighted:highlighted animated:animated];
   
@@ -102,11 +102,11 @@
         if (data != nil) {
           [self.headView setImage:[UIImage imageWithData:data]];
         } else {
-          [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
         }
       } else {
         DDLogDebug(@"fail to get thumbAvatarData");
-        [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+        [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
       }
 
     }];

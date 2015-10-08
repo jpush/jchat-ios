@@ -31,7 +31,7 @@
 
 
 #pragma mark---加载子view
--(void)loadSubView
+- (void)loadSubView
 {
     //录音按钮
 }
@@ -51,8 +51,8 @@
 - (IBAction)voiceBtnClick:(id)sender {
     if (self.voiceButton.selected == NO) {
         self.voiceButton.selected = YES;
-        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03"] forState:UIControlStateNormal];
-        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03_pre"] forState:UIControlStateHighlighted];
+        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar_pre"] forState:UIControlStateHighlighted];
         [self.textView setHidden:YES];
         [self.startRecordButton setHidden:NO];
         if (self.delegate && [self.delegate respondsToSelector:@selector(pressVoiceBtnToHideKeyBoard)]) {
@@ -60,23 +60,23 @@
         }
     }else{
         self.voiceButton.selected=NO;
-        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02"] forState:UIControlStateNormal];
-        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02_pre"] forState:UIControlStateHighlighted];
+        [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar_pre"] forState:UIControlStateHighlighted];
         [self.startRecordButton setHidden:YES];
         JPIMLog(@"startRecordButton is :%@",self.startRecordButton);
         [self.textView setHidden:NO];
     }
 }
 
--(void)layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
     if (self.voiceButton.selected == NO) {
-        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02.png"] forState:UIControlStateNormal];
-        [self.voiceButton setImage:[UIImage imageNamed:@"voice_02_pre"] forState:UIControlStateHighlighted];
+        [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar_pre"] forState:UIControlStateHighlighted];
     }else{
-        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03"] forState:UIControlStateNormal];
-        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_03_pre"] forState:UIControlStateHighlighted];
+        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar"] forState:UIControlStateNormal];
+        [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar_pre"] forState:UIControlStateHighlighted];
     }
     [self setBackgroundColor:[UIColor colorWithRed:223/255.0 green:223/255.0 blue:223/255.0 alpha:1]];
 }
@@ -96,7 +96,7 @@
       return;
     }
     self.voiceButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
-    [self.voiceButton setImage:[UIImage imageNamed:@"voice_02.png"] forState:UIControlStateNormal];
+    [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar"] forState:UIControlStateNormal];
     self.textView.delegate = self;
 
     self.textView.returnKeyType = UIReturnKeySend;
@@ -280,7 +280,7 @@
     }
 }
 
--(void)textViewDidEndEditing:(UITextView *)textView
+- (void)textViewDidEndEditing:(UITextView *)textView
 {
     if ([self.delegate respondsToSelector:@selector(inputTextViewDidEndEditing:)]) {
         [self.delegate inputTextViewDidEndEditing:self.textView];
@@ -329,17 +329,10 @@
   [super awakeFromNib];
   
   _toolbar = NIB(JCHATToolBar);
-
-//  _toolbar.frame =CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    _toolbar.frame =CGRectMake(0, 0, 200, self.frame.size.height);
+  _toolbar.frame =CGRectMake(0, 0, 200, self.frame.size.height);
   _toolbar.backgroundColor = [UIColor yellowColor];
-  
 
-
-//  [_toolbar drawRect:_toolbar.frame];
-
-//  _toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  [self addSubview:_toolbar];
+//  [self addSubview:_toolbar];
 
 }
 

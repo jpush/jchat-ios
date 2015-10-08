@@ -24,9 +24,9 @@
 
 @protocol MJPhotoBrowserDelegate <NSObject>
 
--(void)CellPhotoImageReload;
+- (void)CellPhotoImageReload;
 
--(void)NewPostImageReload:(NSInteger)ImageIndex;
+- (void)NewPostImageReload:(NSInteger)ImageIndex;
 
 @optional
 // 切换到某一页图片

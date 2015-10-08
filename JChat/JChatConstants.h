@@ -146,7 +146,10 @@ typedef NS_ENUM(NSInteger, JCHATErrorCode) {
 
 
 //static const
+static NSString * const st_chatViewController = @"JCHATChatViewController";
 static NSString * const st_contactsViewController = @"JCHATContactsViewController";
+static NSString * const st_userInfoViewController = @"JCHATUserInfoViewController";
+
 static NSString * const st_chatViewControllerTittle = @"会话";
 static const NSInteger st_chatTabTag = 10;
 

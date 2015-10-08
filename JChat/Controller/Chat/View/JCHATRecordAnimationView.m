@@ -20,7 +20,7 @@
         self.layer.cornerRadius=3.0;
         self.clipsToBounds = YES;
         UIImageView *backView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        backView.image = [[UIImage imageNamed:@"chat_voice_03"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+        backView.image = [[UIImage imageNamed:@"chat_voice"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
         [self addSubview:backView];
         
         phoneIV=[[UIImageView alloc]initWithFrame:CGRectMake(13, 10, 72, 99)];
@@ -28,7 +28,7 @@
         [self addSubview:phoneIV];
         
         cancelIV = [[UIImageView alloc] initWithFrame:CGRectMake(35, 10, 72, 99)];
-        cancelIV.image = [UIImage imageNamed:@"voice_delete.png"];
+        cancelIV.image = [UIImage imageNamed:@"voice_delete"];
         cancelIV.hidden = YES;
         [self addSubview:cancelIV];
         
@@ -57,7 +57,7 @@
 }
 */
 //切换录音和取消界面 YES：显示录音 NO：显示取消
--(void)changeRecordView:(BOOL)flag{
+- (void)changeRecordView:(BOOL)flag{
     if (flag) {
         phoneIV.hidden = NO;
         cancelIV.hidden = YES;
@@ -70,7 +70,8 @@
         tipLabel.text = @"松开取消语音发送";
     }
 }
--(void)changeanimation:(double)lowPassResults;
+
+- (void)changeanimation:(double)lowPassResults;
 {
     //     int index=arc4random()%8;
     //
@@ -85,11 +86,11 @@
         
     }
     else if (0.13<lowPassResults<=0.20) {
-        [signalIV setImage:[UIImage imageNamed:@"RecordingSignal001.png"]];
+        [signalIV setImage:[UIImage imageNamed:@"RecordingSignal001"]];
         
     }
     else if (0.20<lowPassResults<=0.27) {
-        [signalIV setImage:[UIImage imageNamed:@"RecordingSignal001.png"]];
+        [signalIV setImage:[UIImage imageNamed:@"RecordingSignal001"]];
         
     }
     else if (0.27<lowPassResults<=0.34) {
@@ -133,10 +134,12 @@
         
     }
 }
--(void)change{
+
+- (void)change{
     
 }
--(void)startAnimation
+
+- (void)startAnimation
 {
     tipLabel.text = @"上滑取消语音发送";
     self.hidden=NO;
@@ -145,7 +148,7 @@
     signalIV.hidden = NO;
 }
 
--(void)stopAnimation{
+- (void)stopAnimation{
     self.hidden=YES;
 }
 

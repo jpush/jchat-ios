@@ -15,7 +15,7 @@
   DDLogDebug(@"Action - viewDidLoad");
     UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-    [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+    [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
     self.title=@"修改密码";
@@ -24,7 +24,7 @@
     self.pressBtn.layer.masksToBounds=YES;
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.passwordField resignFirstResponder];
     [self.passwordFieldAgain resignFirstResponder];

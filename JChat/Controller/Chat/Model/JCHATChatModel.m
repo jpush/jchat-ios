@@ -23,14 +23,14 @@
   return self;
 }
 
--(void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation {
+- (void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation {
   _fromUser = message.fromUser;
   _message = message;
   _chatType = conversation.conversationType;
   _messageId = message.msgId;
   _fromId = message.fromUser.username;
   _type = message.contentType;
-  _isMyMessage = ![message isReceived];
+  _isReceived = [message isReceived];
   _messageStatus = message.status;
   _messageTime = message.timestamp;
   _sendFlag = NO;
@@ -109,7 +109,7 @@
   [self getTextHeight];
 }
 
--(float )getTextHeight {
+- (float )getTextHeight {
   if (self.type == kJMSGContentTypeText || self.type == kJMSGContentTypeEventNotification) {
     UIFont *font =[UIFont systemFontOfSize:18];
     CGSize maxSize = CGSizeMake(200, 2000);
@@ -130,7 +130,7 @@
 
 
 
--(CGSize)getImageSize {
+- (CGSize)getImageSize {
   if (self.messageStatus == kJMSGMessageStatusReceiveDownloadFailed) {
     self.imageSize = CGSizeMake(77, 57);
     return self.imageSize;

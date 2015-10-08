@@ -34,7 +34,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headDefalt_34.png" translatesAutoresizingMaskIntoConstraints="NO" id="Zbp-zO-oR9">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headDefalt.png" translatesAutoresizingMaskIntoConstraints="NO" id="Zbp-zO-oR9">
                         <rect key="frame" x="6" y="4" width="46" height="46"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="46" id="wyv-Z7-y9O"/>
@@ -86,6 +86,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="headDefalt_34.png" width="45" height="45"/>
+        <image name="headDefalt.png" width="45" height="45"/>
     </resources>
 </document>
