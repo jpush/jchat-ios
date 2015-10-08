@@ -4,7 +4,7 @@
 #import "JCHATSendMessageViewController.h"
 #import "JCHATSelectFriendsCtl.h"
 #import "MBProgressHUD+Add.h"
-
+#import "JCHATAlertViewWait.h"
 @interface JCHATChatViewController ()
 {
    __block NSMutableArray *_conversationArr;
@@ -18,7 +18,6 @@
 @end
 
 @implementation JCHATChatViewController
-
 @synthesize searchDisplayController;
 
 - (void)viewDidLoad {
@@ -64,12 +63,12 @@
                                              object:nil];
   
 
-  self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha=0.8;
+  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  self.navigationController.navigationBar.translucent = NO;
 
   NSShadow *shadow = [[NSShadow alloc]init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0,-1);
+  shadow.shadowOffset = CGSizeMake(0,0);
   [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    [UIColor whiteColor], NSForegroundColorAttributeName,
                                                                    shadow,NSShadowAttributeName,
@@ -109,7 +108,7 @@
   // searchResultsDelegate 就是 UITableViewDelegate
   searchDisplayController.searchResultsDelegate = self;
 
-  self.addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 65, 100, 100)];
+  self.addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 1, 100, 100)];
   [self.addBgView setBackgroundColor:[UIColor clearColor]];
   [self.addBgView setUserInteractionEnabled:YES];
   UIImage *frameImg =[UIImage imageNamed:@"frame"];
@@ -271,6 +270,7 @@
 
 - (void)getConversationList {
     [self.addBgView setHidden:YES];
+
     [JMSGConversation getConversationListWithCompletionHandler:^(id resultObject, NSError *error) {
       JPIMMAINTHEAD(^{
 
@@ -343,12 +343,38 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-  if (buttonIndex == 0) {
-  }else if (buttonIndex == 1)
-  {
-    [MBProgressHUD showMessage:@"正在获取好友信息" view:self.view];
-    if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
-      return;
+    if (buttonIndex == 0) {
+    }else if (buttonIndex == 1)
+    {
+//        [MBProgressHUD showMessage:@"正在获取好友信息" view:self.view];
+      [[JCHATAlertViewWait ins] showInView];
+        if ([[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
+            return;
+        }
+        JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
+        sendMessageCtl.hidesBottomBarWhenPushed=YES;
+        [[alertView textFieldAtIndex:0] resignFirstResponder];
+        __weak __typeof(self)weakSelf = self;
+        [JMSGUser getUserInfoWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+          [[JCHATAlertViewWait ins] hidenAll];
+            if (error == nil) {
+                __strong __typeof(weakSelf) strongSelf = weakSelf;
+                sendMessageCtl.user = ((JMSGUser *) resultObject);
+                NSLog(@"username :%@", sendMessageCtl.user.username);
+                if (![sendMessageCtl.user.username isEqualToString:[JMSGUser getMyInfo].username]) {
+                    [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
+                } else {
+                  [[JCHATAlertViewWait ins] hidenAll];
+                    [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
+                }
+                NSLog(@"getuserinfo success");
+            } else {
+                NSLog(@"没有这个用户!");
+              [[JCHATAlertViewWait ins] hidenAll];
+                [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
+            }
+        }];
     }
     JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
     sendMessageCtl.hidesBottomBarWhenPushed=YES;
@@ -377,7 +403,6 @@ NSInteger sortType(id object1,id object2,void *cha) {
         [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
       }
     }];
-  }
 }
 
 -(void)addBtnClick:(UIButton *)btn {
@@ -455,7 +480,6 @@ NSInteger sortType(id object1,id object2,void *cha) {
     JCHATChatTableViewCell *cell = (JCHATChatTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         cell = [[JCHATChatTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
   [cell setCellDataWithConversation:conversation];
@@ -480,14 +504,17 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-    sendMessageCtl.hidesBottomBarWhenPushed=YES;
-    sendMessageCtl.conversation.chatType = kJMSGSingle;
-    JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
-    sendMessageCtl.conversation = conversation;
-    [self.navigationController pushViewController:sendMessageCtl animated:YES];
-    NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
-    [self saveBadge:badge];
+  UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+  cell.selected = NO;
+  JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
+  sendMessageCtl.hidesBottomBarWhenPushed=YES;
+  sendMessageCtl.conversation.chatType = kJMSGSingle;
+  JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
+  sendMessageCtl.conversation = conversation;
+  [self.navigationController pushViewController:sendMessageCtl animated:YES];
+  
+  NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
+  [self saveBadge:badge];
 }
 
 - (void)saveBadge:(NSInteger)badge {

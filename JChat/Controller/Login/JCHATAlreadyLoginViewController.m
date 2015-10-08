@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import "JCHATLoginViewController.h"
 #import <JMessage/JMessage.h>
+#import "NSString+MessageInputView.h"
+#import "ViewUtil.h"
 @interface JCHATAlreadyLoginViewController ()
 
 @end
@@ -24,16 +26,21 @@
     // Do any additional setup after loading the view from its nib.
     self.loginBtn.layer.cornerRadius=4;
     [self.loginBtn.layer setMasksToBounds:YES];
-    NSString *userName =[[NSUserDefaults standardUserDefaults] objectForKey:kuserName];
+  [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  self.loginBtn.backgroundColor = UIColorFromRGB(0x6fd66b);
+  [self.loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x498d47) frame:self.loginBtn.frame] forState:UIControlStateHighlighted];
+  
+    NSString *userName =[[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName];
+  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  self.navigationController.navigationBar.translucent = NO;
+
     [self.userName setTitle:userName forState:UIControlStateNormal];
-    self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-    self.navigationController.navigationBar.alpha=0.8;
     self.title=@"极光IM";
     [self.passwordField setSecureTextEntry:YES];
     
     NSShadow *shadow = [[NSShadow alloc]init];
     shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-    shadow.shadowOffset = CGSizeMake(0,-1);
+    shadow.shadowOffset = CGSizeMake(0,0);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                      [UIColor whiteColor], NSForegroundColorAttributeName,
                                                                      shadow,NSShadowAttributeName,
@@ -57,30 +64,46 @@
     [super viewWillDisappear:YES];
     [self.navigationController.navigationBar setHidden:YES];
 }
+
 - (IBAction)userSwitching:(id)sender {
-    JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
-    [self.navigationController pushViewController:loginCtl animated:YES];
+  JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
+  UINavigationController *nvloginCtl = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+  AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+  appDelegate.window.rootViewController = nvloginCtl;
+  //    [self.navigationController pushViewController:loginCtl animated:YES];
 }
 - (IBAction)loginBtn:(id)sender {
     
     [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
     if (![self.passwordField.text isEqualToString:@""] && ![self.passwordField.text isEqualToString:@""]) {
-        [JMSGUser loginWithUsername:[[NSUserDefaults standardUserDefaults] objectForKey:kuserName] password:self.passwordField.text completionHandler:^(id resultObject, NSError *error) {
-            if (error != nil) {
-                NSLog(@"login success");
-                AppDelegate *appdelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-                [self.navigationController pushViewController:appdelegate.tabBarCtl animated:YES];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            } else {
-                if (error.code == 100) {
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [MBProgressHUD showMessage:@"用户不存在!" view:self.view];
-                } else {
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [MBProgressHUD showMessage:@"登录失败!" view:self.view];
-                }
-            }
-        }];
+      NSLog(@"   username  %@,password  %@",[[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName],self.passwordField.text);
+      NSString *username = ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]);
+      NSString *password = self.passwordField.text.stringByTrimingWhitespace;
+      [JMSGUser loginWithUsername:username
+                         password:password
+                completionHandler:^(id resultObject, NSError *error) {
+                  if (error == nil) {
+                    [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                    [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
+                    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+
+                    JPIMMAINTHEAD(^{
+                      [self.navigationController pushViewController:appDelegate.tabBarCtl animated:YES];
+                      
+                      [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    });
+
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
+                  } else {
+                    if (error.code == 100) {
+                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                      [MBProgressHUD showMessage:@"用户不存在!" view:self.view];
+                    } else {
+                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                      [MBProgressHUD showMessage:@"登录失败!" view:self.view];
+                    }
+                  }
+                }];
     }else{
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showMessage:@"密码不能为空!" view:self.view];

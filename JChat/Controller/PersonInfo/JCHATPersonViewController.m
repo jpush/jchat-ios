@@ -12,7 +12,7 @@
 #import "MBProgressHUD+Add.h"
 #import "JCHATChatTable.h"
 #import <JMessage/JMessage.h>
-
+#import "JCHATChangeNameViewController.h"
 
 @interface JCHATPersonViewController () <
     TouchTableViewDelegate,
@@ -44,13 +44,13 @@
   [self.view setBackgroundColor:[UIColor whiteColor]];
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
   self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha = 0.8;
+  self.navigationController.navigationBar.alpha = 1;
   self.title = @"个人信息";
   [self loadUserInfoData];
 
   NSShadow *shadow = [[NSShadow alloc] init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0, -1);
+  shadow.shadowOffset = CGSizeMake(0, 0);
 
   NSDictionary *dic = @{
       NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -89,7 +89,7 @@
   _genderPicker.tag = 200;
   [self.view addSubview:_genderPicker];
 
-  _titleArr = @[@"昵称", @"性别", @"地区", @"个性签名"];
+  _titleArr = @[@"用户名", @"性别", @"地区", @"个性签名"];
   _imgArr = @[@"wo_20", @"gender", @"location_21", @"signature"];
   _pickerDataArr = @[@"男", @"女",@"未知"];
 }
@@ -117,6 +117,8 @@
   }else {
     _genderNumber = [NSNumber numberWithInt:0];
   }
+
+  [_personTabl reloadData];
 }
 
 - (void)showResultInfo:(id)resultObject error:(NSError *)error {
@@ -193,7 +195,7 @@
   if (cell == nil) {
     cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATPersonInfoCell" owner:self options:nil] lastObject];
   }
-  cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   cell.infoTitleLabel.text = [_titleArr objectAtIndex:indexPath.row];
   cell.personInfoConten.text = [_infoArr objectAtIndex:indexPath.row];
   cell.titleImgView.image = [UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
@@ -205,12 +207,21 @@
     _selectFlagGender = YES;
     [self showSelectGenderView:YES];
   }else {
-    NSArray *titleArr = @[@"输入昵称", @"输入性别", @"输入地区", @"个性签名"];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[titleArr objectAtIndex:indexPath.row] message:nil
-                                                       delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alertView.tag = indexPath.row;
-    [alertView show];
+//    NSArray *titleArr = @[@"输入昵称", @"输入性别", @"输入地区", @"个性签名"];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[titleArr objectAtIndex:indexPath.row] message:nil
+//                                                       delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    alertView.tag = indexPath.row;
+//    [alertView show];
+    JCHATChangeNameViewController *changeNameVC = [[JCHATChangeNameViewController alloc] init];
+    if (indexPath.row == 0) {
+      changeNameVC.updateType = kJMSGNickname;
+    }else if(indexPath.row == 2) {
+      changeNameVC.updateType = kJMSGRegion;
+    }else if(indexPath.row == 3) {
+      changeNameVC.updateType = kJMSGSignature;
+    }
+    [self.navigationController pushViewController:changeNameVC animated:YES];
   }
 }
 
@@ -309,6 +320,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
+  [self loadUserInfoData];
+  [_personTabl reloadData];
   [self.navigationController setNavigationBarHidden:NO];
   // 禁用 iOS7 返回手势
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {

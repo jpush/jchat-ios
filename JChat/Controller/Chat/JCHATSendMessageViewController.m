@@ -22,51 +22,87 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <JMessage/JMSGConversation.h>
 #import "JCHATStringUtils.h"
-#import "JCHATLoginViewController.h"
+//#import "JCHATLoginViewController.h"
+#import "JCHATAlreadyLoginViewController.h"
 //#import "JMSGConversation+Inner.h"
-
+#import "ViewUtil.h"
+#import "JCHATVoiceTableCell.h"
+#import "JCHATTextTableCell.h"
+#import <UIKit/UIPrintInfo.h>
+//#import <UITableView+FDTemplateLayoutCell/UITableView+FDTemplateLayoutCell.h>
 #define interval 60*2
 
 NSString * const JCHATMessage      = @"JCHATMessage";
 NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 @interface JCHATSendMessageViewController () {
-
+  
 @private
   NSMutableArray *_imgDataArr;
   __block JMSGConversation *_conversation;
   NSMutableDictionary *_messageDic;
   __block NSMutableArray *_userArr;
   NSMutableDictionary *_JMSgMessageDic;
- __block BOOL _eixtGroupFlag;
   UIButton *_rightBtn;
+
 }
 
 @end
 
 
 @implementation JCHATSendMessageViewController
+//- (IBAction)click_to_change:(id)sender {
+//  
+////  self.toolBarToBottomConstrait.constant = 0;
+////  self.moreViewHeight.constant = 227;
+////  [self.view addSubview:self.toolBarContainer.toolbar];
+////
+////  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, 320, 45);
+////  [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
+//
+//  
+////  if ([voiceDuration integerValue] >= 60) {
+////    model.voiceTime = @"60''";
+////  }else{
+////    model.voiceTime = [NSString stringWithFormat:@"%d''",(int)[voiceDuration integerValue]];
+////  }
+////  JCHATChatModel *model =[[JCHATChatModel alloc] init];
+////  model.messageId = voiceMessage.messageId;
+////  model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
+////  model.type=kJMSGVoiceMessage;
+////  model.conversation = _conversation;
+////  model.targetId = self.conversation.targetId;
+////  model.displayName = self.targetName;
+////  model.readState = YES;
+////  model.who = YES;
+////  model.sendFlag = NO;
+////  model.mediaData = [NSData dataWithContentsOfFile:voicePath];
+////  
+////  if (self.conversation.chatType == kJMSGSingle) {
+////    voiceMessage.conversationType = kJMSGSingle;
+////  }else {
+////    voiceMessage.conversationType = kJMSGGroup;
+////  }
+//
+//  JMSGVoiceMessage *voiceMessage = [[JMSGVoiceMessage alloc] init];
+//
+//  voiceMessage.conversationType = kJMSGSingle;
+//  
+//  voiceMessage.targetId = self.conversation.targetId;
+//  voiceMessage.duration = @"15''";//time;
+//  NSString *musicFilePath = [[NSBundle mainBundle] pathForResource:@"sendmusic" ofType:@"mp3"];
+//  voiceMessage.mediaData = [NSData dataWithContentsOfFile:musicFilePath];//
+//  [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
+//  [JMSGMessage sendMessage:voiceMessage];
+//
+//
+//}
+
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.automaticallyAdjustsScrollViewInsets = NO;
-  [self.view setBackgroundColor:[UIColor clearColor]];
-  NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"JCHATToolBar"owner:self options:nil];
-  self.toolBar = [nib objectAtIndex:0];
-  self.toolBar.contentMode = UIViewContentModeRedraw;
-  [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - 45, self.view.bounds.size.width, 45)];
-  self.toolBar.delegate = self;
-  [self.toolBar setUserInteractionEnabled:YES];
 
-  self.messageTableView =[[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight)) style:UITableViewStylePlain];
-  self.messageTableView.userInteractionEnabled = YES;
-  self.messageTableView.showsVerticalScrollIndicator = NO;
-  self.messageTableView.delegate = self;
-  self.messageTableView.dataSource = self;
-  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
-  [self.view addSubview:self.messageTableView];
-  [self.view addSubview:self.toolBar];
 
    _JMSgMessageDic = [[NSMutableDictionary alloc]init];
   _messageDic = [[NSMutableDictionary alloc]init];
@@ -78,30 +114,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   _imgDataArr =[[NSMutableArray alloc] init];
   
-  [self.view setBackgroundColor:[UIColor whiteColor]];
-  _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [_rightBtn setFrame:CGRectMake(0, 0, 46, 46)];
-  [_rightBtn setImage:[UIImage imageNamed:@"setting_55"] forState:UIControlStateNormal];
-  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
-  
-  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-  self.navigationController.interactivePopGestureRecognizer.delegate = self;
-  UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-  [self.view addGestureRecognizer:gesture];
-  NSArray *temXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATMoreView"owner:self options:nil];
-  self.moreView = [temXib objectAtIndex:0];
-  self.moreView.delegate = self;
-  if ([self checkDevice:@"iPad"] || kApplicationHeight <= 480) {
-      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 300)];
-  }else {
-      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, 200)];
-  }
-  [self.view addSubview:self.moreView];
+
   DDLogDebug(@"Action - viewDidLoad");
   if (self.user) {
     self.targetName = self.user.username;
@@ -161,12 +174,73 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }else {
     }
   }
-
+  [self initView];
   [self getGroupMemberListWithGetMessageFlag:YES];
   [self addNotification];
   [self sendInfoRequest];
+
 }
 
+
+-(void)initView {
+  [self initNavigation];
+  [self initComponentView];
+}
+
+
+- (void)addtoolbar {
+  self.toolBarContainer.toolbar.frame = CGRectMake(0, 0, kApplicationWidth, 45);
+  
+  [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
+
+}
+-(void)initComponentView {
+
+
+  [self performSelector:@selector(addtoolbar) withObject:nil afterDelay:0.1];
+
+  UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+  [self.view addGestureRecognizer:gesture];
+  
+  [self.view setBackgroundColor:[UIColor clearColor]];
+  self.toolBarContainer.toolbar.delegate = self;
+  [self.toolBarContainer.toolbar setUserInteractionEnabled:YES];
+  
+  
+  self.messageTableView.userInteractionEnabled = YES;
+  self.messageTableView.showsVerticalScrollIndicator = NO;
+  self.messageTableView.delegate = self;
+  self.messageTableView.dataSource = self;
+  self.messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.messageTableView.backgroundColor = [UIColor colorWithRed:236/255.0 green:237/255.0 blue:240/255.0 alpha:1];
+
+  [self.messageTableView registerClass:[JCHATTextTableCell class]forCellReuseIdentifier:@"JCHATTextTableCell"];
+  [self.messageTableView registerClass:[JCHATImgTableViewCell class] forCellReuseIdentifier:@"JCHATImgTableViewCell"];
+  [self.messageTableView registerClass:[JCHATVoiceTableCell class] forCellReuseIdentifier:@"JCHATVoiceTableCell"];
+  //-registerClass:forCellReuseIdentifier:
+  self.moreViewContainer.moreView.delegate = self;
+
+}
+-(void)initNavigation {
+  _rightBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [_rightBtn setFrame:CGRectMake(0, 0, 14, 17)];
+  if (self.conversation.chatType == kJMSGSingle) {
+    [_rightBtn setImage:[UIImage imageNamed:@"dialogue_nav_b_"] forState:UIControlStateNormal];
+   }else {
+    [_rightBtn setImage:[UIImage imageNamed:@"dialogue_nav_a_"] forState:UIControlStateNormal];
+   }
+//  _rightBtn.backgroundColor = [UIColor greenColor];
+  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
+  
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
+  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
+
+}
 
 -(void)getGroupMemberListWithGetMessageFlag:(BOOL)getMesageFlag {
   if (self.conversation && self.conversation.chatType == kJMSGGroup) {
@@ -174,10 +248,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [JMSGGroup getGroupMemberList:self.conversation.targetId completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         _userArr = [NSMutableArray arrayWithArray:resultObject];
+        [self isContantMeWithUserArr:_userArr];
         if (getMesageFlag) {
           [weakSelf getAllMessage];
         }
-        [weakSelf hidenDetailBtn:_eixtGroupFlag];
       }else {
         DDLogDebug(@"群聊成员获取失败");
       }
@@ -186,8 +260,23 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (getMesageFlag) {
       [self getAllMessage];
     }
-    [self hidenDetailBtn:_eixtGroupFlag];
+    [self hidenDetailBtn:NO];
   }
+}
+
+
+- (void)isContantMeWithUserArr:(NSMutableArray *)userArr {
+  BOOL hideFlag = YES;
+  for (NSInteger i =0; i< [userArr count]; i++) {
+    JMSGUser *user = [userArr objectAtIndex:i];
+    if ([user.username isEqualToString:[JMSGUser getMyInfo].username]) {
+      hideFlag = NO;
+      break;
+    }
+  }
+  
+  [self hidenDetailBtn:hideFlag];
+
 }
 
 - (void)hidenDetailBtn:(BOOL)flag {
@@ -276,8 +365,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
       alert = @"本用户登出了。可能在其他设备上做了登录。";
     } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"用户在其他地方登录了"
-                                                      message:@"可能在其他设备上做了登录"
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                      message:@"登录错误，请重新登录"
                                                      delegate:self
                                             cancelButtonTitle:nil
                                             otherButtonTitles:@"退出",nil];
@@ -310,6 +399,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   } else if (message.contentType == kJMSGImageMessage) {
     JMSGImageMessage *imgMessage = (JMSGImageMessage *) message;
     model.pictureImgPath = imgMessage.resourcePath;
+    model.imageSize = [model getImageSize];
   }
   
   model.messageStatus = (JMSGMessageStatusType) [message.status integerValue];
@@ -337,7 +427,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
       DDLogDebug(@"Logout callback with - %@", error);
     }];
-    JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] init];
+    JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
     loginCtl.hidesBottomBarWhenPushed = YES;
     UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
     appDelegate.window.rootViewController = navLogin;
@@ -407,102 +497,103 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 - (void)getAllMessage {
   DDLogDebug(@"Action - getAllMessage");
-
+  
   __block NSMutableArray * arrList;
   [self cleanMessageCache];
   
   __weak typeof(self) weakSelf = self;
-    [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
-      arrList = [self sortMessage:resultObject];
-        for (NSInteger i=0; i< [arrList count]; i++) {
-            JMSGMessage *message = [arrList objectAtIndex:i];
-          [_JMSgMessageDic setObject:message forKey:message.messageId];
-
-          if (message.contentType == kJMSGEventMessage) {
-            JMSGEventMessage *eventMessage = (JMSGEventMessage *)message;
-            if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
-              if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
-                _eixtGroupFlag = YES;
-                [weakSelf hidenDetailBtn:_eixtGroupFlag];
-              }
-              JCHATChatModel *model = [[JCHATChatModel alloc]init];
-              model.messageId = eventMessage.messageId;
-              model.chatType = kJMSGGroup;
-              model.type = kJMSGEventMessage;
-              model.chatContent = eventMessage.contentText;
-              [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
-              [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
-            }
-            continue;
-          }
-            JCHATChatModel *model =[[JCHATChatModel alloc]init];
-            model.messageId = message.messageId;
-            model.fromId = message.fromId;
-            model.conversation = _conversation;
-            model.messageStatus = [message.status integerValue];
-            model.displayName = message.displayName;
-            model.readState = YES;
-            JMSGUser *user = [JMSGUser getMyInfo];
-          
-          if (_conversation.chatType == kJMSGGroup) {
-            if (![message.fromId isEqualToString :user.username]) {
-              model.who=NO;
-              model.avatar = [self getAvatarWithTargetId:message.fromId].avatarThumbPath;
-              model.targetId = _conversation.targetId;
-            }else{
-              model.who=YES;
-              model.avatar = user.avatarThumbPath;
-              model.targetId = user.username;
-            }
-          }else {
-            if (![message.fromId isEqualToString :user.username]) {
-              model.who=NO;
-              model.avatar = _conversation.avatarThumb;
-              model.targetId = _conversation.targetId;
-            }else{
-              model.who=YES;
-              model.avatar = user.avatarThumbPath;
-              model.targetId = user.username;
-            }
-
-          }
-            if (message.contentType == kJMSGTextMessage) {
-                model.type=kJMSGTextMessage;
-                JMSGContentMessage *contentMessage = (JMSGContentMessage *)message;
-                model.chatContent = contentMessage.contentText;
-            }else if (message.contentType == kJMSGImageMessage)
-            {
-                model.type= kJMSGImageMessage;
-                JMSGImageMessage *imageMessage = (JMSGImageMessage *)message;
-                if (imageMessage.resourcePath != nil) {
-                    model.pictureImgPath = imageMessage.resourcePath;
-                    if (imageMessage.thumbPath != nil) {
-                        model.pictureThumbImgPath = imageMessage.thumbPath;
-                    }
-                    [_imgDataArr addObject:model];
-                }else {
-                    model.pictureThumbImgPath = imageMessage.thumbPath;
-                    [_imgDataArr addObject:model];
-                }
-                model.photoIndex = [_imgDataArr count] -1;
-            }else if (message.contentType == kJMSGVoiceMessage)
-            {
-                model.type = kJMSGVoiceMessage;
-                JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *)message;
-                model.voicePath = voiceMessage.resourcePath;
-                model.voiceTime = [NSString stringWithFormat:@"%@",voiceMessage.duration];
-                model.chatContent =@"";
-            }
-            model.messageTime = message.timestamp;
-          [weakSelf dataMessageShowTime:message.timestamp];
+  [_conversation getAllMessageWithCompletionHandler:^(id resultObject, NSError *error) {
+    arrList = [self sortMessage:resultObject];
+    for (NSInteger i=0; i< [arrList count]; i++) {
+      JMSGMessage *message = [arrList objectAtIndex:i];
+      [_JMSgMessageDic setObject:message forKey:message.messageId];
+      
+      if (message.contentType == kJMSGEventMessage) {
+        JMSGEventMessage *eventMessage = (JMSGEventMessage *)message;
+        if (eventMessage.type == kJMSGDeleteGroupMemberEvent || eventMessage.type == kJMSGAddGroupMemberEvent || eventMessage.type == kJMSGExitGroupEvent) {
+          JCHATChatModel *model = [[JCHATChatModel alloc]init];
+          model.messageId = eventMessage.messageId;
+          model.chatType = kJMSGGroup;
+          model.type = kJMSGEventMessage;
+          model.chatContent = eventMessage.contentText;
+          model.contentHeight = [model getTextHeight];//!
           [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
           [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
         }
-      [_messageTableView reloadData];
-        if ([_messageDic[JCHATMessageIdKey] count] != 0) {
-            [weakSelf.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        continue;
+      }
+      JCHATChatModel *model =[[JCHATChatModel alloc]init];
+      model.messageId = message.messageId;
+      model.fromId = message.fromId;
+      model.conversation = _conversation;
+      model.messageStatus = [message.status integerValue];
+      model.displayName = message.displayName;
+      model.readState = YES;
+      JMSGUser *user = [JMSGUser getMyInfo];
+      
+      if (_conversation.chatType == kJMSGGroup) {
+        if (![message.fromId isEqualToString :user.username]) {
+          model.who=NO;
+          model.avatar = [self getAvatarWithTargetId:message.fromId].avatarThumbPath;
+          model.targetId = _conversation.targetId;
+        }else{
+          model.who=YES;
+          model.avatar = user.avatarThumbPath;
+          model.targetId = user.username;
         }
-    }];
+      }else {
+        if (![message.fromId isEqualToString :user.username]) {
+          model.who=NO;
+          model.avatar = _conversation.avatarThumb;
+          model.targetId = _conversation.targetId;
+        }else{
+          model.who=YES;
+          model.avatar = user.avatarThumbPath;
+          model.targetId = user.username;
+        }
+        
+      }
+      if (message.contentType == kJMSGTextMessage) {
+        model.type=kJMSGTextMessage;
+        JMSGContentMessage *contentMessage = (JMSGContentMessage *)message;
+        model.chatContent = contentMessage.contentText;
+        model.contentHeight = [model getTextHeight];//!
+      }else if (message.contentType == kJMSGImageMessage)
+      {
+        model.type= kJMSGImageMessage;
+        JMSGImageMessage *imageMessage = (JMSGImageMessage *)message;
+        if (imageMessage.resourcePath != nil) {
+          model.pictureImgPath = imageMessage.resourcePath;
+          if (imageMessage.thumbPath != nil) {
+            model.pictureThumbImgPath = imageMessage.thumbPath;
+          }
+          [_imgDataArr addObject:model];
+        }else {
+          model.pictureThumbImgPath = imageMessage.thumbPath;
+          [_imgDataArr addObject:model];
+        }
+        model.imageSize = [model getImageSize];
+        model.photoIndex = [_imgDataArr count] -1;
+      }else if (message.contentType == kJMSGVoiceMessage)
+      {
+        model.type = kJMSGVoiceMessage;
+        JMSGVoiceMessage *voiceMessage = (JMSGVoiceMessage *)message;
+        model.voicePath = voiceMessage.resourcePath;
+        model.voiceTime = [NSString stringWithFormat:@"%@",voiceMessage.duration];
+        model.chatContent =@"";
+        
+      }
+      model.messageTime = message.timestamp;
+      
+      [weakSelf dataMessageShowTime:message.timestamp];
+      [_messageDic[JCHATMessage] setObject:model forKey:model.messageId];
+      [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
+    }
+    [_messageTableView reloadData];
+    if ([_messageDic[JCHATMessageIdKey] count] != 0) {
+      [weakSelf.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey]  count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
+  }];
 }
 
 - (JMSGUser *)getAvatarWithTargetId:(NSString *)targetId {
@@ -521,13 +612,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
     JPIMMAINTHEAD(^{
         JMSGUser *user = [JMSGUser getMyInfo];
-//        [_conversation resetUnreadMessageCountWithCompletionHandler:^(id resultObject, NSError *error) {
-//            if (error == nil) {
-//            }else {
-//                DDLogDebug(@"消息未读数清空失败");
-//            }
-//        }];
-
         NSDictionary *userInfo = [notification userInfo];
         JMSGMessage *message = (JMSGMessage *)(userInfo[JMSGNotification_MessageKey]);
       [_JMSgMessageDic setObject:message forKey:message.messageId];
@@ -557,9 +641,10 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
         model.targetId = message.targetId;
         model.messageStatus = [message.status integerValue];
         if (message.contentType == kJMSGTextMessage) {
-            model.type=kJMSGTextMessage;
+            model.type = kJMSGTextMessage;
             JMSGContentMessage *contentMessage =  (JMSGContentMessage *)message;
             model.chatContent = contentMessage.contentText;
+            model.contentHeight = [model getTextHeight];//!
         } else if (message.contentType == kJMSGImageMessage) {
             model.type=kJMSGImageMessage;
             model.pictureThumbImgPath = ((JMSGImageMessage *)message).thumbPath;
@@ -629,7 +714,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 - (void)pressVoiceBtnToHideKeyBoard
 {
-    [self.toolBar.textView resignFirstResponder];
+    [self.toolBarContainer.toolbar.textView resignFirstResponder];
     [self dropToolBar];
 }
 
@@ -664,19 +749,27 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 #pragma mark --调用相机
 -(void)cameraClick {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        NSString *requiredMediaType = ( NSString *)kUTTypeImage;
-        NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
-        [picker setMediaTypes:arrMediaTypes];
-        picker.showsCameraControls = YES;
-        picker.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-        picker.editing = YES;
-        picker.delegate = self;
-        [self presentViewController:picker animated:YES completion:nil];
-    }
+  UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+  if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    NSString *requiredMediaType = ( NSString *)kUTTypeImage;
+    NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
+    [picker setMediaTypes:arrMediaTypes];
+    picker.showsCameraControls = YES;
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    picker.editing = YES;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+  }
 }
+
+//- (void) didRotate:(NSNotification *)notification
+//{
+//  //Maintain the camera in Landscape orientation
+////  [[UIDevice currentDevice] setOrientation:UIInterfaceOrientationLandscapeRight];
+//  [UIDevice currentDevice].orientation = UIInterfaceOrientationLandscapeRight;
+//  
+//}
 
 #pragma mark - UIImagePickerController Delegate
 //相机,相册Finish的代理
@@ -690,46 +783,49 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
   [self prepareImageMessage:image];
-  [self dropToolBar];
+  [self dropToolBarNoAnimate];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark --发送图片
 - (void)prepareImageMessage:(UIImage *)img {
   DDLogDebug(@"Action - prepareImageMessage");
-  img = [img resizedImageByWidth:upLoadImgWidth];
-  UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
+
+    img = [img resizedImageByWidth:upLoadImgWidth];
+    UIImage *smallpImg = [UIImage imageWithImageSimple:img scaled:0.5];
+    
+    JMSGImageMessage* message = [[JMSGImageMessage alloc] init];
+    [self addmessageShowTimeData:message.timestamp];
+    JCHATChatModel *model = [[JCHATChatModel alloc] init];
+    
+    model.messageId = message.messageId;
+    model.messageTime = message.timestamp;
+    model.messageStatus = kJMSGStatusSending;
+    model.who = YES;
+    model.sendFlag = NO;
+    model.conversation = _conversation;
+    model.targetId = self.conversation.targetId;
+    model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
+    model.messageStatus = kJMSGStatusSending;
+    model.type = kJMSGImageMessage;
+    model.mediaData = UIImageJPEGRepresentation(smallpImg, 1);
+    
+    if (self.conversation.chatType == kJMSGSingle) {
+      message.conversationType = kJMSGSingle;
+    }else {
+      message.conversationType = kJMSGGroup;
+    }
+    message.targetId = model.targetId;
+    ((JMSGImageMessage *)message).mediaData = model.mediaData;
+    
+    [_imgDataArr addObject:model];
+    model.photoIndex = [_imgDataArr count] - 1;
+    [_JMSgMessageDic setObject:message forKey:message.messageId];
+    model.imageSize = [model getImageSize];
+    [self addMessage:model];
   
-  JMSGImageMessage* message = [[JMSGImageMessage alloc] init];
-  [self addmessageShowTimeData:message.timestamp];
-  JCHATChatModel *model = [[JCHATChatModel alloc] init];
-  
-  model.messageId = message.messageId;
-  model.messageTime = message.timestamp;
-  model.messageStatus = kJMSGStatusSending;
-  model.who = YES;
-  model.sendFlag = NO;
-  model.conversation = _conversation;
-  model.targetId = self.conversation.targetId;
-  model.avatar = [JMSGUser getMyInfo].avatarThumbPath;
-  model.messageStatus = kJMSGStatusSending;
-  model.type = kJMSGImageMessage;
-  model.mediaData = UIImageJPEGRepresentation(smallpImg, 1);
-  
-  if (self.conversation.chatType == kJMSGSingle) {
-    message.conversationType = kJMSGSingle;
-  }else {
-    message.conversationType = kJMSGGroup;
-  }
-  message.targetId = model.targetId;
-  ((JMSGImageMessage *)message).mediaData = model.mediaData;
-  
-  [_imgDataArr addObject:model];
-  model.photoIndex = [_imgDataArr count] - 1;
-  [_JMSgMessageDic setObject:message forKey:message.messageId];
-  [self addMessage:model];
-  [self dropToolBar];
 }
+
 
 #pragma mark --
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -772,7 +868,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                            selector:@selector(receiveEventNotification:)
                                                name:JMSGNotification_EventMessage
                                              object:nil];
-  [self.toolBar.textView addObserver:self
+  [self.toolBarContainer.toolbar.textView addObserver:self
                             forKeyPath:@"contentSize"
                                options:NSKeyValueObservingOptionNew
                                context:nil];
@@ -818,8 +914,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   
   if (self.conversation.chatType == kJMSGGroup && eventMessage.gid == [self.conversation.targetId longLongValue]) {
     if (eventMessage.type == kJMSGExitGroupEvent && eventMessage.isContainsMe) {
-      _eixtGroupFlag = YES;
-      [self hidenDetailBtn:_eixtGroupFlag];
+      [self hidenDetailBtn:YES];
     }else if(eventMessage.type == kJMSGAddGroupMemberEvent) {
       [self getGroupMemberListWithGetMessageFlag:NO];
     }
@@ -842,64 +937,99 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     self.barBottomFlag=NO;
     CGRect keyBoardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight)-keyBoardFrame.size.height)];
+  
+  [self.messageTableView setNeedsLayout];
+    [self.toolBarContainer setNeedsLayout];
+  [self.moreViewContainer setNeedsLayout];
+  [UIView animateWithDuration:animationTime animations:^{
+
+    self.moreViewHeight.constant = keyBoardFrame.size.height;
+    
     [self scrollToEnd];
-    [UIView animateWithDuration:animationTime animations:^{
-        [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45-keyBoardFrame.size.height, self.view.bounds.size.width, 45)];
-    }];
-    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
+    [self.toolBarContainer layoutIfNeeded];
+    [self.messageTableView layoutIfNeeded];
+    [self.moreViewContainer layoutIfNeeded];
+  }];
+  
+  [self scrollToEnd];
+  
+  
+  
 }
 
 - (void)inputKeyboardWillHide:(NSNotification *)notification {
     CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kApplicationHeight-45-(kNavigationBarHeight))];
-        [UIView animateWithDuration:animationTime animations:^{
-            [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.view.bounds.size.width, 45)];
-        }];
+
+  
+  
+  [self.messageTableView setNeedsLayout];
+  [self.toolBarContainer setNeedsLayout];
+  [self.moreViewContainer setNeedsLayout];
+
+  [UIView animateWithDuration:animationTime animations:^{
+    self.moreViewHeight.constant = 0;
+    [self.toolBarContainer layoutIfNeeded];
+    [self.messageTableView layoutIfNeeded];
+    [self.moreViewContainer layoutIfNeeded];
+  }];
+    [self scrollToBottomAnimated:NO];
 }
 
 #pragma mark --发送文本
 - (void)sendText:(NSString *)text {
-  [self prepareTextMessage:text];
+      [self prepareTextMessage:text];
 }
 
 - (void)perform {
-    [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-    [self.toolBar setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.view.bounds.size.width, 45)];
+
+  self.moreViewHeight.constant = 0;
+  self.toolBarToBottomConstrait.constant = 0;
+  
 }
 
 #pragma mark --返回下面的位置
 - (void)dropToolBar {
   self.barBottomFlag =YES;
   self.previousTextViewContentHeight = 31;
-  self.toolBar.addButton.selected = NO;
+  self.toolBarContainer.toolbar.addButton.selected = NO;
   [_messageTableView reloadData];
   [UIView animateWithDuration:0.3 animations:^{
-      [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.view.bounds.size.width, self.moreView.bounds.size.height)];
-      [self.toolBar setFrame:CGRectMake(0, self.view.bounds.size.height - self.toolBar.bounds.size.height, self.toolBar.bounds.size.width, 45)];
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenSize.height - 20 -45-(kNavigationBarHeight))];
-    NSLog(@"self.messageTableView height %f   real height %f",self.messageTableView.frame.size.height,kScreenSize.height - 20 -45-(kNavigationBarHeight));
+    self.toolBarToBottomConstrait.constant = 0;
+    self.moreViewHeight.constant = 0;
+    
   }];
 }
 
+- (void)dropToolBarNoAnimate {
+  self.barBottomFlag =YES;
+  self.previousTextViewContentHeight = 31;
+  self.toolBarContainer.toolbar.addButton.selected = NO;
+  [_messageTableView reloadData];
+    self.toolBarToBottomConstrait.constant = 0;
+    self.moreViewHeight.constant = 0;
+}
 #pragma mark --按下功能响应
 - (void)pressMoreBtnClick:(UIButton *)btn {
   self.barBottomFlag=NO;
-  [self.toolBar.textView resignFirstResponder];
-  [self.moreView setFrame:CGRectMake(0, kScreenHeight, self.moreView.bounds.size.width, self.moreView.bounds.size.height)];
-  [UIView animateWithDuration:0.3 animations:^{
-  [self.toolBar setFrame:CGRectMake(0, kScreenHeight-45-self.moreView.bounds.size.height, self.view.bounds.size.width, 45)];
-  [self.moreView setFrame:CGRectMake(0, kScreenHeight-self.moreView.bounds.size.height, self.view.bounds.size.width, self.moreView.bounds.size.height)];
+  [self.toolBarContainer.toolbar.textView resignFirstResponder];
+
+  self.toolBarToBottomConstrait.constant = 0;
+  self.moreViewHeight.constant = 227;
+  [self.messageTableView setNeedsDisplay];
+  [self.moreViewContainer setNeedsLayout];
+  [self.toolBarContainer setNeedsLayout];
+  [UIView animateWithDuration:0.25 animations:^{
+  self.toolBarToBottomConstrait.constant = 0;
+  self.moreViewHeight.constant = 227;
+  [self.messageTableView layoutIfNeeded];
+  [self.toolBarContainer layoutIfNeeded];
+  [self.moreViewContainer layoutIfNeeded];
   }];
-  
-  [UIView animateWithDuration:0.3 animations:^{
-    [self.messageTableView setFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kApplicationWidth,kScreenHeight-45-(kNavigationBarHeight+kStatusBarHeight) - self.moreView.bounds.size.height)];
-    [self scrollToEnd];
-  }];
+  [self scrollToBottomAnimated:NO];
 }
 
 -(void)noPressmoreBtnClick:(UIButton *)btn {
-    [self.toolBar.textView becomeFirstResponder];
+    [self.toolBarContainer.toolbar.textView becomeFirstResponder];
 }
 
 #pragma mark ----发送文本消息
@@ -927,7 +1057,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   model.sendFlag = NO;
   model.type = kJMSGTextMessage;
   model.chatContent = text;
-  
+  model.contentHeight = [model getTextHeight];//!
   if (self.conversation.chatType == kJMSGSingle) {
     message.conversationType = kJMSGSingle;
   }else {
@@ -935,21 +1065,31 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   }
   message.targetId = model.targetId;
   message.contentText = model.chatContent;
+  
   [_JMSgMessageDic setObject:message forKey:message.messageId];
   [self addMessage:model];
 }
 
 #pragma mark -- 刷新对应的
 - (void)reloadCellDataWith:(NSInteger)Index {
-  [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-  [self scrollToEnd];
+  [self.messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];//UITableViewRowAnimationNone
+//  [self scrollToEnd];
+  UITableViewCell *tableCell = [self.messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Index inSection:0]];
+  [tableCell setHighlighted:YES animated:NO];
+  [tableCell setHighlighted:NO animated:NO];
+
 }
 
 - (void)addCellToTabel {
   NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
-  [self.messageTableView beginUpdates];
+//  [self.messageTableView beginUpdates];sdafa
+//  [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];//UITableViewRowAnimationBottom
+//  [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+
   [self.messageTableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-  [self.messageTableView endUpdates];
+//  [self.messageTableView reloadData];
+//  [self.messageTableView scrollRectToVisible:CGRectMake(0, self.messageTableView.contentSize.height - self.messageTableView.bounds.size.height, self.messageTableView.bounds.size.width, self.messageTableView.bounds.size.height) animated:YES];
+//  [self.messageTableView endUpdates];
   [self scrollToEnd];
 }
 
@@ -986,6 +1126,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
       timeModel.messageId = [self getTimeId];
       timeModel.type = kJMSGTimeMessage;
       timeModel.messageTime = @(timeInterVal);
+      timeModel.contentHeight = [timeModel getTextHeight];//!
       [_messageDic[JCHATMessage] setObject:timeModel forKey:timeModel.messageId];
       [_messageDic[JCHATMessageIdKey] addObject:timeModel.messageId];
     }
@@ -994,6 +1135,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     timeModel.messageId = [self getTimeId];
     timeModel.type = kJMSGTimeMessage;
     timeModel.messageTime = @(timeInterVal);
+    timeModel.contentHeight = [timeModel getTextHeight];//!
     [_messageDic[JCHATMessage] setObject:timeModel forKey:timeModel.messageId];
     [_messageDic[JCHATMessageIdKey] addObject:timeModel.messageId];
   }else {
@@ -1006,6 +1148,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   timeModel.messageId = [self getTimeId];
   timeModel.type = kJMSGTimeMessage;
   timeModel.messageTime = @(timeInterVal);
+  timeModel.contentHeight = [timeModel getTextHeight];//!
   [self addMessage:timeModel];
 }
 
@@ -1017,7 +1160,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 #pragma mark --滑动至尾端
 - (void)scrollToEnd {
     if ([_messageDic[JCHATMessageIdKey] count] != 0) {
-        [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];//!
     }
 }
 
@@ -1027,37 +1170,43 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   JCHATChatModel *model = _messageDic[JCHATMessage][messageId ];
   if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
-    return model.getTextSize.height + 8;
+    return model.contentHeight +8;
   } else if (model.type == kJMSGImageMessage) {
-      UIImage *img;
-      if ([[NSFileManager defaultManager] fileExistsAtPath:model.pictureThumbImgPath]) {
-      img = [UIImage imageWithContentsOfFile:model.pictureThumbImgPath];
-      }else if (model.mediaData) {
-      img = [UIImage imageWithData:model.mediaData];
-      }else {
-        img = [UIImage imageNamed:@"receiveFail.png"];
-        return img.size.height;
-      }
-      if (IS_IPHONE_6P) {
-        return img.size.height / 3;
-      } else {
-        return img.size.height / 2;
-      }
+    if (model.imageSize.height == 0) {
+      model.imageSize = [model getImageSize];
+    }
+    return model.imageSize.height < 44?50:model.imageSize.height+5;
   } else if (model.type == kJMSGVoiceMessage) {
     return 60;
   } else {
     return 40;
   }
+
+//  if (model.type == kJMSGTextMessage || model.type == kJMSGTimeMessage ||  model.type ==kJMSGEventMessage) {
+//    return [tableView fd_heightForCellWithIdentifier:@"JCHATTextTableCell" cacheByIndexPath:indexPath configuration:^(JCHATTextTableCell *cell) {
+////      [self configureCell:cell atIndexPath:indexPath];
+//    }];
+//  } else if (model.type == kJMSGImageMessage) {
+//    return [tableView fd_heightForCellWithIdentifier:@"JCHATImgTableViewCell" cacheByIndexPath:indexPath configuration:^(JCHATImgTableViewCell *cell) {
+////      [self configureCell:cell atIndexPath:indexPath];
+//    }];
+//  } else if (model.type == kJMSGVoiceMessage) {
+//    return [tableView fd_heightForCellWithIdentifier:@"JCHATVoiceTableCell" cacheByIndexPath:indexPath configuration:^(JCHATVoiceTableCell *cell) {
+////      [self configureCell:cell atIndexPath:indexPath];
+//    }];
+//  } else {
+//    return 40;
+//  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   DDLogDebug(@"Event - viewWillAppear");
   [super viewWillAppear:NO];
-  [self.toolBar drawRect:self.toolBar.frame];
+  [self.toolBarContainer.toolbar drawRect:self.toolBarContainer.toolbar.frame];
   [self.navigationController setNavigationBarHidden:NO];
 
   
-//    // 禁用 iOS7 返回手势
+// 禁用 iOS7 返回手势
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
       self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   }
@@ -1090,11 +1239,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark --释放内存
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [self.toolBar.textView removeObserver:self forKeyPath:@"contentSize"];
+  [self.toolBarContainer.toolbar.textView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (void)tapClick:(UIGestureRecognizer *)gesture {
-    [self.toolBar.textView resignFirstResponder];
+    [self.toolBarContainer.toolbar.textView resignFirstResponder];
     [self dropToolBar];
 }
 
@@ -1123,54 +1272,67 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
   }
     if (model.type == kJMSGTextMessage) {
-        static NSString *cellIdentifier = @"textCell";
-        JCHATTextTableViewCell *cell = (JCHATTextTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[JCHATTextTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
+//        static NSString *cellIdentifier = @"JCHATTextTableCell";//textCell
+//        JCHATTextTableCell *cell = (JCHATTextTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil) {
+//            cell = [[JCHATTextTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//        }
+
+
+        JCHATTextTableCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"JCHATTextTableCell" forIndexPath:indexPath];
         if (!model.sendFlag) {
-            model.sendFlag = YES;
-            // 消息展示出来时，调用发文本消息
+          model.sendFlag = YES;
+          // 消息展示出来时，调用发文本消息
           [self sendTextMessage:model.messageId];
         }
         [cell setCellData:model delegate:self];
+
         return cell;
-    }else if(model.type == kJMSGImageMessage)
+      }else if(model.type == kJMSGImageMessage)
     {
-        static NSString *cellIdentifier = @"imgCell";
-        JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[JCHATImgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-      JMSGImageMessage *imgMessage = _JMSgMessageDic[model.messageId];
-      [cell setCellData:self chatModel:model message:imgMessage indexPath:indexPath];
+//        static NSString *cellIdentifier = @"JCHATImgTableViewCell";//imgCell
+//        JCHATImgTableViewCell *cell = (JCHATImgTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil) {
+//            cell = [[JCHATImgTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//        }
+
+        JCHATImgTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JCHATImgTableViewCell" forIndexPath:indexPath];
+        JMSGImageMessage *imgMessage = _JMSgMessageDic[model.messageId];
+        
+        [cell setCellData:self chatModel:model message:imgMessage indexPath:indexPath];
         return cell;
     }else if (model.type == kJMSGVoiceMessage)
     {
-        static NSString *cellIdentifier = @"voiceCell";
-        JCHATVoiceTableViewCell *cell = (JCHATVoiceTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[JCHATVoiceTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-      
-      JMSGVoiceMessage *voiceMessage = _JMSgMessageDic[model.messageId];
-      [cell setCellData:model delegate:self message:voiceMessage indexPath:indexPath];
+//        static NSString *cellIdentifier = @"JCHATVoiceTableCell";//voiceCell
+//        JCHATVoiceTableCell *cell = (JCHATVoiceTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (cell == nil) {
+//            cell = [[JCHATVoiceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//        }
+      JCHATVoiceTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JCHATVoiceTableCell" forIndexPath:indexPath];
+        JMSGVoiceMessage *voiceMessage = _JMSgMessageDic[model.messageId];
+        
+        [cell setCellData:model delegate:self message:voiceMessage indexPath:indexPath];
+
         return cell;
     }else if (model.type == kJMSGTimeMessage || model.type == kJMSGEventMessage) {
         static NSString *cellIdentifier = @"timeCell";
+
+
         JCHATShowTimeCell *cell = (JCHATShowTimeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATShowTimeCell" owner:self options:nil] lastObject];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-      if (model.type == kJMSGEventMessage) {
-        cell.messageTimeLabel.text = model.chatContent;
-//        [cell setCellData:model];
-      }else {
-        cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
-      }
+        
+        if (model.type == kJMSGEventMessage) {
+          cell.messageTimeLabel.text = model.chatContent;
+          //        [cell setCellData:model];
+        }else {
+          cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
+        }
+
         return cell;
-    }
+      }
     else{
         return nil;
     }
@@ -1182,7 +1344,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
   JMSGContentMessage *message = _JMSgMessageDic[messageId];
   DDLogVerbose(@"The message:%@", message);
-  [JMSGMessage sendMessage:message];
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [JMSGMessage sendMessage:message];
+  });
+
 }
 
 - (void)setMessageIDWithMessage:(JMSGMessage *)message chatModel:(JCHATChatModel * __strong *)chatModel index:(NSInteger)index {
@@ -1228,6 +1393,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
             photo.url = [NSURL fileURLWithPath:url]; // 图片路径
         }else {
             url = messageObject.pictureThumbImgPath;
+          if (!url) {
+            return;
+          }
             photo.url = [NSURL fileURLWithPath:url]; // 图片路径
         }
         photo.srcImageView = tapView; // 来源于哪个UIImageView
@@ -1359,7 +1527,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   voiceMessage.targetId = model.targetId;
   voiceMessage.duration = model.voiceTime;
   model.messageTime = voiceMessage.timestamp;
-  voiceMessage.mediaData = model.mediaData;
+  voiceMessage.mediaData = model.mediaData;//!!
   [_JMSgMessageDic setObject:voiceMessage forKey:voiceMessage.messageId];
   [JCHATFileManager deleteFile:voicePath];
   [self addMessage:model];
@@ -1386,7 +1554,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.barBottomFlag) {
         return;
     }
-    if (object == self.toolBar.textView && [keyPath isEqualToString:@"contentSize"]) {
+    if (object == self.toolBarContainer.toolbar.textView && [keyPath isEqualToString:@"contentSize"]) {
         [self layoutAndAnimateMessageInputTextView:object];
     }
 }
@@ -1454,20 +1622,20 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                                      self.previousTextViewContentHeight = MIN(contentH, maxHeight);
                                  }
                                  // if shrinking the view, animate text view frame BEFORE input view frame
-                                 [self.toolBar adjustTextViewHeightBy:changeInHeight];
+                                 [self.toolBarContainer.toolbar adjustTextViewHeightBy:changeInHeight];
                              }
 
-                             CGRect inputViewFrame = self.toolBar.frame;
-                             self.toolBar.frame = CGRectMake(0.0f,
-                                                                      inputViewFrame.origin.y - changeInHeight,
-                                                                      inputViewFrame.size.width,
-                                                                      inputViewFrame.size.height + changeInHeight);
+//                             CGRect inputViewFrame = self.toolBarContainer.toolbar.frame;
+//                             self.toolBarContainer.toolbar.frame = CGRectMake(0.0f,
+//                                                                      inputViewFrame.origin.y - changeInHeight,
+//                                                                      inputViewFrame.size.width,
+//                                                                      inputViewFrame.size.height + changeInHeight);
                              if (!isShrinking) {
                                  if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
                                      self.previousTextViewContentHeight = MIN(contentH, maxHeight);
                                  }
                                  // growing the view, animate the text view frame AFTER input view frame
-                                 [self.toolBar adjustTextViewHeightBy:changeInHeight];
+                                 [self.toolBarContainer.toolbar adjustTextViewHeightBy:changeInHeight];
                              }
                          }
                          completion:^(BOOL finished) {

@@ -31,6 +31,9 @@
 @property (nonatomic,assign)   BOOL readState;
 @property (nonatomic,strong)   JMSGConversation *conversation;
 @property (nonatomic,assign)   BOOL sendFlag;
-
--(CGSize)getTextSize;
+@property (nonatomic,assign)   BOOL isSending;
+@property (nonatomic,assign)   float contentHeight;
+@property (nonatomic,assign)   CGSize imageSize;
+-(float)getTextHeight;
+-(CGSize)getImageSize;
 @end

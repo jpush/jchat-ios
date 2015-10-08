@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATSendMessageViewController"/>
@@ -14,20 +14,32 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rpU-3b-2dD" customClass="JCHATMessageTextView">
                     <rect key="frame" x="47" y="8" width="235" height="31"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="KNP-M4-PJ8"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VuO-mV-udy">
                     <rect key="frame" x="290" y="10" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="2Wr-HL-v6u"/>
+                        <constraint firstAttribute="height" constant="22" id="V4b-qe-SqG"/>
+                    </constraints>
                     <state key="normal" image="add01.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="highlighted" image="add01_pre"/>
                     <connections>
                         <action selector="addBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="pbb-SA-CQS"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCs-zm-hKL">
                     <rect key="frame" x="8" y="10" width="31" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="27" id="hqn-mr-WwU"/>
+                        <constraint firstAttribute="width" constant="31" id="pq5-AN-2Np"/>
+                    </constraints>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -38,16 +50,13 @@
             </subviews>
             <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="VuO-mV-udy" firstAttribute="leading" secondItem="rpU-3b-2dD" secondAttribute="trailing" constant="8" symbolic="YES" id="0H1-en-YDD"/>
-                <constraint firstItem="VuO-mV-udy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="9YR-Fr-cb6"/>
-                <constraint firstItem="rpU-3b-2dD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="I8g-Ba-6RD"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YCs-zm-hKL" secondAttribute="bottom" constant="8" id="ITn-CR-gNW"/>
-                <constraint firstItem="YCs-zm-hKL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="M7a-PD-MoP"/>
-                <constraint firstItem="YCs-zm-hKL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="MYt-T0-vMH"/>
-                <constraint firstAttribute="bottom" secondItem="rpU-3b-2dD" secondAttribute="bottom" constant="6" id="XJk-7h-SvL"/>
-                <constraint firstItem="rpU-3b-2dD" firstAttribute="leading" secondItem="YCs-zm-hKL" secondAttribute="trailing" constant="8" id="a8l-Tt-YBz"/>
-                <constraint firstAttribute="trailing" secondItem="VuO-mV-udy" secondAttribute="trailing" constant="8" id="iYu-4L-NLj"/>
-                <constraint firstItem="rpU-3b-2dD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="47" id="x4c-eg-gAY"/>
+                <constraint firstItem="VuO-mV-udy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="FB0-LK-lnP"/>
+                <constraint firstItem="VuO-mV-udy" firstAttribute="leading" secondItem="rpU-3b-2dD" secondAttribute="trailing" constant="8" id="ILu-91-9Uh"/>
+                <constraint firstItem="YCs-zm-hKL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="MLM-D0-NAS"/>
+                <constraint firstItem="YCs-zm-hKL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="SKu-EB-2Ey"/>
+                <constraint firstItem="rpU-3b-2dD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="W1Q-Gc-ke8"/>
+                <constraint firstAttribute="trailing" secondItem="VuO-mV-udy" secondAttribute="trailing" constant="8" id="fBX-Bl-jGB"/>
+                <constraint firstItem="rpU-3b-2dD" firstAttribute="leading" secondItem="YCs-zm-hKL" secondAttribute="trailing" constant="8" id="o1K-RI-UVr"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -61,17 +70,10 @@
             </connections>
             <point key="canvasLocation" x="907" y="799.5"/>
         </view>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="juL-2e-975">
-            <rect key="frame" x="0.0" y="0.0" width="113" height="138"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <state key="normal" title="Button">
-                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-            </state>
-            <point key="canvasLocation" x="273.5" y="417"/>
-        </button>
     </objects>
     <resources>
-        <image name="add01.png" width="22" height="22"/>
+        <image name="add01.png" width="27" height="27"/>
+        <image name="add01_pre" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

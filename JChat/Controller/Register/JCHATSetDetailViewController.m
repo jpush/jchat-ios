@@ -1,0 +1,153 @@
+//
+//  JCHATSetDetailViewController.m
+//  JChat
+//
+//  Created by HuminiOS on 15/7/14.
+//  Copyright (c) 2015年 HXHG. All rights reserved.
+//
+
+#import "JCHATSetDetailViewController.h"
+#import <JMessage/JMessage.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+#import "MBProgressHUD+Add.h"
+#import "JChatConstants.h"
+#import "AppDelegate.h"
+@interface JCHATSetDetailViewController ()<UIActionSheetDelegate,
+    UIImagePickerControllerDelegate
+>{
+    UILabel *titleLabel;
+}
+
+@end
+
+@implementation JCHATSetDetailViewController
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  // Do any additional setup after loading the view from its nib.
+  self.navigationItem.hidesBackButton = YES;
+  _doneBtn.backgroundColor = UIColorFromRGB(0x6fd66b);
+  _doneBtn.layer.cornerRadius = 5;
+  _baseLine.backgroundColor = UIColorFromRGB(0xc1d2ec);
+  _nameTextF.textColor = UIColorFromRGB(0x555555);
+  _setAvatarBtn.layer.cornerRadius = 28;
+  _setAvatarBtn.layer.masksToBounds = YES;
+    
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.text = @"输入昵称";
+    self.navigationItem.titleView = titleLabel;
+}
+
+- (IBAction)clickToFinish:(id)sender {
+  [JMSGUser updateMyInfoWithParameter:_nameTextF.text withType:kJMSGNickname completionHandler:^(id resultObject, NSError *error) {
+    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+    appDelegate.window.rootViewController = appDelegate.tabBarCtl;
+    
+  }];
+  
+}
+
+- (IBAction)clickToSetAvatar:(id)sender {
+  UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更换头像"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"拍照", @"相册", nil];
+  actionSheet.tag = 201;
+  [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+  if (buttonIndex == 0) {//拍照
+    [self cameraClick];
+  } else if (buttonIndex == 1) { // 相册
+    [self photoClick];
+  }
+}
+
+#pragma mark -调用相册
+-(void)photoClick {
+  UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+  picker.delegate = self;
+  picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+  NSArray *temp_MediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
+  picker.mediaTypes = temp_MediaTypes;
+  picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+  [self presentViewController:picker animated:YES completion:nil];
+}
+
+#pragma mark --调用相机
+-(void)cameraClick {
+  UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+  if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    NSString *requiredMediaType = ( NSString *)kUTTypeImage;
+    NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
+    [picker setMediaTypes:arrMediaTypes];
+    picker.showsCameraControls = YES;
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    picker.editing = YES;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+  }
+}
+
+#pragma mark - UIImagePickerController Delegate
+
+//相机,相册Finish的代理
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  DDLogDebug(@"Action - imagePickerController");
+  
+  [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
+  UIImage *image;
+  image = [info objectForKey:UIImagePickerControllerOriginalImage];
+  JMSGUser *user = [JMSGUser getMyInfo];
+//  image = [image resizedImageByWidth:upLoadImgWidth];
+  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1)
+                             withType:kJMSGAvatar
+                    completionHandler:^(id resultObject, NSError *error) {
+                      JPIMMAINTHEAD(^{
+                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                        if (error == nil) {
+                          [MBProgressHUD showMessage:@"上传成功" view:self.view];
+                          if (user.avatarResourcePath) {
+                            DDLogDebug(@"update headView success %@", user);
+                            [_setAvatarBtn setBackgroundImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
+                            
+                            //                            UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
+//                            UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
+//                            [_bgView setImage:img];
+                          } else {
+//                            [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+                          }
+                        } else {
+                          DDLogDebug(@"update headView fail");
+                          [MBProgressHUD showMessage:@"上传失败!" view:self.view];
+                        }
+                      });
+                    }];
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

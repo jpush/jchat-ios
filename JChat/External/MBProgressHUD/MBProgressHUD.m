@@ -539,7 +539,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	totalSize.height += 2 * margin;
 	
 	// Position elements
-	CGFloat yPos = roundf(((bounds.size.height - totalSize.height) / 2)) + margin + yOffset;
+	CGFloat yPos = roundf(((bounds.size.height - totalSize.height)/3)) + margin + yOffset;
 	CGFloat xPos = xOffset;
 	indicatorF.origin.y = yPos;
 	indicatorF.origin.x = roundf((bounds.size.width - indicatorF.size.width) / 2) + xPos;
@@ -602,7 +602,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, gradColors, gradLocations, gradLocationsNum);
 		CGColorSpaceRelease(colorSpace);
 		//Gradient center
-		CGPoint gradCenter= CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+		CGPoint gradCenter= CGPointMake(self.bounds.size.width/2, self.bounds.size.height/3);
 		//Gradient radius
 		float gradRadius = MIN(self.bounds.size.width , self.bounds.size.height) ;
 		//Gradient draw
@@ -624,7 +624,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	CGRect allRect = self.bounds;
 	// Draw rounded HUD backgroud rect
 	CGRect boxRect = CGRectMake(roundf((allRect.size.width - size.width) / 2) + self.xOffset,
-								roundf((allRect.size.height - size.height) / 2) + self.yOffset, size.width, size.height);
+								roundf((allRect.size.height - size.height) / 3) + self.yOffset, size.width, size.height);
 	float radius = 10.0f;
 	CGContextBeginPath(context);
 	CGContextMoveToPoint(context, CGRectGetMinX(boxRect) + radius, CGRectGetMinY(boxRect));
@@ -787,7 +787,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		UIBezierPath *processBackgroundPath = [UIBezierPath bezierPath];
 		processBackgroundPath.lineWidth = lineWidth;
 		processBackgroundPath.lineCapStyle = kCGLineCapRound;
-		CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+		CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/3);
 		CGFloat radius = (self.bounds.size.width - lineWidth)/2;
 		CGFloat startAngle = - ((float)M_PI / 2); // 90 degrees
 		CGFloat endAngle = (2 * (float)M_PI) + startAngle;
@@ -810,7 +810,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		CGContextFillEllipseInRect(context, circleRect);
 		CGContextStrokeEllipseInRect(context, circleRect);
 		// Draw progress
-		CGPoint center = CGPointMake(allRect.size.width / 2, allRect.size.height / 2);
+		CGPoint center = CGPointMake(allRect.size.width / 2, allRect.size.height / 3);
 		CGFloat radius = (allRect.size.width - 4) / 2;
 		CGFloat startAngle = - ((float)M_PI / 2); // 90 degrees
 		CGFloat endAngle = (self.progress * 2 * (float)M_PI) + startAngle;

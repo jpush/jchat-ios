@@ -13,6 +13,7 @@
 #import "JCHATUpdatePasswordCtl.h"
 #import "MBProgressHUD+Add.h"
 #import <JMessage/JMessage.h>
+#import "JCHATAboutViewController.h"
 
 @interface JCHATSettingViewController ()<UIGestureRecognizerDelegate>
 {
@@ -25,34 +26,36 @@
 @implementation JCHATSettingViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-    self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-    self.navigationController.navigationBar.alpha=0.8;
-    self.title=@"设置";
-    
-    NSShadow *shadow = [[NSShadow alloc]init];
-    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-    shadow.shadowOffset = CGSizeMake(0,-1);
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                                     shadow,NSShadowAttributeName,
-                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
-                                                                     nil]];
-    UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-    [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-    titleArr = @[@"密码修改"];
-    settingTabl =[[UITableView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight-kNavigationBarHeight-kStatusBarHeight)];
-    [settingTabl setBackgroundColor:[UIColor whiteColor]];
-    settingTabl.scrollEnabled=NO;
-    settingTabl.dataSource=self;
-    settingTabl.delegate=self;
-    settingTabl.separatorStyle=UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:settingTabl];
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
+  self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
+  self.navigationController.navigationBar.alpha=1;
+  self.title=@"设置";
+  
+  NSShadow *shadow = [[NSShadow alloc]init];
+  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
+  shadow.shadowOffset = CGSizeMake(0,0);
+  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                                   shadow,NSShadowAttributeName,
+                                                                   [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
+                                                                   nil]];
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
+  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  titleArr = @[@"密码修改",@"关于"];//
+  settingTabl =[[UITableView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight-kNavigationBarHeight-kStatusBarHeight)];
+  [settingTabl setBackgroundColor:[UIColor whiteColor]];
+  settingTabl.scrollEnabled=NO;
+  settingTabl.dataSource=self;
+  settingTabl.delegate=self;
+  settingTabl.separatorStyle=UITableViewCellSeparatorStyleNone;
+  [self.view addSubview:settingTabl];
+  settingTabl.backgroundColor = [UIColor whiteColor];
+  self.view.backgroundColor = [UIColor whiteColor];
 }
 
 
@@ -84,14 +87,20 @@
 //        JCHATNewsReminderCtl *newsReminderCtl =[[JCHATNewsReminderCtl alloc] init];
 //        [self.navigationController pushViewController:newsReminderCtl animated:YES];
 //    }
-    if (indexPath.row==0) {
-        UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"修改密码前请输入原密码" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        alerView.alertViewStyle=UIAlertViewStyleSecureTextInput;
-        [alerView show];
-    }
-//    if (indexPath.row==2) {
-//        
-//    }
+  UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+  cell.selected = NO;
+  
+  if (indexPath.row==0) {
+    UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"修改密码前请输入原密码" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alerView.alertViewStyle=UIAlertViewStyleSecureTextInput;
+    [alerView show];
+  }
+  
+  if (indexPath.row == 1) {
+    JCHATAboutViewController *about = [[JCHATAboutViewController alloc]initWithNibName:@"JCHATAboutViewController" bundle:nil];
+    [self.navigationController pushViewController:about animated:YES];
+
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,20 +114,22 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==0) {
+      if (![[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
+        [[alertView textFieldAtIndex:0] resignFirstResponder];
         
+        JPIMLog(@"%@ %@",[alertView textFieldAtIndex:0].text, [JMSGUser getMyInfo].password);
+        if ([[alertView textFieldAtIndex:0].text isEqualToString:[JMSGUser getMyInfo].password] ) {
+          
+          JCHATUpdatePasswordCtl *updateWordCtl =[[JCHATUpdatePasswordCtl alloc] init];
+          [self.navigationController pushViewController:updateWordCtl animated:YES];
+        }
+        [MBProgressHUD showMessage:@"输入原密码错误" view:self.view];
+      }
+
+      
     }else if (buttonIndex==1)
     {
-        if (![[alertView textFieldAtIndex:0].text isEqualToString:@""]) {
-            [[alertView textFieldAtIndex:0] resignFirstResponder];
-          
-            JPIMLog(@"%@ %@",[alertView textFieldAtIndex:0].text, [JMSGUser getMyInfo].password);
-            if ([[alertView textFieldAtIndex:0].text isEqualToString:[JMSGUser getMyInfo].password] ) {
-                
-                JCHATUpdatePasswordCtl *updateWordCtl =[[JCHATUpdatePasswordCtl alloc] init];
-                [self.navigationController pushViewController:updateWordCtl animated:YES];
-            }
-            [MBProgressHUD showMessage:@"输入原密码错误" view:self.view];
-        }
+      
     }
 }
 

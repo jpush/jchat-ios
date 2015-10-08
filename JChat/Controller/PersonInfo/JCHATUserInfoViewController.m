@@ -17,13 +17,16 @@
 #import "UIImage+ResizeMagick.h"
 #import <JMessage/JMessage.h>
 #import <MobileCoreServices/UTCoreTypes.h>
-
+#import "JCHATAlreadyLoginViewController.h"
+#import "CExpandHeader.h"
+#import "UIImageView+LBBlurredImage.h"
+#import "JCHATAvatarView.h"
 @interface JCHATUserInfoViewController ()
 
 @property(strong, nonatomic) UITableView *settingTableView;
 @property(strong, nonatomic) NSArray *titleArr;
 @property(strong, nonatomic) NSArray *imgArr;
-@property(strong, nonatomic) UIImageView *bgView;
+@property(strong, nonatomic) JCHATAvatarView* bgView;
 
 @end
 
@@ -33,7 +36,9 @@
 * 2. 大头像如果存在，则变更为大头像；
 * 3. 大头像如果不存在，则尝试去获取，后续再设置上来。
 */
-@implementation JCHATUserInfoViewController
+@implementation JCHATUserInfoViewController {
+  CExpandHeader *_header;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -41,47 +46,17 @@
 
   [self.view setBackgroundColor:[UIColor clearColor]];
 
-  //设置背景图片
-  _bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, (kApplicationHeight) / 2)];
-  [_bgView setUserInteractionEnabled:YES];
-  [_bgView setBackgroundColor:[UIColor clearColor]];
-  [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
-  JMSGUser *user = [JMSGUser getMyInfo];
-
-  [JMSGUser getOriginAvatarImage:user
-               completionHandler:^(id resultObject, NSError *error) {
-    if (error == nil) {
-      if (user.avatarResourcePath) {
-        UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-        UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-        [_bgView setImage:img];
-      } else {
-        [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
-      }
-    } else {
-      [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
-    }
-  }];
-
-  if (user.avatarThumbPath) {
-    [_bgView setImage:[UIImage imageNamed:user.avatarThumbPath]];
-  } else {
-    [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
-  }
-
-  UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
-  [_bgView addGestureRecognizer:gesture];
-
+  
   self.settingTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, kApplicationHeight - 45 + kStatusBarHeight) style:UITableViewStylePlain];
   [self.view addSubview:self.settingTableView];
   [self.settingTableView setBackgroundColor:[UIColor colorWithRed:235 / 255.0 green:235 / 255.0 blue:243 / 255.0 alpha:1]];
   self.settingTableView.dataSource = self;
   self.settingTableView.delegate = self;
-  self.settingTableView.scrollEnabled = NO;
-  self.settingTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.settingTableView.separatorColor = [UIColor clearColor];
-  self.settingTableView.tableHeaderView = _bgView;
+  self.settingTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+  self.settingTableView.tableFooterView = [[UIView alloc] init];
 
+  [self setAvatar];
+  
   if ([JMSGUser getMyInfo].nickname) {
     self.titleArr = @[[JMSGUser getMyInfo].nickname, @"设置", @"退出登录"];
   } else if ([JMSGUser getMyInfo].username) {
@@ -95,18 +70,60 @@
                                            selector:@selector(updateAvatar)
                                                name:kupdateUserInfo
                                              object:nil];
+
+
+//  [_bgView setBlurLevel:0.5]x;
 }
 
+
+- (void)setAvatar {
+  
+  //设置背景图片
+  _bgView = [[JCHATAvatarView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, 176)/*(kApplicationHeight) / 2)*/];
+  [_bgView setUserInteractionEnabled:YES];
+
+
+  JMSGUser *user = [JMSGUser getMyInfo];
+  
+  [JMSGUser getOriginAvatarImage:user
+               completionHandler:^(id resultObject, NSError *error) {
+                 if (error == nil) {
+                   if (user.avatarResourcePath) {
+                     UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
+                     UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
+
+                     _bgView.originImage = img;
+                   } else {
+                      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+                   }
+                 } else {
+                    _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+                 }
+               }];
+  
+  if (user.avatarThumbPath) {
+    _bgView.originImage = [UIImage imageNamed:user.avatarThumbPath];
+  } else {
+    _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+  }
+
+  UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
+  [_bgView addGestureRecognizer:gesture];
+  _header = [CExpandHeader expandWithScrollView:_settingTableView expandView:_bgView];
+
+
+}
 - (void)updateAvatar {
   DDLogDebug((@"Action - updateAvatar"));
 
   JMSGUser *user = [JMSGUser getMyInfo];
+  [_bgView updataNameLable];
   DDLogDebug(@"Current avatarResourcePath - %@", user.avatarResourcePath);
 
   if (user.avatarResourcePath) {
     UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
     UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-    [_bgView setImage:img];
+    _bgView.image = img;
   } else {
     JMSGUser *user = [JMSGUser getMyInfo];
     [JMSGUser getOriginAvatarImage:user completionHandler:^(id resultObject, NSError *error) {
@@ -116,12 +133,12 @@
         if (user.avatarResourcePath) {
           UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
           UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-          [_bgView setImage:img];
+          _bgView.originImage = img;
         } else {
-          [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+          _bgView.originImage = [UIImage imageNamed:@"wo"];
         }
       } else {
-        [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+        _bgView.originImage = [UIImage imageNamed:@"wo"];
       }
     }];
   }
@@ -195,9 +212,9 @@
           DDLogDebug(@"update headView success %@", user);
           UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
           UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-          [_bgView setImage:img];
+          _bgView.originImage = img;
         } else {
-          [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+          _bgView.originImage = [UIImage imageNamed:@"wo.png"];
         }
       } else {
         DDLogDebug(@"update headView fail");
@@ -218,15 +235,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
+  [self.settingTableView reloadData];
   [self.navigationController.navigationBar setHidden:NO];
   [self.navigationController setNavigationBarHidden:NO];
-  self.navigationController.navigationBar.barTintColor = UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha = 0.8;
-  self.title = @"我";
+  self.navigationController.navigationBar.barTintColor =kNavigationBarColor;
+  self.navigationController.navigationBar.translucent = NO;
 
+  self.title = @"我";
+  [_bgView updataNameLable];
   NSShadow *shadow = [[NSShadow alloc] init];
   shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0, -1);
+  shadow.shadowOffset = CGSizeMake(0, 0);
 
   NSDictionary *dic = @{
       NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -234,7 +253,8 @@
       NSFontAttributeName:[UIFont boldSystemFontOfSize:18]
   };
   [self.navigationController.navigationBar setTitleTextAttributes:dic];
-
+  self.view.backgroundColor = [UIColor whiteColor];
+  self.settingTableView.backgroundColor = [UIColor whiteColor];
   [self updateUserInfo];
 }
 
@@ -252,7 +272,7 @@
   if (user.avatarResourcePath) {
     UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
     UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-    [_bgView setImage:img];
+    _bgView.originImage = img;
   } else {
     [JMSGUser getOriginAvatarImage:user
                  completionHandler:^(id resultObject, NSError *error) {
@@ -264,11 +284,12 @@
           UIImage *headImg = [UIImage imageWithContentsOfFile:userObject.avatarResourcePath];
           UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
           [_bgView setImage:img];
+          _bgView.originImage = img;
         } else {
-          [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+          _bgView.originImage = [UIImage imageNamed:@"wo.png"];
         }
       } else {
-        [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
+          _bgView.originImage = [UIImage imageNamed:@"wo.png"];
       }
     }];
   }
@@ -293,10 +314,10 @@
   JCHATSettingCell *cell = (JCHATSettingCell *) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil) {
     cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATSettingCell" owner:self options:nil] lastObject];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 56, kApplicationWidth, 0.5)];
     [line setBackgroundColor:UIColorFromRGB(0xd0d0cf)];
-    [cell addSubview:line];
+
   }
   cell.nickNameBtn.text = self.titleArr[indexPath.row];
   cell.headImgView.image = [UIImage imageNamed:self.imgArr[indexPath.row]];
@@ -308,6 +329,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+  cell.selected = NO;
+
   if (indexPath.row == 0) {
     JCHATPersonViewController *personCtl = [[JCHATPersonViewController alloc] init];
     personCtl.hidesBottomBarWhenPushed = YES;
@@ -333,18 +357,25 @@
     DDLogDebug(@"Logout anyway.");
     
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-    if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
-      [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
-    } else {
-      JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
-      loginCtl.hidesBottomBarWhenPushed = YES;
-      [self.navigationController pushViewController:loginCtl animated:YES];
-    }
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+//    if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
+//      [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
+//    } else {
+//      JCHATLoginViewController *loginCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
+//      loginCtl.hidesBottomBarWhenPushed = YES;
+//      [self.navigationController pushViewController:loginCtl animated:YES];
+//    }
+    [appDelegate.tabBarCtl setSelectedIndex:0];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [JMSGUser logoutWithCompletionHandler:^(id resultObject, NSError *error) {
       DDLogDebug(@"Logout callback with - %@", error);
     }];
+    JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+    UINavigationController *nvLoginCtl = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+    appDelegate.window.rootViewController = nvLoginCtl;
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+
+
   }
 }
 
