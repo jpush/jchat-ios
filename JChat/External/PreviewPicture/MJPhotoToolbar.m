@@ -66,7 +66,7 @@
     
 }
 
--(void)deleteThisImage
+- (void)deleteThisImage
 {
     if ( [Delegate respondsToSelector:@selector(DeleteThisImage:)] ) {
         [Delegate DeleteThisImage:_currentPhotoIndex];

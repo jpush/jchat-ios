@@ -11,7 +11,7 @@
 #import <JMessage/JMessage.h>
 
 @protocol selectHeadViewDelegate <NSObject>
--(void)selectHeadView:(JCHATChatModel *)model;
+- (void)selectHeadView:(JCHATChatModel *)model;
 @end
 
 @interface JCHATTextTableCell : UITableViewCell<UIAlertViewDelegate,JMessageDelegate>

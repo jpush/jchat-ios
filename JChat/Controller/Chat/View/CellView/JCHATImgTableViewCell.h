@@ -12,11 +12,11 @@
 
 @protocol PictureDelegate <NSObject>
 @optional
--(void)tapPicture :(NSIndexPath *)index
+- (void)tapPicture :(NSIndexPath *)index
           tapView :(UIImageView *)tapView
      tableViewCell:(UITableViewCell *)tableViewCell;
 
--(void)selectHeadView:(JCHATChatModel *)model;
+- (void)selectHeadView:(JCHATChatModel *)model;
 
 //- (void)setMessageIDWithMessage:(JMSGMessage *)message
 //                      chatModel:(JCHATChatModel * __strong *)chatModel
@@ -40,9 +40,10 @@
 @property (strong, nonatomic) UIActivityIndicatorView *downLoadIndicatorView;
 @property (strong, nonatomic) JMSGMessage *message;
 @property (strong, nonatomic) NSString *headViewFlag;
--(void)sendImageMessage;
 
--(void)setCellData :(UIViewController *)controler
+- (void)sendImageMessage;
+
+- (void)setCellData :(UIViewController *)controler
          chatModel :(JCHATChatModel *)chatModel
          indexPath :(NSIndexPath *)indexPath;
 

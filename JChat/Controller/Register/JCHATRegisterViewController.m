@@ -27,7 +27,7 @@
   UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
   backBtn.frame = CGRectMake(0, 0, 44, 44);
   
-  [backBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [backBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   [backBtn addTarget:self action:@selector(doBack:) forControlEvents:UIControlEventTouchUpInside];
   
   UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
@@ -56,7 +56,7 @@
 }
 
 
--(void)doBack:(id)sender
+- (void)doBack:(id)sender
 {
   [self.navigationController popViewControllerAnimated:YES];
 }

@@ -118,7 +118,7 @@
   DDLogDebug(@"_progress=  %f", _progress.fractionCompleted);
 }
 
--(void)DeleteThisImage:(NSInteger)ThisImageIndex {
+- (void)DeleteThisImage:(NSInteger)ThisImageIndex {
     NSLog(@"ThisImageIndex---%ld", (long)ThisImageIndex );
     NSLog(@"_currentPhotoIndex---%lu", (unsigned long)_currentPhotoIndex );
     if ( ThisImageIndex == 0 ) {

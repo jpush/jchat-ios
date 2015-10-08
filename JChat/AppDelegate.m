@@ -284,7 +284,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 
 #pragma mark --初始化各个功能模块
--(void)setupMainTabBar {
+- (void)setupMainTabBar {
   self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
   self.tabBarCtl.loginIdentify = kFirstLogin;
   NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25"],

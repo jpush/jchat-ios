@@ -26,12 +26,12 @@
     // Configure the view for the selected state
 }
 
--(void)setCellData:(id)model {
+- (void)setCellData:(id)model {
   self.model = model;
   [self setContentFram];
 }
 
--(void)layoutSubviews {
+- (void)layoutSubviews {
 //  [self setContentFram];
 }
 

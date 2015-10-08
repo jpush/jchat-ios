@@ -29,7 +29,7 @@
     self.chatView = [UIImageView new];
 
     self.headImgView = [UIImageView new];
-    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+    [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
     
     self.stateView =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [self.stateView setHidden:NO];
@@ -77,7 +77,7 @@
   _model = model;
   self.delegate = delegate;
 
-  [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+  [self.imageView setImage:[UIImage imageNamed:@"headDefalt"]];
   
   _fromUser = model.fromUser;
 
@@ -91,7 +91,7 @@
           }
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
-        [self.headImgView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+        [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
       }
     }];
   } else {
@@ -254,7 +254,7 @@
   
 }
 
--(void)alertView:(UIAlertView *)alertView
+- (void)alertView:(UIAlertView *)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (buttonIndex == 1) {
     [self.sendFailView setHidden:YES];

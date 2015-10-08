@@ -42,7 +42,7 @@
     [self addSubview:self.voiceBgView];
     
     self.headView = [UIImageView new];
-    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
+    [self.headView setImage:[UIImage imageNamed:@"headDefalt.png"]];
     self.headView.layer.cornerRadius = 23;
     [self.headView.layer setMasksToBounds:YES];
     [self addSubview:self.headView];
@@ -265,7 +265,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
         JPIMMAINTHEAD(^{
-        [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+        [self.imageView setImage:[UIImage imageNamed:@"headDefalt"]];
         });
       }
     }];

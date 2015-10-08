@@ -74,7 +74,7 @@
 }
 
 #pragma mark -调用相册
--(void)photoClick {
+- (void)photoClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
   picker.delegate = self;
   picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -85,7 +85,7 @@
 }
 
 #pragma mark --调用相机
--(void)cameraClick {
+- (void)cameraClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
   if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;

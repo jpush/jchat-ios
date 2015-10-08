@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 @protocol AddBtnDelegate <NSObject>
 @optional
--(void)photoClick;
--(void)cameraClick;
+- (void)photoClick;
+- (void)cameraClick;
 @end
 @interface JCHATMoreView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *photoBtn;

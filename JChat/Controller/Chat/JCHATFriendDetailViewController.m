@@ -32,7 +32,7 @@
   self.title = @"详细资料";
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
   
@@ -74,7 +74,7 @@
     __strong __typeof(weakSelf) strongSelf = weakSelf;
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error) {
-      [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+      [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
       [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
       return;
     }
@@ -84,7 +84,7 @@
               if (data != nil) {
                 [_headView setImage:[UIImage imageWithData:data]];
               }else {
-                [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+                [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
               }
             }else {
               DDLogDebug(@"JCHATFriendDetailVC  thumbAvatarData fail");
@@ -117,12 +117,12 @@
 
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
   return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   return [_titleArr count] + 1;
 }
@@ -166,7 +166,7 @@
   }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 3) {
     return 80;
   }

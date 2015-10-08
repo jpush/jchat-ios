@@ -67,7 +67,7 @@
   UIButton *leftbtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftbtn setFrame:CGRectMake(0, 0, 30, 30)];
   [leftbtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-  [leftbtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftbtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftbtn];//为导航栏添加右侧按钮
   
   UIButton *rightbtn =[UIButton buttonWithType:UIButtonTypeCustom];
