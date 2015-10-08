@@ -40,9 +40,9 @@
 @property (nonatomic, assign) CGSize imageSize;
 @property (nonatomic, assign) BOOL isTime;
 
--(float)getTextHeight;
--(CGSize)getImageSize;
+- (float)getTextHeight;
+- (CGSize)getImageSize;
 
--(void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation;
+- (void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation;
 
 @end

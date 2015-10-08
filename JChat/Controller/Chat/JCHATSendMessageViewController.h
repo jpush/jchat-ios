@@ -57,6 +57,6 @@
 */
 @property(nonatomic, assign) CGFloat previousTextViewContentHeight;
 
--(void)setupView;
+- (void)setupView;
 
 @end

@@ -101,7 +101,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 
 
--(void)setupView {
+- (void)setupView {
   [self setupNavigation];
   [self setupComponentView];
 }
@@ -111,7 +111,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   [self.toolBarContainer addSubview:self.toolBarContainer.toolbar];
 }
 
--(void)setupComponentView {
+- (void)setupComponentView {
   [self performSelector:@selector(addtoolbar) withObject:nil afterDelay:0.1];
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                            action:@selector(tapClick:)];
@@ -134,10 +134,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
   [_rightBtn setFrame:CGRectMake(0, 0, 14, 17)];
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    [_rightBtn setImage:[UIImage imageNamed:@"dialogue_nav_b_"] forState:UIControlStateNormal]; //change name
+    [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal]; //change name//userDetail
   }else {
-    [_rightBtn setImage:[UIImage imageNamed:@"dialogue_nav_a_"] forState:UIControlStateNormal];
-  }
+    [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
+  }//
   
   if (_conversation && _conversation.conversationType == kJMSGConversationTypeGroup) {
     _groupInfo = _conversation.target;
@@ -155,14 +155,14 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
   
 }
 
--(void)getGroupMemberListWithGetMessageFlag:(BOOL)getMesageFlag {
+- (void)getGroupMemberListWithGetMessageFlag:(BOOL)getMesageFlag {
   if (self.conversation && self.conversation.conversationType == kJMSGConversationTypeGroup) {
     JMSGGroup *group = nil;
     group = self.conversation.target;
@@ -314,7 +314,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
 #pragma marks -- UIAlertViewDelegate --
 //根据被点击按钮的索引处理点击事件
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   if (buttonIndex == 0) {
     [self.navigationController popViewControllerAnimated:NO];//目的回到根视图
@@ -465,7 +465,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   return _voiceRecordHUD;
 }
 
--(void)backClick {
+- (void)backClick {
   [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -476,7 +476,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 #pragma mark --增加朋友
--(void)addFriends
+- (void)addFriends
 {
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
@@ -495,7 +495,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 #pragma mark -调用相册
--(void)photoClick {
+- (void)photoClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
   picker.delegate = self;
   picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -507,7 +507,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 #pragma mark --调用相机
--(void)cameraClick {
+- (void)cameraClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
   
   if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -572,7 +572,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 #pragma mark --加载通知
--(void)addNotification{
+- (void)addNotification{
   //给键盘注册通知
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(inputKeyboardWillShow:)
@@ -601,7 +601,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 
 
--(void)inputKeyboardWillShow:(NSNotification *)notification{
+- (void)inputKeyboardWillShow:(NSNotification *)notification{
   _barBottomFlag=NO;
   CGRect keyBoardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
   CGFloat animationTime = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
@@ -685,7 +685,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   [self scrollToBottomAnimated:NO];
 }
 
--(void)noPressmoreBtnClick:(UIButton *)btn {
+- (void)noPressmoreBtnClick:(UIButton *)btn {
   [_toolBarContainer.toolbar.textView becomeFirstResponder];
 }
 

@@ -28,7 +28,7 @@
   self.title=@"聊天详情";
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
 
@@ -46,7 +46,7 @@
   [((JMSGUser *)self.conversation.target) thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
             if (error == nil) {
               if (data == nil) {
-                [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+                [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
               }else {
                 [_headView setImage:[UIImage imageWithData:data]];
               }
@@ -72,8 +72,8 @@
   UIButton *addView =[[UIButton alloc] initWithFrame:CGRectMake(75, (80-46)/2, 46, 46)];
   [addView setBackgroundColor:[UIColor clearColor]];
   [addView addTarget:self action:@selector(addFriend) forControlEvents:UIControlEventTouchUpInside];
-  [addView setImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
-  [addView setImage:[UIImage imageNamed:@"addMan_13_pre"] forState:UIControlStateHighlighted];
+  [addView setImage:[UIImage imageNamed:@"addMan"] forState:UIControlStateNormal];
+  [addView setImage:[UIImage imageNamed:@"addMan_pre"] forState:UIControlStateHighlighted];
   [tableHeadView addSubview:addView];
   
   self.detailTableView.tableHeaderView = tableHeadView;
@@ -94,7 +94,7 @@
   [alerView show];
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (buttonIndex == 0) {
     
   }else {
@@ -131,12 +131,12 @@
     [self.navigationController pushViewController:friendCtl animated:YES];
 }
 
--(void)backClick
+- (void)backClick
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //    if ([self.detailArr count]>0) {
 //        return [self.detailArr count];
@@ -145,11 +145,11 @@
 //    }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 20;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSDictionary *dic =[self.detailArr objectAtIndex:section];
     if (section==0) {
@@ -203,7 +203,7 @@
   [self.chatUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
       if (data == nil) {
-        [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+        [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
       }else {
         [_headView setImage:[UIImage imageWithData:data]];
       }
@@ -213,7 +213,7 @@
   }];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [_conversation deleteAllMessages];
 }
 

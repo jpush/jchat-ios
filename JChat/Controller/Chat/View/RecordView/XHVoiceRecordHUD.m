@@ -150,7 +150,7 @@
     
     if (!_recordingHUDImageView) {
         UIImageView *recordHUDImageView = [[UIImageView alloc] initWithFrame:CGRectMake(82.0, 34.0, 18.0, 61.0)];
-        recordHUDImageView.image = [UIImage imageNamed:@"RecordingSignal001"];
+        recordHUDImageView.image = [UIImage imageNamed:@"RecordingSignal"];
         recordHUDImageView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         recordHUDImageView.contentMode = UIViewContentModeScaleToFill;
         [self addSubview:recordHUDImageView];

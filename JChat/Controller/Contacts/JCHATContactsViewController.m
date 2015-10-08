@@ -57,12 +57,12 @@
                                                                      nil]];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 0;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 0;
 }
@@ -115,14 +115,14 @@
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
 }
 
 
 
--(void)perFormAdd :(UIButton *)btn
+- (void)perFormAdd :(UIButton *)btn
 {
   JCHATAddViewController *addFriends = [[JCHATAddViewController alloc] init];
   [self.navigationController pushViewController:addFriends animated:YES];

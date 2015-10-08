@@ -17,9 +17,9 @@
     UIImageView *cancelIV;
 }
 
--(void)startAnimation;
--(void)stopAnimation;
--(void)changeanimation:(double)lowPassResults;
+- (void)startAnimation;
+- (void)stopAnimation;
+- (void)changeanimation:(double)lowPassResults;
 //切换录音和取消界面 YES：显示录音 NO：显示取消
--(void)changeRecordView:(BOOL)flag;
+- (void)changeRecordView:(BOOL)flag;
 @end

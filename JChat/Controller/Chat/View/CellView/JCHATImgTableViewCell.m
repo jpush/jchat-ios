@@ -29,7 +29,7 @@
     
     self.headView = [UIImageView new];
     
-    [self.headView setImage:[UIImage imageNamed:@"headDefalt_34.png"]];
+    [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
     [self addSubview:self.headView];
     self.headView.layer.cornerRadius = 23;
     [self.headView.layer setMasksToBounds:YES];
@@ -173,7 +173,7 @@
     
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         [self.sendFailView setHidden:YES];
         [self.circleView setHidden:NO];
@@ -228,7 +228,7 @@
   self.cellIndex = indexPath;
   NSLog(@"huangmin  message  %@",_model.fromUser);
   typeof(self) __weak weakSelf = self;
-          [self.imageView setImage:[UIImage imageNamed:@"headDefalt_34"]];  
+          [self.imageView setImage:[UIImage imageNamed:@"headDefalt"]];
   if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
@@ -239,7 +239,7 @@
           }
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
-          [self.headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
       }
     }];
   } else {

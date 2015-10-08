@@ -41,7 +41,7 @@
   self.title=@"聊天详情";
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
   _groupTitleData =@[@"群聊名称",@"清空聊天记录",@"删除并退出"];
@@ -151,13 +151,12 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       [personView setFrame:CGRectMake(width +j*(headWidth + width), 10 + (headHeight +10) * i, headWidth, headHeight)];
       personView.backgroundColor = [UIColor clearColor];
       [personView.headViewBtn setFrame:CGRectMake(0, 0, 46, 46)];
-      [personView.headViewBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
       [_groupBtnArr addObject:personView];
       personView.delegate = self;
       [personView.deletePersonBtn setHidden:YES];
       if (i*4 +j == [_groupData count]) {
-        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"addMan_13"] forState:UIControlStateNormal];
-        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"addMan_13_pre"] forState:UIControlStateHighlighted];
+        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"addMan"] forState:UIControlStateNormal];
+        [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"addMan_pre"] forState:UIControlStateHighlighted];
         
         personView.headViewBtn.tag = 10000;
         _addBtn = personView.headViewBtn;
@@ -184,7 +183,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
             [personView.headViewBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
           }else {
             DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
-            [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt_34"] forState:UIControlStateNormal];
+            [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt"] forState:UIControlStateNormal];
           }
         }];
         
@@ -199,7 +198,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   }
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField {
+- (void)textFieldDidEndEditing:(UITextField *)textField {
 }
 
 - (void)groupPersonBtnClick:(JCHATGroupPersonView *)personView
@@ -293,7 +292,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     }
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
@@ -301,7 +300,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     return [_groupTitleData count];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 54;
 }
 
@@ -498,7 +497,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   return ([_groupData count] -1)%4;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 1) {
         UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"清空聊天记录" message:@""
                                                          delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];

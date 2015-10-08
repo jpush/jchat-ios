@@ -236,7 +236,7 @@
 //  [self saveBadge:badge];
 //}
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
   [self getConversationList];
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -350,7 +350,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
   }
 }
 
--(void)btnClick :(UIButton *)btn {
+- (void)btnClick :(UIButton *)btn {
   [self.addBgView setHidden:YES];
   if (btn.tag == 100) {
     //
@@ -397,7 +397,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
   }
 }
 
--(void)addBtnClick:(UIButton *)btn {
+- (void)addBtnClick:(UIButton *)btn {
   if (btn.selected) {
     btn.selected=NO;
     [self.addBgView setHidden:YES];
@@ -409,7 +409,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
   [self.view bringSubviewToFront:self.addBgView];
 }
 
--(void)perFormAdd {
+- (void)perFormAdd {
   
 }
 
@@ -445,11 +445,11 @@ NSInteger sortType(id object1,id object2,void *cha) {
   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   if ([_conversationArr count] > 0) {
     return [_conversationArr count];
   }else{
@@ -485,7 +485,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
   return [_conversationArr count];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
   cell.selected = NO;
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
