@@ -174,30 +174,24 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [self.sendFailView setHidden:YES];
-        [self.circleView setHidden:NO];
-        [self.circleView startAnimating];
-      self.pictureImgView.alpha = 0.5;
-        _model.isSending = YES;
-        self.model.messageStatus = kJMSGMessageStatusSending;
-        __weak typeof(self)weakSelf = self;
-        if (!self.sendFailImgMessage) {
-         self.sendFailImgMessage = [self.conversation messageWithMessageId:self.model.messageId];
-
-        }else {
-          self.sendFailImgMessage.uploadHandler = ^(float percent){
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            NSLog(@"huangmin  percent number is %f",percent*100);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                            strongSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)(percent*100)];
-            });
-          };
-          [JMSGMessage sendMessage:self.sendFailImgMessage];
-        }
-    }
+  if (buttonIndex == 1) {
+    [self.sendFailView setHidden:YES];
+    [self.circleView setHidden:NO];
+    [self.circleView startAnimating];
+    self.pictureImgView.alpha = 0.5;
+    _model.isSending = YES;
+    self.model.messageStatus = kJMSGMessageStatusSending;
+    __weak typeof(self)weakSelf = self;
+    _model.message.uploadHandler = ^(float percent){
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      NSLog(@"huangmin  percent number is %f",percent*100);
+      dispatch_async(dispatch_get_main_queue(), ^{
+        strongSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)(percent*100)];
+      });
+      [weakSelf.conversation sendMessage:weakSelf.model.message];
+    };
+  }
 }
-
 - (void)pushPersonInfoCtlClick {
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectHeadView:)]) {
         [self.delegate selectHeadView:self.model];
@@ -228,18 +222,21 @@
   self.cellIndex = indexPath;
   NSLog(@"huangmin  message  %@",_model.fromUser);
   typeof(self) __weak weakSelf = self;
-          [self.imageView setImage:[UIImage imageNamed:@"headDefalt"]];
   if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
-          if ([objectId isEqualToString:self.headViewFlag]) {
-            [weakSelf.headView setImage:[UIImage imageWithData:data]];
+          if ([objectId isEqualToString:weakSelf.headViewFlag]) {
+            if (data != nil) {
+              [weakSelf.headView setImage:[UIImage imageWithData:data]];
+            } else {
+              [weakSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+            }
           } else {
             DDLogDebug(@"该头像是异步乱序的头像");
           }
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
-          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+          [weakSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
       }
     }];
   } else {

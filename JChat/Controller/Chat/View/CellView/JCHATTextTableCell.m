@@ -85,7 +85,11 @@
     [_fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
           if ([objectId isEqualToString:self.headViewFlag]) {
-            [self.headImgView setImage:[UIImage imageWithData:data]];
+            if (data != nil) {
+              [self.headImgView setImage:[UIImage imageWithData:data]];
+            } else {
+              [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
+            }
           } else {
             DDLogDebug(@"该头像是异步乱序的头像");
           }

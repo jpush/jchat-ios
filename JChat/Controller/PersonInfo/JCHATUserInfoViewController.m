@@ -81,32 +81,6 @@
   [_bgView setUserInteractionEnabled:YES];
   _bgView.originImage = [UIImage imageNamed:@"wo.png"];
   [self updateAvatar];
-//  [user largeAvatarData:^(id resultObject, NSError *error) {
-//    if (error == nil) {
-//      if (resultObject != nil) {
-//        _bgView.originImage = [UIImage imageWithData:resultObject];
-//      }else {
-//        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-//      }
-//    }else {
-//      DDLogDebug(@"Action -- largeAvatarData");
-//      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-//    }
-//  }];
-//  
-//  [user thumbAvatarData:^(id resultObject, NSError *error) {
-//    if (error == nil) {
-//      if (resultObject != nil) {
-//        _bgView.originImage = [UIImage imageWithData:resultObject];
-//      }else {
-//        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-//      }
-//    }else {
-//      DDLogDebug(@"Action -- largeAvatarData");
-//      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-//    }
-//  }];
-
   UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
   [_bgView addGestureRecognizer:gesture];
   _header = [CExpandHeader expandWithScrollView:_settingTableView expandView:_bgView];

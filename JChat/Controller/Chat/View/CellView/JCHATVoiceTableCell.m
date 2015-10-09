@@ -196,13 +196,15 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
       self.voiceFailMessage = [self.conversation messageWithMessageId:self.model.messageId];
       if (self.voiceFailMessage != nil) {
         self.message = self.voiceFailMessage;
-        [JMSGMessage sendMessage:self.voiceFailMessage];
+//        [JMSGMessage sendMessage:self.voiceFailMessage];
+        [_conversation sendMessage:_model.message];
       }else {
         DDLogDebug(@"Action get messageWithMessageid fail");
       }
 
     } else {
-      [JMSGMessage sendMessage:self.voiceFailMessage];
+//      [JMSGMessage sendMessage:self.voiceFailMessage];
+      [_conversation sendMessage:_model.message];
     }
   }
 }
@@ -255,18 +257,18 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
-        JPIMMAINTHEAD(^{
           if ([objectId isEqualToString:self.headViewFlag]) {
-            [self.headView setImage:[UIImage imageWithData:data]];
+            if (data != nil) {
+              [self.headView setImage:[UIImage imageWithData:data]];
+            } else {
+              [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+            }
           } else {
             DDLogDebug(@"该头像是异步乱序的头像");
           }
-        });
       } else {
         DDLogDebug(@"Action -- get thumbavatar fail");
-        JPIMMAINTHEAD(^{
-        [self.imageView setImage:[UIImage imageNamed:@"headDefalt"]];
-        });
+        [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
       }
     }];
   } else {
@@ -333,6 +335,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.delegate getContinuePlay:self indexPath:self.indexPath];
   }
   [self.readView setHidden:YES];
+  [self.model.message updateFlag:@1];
   self.model.readState = YES;
   self.index = 0;
   if (!self.playing) {
@@ -391,7 +394,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)updateFrame {
   /*信息读取状态显示*/
-  if (self.model.readState) {
+  if (self.model.message.flag) {
     [self.readView setHidden:YES];
   } else {
     [self.readView setHidden:NO];
