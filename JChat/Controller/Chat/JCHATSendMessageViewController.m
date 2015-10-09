@@ -273,7 +273,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   });
 }
 
-
 #pragma mark --收到消息
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {

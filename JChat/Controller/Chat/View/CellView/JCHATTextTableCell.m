@@ -127,70 +127,12 @@
     [self.contentLabel setBackgroundColor:[UIColor clearColor]];
     
     if (!_model.isReceived) {//isme
-      //      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.top.mas_equalTo(self).with.offset(0);
-      //        make.right.mas_equalTo(self).with.offset(-5);
-      //        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
-      //      }];
-      //
-      //      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.top.mas_equalTo(self);
-      //        make.right.mas_equalTo(self.headImgView.mas_left).with.offset(-5);
-      //        make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
-      //      }];
-      //
-      //      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.size.mas_equalTo(CGSizeMake(30, 30));
-      //        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
-      //        make.centerY.mas_equalTo(self);
-      //      }];
-      //      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.size.mas_equalTo(CGSizeMake(17, 15));
-      //        make.right.mas_equalTo(self.chatView.mas_left).with.offset(-5);
-      //        make.centerY.mas_equalTo(self);
-      //      }];
-      ////
-      //      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.top.mas_equalTo(self.chatView).with.offset(5);
-      //        make.right.mas_equalTo(self.chatView).with.offset(-15);
-      //        make.left.mas_equalTo(self.chatView).with.offset(5);
-      //        make.bottom.mas_equalTo(self.chatView).with.offset(-5);
-      //      }];
       [self.chatView setFrame:CGRectMake(kApplicationWidth - imgSize.width - headHeight - 10, 0, imgSize.width, imgSize.height)];
       [self.headImgView setFrame:CGRectMake(kApplicationWidth - headHeight - 5, 0, headHeight, headHeight)];
 
     }else
     {
-      //      [self.headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.top.mas_equalTo(self).with.offset(0);
-      //        make.left.mas_equalTo(self).with.offset(5);
-      //        make.size.mas_equalTo(CGSizeMake(headHeight, headHeight));
-      //      }];
-      //
-      //      [self.chatView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.top.mas_equalTo(self);
-      //        make.left.mas_equalTo(self.headImgView.mas_right).with.offset(5);
-      //        make.size.mas_equalTo(CGSizeMake(realSize.width + 30, realSize.height +20));
-      //      }];
-      //
-      //      [self.stateView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.size.mas_equalTo(CGSizeMake(30, 30));
-      //        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
-      //        make.centerY.mas_equalTo(self);
-      //      }];
-      //
-      //      [self.sendFailView mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.size.mas_equalTo(CGSizeMake(17, 15));
-      //        make.left.mas_equalTo(self.chatView.mas_right).with.offset(10);
-      //        make.centerY.mas_equalTo(self);
-      //      }];
-      //
-      //      [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-      //        make.top.mas_equalTo(self.chatView).with.offset(5);
-      //        make.right.mas_equalTo(self.chatView).with.offset(-5);
-      //        make.left.mas_equalTo(self.chatView).with.offset(15);
-      //        make.bottom.mas_equalTo(self.chatView).with.offset(-5);
-      //      }];
+
       [self.headImgView setFrame:CGRectMake( 5, 0, headHeight, headHeight)];
       [self.chatView setFrame:CGRectMake(headHeight + 10, 0, imgSize.width, imgSize.height)];
     }
@@ -207,9 +149,6 @@
                                        resizingMode:UIImageResizingModeTile];
   [self.chatView setImage:newImg];
   [self.chatView setBackgroundColor:[UIColor clearColor]];
-  //    CGSize imgSize =realSize;
-  //    imgSize.height=realSize.height+20;
-  //    imgSize.width=realSize.width+2*15;
   self.chatView.layer.cornerRadius=6;
   [self.chatView.layer setMasksToBounds:YES];
   
@@ -220,16 +159,16 @@
   [self.stateView setHidden:YES];
   [self.stateView stopAnimating];
   [self.sendFailView setHidden:YES];
-  if (_model.messageStatus == kJMSGMessageStatusSending || _model.messageStatus == kJMSGMessageStatusReceiving) {
+  if (_model.message.status == kJMSGMessageStatusSending || _model.messageStatus == kJMSGMessageStatusReceiving) {
     [self.stateView setHidden:NO];
     [self.stateView startAnimating];
     [self.sendFailView setHidden:YES];
-  }else if (_model.messageStatus == kJMSGMessageStatusSendSucceed || _model.messageStatus == kJMSGMessageStatusReceiveSucceed)
+  }else if (_model.message.status == kJMSGMessageStatusSendSucceed || _model.messageStatus == kJMSGMessageStatusReceiveSucceed)
   {
     [self.stateView stopAnimating];
     [self.stateView setHidden:YES];
     [self.sendFailView setHidden:YES];
-  }else if (_model.messageStatus == kJMSGMessageStatusSendFailed || _model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed)
+  }else if (_model.message.status == kJMSGMessageStatusSendFailed || _model.messageStatus == kJMSGMessageStatusReceiveDownloadFailed)
   {
     [self.stateView stopAnimating];
     [self.stateView setHidden:YES];

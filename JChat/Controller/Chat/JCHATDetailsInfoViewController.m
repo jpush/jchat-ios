@@ -111,6 +111,8 @@
         [JMSGConversation createGroupConversationWithGroupId:group.gid completionHandler:^(id resultObject, NSError *error) {
           JMSGConversation *groupConversation = (JMSGConversation *)resultObject;
           strongSelf.sendMessageCtl.conversation = groupConversation;
+          [JMessage removeDelegate:strongSelf.sendMessageCtl];
+          [JMessage addDelegate:strongSelf.sendMessageCtl withConversation:groupConversation];
           strongSelf.sendMessageCtl.targetName = group.name;
           strongSelf.sendMessageCtl.title = group.name;
           [strongSelf.sendMessageCtl setupView];
