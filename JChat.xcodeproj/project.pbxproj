@@ -352,7 +352,7 @@
 		6039BF30DEDE922DD51F2F29 /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039BF05C94E89B8A486DAB9 /* JCHATStringUtils.m */; };
 		6039BF586E9688129BC2C915 /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B1EA0E3C862446BAEC66 /* MJPhotoProgressView.m */; };
 		6039BFB3EC166386F9AEE068 /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039B56CC9F7BD2AE93AF6EC /* MJPhotoLoadingView.m */; };
-		8FE536821B3AAD6200EFC8CE /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE536811B3AAD6200EFC8CE /* JMessage.framework */; };
+		628AC3EF1BC766A50032D66D /* JMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 628AC3EE1BC766A50032D66D /* JMessage.framework */; settings = {ASSET_TAGS = (); }; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		9C979D9E5AD8492296E1A3D3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5FD764EC422CFC7BB8C437 /* libPods.a */; };
@@ -829,9 +829,9 @@
 		6039BF128CC5C5BE6823314B /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
 		6039BF638019C00F541E859F /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
 		6039BFD4C5DA5125D6E4137C /* XHVoiceCommonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHVoiceCommonHelper.m; sourceTree = "<group>"; };
+		628AC3EE1BC766A50032D66D /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMessage.framework; sourceTree = "<group>"; };
 		8F8840A41B159E7500BDC126 /* JChat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JChat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8840A71B159E7500BDC126 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8FE536811B3AAD6200EFC8CE /* JMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JMessage.framework; path = JChat/lib/JMessage.framework; sourceTree = "<group>"; };
 		8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		8FF149F91AFBA11800D13F2E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -855,7 +855,7 @@
 				183983491AFC91A400AC8280 /* CoreLocation.framework in Frameworks */,
 				183983471AFC919C00AC8280 /* CoreFoundation.framework in Frameworks */,
 				183983451AFC919300AC8280 /* Foundation.framework in Frameworks */,
-				8FE536821B3AAD6200EFC8CE /* JMessage.framework in Frameworks */,
+				628AC3EF1BC766A50032D66D /* JMessage.framework in Frameworks */,
 				183983431AFC918C00AC8280 /* CoreGraphics.framework in Frameworks */,
 				183983411AFC918300AC8280 /* UIKit.framework in Frameworks */,
 				1839833F1AFC917C00AC8280 /* CFNetwork.framework in Frameworks */,
@@ -1387,11 +1387,11 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				628AC3EE1BC766A50032D66D /* JMessage.framework */,
 				44B60EAD1B7B43EA00AE828D /* OpenGLES.framework */,
 				44B60EAB1B7B43DF00AE828D /* CoreVideo.framework */,
 				44B60EA91B7B43D400AE828D /* CoreMedia.framework */,
 				44C78F1B1B7B15A6006D4192 /* Accelerate.framework */,
-				8FE536811B3AAD6200EFC8CE /* JMessage.framework */,
 				1839834E1AFC91C800AC8280 /* CoreTelephony.framework */,
 				1839834C1AFC91BF00AC8280 /* AudioToolbox.framework */,
 				1839834A1AFC91B600AC8280 /* SystemConfiguration.framework */,
@@ -2239,6 +2239,7 @@
 					"$(PROJECT_DIR)/JChat/lib",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -2282,6 +2283,7 @@
 					"$(PROJECT_DIR)/JChat/lib",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-dphidriusaogyybmbymvxgyjekmj/Build/Products/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Untitled-bekumkuvjahxfocexzkgvuvbzulu/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;

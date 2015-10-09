@@ -233,6 +233,19 @@ JMSG_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign, readonly) BOOL isReceived;
 
 /*!
+ * @abstract 消息标志
+ *
+ * @discussion 这是一个用于表示消息状态的标识字段, App 可自由使用, SDK 不做变更.
+ * 默认值为 0, App 有需要时可更新此状态.
+ *
+ * 使用场景:
+ *
+ * 1. 语音消息有一个未听标志. 默认 0 表示未读, 已读时 App 更新为 1 或者其他.
+ * 2. 某些 App 需要对一条消息做送达, 已读标志, 可借用这个字段.
+ */
+@property(nonatomic, strong, readonly) NSNumber *flag;
+
+/*!
  * @abstract 上传资源文件progress绑定(用来监听上传progress回调)
  */
 @property(nonatomic, copy)JMSGMediaUploadProgressHandler JMSG_NULLABLE uploadHandler;
@@ -274,6 +287,15 @@ JMSG_ASSUME_NONNULL_BEGIN
  * 本设置会覆盖默认的 Profile -> nickname 规则.
  */
 - (void)setFromName:(NSString * JMSG_NULLABLE)displayName;
+
+/*!
+ * @abstract 更新消息标志
+ *
+ * @param 为 nil 时表示设置为 0.
+ *
+ * @discussion 参考 flag property 的说明.
+ */
+- (void)updateFlag:(NSNumber * JMSG_NULLABLE)flag;
 
 /*!
  * @abstract 消息对象转换为 JSON 字符串的表示。
