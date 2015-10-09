@@ -102,7 +102,7 @@
     __block JMSGGroup *group =nil;
     typeof(self) __weak weakSelf = self;
     NSLog(@"huangmin merbers %@",@[[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text].description);
-    [JMSGGroup createGroupWithName:[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] description:@"" memberArray:@[((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+    [JMSGGroup createGroupWithName:[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] desc:@"" memberArray:@[((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       typeof(weakSelf) __strong strongSelf = weakSelf;
       group = (JMSGGroup *)resultObject;

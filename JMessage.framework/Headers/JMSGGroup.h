@@ -33,8 +33,8 @@ JMSG_ASSUME_NONNULL_BEGIN
  @discussion 向服务器端提交创建群组请求，服务器端会生成群组ID，可以基于这个ID做后续很多操作。
  */
 + (void)createGroupWithName:(NSString *)groupName
-                description:(NSString * JMSG_NULLABLE)groupDesc
-                memberArray:(NSArray JMSG_GENERIC(__kindof NSString *)* JMSG_NULLABLE)usernameArray
+                       desc:(NSString *JMSG_NULLABLE)groupDesc
+                memberArray:(NSArray JMSG_GENERIC(__kindof NSString *) *JMSG_NULLABLE)usernameArray
           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
@@ -46,8 +46,8 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 + (void)updateGroupInfoWithGroupId:(NSString *)groupId
                               name:(NSString *)groupName
-                       description:(NSString *)groupDesc
-               completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+                              desc:(NSString *)groupDesc
+                 completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /**
 * 获取群组信息

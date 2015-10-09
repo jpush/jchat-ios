@@ -402,7 +402,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       typeof(self) __weak weakSelf = self;
       JMSGGroup *needUpdateGroup = (JMSGGroup *)(self.conversation.target);
       NSLog(@"huangmin   new name %@",[alertView textFieldAtIndex:0].text);
-      [JMSGGroup updateGroupInfoWithGroupId:needUpdateGroup.gid name:[alertView textFieldAtIndex:0].text description:needUpdateGroup.desc completionHandler:^(id resultObject, NSError *error) {
+      [JMSGGroup updateGroupInfoWithGroupId:needUpdateGroup.gid name:[alertView textFieldAtIndex:0].text desc:needUpdateGroup.desc completionHandler:^(id resultObject, NSError *error) {
                 typeof(weakSelf) __strong strongSelf = weakSelf;
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
               if (error == nil) {

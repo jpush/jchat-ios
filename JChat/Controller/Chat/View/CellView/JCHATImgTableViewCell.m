@@ -184,12 +184,11 @@
     __weak typeof(self)weakSelf = self;
     _model.message.uploadHandler = ^(float percent){
       __strong __typeof(weakSelf)strongSelf = weakSelf;
-      NSLog(@"huangmin  percent number is %f",percent*100);
       dispatch_async(dispatch_get_main_queue(), ^{
         strongSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)(percent*100)];
       });
-      [weakSelf.conversation sendMessage:weakSelf.model.message];
     };
+    [weakSelf.conversation sendMessage:weakSelf.model.message];
   }
 }
 - (void)pushPersonInfoCtlClick {
