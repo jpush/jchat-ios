@@ -87,9 +87,8 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         [_messageTableView reloadData];
       }
     }
-    [self scrollToBottomAnimated:YES];
+    [self scrollToBottomAnimated:NO];
   }];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -424,10 +423,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
     [_messageDic[JCHATMessageIdKey] addObject:model.messageId];
   }
   [_messageTableView reloadData];
-  if ([_messageDic[JCHATMessageIdKey] count] != 0) {
-    [_messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-  }
-  
+  [self scrollToBottomAnimated:NO];
 }
 
 - (JMSGUser *)getAvatarWithTargetId:(NSString *)targetId {
@@ -611,15 +607,12 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   [_toolBarContainer setNeedsLayout];
   [_moreViewContainer setNeedsLayout];
   [UIView animateWithDuration:animationTime animations:^{
-    
     _moreViewHeight.constant = keyBoardFrame.size.height;
-    
-    [self scrollToEnd];
     [_toolBarContainer layoutIfNeeded];
     [_messageTableView layoutIfNeeded];
     [_moreViewContainer layoutIfNeeded];
   }];
-  [self scrollToEnd];
+    [self scrollToEnd];
 }
 
 - (void)inputKeyboardWillHide:(NSNotification *)notification {
@@ -791,7 +784,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 #pragma mark --滑动至尾端
 - (void)scrollToEnd {
   if ([_messageDic[JCHATMessageIdKey] count] != 0) {
-    [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];//!
+    [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];//!UITableViewScrollPositionBottom
   }
 }
 
@@ -1186,14 +1179,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
-  if (![self shouldAllowScroll])
-    return;
+  if (![self shouldAllowScroll]) return;
   
   NSInteger rows = [self.messageTableView numberOfRowsInSection:0];
   
   if (rows > 0) {
     [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows - 1 inSection:0]
-                                 atScrollPosition:UITableViewScrollPositionBottom
+                                 atScrollPosition:UITableViewScrollPositionTop
                                          animated:animated];
   }
 }
