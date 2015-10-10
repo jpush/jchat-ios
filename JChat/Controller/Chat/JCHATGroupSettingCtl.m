@@ -169,7 +169,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         _deleteBtn = personView.headViewBtn;
         [personView.deletePersonBtn setHidden:YES];
         personView.memberLable.text = @"";
-        NSLog(@"huangin  owner   %@",self.sendMessageCtl);
+        NSLog(@"huangmin  owner   %@",self.sendMessageCtl);
         if ([self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username]  && [_groupData count] !=1) {
           [_headView addSubview:personView];
         }
@@ -180,7 +180,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         
         [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
           if (error == nil) {
-            
             if (data != nil) {
               [personView.headViewBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
             } else {
