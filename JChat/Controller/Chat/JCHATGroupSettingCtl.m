@@ -180,7 +180,12 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         
         [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
           if (error == nil) {
-            [personView.headViewBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+            
+            if (data != nil) {
+              [personView.headViewBtn setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+            } else {
+              [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt"] forState:UIControlStateNormal];
+            }
           }else {
             DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
             [personView.headViewBtn setImage:[UIImage imageNamed:@"headDefalt"] forState:UIControlStateNormal];
@@ -449,7 +454,8 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       _deleteBtn = personView.headViewBtn;
       personView.headViewBtn.tag = 20000;//删除按钮标示
       personView.delegate = self;
-      [personView.headViewBtn setImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
+//
+      [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
       [personView.deletePersonBtn setHidden:YES];
       [_headView addSubview:personView];
       [_groupBtnArr addObject:_deleteBtn];
