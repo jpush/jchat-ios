@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		et6NC3AYj8ZlQgvRZjm8ZWwmwok=
+		DDZTDNKh2FWioVzeMnqwIJ2HCdE=
 		</data>
 		<key>Headers/JMSGConversationDelegate.h</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Headers/JMSGEventContent.h</key>
 		<data>
-		S+HEmOnOMZ8Gp3WmS0BCsWdDVU8=
+		CUgRNjw7bCMQRgRKehXsabL4jAQ=
 		</data>
 		<key>Headers/JMSGGroup.h</key>
 		<data>
-		KnSe80kApw1TUhPmcOwjbj3LeGE=
+		xsDv0Rlkkb7CUixy4lDq+QMnBzE=
 		</data>
 		<key>Headers/JMSGGroupDelegate.h</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		xoj4HK8ApcnmopDumxkQAp3tduQ=
+		esGiB/279o89D98nIfYs/Wkg/Nc=
 		</data>
 		<key>Headers/JMSGMessageDelegate.h</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		tpsL8UNHedq9IPRbo+bJb3FaWww=
+		IjipvEGB7Ptzq7f6ei+Xa+TGtFI=
 		</data>
 		<key>Headers/JMSGVoiceContent.h</key>
 		<data>
@@ -101,7 +101,7 @@
 		</data>
 		<key>Headers/JMSGConversation.h</key>
 		<data>
-		et6NC3AYj8ZlQgvRZjm8ZWwmwok=
+		DDZTDNKh2FWioVzeMnqwIJ2HCdE=
 		</data>
 		<key>Headers/JMSGConversationDelegate.h</key>
 		<data>
@@ -113,11 +113,11 @@
 		</data>
 		<key>Headers/JMSGEventContent.h</key>
 		<data>
-		S+HEmOnOMZ8Gp3WmS0BCsWdDVU8=
+		CUgRNjw7bCMQRgRKehXsabL4jAQ=
 		</data>
 		<key>Headers/JMSGGroup.h</key>
 		<data>
-		KnSe80kApw1TUhPmcOwjbj3LeGE=
+		xsDv0Rlkkb7CUixy4lDq+QMnBzE=
 		</data>
 		<key>Headers/JMSGGroupDelegate.h</key>
 		<data>
@@ -133,7 +133,7 @@
 		</data>
 		<key>Headers/JMSGMessage.h</key>
 		<data>
-		xoj4HK8ApcnmopDumxkQAp3tduQ=
+		esGiB/279o89D98nIfYs/Wkg/Nc=
 		</data>
 		<key>Headers/JMSGMessageDelegate.h</key>
 		<data>
@@ -149,7 +149,7 @@
 		</data>
 		<key>Headers/JMSGUser.h</key>
 		<data>
-		tpsL8UNHedq9IPRbo+bJb3FaWww=
+		IjipvEGB7Ptzq7f6ei+Xa+TGtFI=
 		</data>
 		<key>Headers/JMSGVoiceContent.h</key>
 		<data>

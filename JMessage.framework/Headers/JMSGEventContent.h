@@ -13,6 +13,7 @@
 #import <JMessage/JMSGAbstractContent.h>
 
 typedef NS_ENUM(NSInteger, JMSGEventNotificationType) {
+  kJMSGEventNotificationAdmin = 0,
   kJMSGEventNotificationLoginKicked = 1,
   kJMSGEventNotificationCreateGroup = 8,
   kJMSGEventNotificationExitGroup = 9,

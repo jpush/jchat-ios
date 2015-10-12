@@ -19,8 +19,9 @@
 @protocol JMSGTargetProtocol;
 
 /*!
- * 'JMSGMessage' 是 JMessage SDK 里的消息实体。
+ * @abstract 消息
  *
+ * @discussion 本类 JMSGMessage 是 JMessage SDK 里的消息实体。
  * 收到的消息、发送的消息、获取历史消息，其中的消息类，都是这个 JMSGMessage。
  *
  * 以下分别描述消息相关主要使用场景。
@@ -178,7 +179,7 @@ JMSG_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, readonly) id<JMSGTargetProtocol> target;
 
 /*!
-
+ *
  */
 @property(nonatomic, strong, readonly) JMSGUser *fromUser;
 

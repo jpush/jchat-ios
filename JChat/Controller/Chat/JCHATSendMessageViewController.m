@@ -71,10 +71,11 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   DDLogDebug(@"Event - viewWillAppear");
   [super viewWillAppear:animated];
   [self.toolBarContainer.toolbar drawRect:self.toolBarContainer.toolbar.frame];
-  
+
   [_conversation refreshTargetInfoFromServer:^(id resultObject, NSError *error) {
     [self.navigationController setNavigationBarHidden:NO];
     // 禁用 iOS7 返回手势
+
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
       self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     }
@@ -87,6 +88,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
         [_messageTableView reloadData];
       }
     }
+    self.title = [resultObject title];
     [self scrollToBottomAnimated:NO];
   }];
 }
