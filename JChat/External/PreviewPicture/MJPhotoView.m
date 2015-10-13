@@ -140,7 +140,8 @@
         NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
         __weak MJPhoto *photo = _photo;
             if (_photo.message.messageId) {
-              JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
+//              JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
+              JMSGMessage *message = _photo.message.message;
               [((JMSGImageContent *)message.content) largeImageDataWithProgress:progress completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
                 __strong __typeof(photo)strongPhoto = photo;
                 if (error == nil) {

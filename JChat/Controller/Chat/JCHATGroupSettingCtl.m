@@ -253,7 +253,11 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     if (error == nil) {
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       [MBProgressHUD showMessage:@"删除成员成功！" view:self.view];
-      [self sorteUserArr:resultObject];
+//      [self sorteUserArr:resultObject];
+//      [self getGroupMemberList];
+      [self deleteMemberToReload:user];
+      [self reloadHeadViewData];
+
       [self.groupTab reloadData];
     }else {
       DDLogDebug(@"JCHATGroupSettingCtl   fail to removeMembersFromUsernameArrary");
@@ -375,8 +379,11 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
           [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
           if (error == nil) {
 //            [weakSelf.groupData addObject:resultObject];
-            [weakSelf addMemberToReload:resultObject[0]];
-            [MBProgressHUD showMessage:@"添加成员成功" view:weakSelf.view];
+            [JMSGUser userInfoArrayWithUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+              [weakSelf addMemberToReload:resultObject[0]];
+              [MBProgressHUD showMessage:@"添加成员成功" view:weakSelf.view];
+            }];
+//            [weakSelf addMemberToReload:resultObject[0]];
           }else {
             DDLogDebug(@"addMembersFromUsernameArray fail with error %@",error);
             [MBProgressHUD showMessage:@"添加成员失败" view:weakSelf.view];
@@ -430,6 +437,11 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 
 - (void)addMemberToReload:(JMSGUser *)user {
   [_groupData addObject:user];
+  [self reloadHeadViewData];
+}
+
+- (void)deleteMemberToReload:(JMSGUser *)user {
+  [_groupData removeObject:user];
   [self reloadHeadViewData];
 }
 
