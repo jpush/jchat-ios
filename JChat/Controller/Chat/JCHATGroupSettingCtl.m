@@ -249,12 +249,16 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   
   [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
   JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
-  [((JMSGGroup *)(self.conversation.target)) removeMembersFromUsernameArray:@[user] completionHandler:^(id resultObject, NSError *error) {
+  [((JMSGGroup *)(self.conversation.target)) removeMembersFromUsernameArray:@[user.username] completionHandler:^(id resultObject, NSError *error) {
     if (error == nil) {
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      [MBProgressHUD showMessage:@"删除成员成功！" view:self.view];
       [self sorteUserArr:resultObject];
       [self.groupTab reloadData];
     }else {
       DDLogDebug(@"JCHATGroupSettingCtl   fail to removeMembersFromUsernameArrary");
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      [MBProgressHUD showMessage:@"删除成员错误！" view:self.view];
     }
   }];
 }

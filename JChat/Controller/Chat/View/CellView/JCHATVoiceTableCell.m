@@ -394,7 +394,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 - (void)updateFrame {
   /*信息读取状态显示*/
-  if (self.model.message.flag) {
+  if ([self.model.message.flag isEqualToNumber:@1] || ![self.model.message isReceived]) {
     [self.readView setHidden:YES];
   } else {
     [self.readView setHidden:NO];
