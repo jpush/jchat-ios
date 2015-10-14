@@ -13,7 +13,6 @@
 #import <JMessage/JMSGAbstractContent.h>
 
 typedef NS_ENUM(NSInteger, JMSGEventNotificationType) {
-  kJMSGEventNotificationAdmin = 0,
   kJMSGEventNotificationLoginKicked = 1,
   kJMSGEventNotificationCreateGroup = 8,
   kJMSGEventNotificationExitGroup = 9,
@@ -23,6 +22,9 @@ typedef NS_ENUM(NSInteger, JMSGEventNotificationType) {
 
 
 @interface JMSGEventContent : JMSGAbstractContent <NSCopying>
+
+@property(nonatomic, assign, readonly) JMSGEventNotificationType eventType;
+
 
 - (nullable instancetype)init NS_UNAVAILABLE;
 

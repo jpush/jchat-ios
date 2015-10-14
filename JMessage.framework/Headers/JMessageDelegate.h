@@ -31,6 +31,19 @@
  *                       /// 这里处理收到的消息
  *    }
  *
+ * 有一类特殊的系统事件, 需要特别提示: 如果当前用户在其他设备上登录, 本设备会收到一个下发通知.
+ * 思路上, 需要先从 onReceiveMessage 上收到事件类型的消息, 判断 JMSGEventContent 里的
+ * eventType = kJMSGEventNotificationLoginKicked 表示这是一个用户被踢出登录的事件.
+ *
+ * 以下示例代码在上述 onReceiveMessage 监听里:
+ *
+ *    if (message.contentType == kJMSGContentTypeEventNotification) {
+ *      JMSGEventContent *eventContent = (JMSGEventContent) message.content;
+ *      if (eventContent.eventType == kJMSGEventNotificationLoginKicked) {
+ *        // 这里做用户被踢处理. 一般的作法应该是: 弹出提示信息,告诉用户在其他设备登录了;
+ *        // 弹窗关闭后界面切换到用户登录界面
+ *      }
+ *    }
  */
 @protocol JMessageDelegate <JMSGMessageDelegate,
                             JMSGConversationDelegate,

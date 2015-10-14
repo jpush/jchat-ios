@@ -137,7 +137,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @abstract 向群组中添加成员
  *
  * @param usernameArray 用户名数组。数据里的成员类型是 NSString
- * @param handler 结果回调。正常返回时 resultObject 为当前新加入的成员数据。数据里成员类型为 JMSGUser
+ * @param handler 结果回调。正常返回时 resultObject 为 nil.
  */
 - (void)addMembersFromUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
                   completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
@@ -146,7 +146,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @abstract 删除群成员
  *
  * @param usernameArray 元素是 username
- * @param handler 结果回调。正常返回时 resultObject 为 当前删除成员数组，数组里的成员类型为 JMSGUser
+ * @param handler 结果回调。正常返回时 resultObject 为 nil.
  */
 - (void)removeMembersFromUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
                      completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;

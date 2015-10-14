@@ -20,7 +20,11 @@
  * 留意的是, 这里的 error 不包含媒体消息下载文件错误. 这类错误有单独的回调 onReceiveMessageDownloadFailed:
  *
  * 收到的消息里, 也包含服务器端下发的各类事件, 比如有人被加入了群聊. 这类事件处理为特殊的 JMSGMessage 类型.
+ *
+ * 事件类的消息, 基于 JMSGMessage 类里的 contentType 属性来做判断,
+ * contentType = kJMSGContentTypeEventNotification.
  */
+@optional
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error;
 
@@ -32,9 +36,6 @@
  * 则不必特别处理, 还是原来的图标展示. 用户点击时, SDK 发现语音文件在本地没有, 会再次发起下载.
  */
 @optional
-/*!
-  针对多媒体消息的接受回调，当多媒体消息下载失败的时候，进入此回调.
- */
 - (void)onReceiveMessageDownloadFailed:(JMSGMessage *)message;
 
 @end
