@@ -5,6 +5,9 @@
 #import "JCHATSelectFriendsCtl.h"
 #import "MBProgressHUD+Add.h"
 #import "JCHATAlertViewWait.h"
+#import "JCHATAlreadyLoginViewController.h"
+#import "AppDelegate.h"
+
 @interface JCHATChatViewController ()
 {
   __block NSMutableArray *_conversationArr;
@@ -269,7 +272,15 @@
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
   DDLogDebug(@"Action -- onReceivemessage %@",message);
-  NSLog(@"huangmin   message.fromuser   %@",message.fromUser);
+
+  if (message.contentType == kJMSGContentTypeEventNotification) {
+    if (((JMSGEventContent *)message.content).eventType == kJMSGEventNotificationLoginKicked) {
+      UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"登录状态出错" message:@"你已在别的设备上登录!"
+                                                       delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+      alerView.tag = 1200;
+      [alerView show];
+    }
+  }
   [self getConversationList];
 }
 
@@ -365,7 +376,33 @@ NSInteger sortType(id object1,id object2,void *cha) {
   }
 }
 
+
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  if (alertView.tag == 1200) {
+
+      [self.navigationController popViewControllerAnimated:NO];//目的回到根视图
+      [MBProgressHUD showMessage:@"正在退出登录！" view:self.view];
+      DDLogDebug(@"Logout anyway.");
+      
+      AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+      if ([appDelegate.tabBarCtl.loginIdentify isEqualToString:kFirstLogin]) {
+        [self.navigationController.navigationController popToViewController:[self.navigationController.navigationController.childViewControllers objectAtIndex:0] animated:YES];
+      }
+      [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      
+      [JMSGUser logout:^(id resultObject, NSError *error) {
+        DDLogDebug(@"Logout callback with - %@", error);
+      }];
+      
+      JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+      loginCtl.hidesBottomBarWhenPushed = YES;
+      UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+      appDelegate.window.rootViewController = navLogin;
+
+    return;
+  }
   if (buttonIndex == 0) {
   }else if (buttonIndex == 1)
   {

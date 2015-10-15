@@ -104,13 +104,7 @@
                     } else {
                       DDLogDebug(@"login fail error  %@",error);
                       NSString *alert = @"用户登录失败";
-                      if (error.code == JCHAT_ERROR_USER_NOT_EXIST) {
-                        alert = @"用户名不存在";
-                      } else if (error.code == JCHAT_ERROR_LOGIN_PASSWORD_WRONG) {
-                        alert = @"密码错误！";
-                      } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
-                        alert = @"用户名或者密码不合法！";
-                      }
+                      alert = [JCHATStringUtils errorAlert:error];
                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                       [MBProgressHUD showMessage:alert view:self.view];
                       DDLogError(alert);

@@ -41,7 +41,7 @@
 		// 属性
 		self.backgroundColor = [UIColor clearColor];
 		self.delegate = self;
-        
+
 		self.showsHorizontalScrollIndicator = NO;
 		self.showsVerticalScrollIndicator = NO;
 		self.decelerationRate = UIScrollViewDecelerationRateFast;
@@ -93,15 +93,10 @@
                   JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
                   [((JMSGImageContent *)message.content) largeImageDataWithProgress:progress completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
                     if (error == nil) {
-                      JPIMLog(@"下载大图 success");
-                      _photo.url = data;
-                      _photo.message.pictureImgPath = [(NSURL *)data absoluteString];
-                      [_imageView setImageWithURL:data placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                        photo.image = image;
-                        // 调整frame参数
-                        [photoView adjustFrame];
-                      }];                                    // 调整frame参数
-
+                      JPIMLog(@"huangmin  下载大图 success");
+                      photo.image = [UIImage imageWithData:data];
+                      _imageView.image = [UIImage imageWithData:data];
+                      [photoView adjustFrame];
                     }else {
                       JPIMLog(@"下载大图 error");
                       _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
@@ -146,19 +141,10 @@
                 __strong __typeof(photo)strongPhoto = photo;
                 if (error == nil) {
                   JPIMLog(@"下载大图 success");
-//                  _photo.url = resultObject;
-                  
                   strongPhoto.image = [UIImage imageWithData:data];
                   [photoView photoDidFinishLoadWithImage:strongPhoto.image];
                   _imageView.image = strongPhoto.image;
-                  //                  _photo.message.pictureImgPath = [(NSURL *)resultObject path];
-//                  [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-//                    photo.image = image;
-//                    // 调整frame参数
-//                    [photoView photoDidFinishLoadWithImage:image];
-//                    
-//                  }];                                    // 调整frame参数
-                  
+                  [photoView adjustFrame];
                 }else {
                   JPIMLog(@"下载大图 error");
                   _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
@@ -275,6 +261,9 @@
     } else {
         _imageView.frame = imageFrame;
     }
+  
+
+        
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -8,6 +8,7 @@
 
 @interface JCHATStringUtils : NSObject
 
++ (NSString*)errorAlert:(NSError *)error;
 
 + (NSString *)dictionary2String:(NSDictionary *)dictionary;
 
