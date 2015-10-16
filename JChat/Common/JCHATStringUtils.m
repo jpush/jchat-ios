@@ -37,12 +37,6 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
     case kJMSGErrorSDKNetworkDownloadFailed:
       errorAlert = @"下载失败";
       break;
-    case JMSG_ERROR_NETWORK_OTHER:
-      errorAlert = @"网络原因";
-      break;
-    case JMSG_ERROR_NETWORK_TOKEN_FAILED:
-      errorAlert = @"服务器获取用户Token失败";
-      break;
     case kJMSGErrorSDKNetworkUploadFailed:
       errorAlert = @"上传资源文件失败";
       break;
@@ -52,14 +46,8 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
     case kJMSGErrorSDKNetworkUploadTokenGetFailed:
       errorAlert = @"获取服务器Token失败";
       break;
-    case KJMSG_ERROR_NETWORK_RESULT_ERROR:
-      errorAlert = @"服务器返回数据错误";
-      break;
     case kJMSGErrorNetworkDataFormatInvalid:
       errorAlert = @"数据格式错误";
-      break;
-    case JMSG_ERROR_LACK_PARAMETER:
-      errorAlert = @"缺少本地参数";
       break;
     case kJMSGErrorSDKDBDeleteFailed:
       errorAlert = @"数据库删除失败";
@@ -75,9 +63,6 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
       break;
     case kJMSGErrorSDKParamAppkeyInvalid:
       errorAlert = @"appkey不合法";
-      break;
-    case JMSG_ERROR_LOCAL_PARAMETER:
-      errorAlert = @"本地参数错误";
       break;
     case kJMSGErrorPartyQiniuUnknown:
       errorAlert = @"七牛出错";
@@ -125,9 +110,6 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
       errorAlert = @"";
       break;
     case kJMSGErrorSDKParamConversationGroupIdInvalid:
-      errorAlert = @"";
-      break;
-    case kJMSGErrorSDKParamConversationLackAvatarPath:
       errorAlert = @"";
       break;
     case kJMSGErrorSDKParamGroupGroupIdInvalid:

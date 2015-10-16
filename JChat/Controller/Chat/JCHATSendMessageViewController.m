@@ -81,14 +81,19 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
     
     if (self.conversation.conversationType == kJMSGConversationTypeGroup) {
+      if ([((JMSGGroup *)self.conversation.target).name isEqualToString:@""]) {
+        self.title = @"群聊";
+      }
       [self getGroupMemberListWithGetMessageFlag:NO];
       if (self.user != nil) {
         self.user = nil;
         [self cleanMessageCache];
         [_messageTableView reloadData];
       }
+    } else {
+      self.title = [resultObject title];      
     }
-    self.title = [resultObject title];
+
     [self scrollToBottomAnimated:NO];
   }];
 }
@@ -707,8 +712,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 #pragma mark -- 刷新对应的
 - (void)reloadCellDataWith:(NSInteger)Index {
-  [_messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];//UITableViewRowAnimationNone
-  //  [self scrollToEnd];
+  [_messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
   UITableViewCell *tableCell = [_messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Index inSection:0]];
   [tableCell setHighlighted:YES animated:NO];
   [tableCell setHighlighted:NO animated:NO];
@@ -788,7 +792,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 #pragma mark --滑动至尾端
 - (void)scrollToEnd {
   if ([_messageDic[JCHATMessageIdKey] count] != 0) {
-    [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];//!UITableViewScrollPositionBottom
+    [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];//!UITableViewScrollPositionBottom
   }
 }
 
@@ -1189,7 +1193,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   if (rows > 0) {
     [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows - 1 inSection:0]
-                                 atScrollPosition:UITableViewScrollPositionTop
+                                 atScrollPosition:UITableViewScrollPositionBottom
                                          animated:animated];
   }
 }

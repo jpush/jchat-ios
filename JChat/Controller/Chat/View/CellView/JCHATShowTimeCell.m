@@ -18,6 +18,7 @@
   self.messageTimeLabel.textAlignment = NSTextAlignmentCenter;
   self.messageTimeLabel.numberOfLines = 0;
   self.messageTimeLabel.lineBreakMode = NSLineBreakByCharWrapping;
+  self.backgroundColor = [UIColor yellowColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

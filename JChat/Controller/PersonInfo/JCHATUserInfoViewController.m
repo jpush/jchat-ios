@@ -177,7 +177,7 @@
   __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
   image = [image resizedImageByWidth:upLoadImgWidth];
-  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) type:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
+  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) userFieldType:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error == nil) {
       weakSelf.bgView.originImage = image;

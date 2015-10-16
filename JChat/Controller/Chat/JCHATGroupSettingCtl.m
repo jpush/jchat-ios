@@ -249,7 +249,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   
   [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
   JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
-  [((JMSGGroup *)(self.conversation.target)) removeMembersFromUsernameArray:@[user.username] completionHandler:^(id resultObject, NSError *error) {
+  [((JMSGGroup *)(self.conversation.target)) removeMembersWithUsernameArray:@[user.username] completionHandler:^(id resultObject, NSError *error) {
     if (error == nil) {
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       [MBProgressHUD showMessage:@"删除成员成功！" view:self.view];
@@ -338,7 +338,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
             [cell.groupName setHidden:YES];
         }
         return cell;
-    }else {
+    } else {
         static NSString *cellIdentifier = @"groupDeleteCell";
         UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
@@ -375,7 +375,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     }
     __weak __typeof(self)weakSelf = self;
     [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
-        [((JMSGGroup *)(self.conversation.target)) addMembersFromUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+        [((JMSGGroup *)(self.conversation.target)) addMembersWithUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
           [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
           if (error == nil) {
 //            [weakSelf.groupData addObject:resultObject];

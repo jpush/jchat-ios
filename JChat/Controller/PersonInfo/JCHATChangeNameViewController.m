@@ -81,7 +81,7 @@
 }
 - (void)clickToSave {
   kWEAKSELF
-  [JMSGUser updateMyInfoWithParameter:self.nameTextField.text type:self.updateType completionHandler:^(id resultObject, NSError *error) {
+  [JMSGUser updateMyInfoWithParameter:self.nameTextField.text userFieldType:self.updateType completionHandler:^(id resultObject, NSError *error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (error == nil) {
           [MBProgressHUD showMessage:@"修改成功" view:self.view];

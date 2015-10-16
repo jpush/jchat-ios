@@ -48,7 +48,7 @@
     return;
   }
   
-  [JMSGUser updateMyInfoWithParameter:_nameTextF.text type:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
+  [JMSGUser updateMyInfoWithParameter:_nameTextF.text userFieldType:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
         AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
         appDelegate.window.rootViewController = appDelegate.tabBarCtl;
       }];
@@ -110,7 +110,7 @@
   __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
-  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) type:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
+  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) userFieldType:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
                           JPIMMAINTHEAD(^{
                             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                             if (error == nil) {

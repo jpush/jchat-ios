@@ -114,9 +114,23 @@
     [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
   }
   self.nickName.text =conversation.title;
-  [conversation avatarData:^(id resultObject, NSError *error) {
-    [self.headView setImage:[UIImage imageWithData:resultObject]];
-  }];
+//  [conversation avatarData:^(id resultObject, NSError *error) {
+//    if (error == nil) {
+//      if (resultObject != nil) {
+//        [self.headView setImage:[UIImage imageWithData:resultObject]];
+//      } else {
+//        if (conversation.conversationType ==kJMSGConversationTypeSingle) {
+//          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+//        } else {
+//          [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
+//        }
+//      }
+//    } else {
+//      DDLogDebug(@"fail get avatar");
+//    }
+//      
+//
+//  }];
 
   if ([conversation.unreadCount integerValue] > 0) {
     [self.messageNumberLabel setHidden:NO];
