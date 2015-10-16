@@ -332,7 +332,9 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         cell.groupTitle.text = [_groupTitleData objectAtIndex:indexPath.row];
       if (indexPath.row == 0) {
         cell.groupName.delegate = self;
-        cell.groupName.text = self.conversation.title;
+        if ([((JMSGGroup *)self.conversation.target).name isEqualToString:@""]) {
+          cell.groupName.text = @"未命名";
+        }
       }
         if (indexPath.row == 1) {
             [cell.groupName setHidden:YES];
