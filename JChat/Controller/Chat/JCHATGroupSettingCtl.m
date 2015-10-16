@@ -332,8 +332,11 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         cell.groupTitle.text = [_groupTitleData objectAtIndex:indexPath.row];
       if (indexPath.row == 0) {
         cell.groupName.delegate = self;
-        if ([((JMSGGroup *)self.conversation.target).name isEqualToString:@""]) {
+        JMSGGroup *group = ((JMSGGroup *)self.conversation.target);
+        if ([group.name isEqualToString:@""]) {
           cell.groupName.text = @"未命名";
+        } else {
+          cell.groupName.text = group.name;
         }
       }
         if (indexPath.row == 1) {
@@ -452,34 +455,34 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   return  CGRectMake(width + (56 + width)*[self getVerticalNumberlLast], 10 + (75 +10) * ([self getRowFromGroupData]-1), 56, 75);
 }
 
-- (void)reloadAddBtnAndDeleteBtnFrame {
-  NSInteger n = 0;
-  NSInteger width = (self.view.bounds.size.width - 4* 56)/5;
-  if ([self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username]) {
-    n = 2;
-  }else {
-    n = 1;
-  }
-  
-  UIButton *addBtn = (UIButton *)[_headView viewWithTag:10000];
-  [addBtn setFrame:CGRectMake(width + (56 + width) * (([_groupData count])%4), 10 + (75 +10) * ([self getRowFromGroupData]-1), 56, 75)];
-  
-  if (n == 2) {
-    if (!_deleteBtn) {
-      NSArray *personXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATGroupPersonView"owner:self options:nil];
-      JCHATGroupPersonView * personView = [personXib objectAtIndex:0];
-      _deleteBtn = personView.headViewBtn;
-      personView.headViewBtn.tag = 20000;//删除按钮标示
-      personView.delegate = self;
-//
-      [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
-      [personView.deletePersonBtn setHidden:YES];
-      [_headView addSubview:personView];
-      [_groupBtnArr addObject:_deleteBtn];
-    }
-    [_deleteBtn setFrame:CGRectMake(width + (56 + width) * (([_groupData count] + 1)%4), 10 + (75 +10) * ([self getRowFromGroupData] -1), 56, 75)];
-  }
-}
+//- (void)reloadAddBtnAndDeleteBtnFrame {
+//  NSInteger n = 0;
+//  NSInteger width = (self.view.bounds.size.width - 4* 56)/5;
+//  if ([self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username]) {
+//    n = 2;
+//  }else {
+//    n = 1;
+//  }
+//  
+//  UIButton *addBtn = (UIButton *)[_headView viewWithTag:10000];
+//  [addBtn setFrame:CGRectMake(width + (56 + width) * (([_groupData count])%4), 10 + (75 +10) * ([self getRowFromGroupData]-1), 56, 75)];
+//  
+//  if (n == 2) {
+//    if (!_deleteBtn) {
+//      NSArray *personXib = [[NSBundle mainBundle]loadNibNamed:@"JCHATGroupPersonView"owner:self options:nil];
+//      JCHATGroupPersonView * personView = [personXib objectAtIndex:0];
+//      _deleteBtn = personView.headViewBtn;
+//      personView.headViewBtn.tag = 20000;//删除按钮标示
+//      personView.delegate = self;
+////
+//      [personView.headViewBtn setBackgroundImage:[UIImage imageNamed:@"deleteMan"] forState:UIControlStateNormal];
+//      [personView.deletePersonBtn setHidden:YES];
+//      [_headView addSubview:personView];
+//      [_groupBtnArr addObject:_deleteBtn];
+//    }
+//    [_deleteBtn setFrame:CGRectMake(width + (56 + width) * (([_groupData count] + 1)%4), 10 + (75 +10) * ([self getRowFromGroupData] -1), 56, 75)];
+//  }
+//}
 
 - (void)setHeadViewContentSize {
   NSInteger headViewHeight;
@@ -488,9 +491,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   headViewHeight = [self getRowFromGroupData] * (headHeight + 10)+10;
   
   [_headView setFrame:CGRectMake(_headView.frame.origin.x, _headView.frame.origin.y, _headView.frame.size.width, headViewHeight+2)];
-//  [_headView mas_updateConstraints:^(MASConstraintMaker *make) {
-//    make.height.mas_equalTo(headViewHeight +2);
-//  }];
   _groupTab.tableHeaderView = _headView;
   [_headView setContentSize:CGSizeMake(self.view.bounds.size.width, headViewHeight)];
   [_headLine setFrame:CGRectMake(0, _headView.bounds.size.height - 1.5, self.view.bounds.size.width, 0.5)];

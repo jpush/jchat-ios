@@ -123,6 +123,7 @@
 
 #pragma mark --发送消息响应
 - (void)onSendMessageResponse:(JMSGMessage *)message error:(NSError *)error {
+  
 
   JPIMMAINTHEAD(^{
     DDLogDebug(@"Event - sendMessageResponse");

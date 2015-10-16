@@ -96,41 +96,41 @@
 - (void)setCellDataWithConversation:(JMSGConversation *)conversation {
   self.headView.layer.cornerRadius = 23;
   [self.headView.layer setMasksToBounds:YES];
-  if (conversation.conversationType == kJMSGConversationTypeSingle) {
-    [conversation.target thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
-      if (error == nil) {
-        if (data != nil) {
-          [self.headView setImage:[UIImage imageWithData:data]];
-        } else {
-          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
-        }
-      } else {
-        DDLogDebug(@"fail to get thumbAvatarData");
-        [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
-      }
-
-    }];
-  } else {
-    [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
-  }
-  self.nickName.text =conversation.title;
-//  [conversation avatarData:^(id resultObject, NSError *error) {
-//    if (error == nil) {
-//      if (resultObject != nil) {
-//        [self.headView setImage:[UIImage imageWithData:resultObject]];
-//      } else {
-//        if (conversation.conversationType ==kJMSGConversationTypeSingle) {
-//          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+//  if (conversation.conversationType == kJMSGConversationTypeSingle) {
+//    [conversation.target thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+//      if (error == nil) {
+//        if (data != nil) {
+//          [self.headView setImage:[UIImage imageWithData:data]];
 //        } else {
-//          [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
+//          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
 //        }
+//      } else {
+//        DDLogDebug(@"fail to get thumbAvatarData");
+//        [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
 //      }
-//    } else {
-//      DDLogDebug(@"fail get avatar");
-//    }
-//      
 //
-//  }];
+//    }];
+//  } else {
+//    [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
+//  }
+  self.nickName.text =conversation.title;
+  [conversation avatarData:^(id resultObject, NSError *error) {
+    if (error == nil) {
+      if (resultObject != nil) {
+        [self.headView setImage:[UIImage imageWithData:resultObject]];
+      } else {
+        if (conversation.conversationType ==kJMSGConversationTypeSingle) {
+          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+        } else {
+          [self.headView setImage:[UIImage imageNamed:@"talking_icon_group"]];
+        }
+      }
+    } else {
+      DDLogDebug(@"fail get avatar");
+    }
+      
+
+  }];
 
   if ([conversation.unreadCount integerValue] > 0) {
     [self.messageNumberLabel setHidden:NO];

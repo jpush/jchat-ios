@@ -79,11 +79,14 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
       self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     }
-    
+    JMSGGroup *group = self.conversation.target;
     if (self.conversation.conversationType == kJMSGConversationTypeGroup) {
-      if ([((JMSGGroup *)self.conversation.target).name isEqualToString:@""]) {
+      if ([group.name isEqualToString:@""]) {
         self.title = @"群聊";
+      } else {
+        self.title = group.name;
       }
+      self.title = [NSString stringWithFormat:@"%@(%lu)",self.title,(unsigned long)[group.memberArray count]];
       [self getGroupMemberListWithGetMessageFlag:NO];
       if (self.user != nil) {
         self.user = nil;
@@ -93,8 +96,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     } else {
       self.title = [resultObject title];      
     }
-
+    NSLog(@"huangmin555 %@", ((JMSGGroup *)_conversation.target));
+    NSLog(@"huangmin  %@",[NSBundle mainBundle]);
     [self scrollToBottomAnimated:NO];
+    
   }];
 }
 
@@ -712,7 +717,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 
 #pragma mark -- 刷新对应的
 - (void)reloadCellDataWith:(NSInteger)Index {
-  [_messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+//  [_messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
   UITableViewCell *tableCell = [_messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Index inSection:0]];
   [tableCell setHighlighted:YES animated:NO];
   [tableCell setHighlighted:NO animated:NO];
@@ -856,9 +861,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (model.type == kJMSGContentTypeText) { //switch:
     static NSString *cellIdentifier = @"textCell"; //name
     JCHATTextTableCell *cell = (JCHATTextTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
     if (cell == nil) {
       cell = [[JCHATTextTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+      [cell setupMessageDelegateWithConversation:_conversation];
     }
+
     [cell setCellData:model delegate:self];
     return cell;
   } else if(model.type == kJMSGContentTypeImage)

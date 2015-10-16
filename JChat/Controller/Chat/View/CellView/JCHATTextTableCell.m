@@ -206,23 +206,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.stateView startAnimating];
     if (!_sendFailMessage) {
       [JMSGMessage sendMessage:_model.message];
-//      if (self.conversation.conversationType == kJMSGConversationTypeSingle) {
-//        [JMSGMessage sendMessage:<#(JMSGMessage *)#>]
-//      }else {
-//      
-//      }
-//      [self.conversation getMessage:_model.messageId
-//                  completionHandler:^(id resultObject, NSError *error) {
-//                    if (error == nil) {
-//                      _message = _sendFailMessage = resultObject;
-//                      _message.targetId = self.conversation.targetId;
-//                      _message.conversationType = self.conversation.chatType;
-//                      _sendFailMessage.targetId = self.conversation.targetId;
-//                      [JMSGMessage sendMessage:_sendFailMessage];
-//                    }else {
-//                      NSLog(@"获取消息失败!");
-//                    }
-//                  }];
     }else {
       [JMSGMessage sendMessage:_sendFailMessage];
       JPIMLog(@"重新发送消息:%@",_sendFailMessage);
@@ -237,18 +220,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   }
 }
 
-#pragma mark sendMessage
-//- (void)sendTextMessage:(JMSGMessage *)message{
-//  DDLogDebug(@"Action - sendTextMessage");
-//  DDLogVerbose(@"The message:%@", message);
-//  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//    [JMSGMessage sendMessage:message];
-//  });
-//}
-
 #pragma mark --JMessageDelegate
 - (void)onSendMessageResponse:(JMSGMessage *)message
                         error:(NSError *)error {
+  if (![message.msgId isEqualToString:self.model.message.msgId]) {
+    return;
+  }
+  [self updateFrame];
+
 
 }
 
