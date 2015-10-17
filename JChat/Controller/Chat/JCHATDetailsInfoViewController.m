@@ -11,7 +11,7 @@
 #import "MBProgressHUD.h"
 #import "JChatConstants.h"
 #import "JCHATFriendDetailViewController.h"
-#import <JMessage/JMessage.h>
+#import "JCHATChatViewController.h"
 
 @interface JCHATDetailsInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *detailTableView;
@@ -43,17 +43,6 @@
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeadClick)];
   [_headView addGestureRecognizer:gesture];
 
-  [((JMSGUser *)self.conversation.target) thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
-            if (error == nil) {
-              if (data == nil) {
-                [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
-              }else {
-                [_headView setImage:[UIImage imageWithData:data]];
-              }
-            }else {
-              DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");
-            }
-  }];
   [_headView.layer setMasksToBounds:YES];
   [_headView.layer setCornerRadius:23];
   [tableHeadView addSubview:_headView];
@@ -99,24 +88,31 @@
     
   }else {
     [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
-    __block JMSGGroup *group =nil;
+    __block JMSGGroup *tmpgroup =nil;
     typeof(self) __weak weakSelf = self;
     NSLog(@"huangmin merbers %@",@[[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text].description);
     [JMSGGroup createGroupWithName:@"" desc:@"" memberArray:@[((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       typeof(weakSelf) __strong strongSelf = weakSelf;
-      group = (JMSGGroup *)resultObject;
+      tmpgroup = (JMSGGroup *)resultObject;
       if (error == nil) {
-        [MBProgressHUD showMessage:@"创建群成功" view:self.view];
-        [JMSGConversation createGroupConversationWithGroupId:group.gid completionHandler:^(id resultObject, NSError *error) {
-          JMSGConversation *groupConversation = (JMSGConversation *)resultObject;
-          strongSelf.sendMessageCtl.conversation = groupConversation;
-          [JMessage removeDelegate:strongSelf.sendMessageCtl];
-          [JMessage addDelegate:strongSelf.sendMessageCtl withConversation:groupConversation];
-          strongSelf.sendMessageCtl.targetName = group.name;
-          strongSelf.sendMessageCtl.title = group.name;
-          [strongSelf.sendMessageCtl setupView];
-          [strongSelf.navigationController popViewControllerAnimated:YES];
+        [JMSGConversation createGroupConversationWithGroupId:tmpgroup.gid completionHandler:^(id resultObject, NSError *error) {
+          if (error == nil) {
+            [MBProgressHUD showMessage:@"创建群成功" view:self.view];
+            JMSGConversation *groupConversation = (JMSGConversation *)resultObject;
+            strongSelf.sendMessageCtl.conversation = groupConversation;
+            strongSelf.sendMessageCtl.isConversationChange = YES;
+            [JMessage removeDelegate:strongSelf.sendMessageCtl];
+            [JMessage addDelegate:strongSelf.sendMessageCtl withConversation:groupConversation];
+            strongSelf.sendMessageCtl.targetName = tmpgroup.name;
+            strongSelf.sendMessageCtl.title = tmpgroup.name;
+            [strongSelf.sendMessageCtl setupView];
+                  [[NSNotificationCenter defaultCenter] postNotificationName:kConversationChange object:resultObject];
+            [strongSelf.navigationController popViewControllerAnimated:YES];
+          } else {
+            DDLogDebug(@"creategroupconversation error with error : %@",error);
+          }
+
         }];//[JMSGConversation groupConversationWithGroupId:group.gid];
         
 
@@ -129,7 +125,7 @@
 //[NSString stringWithFormat:@"%@,%@,%@",[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text]
 - (void)tapHeadClick {
     JCHATFriendDetailViewController *friendCtl = [[JCHATFriendDetailViewController alloc]initWithNibName:@"JCHATFriendDetailViewController" bundle:nil];
-    friendCtl.userInfo = self.chatUser;
+    friendCtl.userInfo = self.conversation.target;
     [self.navigationController pushViewController:friendCtl animated:YES];
 }
 
@@ -202,12 +198,14 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
 
-  [self.chatUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+  [self.conversation.target thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
       if (data == nil) {
         [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
+
       }else {
         [_headView setImage:[UIImage imageWithData:data]];
+        NSLog(@"huangmin 555555  %@",_headView.image);
       }
     }else {
       DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");

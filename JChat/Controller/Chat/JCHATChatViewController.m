@@ -131,6 +131,7 @@
   JMSGUser *user = [[notification object] copy];
   __block JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];//!!
   __weak typeof(self)weakSelf = self;
+  sendMessageCtl.superViewController = self;
   [JMSGConversation createSingleConversationWithUsername:user.username completionHandler:^(id resultObject, NSError *error) {
     __strong __typeof(weakSelf)strongSelf = weakSelf;
     if (error == nil) {
@@ -180,7 +181,7 @@
   DDLogDebug(@"Action - creatGroupSuccessToPushView - %@", object);
   __block JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
   __weak __typeof(self)weakSelf = self;
-  
+  sendMessageCtl.superViewController = self;
   sendMessageCtl.hidesBottomBarWhenPushed=YES;
   [JMSGConversation createGroupConversationWithGroupId:((JMSGGroup *)[object object]).gid completionHandler:^(id resultObject, NSError *error) {
     __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -412,6 +413,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
       return;
     }
     __block JCHATSendMessageViewController *sendMessageCtl = [[JCHATSendMessageViewController alloc] init];
+    sendMessageCtl.superViewController = self;
     sendMessageCtl.hidesBottomBarWhenPushed = YES;
     [[alertView textFieldAtIndex:0] resignFirstResponder];
     __weak __typeof(self)weakSelf = self;
@@ -526,8 +528,9 @@ NSInteger sortType(id object1,id object2,void *cha) {
   UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
   cell.selected = NO;
   JCHATSendMessageViewController *sendMessageCtl =[[JCHATSendMessageViewController alloc] init];
-  sendMessageCtl.hidesBottomBarWhenPushed=YES;
-  JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
+  sendMessageCtl.hidesBottomBarWhenPushed = YES;
+  sendMessageCtl.superViewController = self;
+  JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
   sendMessageCtl.conversation = conversation;
   [self.navigationController pushViewController:sendMessageCtl animated:YES];
   

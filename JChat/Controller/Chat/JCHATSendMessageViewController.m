@@ -61,7 +61,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   [self setupView];
   [self addNotification];
-  [self sendInfoRequest];
   [self addDelegate];
   [self getGroupMemberListWithGetMessageFlag:YES];
 
@@ -88,18 +87,16 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
       }
       self.title = [NSString stringWithFormat:@"%@(%lu)",self.title,(unsigned long)[group.memberArray count]];
       [self getGroupMemberListWithGetMessageFlag:NO];
-      if (self.user != nil) {
-        self.user = nil;
+      if (self.isConversationChange) {
         [self cleanMessageCache];
-        [_messageTableView reloadData];
+        [self getAllMessage];
+        self.isConversationChange = NO;
       }
     } else {
       self.title = [resultObject title];      
     }
-    NSLog(@"huangmin555 %@", ((JMSGGroup *)_conversation.target));
-    NSLog(@"huangmin  %@",[NSBundle mainBundle]);
+    [_messageTableView reloadData];
     [self scrollToBottomAnimated:NO];
-    
   }];
 }
 
@@ -150,16 +147,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
   }//
   
-  if (_conversation && _conversation.conversationType == kJMSGConversationTypeGroup) {
-    _groupInfo = _conversation.target;
-  }
-  
-  if (_conversation && _conversation.conversationType == kJMSGConversationTypeSingle) {
-      _user = _conversation.target;
-  }
-  
   [_conversation clearUnreadCount];
-  self.title = [_conversation title];
   
   [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
@@ -215,21 +203,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   self.title = _conversation.title;
 }
 
-- (void)sendInfoRequest {
-  if (self.user) {
-    [JMSGUser userInfoArrayWithUsernameArray:@[self.user.username]//
-                           completionHandler:^(id resultObject, NSError *error) {
-                             if (error == nil) {
-                               [self setTitleWithUser:resultObject];
-                             } else {
-                               DDLogDebug(@"get user info fail");
-                             }
-                           }];
-  } else if (self.conversation && self.conversation.conversationType == kJMSGConversationTypeGroup) {//TODO:
-  }
-}
-
-
 #pragma mark --JMessageDelegate
 - (void)onSendMessageResponse:(JMSGMessage *)message
                         error:(NSError *)error {
@@ -283,9 +256,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   
   model.messageStatus = message.status;
   NSInteger cellIndex = [self getIndexWithMessageId:message.msgId];
-  JPIMMAINTHEAD(^{
-    [self reloadCellDataWith:cellIndex];
-  });
 }
 
 #pragma mark --收到消息
@@ -360,19 +330,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
   }
   return 0;
-}
-
-- (void)changeMessageState:(JMSGMessage *)message {
-  DDLogDebug(@"Action - changeMessageState");
-  NSMutableDictionary *messageDataDic =_messageDic[JCHATMessage];
-  
-  JCHATChatModel *model = messageDataDic[message.msgId];
-  model.messageStatus = message.status;
-  
-  NSInteger index = [self getIndexWithMessageId:message.msgId];
-  JPIMMAINTHEAD(^{
-    [self reloadCellDataWith:index];
-  });
 }
 
 - (bool)checkDevice:(NSString *)name {
@@ -490,7 +447,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 {
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     JCHATDetailsInfoViewController *detailsInfoCtl = [[JCHATDetailsInfoViewController alloc] initWithNibName:@"JCHATDetailsInfoViewController" bundle:nil];
-    detailsInfoCtl.chatUser = self.user;
     detailsInfoCtl.conversation = _conversation;
     detailsInfoCtl.sendMessageCtl = self;
     detailsInfoCtl.hidesBottomBarWhenPushed=YES;
@@ -595,11 +551,7 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
                                            selector:@selector(inputKeyboardWillHide:)
                                                name:UIKeyboardWillHideNotification
                                              object:nil];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(changeMessageState:)
-                                               name:kMessageChangeState
-                                             object:nil];
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(cleanMessageCache)
                                                name:kDeleteAllMessage
@@ -716,13 +668,6 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 #pragma mark -- 刷新对应的
-- (void)reloadCellDataWith:(NSInteger)Index {
-//  [_messageTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:Index inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-  UITableViewCell *tableCell = [_messageTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Index inSection:0]];
-  [tableCell setHighlighted:YES animated:NO];
-  [tableCell setHighlighted:NO animated:NO];
-  
-}
 
 - (void)addCellToTabel {
   NSIndexPath *path = [NSIndexPath indexPathForRow:[_messageDic[JCHATMessageIdKey] count]-1 inSection:0];
@@ -1251,7 +1196,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (!_previousTextViewContentHeight)
     _previousTextViewContentHeight = [self getTextViewContentH:messageInputTextView];
 }
-
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];

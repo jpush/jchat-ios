@@ -46,11 +46,21 @@
     [self addSubview:self.headImgView];
     [self headAddGesture];
     self.isMe = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(ConversationChange:)
+                                                 name:kConversationChange
+                                               object:nil];
   }
   return self;
 }
 
+- (void)ConversationChange:(NSNotification *)notif {
+  NSLog(@"huangmin Conversation   %@",notif);
+  [self setupMessageDelegateWithConversation:notif.object];
+}
+
 - (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage removeDelegate:self];
   [JMessage addDelegate:self withConversation:converstion];
 }
 
@@ -78,30 +88,28 @@
   self.delegate = delegate;
 
   [self.imageView setImage:[UIImage imageNamed:@"headDefalt"]];
-  
-  _fromUser = model.fromUser;
+  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
 
-  if (model.avatar == nil) {
-    [_fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
-      if (error == nil) {
-          if ([objectId isEqualToString:self.headViewFlag]) {
-            if (data != nil) {
-              [self.headImgView setImage:[UIImage imageWithData:data]];
-            } else {
-              [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
-            }
-          } else {
-            DDLogDebug(@"该头像是异步乱序的头像");
-          }
-      } else {
-        DDLogDebug(@"Action -- get thumbavatar fail");
-        [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
-      }
-    }];
-  } else {
-    [self.headImgView setImage:[UIImage imageWithData:model.avatar]];
   }
-
+  _fromUser = model.message.fromUser;
+  
+  [_fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+    if (error == nil) {
+      if ([objectId isEqualToString:self.headViewFlag]) {
+        if (data != nil) {
+          [self.headImgView setImage:[UIImage imageWithData:data]];
+          NSLog(@"huangmin  update avatar %@",self.headImgView.image);
+        } else {
+          [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
+        }
+      } else {
+        DDLogDebug(@"该头像是异步乱序的头像");
+      }
+    } else {
+      DDLogDebug(@"Action -- get thumbavatar fail");
+      [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
+    }
+  }];
   [self updateFrame];
 }
 

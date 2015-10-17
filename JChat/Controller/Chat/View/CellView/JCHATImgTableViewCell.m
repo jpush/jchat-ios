@@ -87,6 +87,7 @@
 }
 
 - (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage removeDelegate:self];
   [JMessage addDelegate:self withConversation:converstion];
 }
 
@@ -222,7 +223,7 @@
   self.cellIndex = indexPath;
   NSLog(@"huangmin  message  %@",_model.fromUser);
   typeof(self) __weak weakSelf = self;
-  if (_model.avatar == nil) {
+//  if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
           if ([objectId isEqualToString:weakSelf.headViewFlag]) {
@@ -239,9 +240,9 @@
           [weakSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
       }
     }];
-  } else {
-    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
-  }
+//  } else {
+//    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
+//  }
 
   [self updateFrame];
   

@@ -68,6 +68,8 @@
 
 #define kDeleteAllMessage  @"deleteAllMessage"
 
+#define kConversationChange @"ConversationChange"
+
 #define JPIMLog(...) NSLog(@"%s %@", __PRETTY_FUNCTION__,[NSString stringWithFormat:__VA_ARGS__])
 
 #define LOG_PREFIX @"JChat"

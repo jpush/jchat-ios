@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) NSString *fromId; //重复
 @property (nonatomic, strong) NSData   *mediaData;
-@property (nonatomic, strong) NSData *avatar;
+//@property (nonatomic, strong) NSData *avatar;
 @property (nonatomic, strong) NSString *displayName;
 @property (nonatomic, strong) NSString *chatContent;
 @property (nonatomic, assign) JMSGConversationType chatType;

@@ -14,5 +14,6 @@
 
 #import "JCHATStringUtils.h"
 #import <JMessage/JMessage.h>
-
+//#import "JChatConstants.h"
+//#import "CocoaLumberjack/CocoaLumberjack.h"
 #endif /* PrefixHeader_pch */

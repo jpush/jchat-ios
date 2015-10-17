@@ -105,7 +105,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   _groupData = [[(NSArray *)arr sortedArrayUsingFunction:userNameSortGroup context:NULL] mutableCopy];
   for (NSInteger i=0; i< [_groupData count]; i++) {
     userInfo = [[_groupData objectAtIndex:i] copy];
-    if ([self.sendMessageCtl.groupInfo.owner isEqualToString:userInfo.username]) {
+    if ([((JMSGGroup *)self.conversation.target).owner isEqualToString:userInfo.username]) {
       [_groupData removeObjectAtIndex:i];
       [_groupData insertObject:userInfo atIndex:0];
       break;
@@ -170,7 +170,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         [personView.deletePersonBtn setHidden:YES];
         personView.memberLable.text = @"";
         NSLog(@"huangmin  owner   %@",self.sendMessageCtl);
-        if ([self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username]  && [_groupData count] !=1) {
+        if ([((JMSGGroup *)self.conversation.target).owner isEqualToString:[JMSGUser myInfo].username]  && [_groupData count] !=1) {
           [_headView addSubview:personView];
         }
         return;
@@ -501,7 +501,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
 #pragma mark --计算row的行数
 - (NSInteger)getRowFromGroupData {
   NSInteger n = 0;
-  if ([_groupData count] == 1 ||[self.sendMessageCtl.groupInfo.owner isEqualToString:[JMSGUser myInfo].username ]) {
+  if ([_groupData count] == 1 ||[((JMSGGroup *)self.conversation.target).owner isEqualToString:[JMSGUser myInfo].username ]) {
     n = 2;
   }else {
     n = 1;

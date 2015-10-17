@@ -101,6 +101,7 @@
 }
 
 - (void)setupMessageDelegateWithConversation:(JMSGConversation *)converstion {
+  [JMessage removeDelegate:self];
   [JMessage addDelegate:self withConversation:converstion];
 }
 
@@ -254,7 +255,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   self.model = model;
 
   _message = model.message;
-  if (_model.avatar == nil) {
+//  if (_model.avatar == nil) {
     [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
       if (error == nil) {
           if ([objectId isEqualToString:self.headViewFlag]) {
@@ -271,9 +272,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
       }
     }];
-  } else {
-    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
-  }
+//  } else {
+//    [self.headView setImage:[UIImage imageWithData:_model.avatar]];
+//  }
   
   self.indexPath = indexPath;
   if ([model.voiceTime rangeOfString:@"''"].location != NSNotFound) {

@@ -101,7 +101,7 @@
   [message.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
       __strong __typeof(weakSelf)strongSelf = weakSelf;
-      strongSelf.avatar = data;
+//      strongSelf.avatar = data;
     } else {
       DDLogDebug(@"get thumbAvatarData fail with error %@",error);
     }

@@ -13,7 +13,6 @@
 #import <JMessage/JMessage.h>
 
 @interface JCHATDetailsInfoViewController : UIViewController<UIAlertViewDelegate>
-@property (nonatomic,strong) JMSGUser *chatUser;
 @property (nonatomic,strong) JMSGConversation *conversation;
 @property (nonatomic,strong) JCHATSendMessageViewController *sendMessageCtl;
 

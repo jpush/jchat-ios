@@ -43,8 +43,8 @@
 @property(nonatomic, strong, readwrite) JCHATVoiceTableCell *saveVoiceCell;
 @property(strong, nonatomic) JMSGConversation *conversation;
 @property(strong, nonatomic) NSString *targetName;
-@property(strong, nonatomic) JMSGUser *user;
-@property(strong, nonatomic) JMSGGroup *groupInfo;
+@property(assign, nonatomic) BOOL isConversationChange;
+@property(weak,nonatomic)id superViewController;
 
 /**
 *  管理录音工具对象
@@ -57,5 +57,4 @@
 @property(nonatomic, assign) CGFloat previousTextViewContentHeight;
 
 - (void)setupView;
-
 @end
