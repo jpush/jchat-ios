@@ -211,30 +211,9 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if (error == nil) {//!
 
   } else {
-    DDLogDebug(@"Sent response error - %@", error);
+    DDLogDebug(@"Send response error - %@", error);
     [_conversation clearUnreadCount];
-    NSString *alert = @"发消息返回错误";
-//    if (error.code == JCHAT_ERROR_STATE_USER_LOGOUT) {
-//      alert = @"本用户登出了。可能在其他设备上做了登录。";
-//    } else if (error.code == JCHAT_ERROR_STATE_USER_NEVER_LOGIN) {
-//      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-//                                                      message:@"登录错误，请重新登录"
-//                                                     delegate:self
-//                                            cancelButtonTitle:nil
-//                                            otherButtonTitles:@"退出",nil];
-//      [alertView show];
-//      return;
-//      
-//    } else if (error.code == JCHAT_ERROR_MSG_TARGET_NOT_EXIST) {
-//      alert = @"发送消息的目标用户不存在。";
-//    } else if (error.code == JCHAT_ERROR_MSG_GROUP_NOT_EXIST) {
-//      alert = @"发送消息的目标群组不存在。";
-//    } else if (error.code == JCHAT_ERROR_MSG_USER_NOT_IN_GROUP) {
-//      alert = @"当前用户不在本群组里";
-//    }
-    alert = [JCHATStringUtils errorAlert:error];
-    DDLogWarn(alert);
-    
+    NSString *alert = [JCHATStringUtils errorAlert:error];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [MBProgressHUD showMessage:alert view:self.view];
   }
@@ -255,7 +234,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }
   
   model.messageStatus = message.status;
-  NSInteger cellIndex = [self getIndexWithMessageId:message.msgId];
+
 }
 
 #pragma mark --收到消息
@@ -264,6 +243,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if (![self.conversation isMessageForThisConversation:message]) {
     return;
   }
+
   
   DDLogDebug(@"Event - receiveMessageNotification");
   JPIMMAINTHEAD((^{
@@ -271,6 +251,14 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     if (!message) {
       DDLogWarn(@"get the nil message .");
       return;
+    }
+
+    NSLog(@"huangming daxian %@",[((JMSGGroup *)_conversation.target) isMyselfGroupMember]?@"is":@"no");
+    if (message.contentType == kJMSGContentTypeEventNotification) {
+      if (((JMSGEventContent *)message.content).eventType == kJMSGEventNotificationRemoveGroupMembers && ![((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
+        NSLog(@"huangmin   bei ti chu le    ");
+        [self setupNavigation];
+      }
     }
     
     if (_conversation.conversationType == kJMSGConversationTypeSingle) {

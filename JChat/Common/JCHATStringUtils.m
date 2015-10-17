@@ -121,7 +121,9 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
     case kJMSGErrorMediaCrcInvalid:
       errorAlert = @"CRC32 错误";
       break;
-
+    case kJMSGErrorSDKMessageNotInGroup:
+      errorAlert = @"你已不在该群，无法发送消息";
+      break;
     default:
       errorAlert = @"未知错误";
       break;

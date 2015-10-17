@@ -137,10 +137,10 @@
     if (!_model.isReceived) {//isme
       [self.chatView setFrame:CGRectMake(kApplicationWidth - imgSize.width - headHeight - 10, 0, imgSize.width, imgSize.height)];
       [self.headImgView setFrame:CGRectMake(kApplicationWidth - headHeight - 5, 0, headHeight, headHeight)];
-
+      [self.stateView setFrame:CGRectMake(self.chatView.frame.origin.x - 25, imgSize.height/2 - 5, 20, 20)];
     }else
     {
-
+      
       [self.headImgView setFrame:CGRectMake( 5, 0, headHeight, headHeight)];
       [self.chatView setFrame:CGRectMake(headHeight + 10, 0, imgSize.width, imgSize.height)];
     }
