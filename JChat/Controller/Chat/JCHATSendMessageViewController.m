@@ -80,24 +80,29 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
     JMSGGroup *group = self.conversation.target;
     if (self.conversation.conversationType == kJMSGConversationTypeGroup) {
-      if ([group.name isEqualToString:@""]) {
-        self.title = @"群聊";
-      } else {
-        self.title = group.name;
-      }
-      self.title = [NSString stringWithFormat:@"%@(%lu)",self.title,(unsigned long)[group.memberArray count]];
-      [self getGroupMemberListWithGetMessageFlag:NO];
-      if (self.isConversationChange) {
-        [self cleanMessageCache];
-        [self getAllMessage];
-        self.isConversationChange = NO;
-      }
+      [self updateGroupConversationTittle];
     } else {
       self.title = [resultObject title];      
     }
     [_messageTableView reloadData];
     [self scrollToBottomAnimated:NO];
   }];
+}
+
+- (void)updateGroupConversationTittle {
+  JMSGGroup *group = self.conversation.target;
+  if ([group.name isEqualToString:@""]) {
+    self.title = @"群聊";
+  } else {
+    self.title = group.name;
+  }
+  self.title = [NSString stringWithFormat:@"%@(%lu)",self.title,(unsigned long)[group.memberArray count]];
+  [self getGroupMemberListWithGetMessageFlag:NO];
+  if (self.isConversationChange) {
+    [self cleanMessageCache];
+    [self getAllMessage];
+    self.isConversationChange = NO;
+  }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -144,6 +149,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal]; //change name//userDetail
   }else {
+    [self updateGroupConversationTittle];
     if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
       [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
     } else _rightBtn.hidden = YES;

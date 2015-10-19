@@ -399,15 +399,20 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     if (buttonIndex ==1) {
       __weak __typeof(self)weakSelf = self;
       [MBProgressHUD showMessage:@"正在推出群组！" toView:self.view];
-      [((JMSGGroup *)(self.conversation.target)) exit:^(id resultObject, NSError *error) {
+      JMSGGroup *deletedGroup = ((JMSGGroup *)(self.conversation.target));
+      [deletedGroup exit:^(id resultObject, NSError *error) {
+
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
         if (error == nil) {
           DDLogDebug(@"推出群组成功");
           [MBProgressHUD showMessage:@"推出群组成功" view:weakSelf.view];
-        }else {
+          [JMSGConversation deleteGroupConversationWithGroupId:deletedGroup.gid];
+          [self.navigationController popToViewController:self.sendMessageCtl.superViewController animated:YES];
+        } else {
           DDLogDebug(@"推出群组失败");
           [MBProgressHUD showMessage:@"推出群组失败" view:weakSelf.view];
         }
+        
       }];
     }
   }else if (alertView.tag == 100){
