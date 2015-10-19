@@ -62,7 +62,7 @@
     self.centeraverter.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:self.centeraverter];
     
-    _nameLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 18)];
+    _nameLable = [[UILabel alloc] initWithFrame  :CGRectMake(0, 0, 100, 18)];
     _nameLable.center = CGPointMake(self.center.x, self.center.y+40);
     _nameLable.backgroundColor = [UIColor clearColor];
     _nameLable.font = [UIFont fontWithName:@"helvetica" size:16];
@@ -88,8 +88,8 @@
 
 - (void)setOriginImage:(UIImage *)originImage{
   self.centeraverter.image = originImage;
+  UIImage *inputImage = originImage;
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    UIImage *inputImage = originImage;
     self.centeraverter.image = originImage;
     sepiaFilter = [[GPUImageiOSBlurFilter alloc] init];
     [sepiaFilter useNextFrameForImageCapture];

@@ -144,7 +144,10 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal]; //change name//userDetail
   }else {
-    [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
+    if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
+      [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
+    } else _rightBtn.hidden = YES;
+
   }//
   
   [_conversation clearUnreadCount];
@@ -216,6 +219,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     NSString *alert = [JCHATStringUtils errorAlert:error];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [MBProgressHUD showMessage:alert view:self.view];
+    return;
   }
   NSMutableDictionary *messageDataDic =_messageDic[JCHATMessage];
   JCHATChatModel *model = messageDataDic[message.msgId];
@@ -244,16 +248,13 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     return;
   }
 
-  
   DDLogDebug(@"Event - receiveMessageNotification");
   JPIMMAINTHEAD((^{
-    DDLogDebug(@"The received msg - %@", message);
     if (!message) {
       DDLogWarn(@"get the nil message .");
       return;
     }
 
-    NSLog(@"huangming daxian %@",[((JMSGGroup *)_conversation.target) isMyselfGroupMember]?@"is":@"no");
     if (message.contentType == kJMSGContentTypeEventNotification) {
       if (((JMSGEventContent *)message.content).eventType == kJMSGEventNotificationRemoveGroupMembers && ![((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
         NSLog(@"huangmin   bei ti chu le    ");
@@ -263,7 +264,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     
     if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     } else if (![((JMSGGroup *)_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
-      DDLogWarn(@"It's group chat, but the targetId of the msg is not group. Throw away.");
       return;
     }
     JCHATChatModel *model = [[JCHATChatModel alloc] init];

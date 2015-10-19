@@ -80,49 +80,52 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
       errorAlert = @"用户没有登录";
       break;
     case kJMSGErrorSDKNotMediaMessage:
-      errorAlert = @"";
+      errorAlert = @"这不是一条媒体消息";
       break;
     case kJMSGErrorSDKMediaResourceMissing:
-      errorAlert = @"";
+      errorAlert = @"下载媒体资源路径或者数据意外丢失";
       break;
     case kJMSGErrorSDKMediaCrcCodeIllegal:
-      errorAlert = @"";
+      errorAlert = @"媒体CRC码无效";
       break;
     case kJMSGErrorSDKMediaCrcVerifyFailed:
-      errorAlert = @"";
+      errorAlert = @"媒体CRC校验失败";
       break;
     case kJMSGErrorSDKMediaUploadEmptyFile:
-      errorAlert = @"";
+      errorAlert = @"上传媒体文件时, 发现文件不存在";
       break;
     case kJMSGErrorSDKParamContentInvalid:
-      errorAlert = @"";
+      errorAlert = @"无效的消息内容";
       break;
     case kJMSGErrorSDKParamMessageNil:
-      errorAlert = @"";
+      errorAlert = @"空消息";
       break;
     case kJMSGErrorSDKMessageNotPrepared:
-      errorAlert = @"";
+      errorAlert = @"消息不符合发送的基本条件检查";
       break;
     case kJMSGErrorSDKParamConversationTypeUnknown:
-      errorAlert = @"";
+      errorAlert = @"未知的会话类型";
       break;
     case kJMSGErrorSDKParamConversationUsernameInvalid:
-      errorAlert = @"";
+      errorAlert = @"会话 username 无效";
       break;
     case kJMSGErrorSDKParamConversationGroupIdInvalid:
-      errorAlert = @"";
+      errorAlert = @"会话 groupId 无效";
       break;
     case kJMSGErrorSDKParamGroupGroupIdInvalid:
-      errorAlert = @"";
+      errorAlert = @"groupId 无效";
       break;
     case kJMSGErrorSDKParamGroupGroupInfoInvalid:
-      errorAlert = @"";
+      errorAlert = @"group 相关字段无效";
       break;
     case kJMSGErrorMediaCrcInvalid:
       errorAlert = @"CRC32 错误";
       break;
     case kJMSGErrorSDKMessageNotInGroup:
       errorAlert = @"你已不在该群，无法发送消息";
+      break;
+    case 810009:
+      errorAlert = @"超出群上限";
       break;
     default:
       errorAlert = @"未知错误";

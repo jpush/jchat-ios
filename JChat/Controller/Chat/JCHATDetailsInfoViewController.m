@@ -116,8 +116,9 @@
         }];//[JMSGConversation groupConversationWithGroupId:group.gid];
         
 
-      }else {
-        [MBProgressHUD showMessage:@"创建群失败" view:self.view];
+      } else {
+        
+        [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
       }
     }];
   }

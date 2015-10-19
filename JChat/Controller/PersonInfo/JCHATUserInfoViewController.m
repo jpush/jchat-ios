@@ -79,7 +79,7 @@
   //设置背景图片
   _bgView = [[JCHATAvatarView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, 176)/*(kApplicationHeight) / 2)*/];
   [_bgView setUserInteractionEnabled:YES];
-  _bgView.originImage = [UIImage imageNamed:@"wo.png"];
+
   [self updateAvatar];
   UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
   [_bgView addGestureRecognizer:gesture];
@@ -92,23 +92,11 @@
 
   JMSGUser *user = [JMSGUser myInfo];
   [_bgView updataNameLable];
-
-  [user largeAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
-    if (error == nil) {
-      if (data != nil) {
-        _bgView.originImage = [UIImage imageWithData:data];
-      }else {
-        _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-      }
-    }else {
-      DDLogDebug(@"Action -- largeAvatarData");
-      _bgView.originImage = [UIImage imageNamed:@"wo.png"];
-    }
-  }];
   
   [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
       if (data != nil) {
+
         _bgView.originImage = [UIImage imageWithData:data];
       }else {
         _bgView.originImage = [UIImage imageNamed:@"wo.png"];
