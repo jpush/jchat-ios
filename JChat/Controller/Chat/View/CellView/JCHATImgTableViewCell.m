@@ -196,6 +196,7 @@
       __strong __typeof(weakSelf)strongSelf = weakSelf;
       dispatch_async(dispatch_get_main_queue(), ^{
         strongSelf.percentLabel.text=[NSString stringWithFormat:@"%d%%",(int)(percent*100)];
+
       });
     };
     [weakSelf.conversation sendMessage:weakSelf.model.message];
@@ -265,6 +266,7 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         NSString *percentString = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
         strongSelf.percentLabel.text = percentString;
+        NSLog(@"huangmin   %@",strongSelf.percentLabel.text);
       });
     };
   }

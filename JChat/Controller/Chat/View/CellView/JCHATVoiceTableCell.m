@@ -143,13 +143,13 @@
   if (duration <= 2) {
     chatBgViewWidth = 60;
   } else if (duration >2 && duration <=20) {
-    chatBgViewWidth = 60 + 4 * duration;
+    chatBgViewWidth = 60 + 2.5 * duration;
   }else if (duration > 20 && duration < 30){
-    chatBgViewWidth = 130 + 2 * duration;
+    chatBgViewWidth = 110 + 2 * (duration - 20);
   }else if (duration >30  && duration < 60) {
-    chatBgViewWidth = 160 + 1.3 * duration;
+    chatBgViewWidth = 130 + 1 * (duration - 30);
   }else {
-    chatBgViewWidth = 300;
+    chatBgViewWidth = 160;
   }
   
   return chatBgViewWidth;
@@ -312,12 +312,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
     [((JMSGVoiceContent *)self.message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
             if (error == nil) {
-      
               if (data != nil) {
                 self.model.mediaData = data;
                 self.model.messageStatus = kJMSGMessageStatusReceiveSucceed;
                 status =  @"下载语音成功";
-                DDLogDebug(@"%@ -%@", status, [(NSURL *) data path]);
                 [self playVoice];
                 [MBProgressHUD showMessage:status view:self];
               }
@@ -422,9 +420,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     img = [UIImage imageNamed:@"mychatBg"];
     [self.headView setFrame:CGRectMake(kApplicationWidth - headHeight - gapWidth, 0, headHeight, headHeight)];//头像位置
     [self.voiceBgView setFrame:CGRectMake(kApplicationWidth - chatBgViewWidth - (headHeight + 2 * gapWidth), 0, chatBgViewWidth, chatBgViewHeight)];
-    [self.voiceImgView setFrame:CGRectMake(_voiceBgView.frame.size.width - 20, 15, 9, 16)];
+    [self.voiceImgView setFrame:CGRectMake(_voiceBgView.frame.size.width - 30, 15, 9, 16)];
     [self.voiceTimeLable setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 50, 10, 40, 30)];
-    
+    self.voiceTimeLable.textAlignment = NSTextAlignmentRight;
     [self.stateView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 40, 10, 30, 30)];
     [self.sendFailView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 20, (50 - 15) / 2, 17, 15)];
     [self.readView setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 10, 5, 8, 8)];
@@ -434,6 +432,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.voiceBgView setFrame:CGRectMake(headHeight + 2 * gapWidth, 0, chatBgViewWidth, chatBgViewHeight)];
     [self.voiceImgView setFrame:CGRectMake(20, 15, 9, 16)];
     [self.voiceTimeLable setFrame:CGRectMake(self.voiceBgView.frame.origin.x + chatBgViewWidth + gapWidth + 10, 10, 40, 30)];
+    self.voiceTimeLable.textAlignment = NSTextAlignmentLeft;
     [self.stateView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x + self.voiceTimeLable.frame.size.width + 5, 10, 30, 30)];
     [self.sendFailView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x + self.voiceTimeLable.frame.size.width + 5, (50 - 15) / 2, 17, 15)];
     [self.readView setFrame:CGRectMake(self.voiceBgView.frame.origin.x + self.voiceBgView.frame.size.width + 10, 5, 8, 8)];
