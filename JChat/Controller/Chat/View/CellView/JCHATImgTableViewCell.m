@@ -52,7 +52,7 @@
     UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPicture:)];
     [self.pictureImgView addGestureRecognizer:gesture];
 
-    self.percentLabel = [UILabel new];
+    self.percentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     self.percentLabel.hidden = NO;
     self.percentLabel.font =[UIFont systemFontOfSize:18];
     self.percentLabel.textAlignment=NSTextAlignmentCenter;
@@ -265,7 +265,6 @@
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         NSString *percentString = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
         strongSelf.percentLabel.text = percentString;
-
       });
     };
   }

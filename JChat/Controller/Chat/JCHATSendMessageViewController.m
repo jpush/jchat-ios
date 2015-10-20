@@ -904,6 +904,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)selectHeadView:(JCHATChatModel *)model {
+  if (!model.message.fromUser) {
+    [MBProgressHUD showMessage:@"该用户为API用户" view:self.view];
+    return;
+  }
   if (!model.isReceived) {
     JCHATPersonViewController *personCtl =[[JCHATPersonViewController alloc] init];
     personCtl.hidesBottomBarWhenPushed = YES;
