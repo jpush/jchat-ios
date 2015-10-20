@@ -3,6 +3,7 @@
 #import <CocoaLumberjack/DDLegacyMacros.h>
 #import "JCHATTabBarViewController.h"
 #import "JChatConstants.h"
+#import <JMessage/JMessage.h>
 
 
 #define UMENG_APPKEY @"55487cee67e58e5431003b06"
@@ -14,7 +15,7 @@
 
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,JMSGMessageDelegate>
 
 @property (nonatomic,strong) JCHATTabBarViewController *tabBarCtl;
 

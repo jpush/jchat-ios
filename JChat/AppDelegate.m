@@ -8,7 +8,7 @@
 #import "JCHATCustomFormatter.h"
 #import "JCHATStringUtils.h"
 #import "JCHATAlreadyLoginViewController.h"
-#import <JMessage/JMessage.h>
+
 
 @implementation AppDelegate
 
@@ -24,6 +24,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                    appKey:JMSSAGE_APPKEY
                   channel:CHANNEL apsForProduction:NO
                  category:nil];
+  [JMessage addDelegate:self withConversation:nil];
+  
   [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                     UIUserNotificationTypeSound |
                                                     UIUserNotificationTypeAlert)
@@ -64,6 +66,28 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [[UINavigationBar appearance] setTranslucent:NO];
   [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
   [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];
+}
+
+- (void)onLoginUserKicked {
+    UIAlertView *alerView =[[UIAlertView alloc] initWithTitle:@"登录状态出错" message:@"你已在别的设备上登录!"
+                                                     delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    alerView.tag = 1200;
+    [alerView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+  [JMSGUser logout:^(id resultObject, NSError *error) {
+    DDLogDebug(@"Logout callback with - %@", error);
+  }];
+  
+  JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+  loginCtl.hidesBottomBarWhenPushed = YES;
+  UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+  self.window.rootViewController = navLogin;
+  
+  return;
 }
 
 - (void)registerJPushStatusNotification {
@@ -287,8 +311,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)setupMainTabBar {
   self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
   self.tabBarCtl.loginIdentify = kFirstLogin;
-  NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25"],
-                               [UIImage imageNamed:@"menu_18"], [UIImage imageNamed:@"menu_13.png"], nil];
   
   JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController" bundle:nil];
   UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewController];
@@ -296,12 +318,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
   
   //聊天
   chatViewController.navigationItem.title = st_chatViewControllerTittle;
-//  UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:st_chatViewControllerTittle
-//                                                        image:normalImageArray[0]
-//                                                          tag:st_chatTabTag];
-//  [chatTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_25"]//FIXME: 修改图片名字， 图片格式
-//        withFinishedUnselectedImage:[UIImage imageNamed:@"menu_23"]];
-//  [chatTab initWithTitle:<#(nullable NSString *)#> image:<#(nullable UIImage *)#> selectedImage:<#(nullable UIImage *)#>]//initWithTitle:image:selectedImage:.
   UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:st_chatViewControllerTittle image:[UIImage imageNamed:@"menu_25"] selectedImage:[UIImage imageNamed:@"menu_23"]];
   chatTab.tag = st_chatTabTag;
   chatNav.tabBarItem = chatTab;
@@ -313,11 +329,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                                          initWithRootViewController:contactsViewController];
   
   contactsViewController.navigationItem.title=st_contactsTabTitle;
-//  UITabBarItem *contactsTab = [[UITabBarItem alloc] initWithTitle:st_contactsTabTitle
-//                                                             image:normalImageArray[1]
-//                                                               tag:st_contactsTabTag];
-//  [contactsTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_18"]
-//             withFinishedUnselectedImage:[UIImage imageNamed:@"menu_16"]];
   UITabBarItem *contactsTab = [[UITabBarItem alloc] initWithTitle:st_contactsTabTitle image:[UIImage imageNamed:@"menu_16"] selectedImage:[UIImage imageNamed:@"menu_16"]];
   contactsTab.tag = st_contactsTabTag;
   contactsNav.tabBarItem = contactsTab;
@@ -329,11 +340,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                                         initWithRootViewController:settingViewController];
   
   settingViewController.navigationItem.title = st_settingTabTitle;
-//  UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:st_settingTabTitle
-//                                                           image:normalImageArray[2]
-//                                                             tag:st_settingTag];
-//  [settingTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_13"]
-//           withFinishedUnselectedImage:[UIImage imageNamed:@"menu_12"]];
   UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:st_settingTabTitle image:[UIImage imageNamed:@"menu_13"] selectedImage:[UIImage imageNamed:@"menu_12"]];
   settingTab.tag = st_contactsTabTag;
   settingNav.tabBarItem = settingTab;
