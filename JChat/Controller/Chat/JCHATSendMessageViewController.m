@@ -270,7 +270,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 
     if (message.contentType == kJMSGContentTypeEventNotification) {
       if (((JMSGEventContent *)message.content).eventType == kJMSGEventNotificationRemoveGroupMembers && ![((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
-        NSLog(@"huangmin   bei ti chu le    ");
         [self setupNavigation];
       }
     }
@@ -322,7 +321,6 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
 }
 
 - (void)onGroupInfoChanged:(JMSGGroup *)group {
-  NSLog(@"huangmin group info changed  %@",group);
   [self updateGroupConversationTittle:group];
 }
 

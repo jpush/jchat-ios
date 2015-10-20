@@ -55,7 +55,6 @@
 }
 
 - (void)ConversationChange:(NSNotification *)notif {
-  NSLog(@"huangmin Conversation   %@",notif);
   [self setupMessageDelegateWithConversation:notif.object];
 }
 
@@ -98,7 +97,6 @@
       if ([objectId isEqualToString:self.headViewFlag]) {
         if (data != nil) {
           [self.headImgView setImage:[UIImage imageWithData:data]];
-          NSLog(@"huangmin  update avatar %@",self.headImgView.image);
         } else {
           [self.headImgView setImage:[UIImage imageNamed:@"headDefalt"]];
         }

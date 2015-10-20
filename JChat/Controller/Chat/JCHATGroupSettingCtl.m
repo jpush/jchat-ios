@@ -169,7 +169,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         _deleteBtn = personView.headViewBtn;
         [personView.deletePersonBtn setHidden:YES];
         personView.memberLable.text = @"";
-        NSLog(@"huangmin  owner   %@",self.sendMessageCtl);
+        
         if ([((JMSGGroup *)self.conversation.target).owner isEqualToString:[JMSGUser myInfo].username]  && [_groupData count] !=1) {
           [_headView addSubview:personView];
         }
@@ -426,7 +426,6 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       [MBProgressHUD showMessage:@"更新群组名称" toView:self.view];
       typeof(self) __weak weakSelf = self;
       JMSGGroup *needUpdateGroup = (JMSGGroup *)(self.conversation.target);
-      NSLog(@"huangmin   new name %@",[alertView textFieldAtIndex:0].text);
       [JMSGGroup updateGroupInfoWithGroupId:needUpdateGroup.gid name:[alertView textFieldAtIndex:0].text desc:needUpdateGroup.desc completionHandler:^(id resultObject, NSError *error) {
                 typeof(weakSelf) __strong strongSelf = weakSelf;
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

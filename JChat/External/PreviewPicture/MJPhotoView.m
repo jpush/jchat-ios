@@ -93,7 +93,7 @@
                   JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
                   [((JMSGImageContent *)message.content) largeImageDataWithProgress:progress completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
                     if (error == nil) {
-                      JPIMLog(@"huangmin  下载大图 success");
+                      JPIMLog(@"下载大图 success");
                       photo.image = [UIImage imageWithData:data];
                       _imageView.image = [UIImage imageWithData:data];
                       [photoView adjustFrame];
@@ -135,7 +135,6 @@
         NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
         __weak MJPhoto *photo = _photo;
             if (_photo.message.messageId) {
-//              JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.messageId];
               JMSGMessage *message = _photo.message.message;
               [((JMSGImageContent *)message.content) largeImageDataWithProgress:progress completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
                 __strong __typeof(photo)strongPhoto = photo;

@@ -90,7 +90,6 @@
     [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
     __block JMSGGroup *tmpgroup =nil;
     typeof(self) __weak weakSelf = self;
-    NSLog(@"huangmin merbers %@",@[[JMSGUser myInfo].username,((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text].description);
     [JMSGGroup createGroupWithName:@"" desc:@"" memberArray:@[((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       typeof(weakSelf) __strong strongSelf = weakSelf;
@@ -206,7 +205,6 @@
 
       }else {
         [_headView setImage:[UIImage imageWithData:data]];
-        NSLog(@"huangmin 555555  %@",_headView.image);
       }
     }else {
       DDLogDebug(@"JCHATDetailsInfoVC thumbAvatarData fail");

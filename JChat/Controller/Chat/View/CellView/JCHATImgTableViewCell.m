@@ -92,7 +92,6 @@
 }
 
 - (void)ConversationChange:(NSNotification *)notif {
-  NSLog(@"huangmin Conversation   %@",notif);
   [self setupMessageDelegateWithConversation:notif.object];
 }
 
@@ -230,7 +229,6 @@
   }
   self.delegate = (id)controler;
   self.cellIndex = indexPath;
-  NSLog(@"huangmin  message  %@",_model.fromUser);
   typeof(self) __weak weakSelf = self;
   //  if (_model.avatar == nil) {
   [_model.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
@@ -265,7 +263,6 @@
     _message.uploadHandler = ^(float percent) {
       dispatch_async(dispatch_get_main_queue(), ^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        NSLog(@"huangmin    the percent value  %d%%  %@",(int)(percent * 100),strongSelf.percentLabel.hidden?@"hidden ":@"no hidden ");
         NSString *percentString = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
         strongSelf.percentLabel.text = percentString;
 
@@ -302,7 +299,6 @@
       [self.downLoadIndicatorView setHidden:NO];
       [self.downLoadIndicatorView startAnimating];
       JMSGMessage *imageReceiveFailMessage = [self.conversation messageWithMessageId:self.model.messageId];
-      NSLog(@"huangmin  %@",imageReceiveFailMessage);
     }else {
       if (self.delegate && [self.delegate respondsToSelector:@selector(tapPicture:tapView:tableViewCell:)]) {
         [self.delegate tapPicture:self.cellIndex tapView:(UIImageView *)gesture.view tableViewCell:self];

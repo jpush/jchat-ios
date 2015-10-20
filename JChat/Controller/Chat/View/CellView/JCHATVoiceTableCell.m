@@ -424,7 +424,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.voiceBgView setFrame:CGRectMake(kApplicationWidth - chatBgViewWidth - (headHeight + 2 * gapWidth), 0, chatBgViewWidth, chatBgViewHeight)];
     [self.voiceImgView setFrame:CGRectMake(_voiceBgView.frame.size.width - 20, 15, 9, 16)];
     [self.voiceTimeLable setFrame:CGRectMake(self.voiceBgView.frame.origin.x - 50, 10, 40, 30)];
-    NSLog(@"huangmin   voiceTimelable %f", self.voiceBgView.frame.origin.x);
     
     [self.stateView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 40, 10, 30, 30)];
     [self.sendFailView setFrame:CGRectMake(self.voiceTimeLable.frame.origin.x - 20, (50 - 15) / 2, 17, 15)];

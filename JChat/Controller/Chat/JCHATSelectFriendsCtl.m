@@ -99,10 +99,8 @@
           [[NSNotificationCenter defaultCenter] postNotificationName:kCreatGroupState object:resultObject];
         }else if (error.code == 808003) {
           [MBProgressHUD showMessage:@"创建群组数量达到上限！" view:self.view];
-          NSLog(@"huangmin  the error is %@",error);
         }else {
           [MBProgressHUD showMessage:@"创建群组失败！" view:self.view];
-          NSLog(@"huangmin  the error is %@",error);
         }
       }];
 }
