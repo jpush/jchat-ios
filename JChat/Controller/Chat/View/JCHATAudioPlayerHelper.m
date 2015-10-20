@@ -72,10 +72,12 @@
              */
           
           NSError *error = [[NSError alloc] init];
+          if(fileName.length){
             AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName] error:&error];
             pl.delegate = self;
             [pl play];
             self.player = pl;
+          }
             [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
             if ([self.delegate respondsToSelector:@selector(didAudioPlayerBeginPlay:)]) {
                 [self.delegate didAudioPlayerBeginPlay:_player];

@@ -333,10 +333,10 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
       if (indexPath.row == 0) {
         cell.groupName.delegate = self;
         JMSGGroup *group = ((JMSGGroup *)self.conversation.target);
-        if ([group.name isEqualToString:@""]) {
-          cell.groupName.text = @"未命名";
-        } else {
+        if (group.name.length) {
           cell.groupName.text = group.name;
+        } else {
+          cell.groupName.text = @"未命名";
         }
       }
         if (indexPath.row == 1) {

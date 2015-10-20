@@ -13,9 +13,9 @@
 #import <JMessage/JMSGAbstractContent.h>
 
 /*!
- * @abstract 定制内容类型
+ * 定制内容类型
  *
- * @discussion 用于自定义消息内容类型.
+ * 用于自定义消息的内容类型.
  *
  * 建议只在基本类型 (TextContent, VoiceContent, ImageContent) 不满足使用的情况才使用此类型.
  *
@@ -29,8 +29,12 @@ JMSG_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong, readonly) NSDictionary * JMSG_NULLABLE customDictionary;
 
+// 不支持使用的初始化方法
 - (instancetype)init NS_UNAVAILABLE;
 
+/*!
+ * @abstract 预期使用的初始化方法
+ */
 - (instancetype)initWithCustomDictionary:(NSDictionary * JMSG_NULLABLE)customDic ;
 
 /*!

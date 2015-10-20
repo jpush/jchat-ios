@@ -12,8 +12,9 @@
 #import <Foundation/Foundation.h>
 #import <JMessage/JMSGAbstractContent.h>
 
+
 /*!
- * @abstract 纯文本内容类型
+ * 纯文本内容类型
  */
 @interface JMSGTextContent : JMSGAbstractContent <NSCopying>
 
@@ -24,11 +25,15 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, readonly, copy) NSString *text;
 
+// 不支持使用的初始化方法
 - (instancetype)init NS_UNAVAILABLE;
 
 /*!
  * @abstract 基于文本初始化内容对象
- * @discussion 这是唯一的创建此类型对象的方法
+ *
+ * @param text 纯文本内容
+ *
+ * @discussion 这是预设的创建文本类型内容的方法
  */
 - (instancetype)initWithText:(NSString *)text;
 

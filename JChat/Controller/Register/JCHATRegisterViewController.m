@@ -103,7 +103,7 @@
                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     } else {
                       DDLogDebug(@"login fail error  %@",error);
-                      NSString *alert = @"用户登录失败";
+                      NSString *alert = [JCHATStringUtils errorAlert:error];
                       alert = [JCHATStringUtils errorAlert:error];
                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                       [MBProgressHUD showMessage:alert view:self.view];
@@ -112,11 +112,7 @@
                   }];
       } else {
         NSString *alert = @"注册失败";
-        if (error.code == JCHAT_ERROR_REGISTER_EXIST) {
-          alert = @"用户已经存在！";
-        } else if (error.code == JCHAT_ERROR_USER_PARAS_INVALID) {
-          alert = @"用户名或者密码不合法";
-        }
+        alert = [JCHATStringUtils errorAlert:error];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [MBProgressHUD showSuccess:alert toView:self.view];
       }

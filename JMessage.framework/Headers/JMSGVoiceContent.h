@@ -13,7 +13,7 @@
 #import <JMessage/JMSGMediaAbstractContent.h>
 
 /*!
- * @abstract 语音内容类型
+ * 语音内容类型
  */
 @interface JMSGVoiceContent : JMSGMediaAbstractContent <NSCopying>
 
@@ -29,24 +29,26 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE voicePath;
 
+// 不支持使用的初始化方法
 - (instancetype)init NS_UNAVAILABLE;
 
 /*!
- @abstract 根据语音数据与时长来创建对象
-
- @param data 该语音内容的数据. 不允许为 nil, 并且内容长度应大于 0
- @param duration 该语音内容的持续时长. 单位是秒. 不允许为 nil, 并且应大于 0.
+ * @abstract 初始化语音内容
+ *
+ * @param data 该语音内容的数据. 不允许为 nil, 并且内容长度应大于 0, 否则失败
+ * @param duration 该语音内容的持续时长. 单位是秒. 不允许为 nil, 并且应大于 0.
+ *
+ * @discussion 这是预设的初始化方法, 创建一条语音内容, 必然传入语音数据, 以及时长.
  */
 - (instancetype)initWithVoiceData:(NSData *)data
                     voiceDuration:(NSNumber *)duration;
 
 /*!
- @abstract 获取图片消息的缩略图数据
- 
- @param completionHandler 结果回调。返回正常时 resultObject 内容是缩略图数据，类型是 NSData
- 
- @discussion
- 如果本地还没有语音数据，会发起网络请求下载。下载完后再回调。
+ * @abstract 获取语音内容的数据
+ *
+ * @param completionHandler 结果回调。返回正常时 resultObject 内容是语音数据，类型是 NSData
+ *
+ * @discussion 如果本地还没有语音数据，会发起网络请求下载。下载完后再回调。
  */
 - (void)voiceData:(JMSGAsyncDataHandler)handler;
 

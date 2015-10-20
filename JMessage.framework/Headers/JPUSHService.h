@@ -24,9 +24,15 @@ extern NSString *const kJPFServiceErrorNotification;  // 错误提示
 
 @class CLLocation;
 
+
+/*!
+ * JPush 核心头文件
+ */
 @interface JPUSHService : NSObject
 
+
 #pragma - mark 基本功能
+
 /**
  *  以下四个接口是必须调用的
  *  setupWithOption:launchingOption是旧版本的注册方法,appKey和channel需要依赖PushConfig.plist文件

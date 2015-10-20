@@ -1,7 +1,18 @@
+/*
+ *	| |    | |  \ \  / /  | |    | |   / _______|
+ *	| |____| |   \ \/ /   | |____| |  / /
+ *	| |____| |    \  /    | |____| |  | |   _____
+ * 	| |    | |    /  \    | |    | |  | |  |____ |
+ *  | |    | |   / /\ \   | |    | |  \ \______| |
+ *  | |    | |  /_/  \_\  | |    | |   \_________|
+ *
+ * Copyright (c) 2011 ~ 2015 Shenzhen HXHG. All rights reserved.
+ */
+
 #import <Foundation/Foundation.h>
 
 /*!
- * @abstract 会话相关变更通知
+ * 会话相关变更通知
  */
 @protocol JMSGConversationDelegate <NSObject>
 

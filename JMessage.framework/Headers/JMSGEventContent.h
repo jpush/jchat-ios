@@ -12,6 +12,9 @@
 #import <Foundation/Foundation.h>
 #import <JMessage/JMSGAbstractContent.h>
 
+/*!
+ * 事件类型
+ */
 typedef NS_ENUM(NSInteger, JMSGEventNotificationType) {
   kJMSGEventNotificationLoginKicked = 1,
   kJMSGEventNotificationCreateGroup = 8,
@@ -21,11 +24,21 @@ typedef NS_ENUM(NSInteger, JMSGEventNotificationType) {
 };
 
 
+/*!
+ * 事件类型的消息内容
+ *
+ * 服务器端下发的事件通知, 比如用户被踢下线,群组里加了人, SDK 作为一个特殊的消息类型处理.
+ * SDK 以消息的形式通知到 App. 详情参见 JMessageDelegate.
+ */
 @interface JMSGEventContent : JMSGAbstractContent <NSCopying>
 
+/*!
+ * @abstract 事件类型
+ * @discussion 参考事件类型的定义 JMSGEventNotificationType
+ */
 @property(nonatomic, assign, readonly) JMSGEventNotificationType eventType;
 
-
+// 不支持使用的初始化方法
 - (nullable instancetype)init NS_UNAVAILABLE;
 
 /*!

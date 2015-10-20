@@ -19,29 +19,34 @@
 @protocol JMSGTargetProtocol;
 
 /*!
- * @abstract 消息
+ * 消息
  *
- * @discussion 本类 JMSGMessage 是 JMessage SDK 里的消息实体。
+ * 本类 JMSGMessage 是 JMessage SDK 里的消息实体。
  * 收到的消息、发送的消息、获取历史消息，其中的消息类，都是这个 JMSGMessage。
  *
  * 以下分别描述消息相关主要使用场景。
  *
- * ### 获取历史消息
+ * #### 获取历史消息
  *
- * 先基于聊天对象ID与会话类型，拿到会话对象，然后调用会话对象里的 allMessages: 获取到某会话的全部历史消息列表。
+ * 先基于聊天对象ID与会话类型，拿到会话对象，然后调用会话对象里的 [JMSGConversation allMessages:] 获取到某会话的全部历史消息列表。
  *
- * ### 展示一条消息
+ * #### 展示一条消息
  *
  * 发送者、接收者等基本属性都有相应的属性。消息内容则在一个 content 对象里，访问时先通过 contentType 拿到内容类型，
  * 然后把 content 转型为相应的具体内容类型，再进一步可拿到具体的信息。
-
+ *
+ *    ```
  *    JMSGTextContent *textContent = (JMSGTextContent *)message.content;
  *    NSString *msgText = textContent.text;
+ *    ```
  *
- * ### 接收消息
+ * #### 接收消息
  *
+ * 参考 JMessageDelegate 里的说明.
  *
- * ### 发送消息
+ * #### 发送消息
+ *
+ * 参考 JMessageDelegate 里的说明.
  *
  */
 @interface JMSGMessage : NSObject <NSCopying, NSCoding>
@@ -92,7 +97,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @discussion 快捷方法，不需要先创建消息而直接发送。
  */
 + (void)sendSingleTextMessage:(NSString *)text
-                     username:(NSString *)username;
+                       toUser:(NSString *)username;
 
 /*!
  * @abstract 发送单聊图片消息
@@ -103,7 +108,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @discussion 快捷方法，不需要先创建消息而直接发送。
  */
 + (void)sendSingleImageMessage:(NSData *)imageData
-                      username:(NSString *)username;
+                        toUser:(NSString *)username;
 
 /*!
  * @abstract 发送单聊语音消息
@@ -116,7 +121,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 + (void)sendSingleVoiceMessage:(NSData *)voiceData
                  voiceDuration:(NSNumber *)duration
-                      username:(NSString *)username;
+                        toUser:(NSString *)username;
 
 /*!
  * @abstract 发送群聊文本消息
@@ -127,7 +132,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @discussion 快捷方法，不需要先创建消息而直接发送。
  */
 + (void)sendGroupTextMessage:(NSString *)text
-                     groupId:(NSString *)groupId;
+                     toGroup:(NSString *)groupId;
 
 /*!
  * @abstract 发送群聊图片消息
@@ -138,7 +143,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @discussion 快捷方法，不需要先创建消息而直接发送。
  */
 + (void)sendGroupImageMessage:(NSData *)imageData
-                      groupId:(NSString *)groupId;
+                      toGroup:(NSString *)groupId;
 
 /*!
  * @abstract 发送群聊语音消息
@@ -151,7 +156,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 + (void)sendGroupVoiceMessage:(NSData *)voiceData
                 voiceDuration:(NSNumber *)duration
-                      groupId:(NSString *)groupId;
+                      toGroup:(NSString *)groupId;
 
 
 
@@ -198,7 +203,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @abstract 消息内容对象
  * @discussion 使用时应通过 contentType 先获取到具体的消息类型，然后转型到相应的具体类。
  */
-@property(nonatomic, copy, readonly) JMSGAbstractContent * JMSG_NULLABLE content;
+@property(nonatomic, strong, readonly) JMSGAbstractContent * JMSG_NULLABLE content;
 
 /*!
  * @abstract 消息发出的时间戳

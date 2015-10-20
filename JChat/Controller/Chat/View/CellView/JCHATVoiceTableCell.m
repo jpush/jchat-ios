@@ -323,7 +323,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
               }
             }else {
               DDLogDebug(@"Action  voiceData");
-              status = @"获取消息失败。。。";
+              status = [JCHATStringUtils errorAlert:error];
               [MBProgressHUD showMessage:status view:self];
             }
       
@@ -336,7 +336,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.delegate getContinuePlay:self indexPath:self.indexPath];
   }
   [self.readView setHidden:YES];
-  [self.model.message updateFlag:@1];
+  if (![self.model.message.flag  isEqual: @1]) {
+    [self.model.message updateFlag:@1];
+  }
+
   self.model.readState = YES;
   self.index = 0;
   if (!self.playing) {

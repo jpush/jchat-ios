@@ -20,13 +20,13 @@
 ///----------------------------------------------------
 
 /*!
- @abstract 异步回调 block
-
- @discussion 大多数异步 API 都会以过个 block 回调。
-
- - 如果调用出错，则 error 不为空，可根据 error.code 来获取错误码。该错误码 JMessage 相关文档里有详细的定义。
- - 如果返回正常，则 error 为空。从 resultObject 去获取相应的返回。每个 API 的定义上都会有进一步的定义。
-
+ * @abstract 异步回调 block
+ *
+ * @discussion 大多数异步 API 都会以过个 block 回调。
+ *
+ * - 如果调用出错，则 error 不为空，可根据 error.code 来获取错误码。该错误码 JMessage 相关文档里有详细的定义。
+ * - 如果返回正常，则 error 为空。从 resultObject 去获取相应的返回。每个 API 的定义上都会有进一步的定义。
+ *
  */
 typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
 
@@ -98,169 +98,267 @@ typedef void (^JMSGMediaUploadProgressHandler)(float percent);
 ///----------------------------------------------------
 
 /*!
- * @typedef
- * @abstract 会话类型 - 单聊、群聊
+ * 会话类型 - 单聊、群聊
  */
 typedef NS_ENUM(NSInteger, JMSGConversationType) {
+  /// 单聊
   kJMSGConversationTypeSingle = 1,
+  /// 群聊
   kJMSGConversationTypeGroup = 2,
 };
 
-/*!
- * @typedef
- * @abstract 消息内容类型 - 文本、语音、图片等
- */
-typedef NS_ENUM(NSInteger, JMSGContentType) {
-  kJMSGContentTypeUnknown = 0,  // 不知道类型的消息: 上层应提示升级之类
-  kJMSGContentTypeText = 1,         // 文本消息
-  kJMSGContentTypeImage = 2,        // 图片消息
-  kJMSGContentTypeVoice = 3,        // 语音消息
-  kJMSGContentTypeCustom = 4,       // 自定义消息
-  kJMSGContentTypeEventNotification = 5, // 事件通知消息。服务器端下发的事件通知，本地展示为这个类型的消息展示出来
-};
+//NSString *JMSGConversationTypeStr(JMSGConversationType type) {
+//  if (type == kJMSGConversationTypeSingle) {
+//    return @"conversationSingle";
+//  } else {
+//    return @"conversationGroup";
+//  }
+//}
 
 /*!
- * @typedef
- * @abstract 消息状态
+ * 消息内容类型 - 文本、语音、图片等
+ */
+typedef NS_ENUM(NSInteger, JMSGContentType) {
+  /// 不知道类型的消息
+  kJMSGContentTypeUnknown = 0,
+  /// 文本消息
+  kJMSGContentTypeText = 1,
+  /// 图片消息
+  kJMSGContentTypeImage = 2,
+  /// 语音消息
+  kJMSGContentTypeVoice = 3,
+  /// 自定义消息
+  kJMSGContentTypeCustom = 4,
+  /// 事件通知消息。服务器端下发的事件通知，本地展示为这个类型的消息展示出来
+  kJMSGContentTypeEventNotification = 5,
+};
+
+//NSString *JMSGContentTypeStr(JMSGContentType type) {
+//  switch (type) {
+//    case kJMSGContentTypeUnknown:
+//      return @"未知类型";
+//    case kJMSGContentTypeText:
+//      return @"文本消息";
+//    case kJMSGContentTypeImage:
+//      return @"图片消息";
+//    case kJMSGContentTypeVoice:
+//      return @"语音消息";
+//    case kJMSGContentTypeCustom:
+//      return @"自定义消息";
+//    case kJMSGContentTypeEventNotification:
+//      return @"事件通知消息";
+//    default:
+//      break;
+//  }
+//}
+
+
+/*!
+ * 消息状态
  */
 typedef NS_ENUM(NSInteger, JMSGMessageStatus) {
-  /// Send Message
-      kJMSGMessageStatusSendDraft = 0,    // 消息创建时的初始状态
-  kJMSGMessageStatusSending = 1,      // 消息正在发送过程中. UI 一般显示进度条
-  kJMSGMessageStatusSendUploadFailed = 2,   //
-  kJMSGMessageStatusSendUploadSucceed = 3,  //
+  /// 发送息创建时的初始状态
+  kJMSGMessageStatusSendDraft = 0,
+  /// 消息正在发送过程中. UI 一般显示进度条
+  kJMSGMessageStatusSending = 1,
+  /// 媒体类消息文件上传失败
+  kJMSGMessageStatusSendUploadFailed = 2,
+  /// 媒体类消息文件上传成功
+  kJMSGMessageStatusSendUploadSucceed = 3,
+  /// 消息发送失败
   kJMSGMessageStatusSendFailed = 4,
+  /// 消息发送成功
   kJMSGMessageStatusSendSucceed = 5,
-  /// Received Message
-      kJMSGMessageStatusReceiving = 6,
+  /// 接收中的消息(还在处理)
+  kJMSGMessageStatusReceiving = 6,
+  /// 接收消息时自动下载媒体失败
   kJMSGMessageStatusReceiveDownloadFailed = 7,
+  /// 接收消息成功
   kJMSGMessageStatusReceiveSucceed = 8,
 };
 
 
 /*!
- @typedef
- @abstract 上传文件的类型
+ * 上传文件的类型
  */
 typedef NS_ENUM(NSInteger, JMSGFileType) {
+  /// 未知的文件类型
   kJMSGFileTypeUnknown,
+  /// 图片类型
   kJMSGFileTypeImage,
+  /// 语音类型
   kJMSGFileTypeVoice,
 };
 
+//NSString *JMSGFileTypeStr(JMSGFileType type) {
+//  if (type == kJMSGFileTypeUnknown) {
+//    return @"未知文件类型";
+//  } else if (type == kJMSGFileTypeImage){
+//    return @"图片";
+//  } else {
+//    return @"语音";
+//  }
+//}
 
 ///----------------------------------------------------
 /// @name errors
 ///----------------------------------------------------
 
 /*!
- * @typedef
  * @abstract JMessage SDK 的错误码汇总
  *
  * @discussion 错误码以 86 打头，都为 iOS SDK 内部的错误码
  */
 typedef NS_ENUM(NSInteger, JMSGSDKErrorCode) {
 
-  // network - 80
-  JMSG_ERROR_NETWORK_USER_NOT_REGISTER = 801003,
+  // --------------------- Server
+
+  kJMSGErrorNetworkUserNotRegistered = 801003,
   
-  /// Network - 860
+  // --------------------- Network (860xxx)
 
   JMSG_ERROR_NETWORK_REQUEST_INVALIDATE = 860010,
-  JMSG_ERROR_NETWORK_REQUEST_TIMEOUT = 860011,   // 服务器返回超时
-  JMSG_ERROR_NETWORK_REQUEST_FAIL = 860012,   // 服务器请求失败
-  JMSG_ERROR_NETWORK_SERVER_FAIL = 860013,   // 服务端错误
-  JMSG_ERROR_NETWORK_HOST_UNKNOWN = 860014,   // 地址错误
-  kJMSGErrorSDKNetworkDownloadFailed = 860015,   // 下载失败
-  JMSG_ERROR_NETWORK_OTHER = 860016,   // 网络原因
-  JMSG_ERROR_NETWORK_TOKEN_FAILED = 860017,   // 服务器获取用户Token失败
-  kJMSGErrorSDKNetworkUploadFailed = 860018,   // 上传资源文件失败
-  kJMSGErrorSDKNetworkUploadTokenVerifyFailed = 860019,   // 上传资源文件Token验证失败
-  kJMSGErrorSDKNetworkUploadTokenGetFailed = 860020,   // 获取服务器Token失败
+  /// 服务器返回超时
+  JMSG_ERROR_NETWORK_REQUEST_TIMEOUT = 860011,
+  /// 服务器请求失败
+  JMSG_ERROR_NETWORK_REQUEST_FAIL = 860012,
+  /// 服务端错误
+  JMSG_ERROR_NETWORK_SERVER_FAIL = 860013,
+  /// 地址错误
+  JMSG_ERROR_NETWORK_HOST_UNKNOWN = 860014,
+  /// 下载失败
+  kJMSGErrorSDKNetworkDownloadFailed = 860015,
+  /// 其他网络原因
+  kJMSGNetworkOther = 860016,
+  /// 服务器获取用户Token失败
+  kJMSGErrorNetworkTokenFailed = 860017,
+  /// 上传资源文件失败
+  kJMSGErrorSDKNetworkUploadFailed = 860018,
+  /// 上传资源文件Token验证失败
+  kJMSGErrorSDKNetworkUploadTokenVerifyFailed = 860019,
+  /// 获取服务器Token失败
+  kJMSGErrorSDKNetworkUploadTokenGetFailed = 860020,
+  /// 服务器返回数据错误（没有按约定返回）
+  kJMSGErrorNetworkResultUnexpected = 860021,
+  /// 服务器端返回数据格式错误
+  kJMSGErrorNetworkDataFormatInvalid = 860030,
 
-  KJMSG_ERROR_NETWORK_RESULT_ERROR = 860021,    // 服务器返回数据错误（没有按约定返回）
-  kJMSGErrorNetworkDataFormatInvalid = 860030,   // 数据格式错误
+  // --------------------- DB & Global params (861xxx)
 
-  JMSG_ERROR_LACK_PARAMETER = 860041,   // 缺少本地参数
-
-
-  /// DB & Global params - 861
-
+  /// 数据库删除失败 (预期应该成功)
   kJMSGErrorSDKDBDeleteFailed = 861000,
+  /// 数据库更新失败 (预期应该成功)
   kJMSGErrorSDKDBUpdateFailed = 861001,
+  /// 数据库查询失败 (预期应该成功)
   kJMSGErrorSDKDBSelectFailed = 861002,
+  /// 数据库插入失败 (预期应该成功)
   kJMSGErrorSDKDBInsertFailed = 861003,
+  /// Appkey 不合法
+  kJMSGErrorSDKParamAppkeyInvalid = 861100,
+  /// SDK 内部方法参数检查错误
+  kJMSGErrorSDKParamInternalInvalid = 860040,
 
-  kJMSGErrorSDKParamAppkeyInvalid = 861100, // AppKey invalid
-  JMSG_ERROR_LOCAL_PARAMETER = 860040,   // 本地参数错误
+  // ------------------------ Third party (862xxx)
 
-  /// Third party - 862
-
+  /// 七牛相关未知错误
   kJMSGErrorPartyQiniuUnknown = 862010,
 
+  // ------------------------ User (863xxx)
 
-  // User - 863
-
-  kJMSGErrorSDKParamUsernameInvalid = 863001, // 用户名不合法
-  kJMSGErrorSDKParamPasswordInvalid = 863002, // 用户密码不合法
-  kJMSGErrorSDKParamAvatarNil = 86303,        // 用户头像属性为空
-  kJMSGErrorSDKUserNotLogin = 86304,          // 用户没登录
+  /// 用户名不合法
+  kJMSGErrorSDKParamUsernameInvalid = 863001,
+  /// 用户密码不合法
+  kJMSGErrorSDKParamPasswordInvalid = 863002,
+  /// 用户头像属性为空
+  kJMSGErrorSDKParamAvatarNil = 86303,
+  /// 用户未登录
+  kJMSGErrorSDKUserNotLogin = 86304,
   
-  /// Media Resource - 864
+  // ------------------------ Media Resource (864xxx)
 
+  /// 这不是一条媒体消息
   kJMSGErrorSDKNotMediaMessage = 864001,
+  /// 下载媒体资源路径或者数据意外丢失
   kJMSGErrorSDKMediaResourceMissing = 864002,
+  /// 媒体CRC码无效
   kJMSGErrorSDKMediaCrcCodeIllegal = 864003,
+  /// 媒体CRC校验失败
   kJMSGErrorSDKMediaCrcVerifyFailed = 864004,
+  /// 上传媒体文件时, 发现文件不存在
   kJMSGErrorSDKMediaUploadEmptyFile = 864005,
 
+  // ------------------------ Message (865xxx)
 
-  /// Message - 865
+  /// 无效的消息内容
+  kJMSGErrorSDKParamContentInvalid = 865001,
+  /// 空消息
+  kJMSGErrorSDKParamMessageNil = 865002,
+  /// 消息不符合发送的基本条件检查
+  kJMSGErrorSDKMessageNotPrepared = 865003,
+  /// 你不是群组成员
+  kJMSGErrorSDKMessageNotInGroup = 865004,
 
-  kJMSGErrorSDKParamContentInvalid = 865001,  // 消息内容无效
-  kJMSGErrorSDKParamMessageNil = 865002, // 空消息
-  kJMSGErrorSDKMessageNotPrepared = 865003, // 消息不符合发送的基本条件检查
+  // ------------------------ Conversation (866xxx)
 
-  /// Conversation - 866
+  /// 未知的会话类型
+  kJMSGErrorSDKParamConversationTypeUnknown = 866001,
+  /// 会话 username 无效
+  kJMSGErrorSDKParamConversationUsernameInvalid = 866002,
+  /// 会话 groupId 无效
+  kJMSGErrorSDKParamConversationGroupIdInvalid = 866003,
 
-  kJMSGErrorSDKParamConversationTypeUnknown = 866001, // 会话类型错误
-  kJMSGErrorSDKParamConversationUsernameInvalid = 866002, // 会话 username 无效
-  kJMSGErrorSDKParamConversationGroupIdInvalid = 866003, // 会话 groupId 无效
-  kJMSGErrorSDKParamConversationLackAvatarPath = 866004, // 会话没有 avatarPath
+  // ------------------------ Group (867xxx)
 
-  /// Group - 867
+  /// groupId 无效
+  kJMSGErrorSDKParamGroupGroupIdInvalid = 867001,
+  /// group 相关字段无效
+  kJMSGErrorSDKParamGroupGroupInfoInvalid = 867002,
 
-  kJMSGErrorSDKParamGroupGroupIdInvalid = 867001, // GroupId 错误
-  kJMSGErrorSDKParamGroupGroupInfoInvalid = 867002, // Group 其他信息不对
-  
-  // Media - 868
-  kJMSGErrorMediaCrcInvalid = 868001,   // crc32 错误
+  // ------------------------ Media (868xxx)
+
+  /// 媒体文件 crc 检查失败
+  kJMSGErrorMediaCrcInvalid = 868001,
 };
 
 /*!
- @abstract SDK依赖的内部 HTTP 服务返回的错误码。
- @discussion 这些错误码也会直接通过 SDK API 返回给应用层。
+ * @abstract SDK依赖的内部 HTTP 服务返回的错误码。
+ *
+ * @discussion 这些错误码也会直接通过 SDK API 返回给应用层。
  */
 typedef NS_ENUM(NSUInteger, JMSGHttpErrorCode) {
+  /// 服务器端内部错误
   kJMSGErrorHttpServerInternal = 898000,
+  /// 用户已经存在
   kJMSGErrorHttpUserExist = 898001,
+  /// 用户不存在
   kJMSGErrorHttpUserNotExist = 898002,
+  /// 参数无效
   kJMSGErrorHttpPrameterInvalid = 898003,
+  /// 密码错误
   kJMSGErrorHttpPasswordError = 898004,
+  /// 内部UID 无效
   kJMSGErrorHttpUidInvalid = 898005,
+  /// 内部Gid 无效
   kJMSGErrorHttpGidInvalid = 898006,
+  /// Http 请求没有验证信息
   kJMSGErrorHttpMissingAuthenInfo = 898007,
+  /// Http 请求验证失败
   kJMSGErrorHttpAuthenticationFailed = 898008,
+  /// Appkey 不存在
   kJMSGErrorHttpAppkeyNotExist = 898009,
+  /// Http 请求 token 过期
   kJMSGErrorHttpTokenExpired = 898010,
+  /// 用户未登录
   kJMSGErrorHttpUserNotLoggedIn = 800012,
+  /// 服务器端响应超时
   kJMSGErrorHttpServerResponseTimeout = 898030,
-  kJMSGErrorHttpUserNotExist2 = 899002,
+  //// 用户不存在
 };
 
 /*!
- @abstract SDK依赖的内部 TCP 服务返回的错误码
- @discussion 这些错误码也会直接通过 SDK API 返回给应用层。
+ * @abstract SDK依赖的内部 TCP 服务返回的错误码
+ *
+ * @discussion 这些错误码也会直接通过 SDK API 返回给应用层。
  */
 typedef NS_ENUM(NSUInteger, JMSGTcpErrorCode) {
   kJMSGErrorTcpAppkeyNotRegistered = 800003,
@@ -269,7 +367,6 @@ typedef NS_ENUM(NSUInteger, JMSGTcpErrorCode) {
   kJMSGErrorTcpServerInternalError = 800009,
   kJMSGErrorTcpUserLogoutState = 800012,
   kJMSGErrorTcpUserOfflineState = 800013,
-
 };
 
 

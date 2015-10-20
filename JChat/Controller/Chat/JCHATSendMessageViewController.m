@@ -80,7 +80,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     }
     JMSGGroup *group = self.conversation.target;
     if (self.conversation.conversationType == kJMSGConversationTypeGroup) {
-      [self updateGroupConversationTittle];
+      [self updateGroupConversationTittle:nil];
     } else {
       self.title = [resultObject title];      
     }
@@ -89,8 +89,14 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }];
 }
 
-- (void)updateGroupConversationTittle {
-  JMSGGroup *group = self.conversation.target;
+- (void)updateGroupConversationTittle:(JMSGGroup *)newGroup {
+  JMSGGroup *group;
+  if (newGroup == nil) {
+    group = self.conversation.target;
+  } else {
+    group = newGroup;
+  }
+
   if ([group.name isEqualToString:@""]) {
     self.title = @"群聊";
   } else {
@@ -104,6 +110,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
     self.isConversationChange = NO;
   }
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated {
   DDLogDebug(@"Event - viewWillDisappear");
@@ -149,7 +156,7 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal]; //change name//userDetail
   }else {
-    [self updateGroupConversationTittle];
+    [self updateGroupConversationTittle:nil];
     if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
       [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
     } else _rightBtn.hidden = YES;
@@ -285,8 +292,38 @@ NSString * const JCHATMessageIdKey = @"JCHATMessageIdKey";
   }));
 }
 
+- (void)onReceiveMessageDownloadFailed:(JMSGMessage *)message {
+  if (![self.conversation isMessageForThisConversation:message]) {
+    return;
+  }
+  
+  DDLogDebug(@"Event - receiveMessageNotification");
+  JPIMMAINTHEAD((^{
+    if (!message) {
+      DDLogWarn(@"get the nil message .");
+      return;
+    }
+    
+    if (_conversation.conversationType == kJMSGConversationTypeSingle) {
+    } else if (![((JMSGGroup *)_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
+      return;
+    }
+    JCHATChatModel *model = [[JCHATChatModel alloc] init];
+    [model setChatModelWith:message conversationType:_conversation];
+    if (message.contentType == kJMSGContentTypeImage) {
+      [_imgDataArr addObject:model];
+    }
+    model.photoIndex = [_imgDataArr count] -1;
+    [self addmessageShowTimeData:message.timestamp];
+    model.sendFlag = YES;
+    model.readState = NO;
+    [self addMessage:model];
+  }));
+}
+
 - (void)onGroupInfoChanged:(JMSGGroup *)group {
   NSLog(@"huangmin group info changed  %@",group);
+  [self updateGroupConversationTittle:group];
 }
 
 #pragma marks -- UIAlertViewDelegate --

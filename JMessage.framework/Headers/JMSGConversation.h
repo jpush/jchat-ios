@@ -18,26 +18,27 @@
 
 
 /*!
- * @abstract 会话
+ * 会话
  *
- * @discussion 会话是整个 IM 的核心. 所有的消息行为都是基于"会话"的.
+ * 会话是整个 IM 的核心. 所有的消息行为都是基于"会话"的.
  *
  * 会话由会话类型, 会话对象组成. 比如: 与某username的单聊, 某个groupId的群聊.
  *
  * 几乎所有的消息行为, 都是由本类 JMSGConversation 提供的.
  *
- * JMSGMessage 上提供了部分, 是快捷方式的含义, 其背后还是依赖于会话的.
- * 提供这个快捷方式的目的在于: 某些非常简单的应用, 可能不必去理解"会话" 这个概念, 只是单地收发消息即可.
+ * JMSGMessage 上提供了部分消息相关 API, 是快捷方式的概念, 其背后还是依赖于会话的.
+ * 提供这个快捷方式的目的在于: 某些聊天场景简单的应用, 可能不必去理解"会话"这个概念, 只是简单地收发消息即可.
  *
  * 本类主要提供两类 API: 会话类, 消息类.
  */
 @interface JMSGConversation : NSObject
 
-///----------------------------------------------------
-/// @name Conversation Operations 会话相关操作（类方法）
-///----------------------------------------------------
-
 JMSG_ASSUME_NONNULL_BEGIN
+
+
+///----------------------------------------------------
+/// @name Conversation Operations 会话相关操作
+///----------------------------------------------------
 
 /*!
  * @abstract 获取单聊会话
@@ -58,7 +59,7 @@ JMSG_ASSUME_NONNULL_BEGIN
 + (JMSGConversation * JMSG_NULLABLE)groupConversationWithGroupId:(NSString *)groupId;
 
 /*!
- * @abstract 创建单聊会话（异步）
+ * @abstract 创建单聊会话
  *
  * @param username 单聊对象 username
  * @param handler 结果回调。正常返回时 resultObject 类型为 JMSGConversation。
@@ -71,7 +72,7 @@ JMSG_ASSUME_NONNULL_BEGIN
                            completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
- * @abstract 创建群聊会话（异步）
+ * @abstract 创建群聊会话
  *
  * @param groupId 群聊群组ID。由创建群组时返回。
  * @param handler 结果回调。正常返回时 resultObject 类型为 JMSGConversation。
@@ -120,7 +121,7 @@ JMSG_ASSUME_NONNULL_BEGIN
 
 /*!
  * @abstract 会话标题
- * @discussion 会话头像应通过 avatarData: 方法异步去获取。
+ * @discussion 会话头像没有属性字段, 应通过 avatarData: 方法异步去获取。
  */
 @property(nonatomic, strong, readonly) NSString * JMSG_NULLABLE title;
 
@@ -129,8 +130,9 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, strong, readonly) JMSGMessage * JMSG_NULLABLE latestMessage;
 
-/**
- * 未读数
+/*!
+ * @abstract 未读数
+ * @discussion 有新消息来时, SDK 会对未读数自动加 1
  */
 @property(nonatomic, strong, readonly) NSNumber * JMSG_NULLABLE unreadCount;
 
@@ -148,13 +150,14 @@ JMSG_ASSUME_NONNULL_BEGIN
 /*!
  * @abstract 聊天对象
  * @discussion 需要根据会话类型转型。单聊时转型为 JMSGUser，群聊时转型为 JMSGGroup
+ * 注意: 在会话列表上, 请不要使用此属性, 否则有性能问题.
  */
 @property(nonatomic, strong, readonly) id target;
 
 
 
 ///----------------------------------------------------
-/// @name Message Operations 消息相关操作（实例方法）
+/// @name Message Operations 消息相关操作
 ///----------------------------------------------------
 
 /*!
@@ -169,19 +172,21 @@ JMSG_ASSUME_NONNULL_BEGIN
 /*!
  * @abstract 同步分页获取最新的消息
  *
- * @offset 开始的位置。nil 表示从最初开始。
- * @limit 获取的数量。nil 表示不限。
+ * @param offset 开始的位置。nil 表示从最初开始。
+ * @param limit 获取的数量。nil 表示不限。
  *
  * @return 返回消息列表（数组）。数组成员的类型是 JMSGMessage*
  *
  * @discussion 排序规则是：最新
+ *
  * 参数举例：
+ *
  * - offset = nil, limit = nil，表示获取全部。相当于 allMessages。
  * - offset = nil, limit = 100，表示从最新开始取 100 条记录。
  * - offset = 100, limit = nil，表示从最新第 100 条开始，获取余下所有记录。
  */
-- (NSArray JMSG_GENERIC(__kindof JMSGMessage *)*)messageArrayFromNewestWithOffset:(NSNumber * JMSG_NULLABLE)offset
-                                                                   limit:(NSNumber * JMSG_NULLABLE)limit;
+- (NSArray JMSG_GENERIC(__kindof JMSGMessage *) *)messageArrayFromNewestWithOffset:(NSNumber *JMSG_NULLABLE)offset
+                                                                             limit:(NSNumber *JMSG_NULLABLE)limit;
 
 /*!
  * @abstract 异步获取所有消息记录
@@ -209,20 +214,28 @@ JMSG_ASSUME_NONNULL_BEGIN
  *
  * @discussion 这是推荐的创建新的消息拿到 JMSGMessage 对象接口。
  *
- * 此接口只是内存里创建对象，不会导致消息存储、文件落地保存的行为。发送消息时才会进行消息保存、文件落地。
+ * 此接口创建消息后, SDK 会进行落地, 包括: 消息保存数据库, 媒体文件保存到文件系统.
+ * 这意味着, 这个创建后的消息对象, App 可以用来放到 UI 上展示.
  *
- * 调用此接口前需要创建消息内容，以作为 content 参数传入。举例：
+ * 新创建的消息对象, 其消息状态 status 为: kJMSGMessageStatusSendDraft
  *
- * NSData *imageData = … (可能来自拍照或者相册）
- * JMSGImageContent *imageContent = [[JMSGImageContent alloc] initWithImageData:imageData];
+ * 调用此接口前需要先创建消息内容，以作为 content 参数传入。举例：
+ *
+ *    ```
+ *    NSData *imageData = … // 可能来自拍照或者相册
+ *    JMSGImageContent *imageContent = [[JMSGImageContent alloc] initWithImageData:imageData];
+ *    ```
  *
  * 另外更快捷的作法是，不通过此接口创建 JMSGMessage 而是直接调用具体的发送接口，如 sendSingleTextMessage.
  *
  * 通过此接口先创建 JMSGMessage 的好处是，可以对 JMSGMessage 做更多的定制控制，比如加附加字段。举例：
  *
- * [imageContent addExtraValue:@"extra_value" forKey:@"extra_key"]
+ *    ```
+ *    [imageContent addExtraValue:@"extra_value" forKey:@"extra_key"]
+ *    ```
  *
- * 注意：如果创建消息的内容是图片，并且图片可能比较大，则建议不要使用这个同步接口，改用 #createMessageForImageAysnc。
+ * 注意：如果创建消息的内容是图片，并且图片可能比较大，则建议不要使用这个同步接口，
+ * 改用 createMessageAsyncWithImageContent:completionHandler: 方法。
  */
 - (JMSGMessage * JMSG_NULLABLE)createMessageWithContent:(JMSGAbstractContent *)content;
 
@@ -233,7 +246,8 @@ JMSG_ASSUME_NONNULL_BEGIN
  *
  * @return JMSGMessage对象。该对象包含了 content。
  *
- * @discussion 对于图片消息，因为 SDK 要做缩图有一定的性能损耗，图片文件很大时存储落地也会较慢。所以创建图片消息，建议使用这个异步接口。
+ * @discussion 对于图片消息，因为 SDK 要做缩图有一定的性能损耗，图片文件很大时存储落地也会较慢。
+ * 所以创建图片消息，建议使用这个异步接口。
  */
 - (void)createMessageAsyncWithImageContent:(JMSGImageContent *)content
                          completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
@@ -276,12 +290,13 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @param handler 结果回调。正常返回时 resultObject 的类型是 NSData，即头像的数据。
  *
  * @discussion SDK会自动做一些策略，比如缓存。
+ * 建议在会话列表时, 使用此接口来显示会话的头像, 而不要使用 target 属性里的用户头像.
  */
 - (void)avatarData:(JMSGCompletionHandler)handler;
 
 
 ///----------------------------------------------------
-/// @name Conversation State Maintenance 会话状态维护（实例方法）
+/// @name Conversation State Maintenance 会话状态维护
 ///----------------------------------------------------
 
 /*!
@@ -326,6 +341,7 @@ JMSG_ASSUME_NONNULL_BEGIN
 ///----------------------------------------------------
 
 - (BOOL)isEqualToConversation:(JMSGConversation * JMSG_NULLABLE)conversation;
+
 
 JMSG_ASSUME_NONNULL_END
 @end

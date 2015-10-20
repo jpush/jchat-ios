@@ -16,9 +16,11 @@
 
 
 /*!
- * @abstract 群组
+ * 群组
  *
- * @discussion 群组表示一组用户
+ * 群组表示一组用户, 是群组聊天的聊天对象.
+ *
+ * 主要包含两类 API: 群组信息维护, 群组成员变更.
  */
 @interface JMSGGroup : NSObject
 
@@ -26,18 +28,19 @@ JMSG_ASSUME_NONNULL_BEGIN
 
 
 ///----------------------------------------------------
-/// @name Class methods 类方法
+/// @name Group Info Maintenance 群组信息维护
 ///----------------------------------------------------
 
 /*!
- * @abstract 创建群组。
+ * @abstract 创建群组
  *
  * @param groupName 群组名称
  * @param groupDesc 群组描述信息
  * @param usernameArray 初始成员列表。NSArray 里的类型是 NSString
- * @param handler 结果回调。正常时 resultObject 的类型是 JMSGGroup。
+ * @param handler 结果回调。正常返回 resultObject 的类型是 JMSGGroup。
  *
- * @discussion 向服务器端提交创建群组请求，服务器端会生成群组ID，可以基于这个ID做后续很多操作。
+ * @discussion 向服务器端提交创建群组请求，返回生成后的群组对象.
+ * 返回群组对象, 群组ID是App 需要关注的, 是后续各种群组维护的基础.
  */
 + (void)createGroupWithName:(NSString *)groupName
                        desc:(NSString *JMSG_NULLABLE)groupDesc
@@ -47,21 +50,24 @@ JMSG_ASSUME_NONNULL_BEGIN
 /*!
  * @abstract 更新群组信息
  *
- * @param groupName
- * @param handler       异步回调 Block。
- *         Handler 里 resultObject 是更新后的群组信息，其内容类型是 JMSGGroup。
+ * @param groupId 待更新的群组ID
+ * @param groupName 新名称
+ * @param groupDesc 新描述
+ * @param handler 结果回调. 正常返回时, resultObject 为 nil.
  */
 + (void)updateGroupInfoWithGroupId:(NSString *)groupId
                               name:(NSString *)groupName
                               desc:(NSString *)groupDesc
                  completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
-/**
- * 获取群组信息
+/*!
+ * @abstract 获取群组信息
  *
- * @param groupId 群组ID。
- * @param handler 异步回调 Block。
- *        handler 里 resultObject 是更新后的群组信息，其内容类型是 JMSGGroup。
+ * @param groupId 待获取详情的群组ID
+ * @param handler 结果回调. 正常返回时 resultObject 类型是 JMSGGroup.
+ *
+ * @discussion 该接口总是向服务器端发起请求, 即使本地已经存在.
+ * 如果考虑性能损耗, 在群聊时获取群组信息, 可以获取 JMSGConversation -> target 属性.
  */
 + (void)groupInfoWithGroupId:(NSString *)groupId
            completionHandler:(JMSGCompletionHandler)handler;
@@ -91,7 +97,7 @@ JMSG_ASSUME_NONNULL_BEGIN
 /*!
  * @abstract 群组名称
  *
- * @discussion 用于群组聊天的展示名称；以及向群组发消息时的 target_name
+ * @discussion 可用于群组聊天的展示名称
  */
 @property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE name;
 
@@ -122,48 +128,54 @@ JMSG_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, readonly) NSString *owner;
 
 
+///----------------------------------------------------
+/// @name Group members maintenance 群组成员维护
+///----------------------------------------------------
+
+
 /*!
  * @abstract 获取群组成员列表
  *
- * @param groupId 群组ID
- * @param handler 结果回调。正常返回时 resultObject 为 NSArray 类型，数组里的成员类型为 JMSGUser。
+ * @return 成员列表. NSArray 里成员类型是 JMSGUser.
  *
- * @discussion 一般在群组成员界面调用此接口，展示群组的所有成员列表。
+ * @discussion 一般在群组详情界面调用此接口，展示群组的所有成员列表。
  * 本接口只是在本地请求成员列表，不会发起服务器端请求。
  */
 - (NSArray JMSG_GENERIC(__kindof JMSGUser *)*)memberArray;
 
 /*!
- * @abstract 向群组中添加成员
+ * @abstract 添加群组成员
  *
- * @param usernameArray 用户名数组。数据里的成员类型是 NSString
+ * @param usernameArray 用户名数组。数组里的成员类型是 NSString
  * @param handler 结果回调。正常返回时 resultObject 为 nil.
  */
-- (void)addMembersFromUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
+- (void)addMembersWithUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *) *)usernameArray
                   completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
- * @abstract 删除群成员
+ * @abstract 删除群组成员
  *
- * @param usernameArray 元素是 username
+ * @param usernameArray 用户名数据. 数组里的成员类型是 NSString
  * @param handler 结果回调。正常返回时 resultObject 为 nil.
  */
-- (void)removeMembersFromUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
+- (void)removeMembersWithUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *) *)usernameArray
                      completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
- * @abstract 我退出当前群组
+ * @abstract 退出当前群组(当前用户)
  *
  * @param handler 结果回调。正常返回时 resultObject 为 nil。
  */
 - (void)exit:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
- * @abstract 群组的展示名
+ * @abstract 获取群组的展示名
  *
- * @discussion 如果 group_name 存在则就是 group_name。否则返回 “群聊”（中文）。
+ * @discussion 如果 group.name 为空, 则此接口会拼接群组前 5 个成员的展示名返回.
  */
 - (NSString *)displayName;
+
+- (BOOL)isMyselfGroupMember;
 
 - (BOOL)isEqualToGroup:(JMSGGroup * JMSG_NULLABLE)group;
 

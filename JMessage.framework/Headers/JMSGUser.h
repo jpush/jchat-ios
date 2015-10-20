@@ -35,9 +35,7 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
 
 
 /*!
- * @abstract 用户
- *
- * @discussion 表征一个用户
+ * 用户
  */
 @interface JMSGUser : NSObject <NSCopying>
 
@@ -49,33 +47,35 @@ JMSG_ASSUME_NONNULL_BEGIN
 ///----------------------------------------------------
 
 /*!
- * @abstract 用户注册接口
+ * @abstract 新用户注册
  *
- * @param username 用户注册用户名
- * @param password 用户注册密码
- * @param handler  用户注册回调接口函数
+ * @param username 用户名. 长度 4~128 位.
+ *                 支持的字符: 字母,数字,下划线,英文减号,英文点,@邮件符号. 首字母只允许是字母或者数字.
+ * @param password 用户密码. 长度 4~128 位.
+ * @param completionhandler 结果回调. 返回正常时 resultObject 为 nil.
  */
 + (void)registerWithUsername:(NSString *)username
                     password:(NSString *)password
            completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
- * @abstract 用户登录接口
+ * @abstract 用户登录
  *
- * @param username 用户登录用户名
- * @param password 用户登录密码
- * @param handler  用户登录回调接口
+ * @param username 登录用户名. 规则与注册接口相同.
+ * @param password 登录密码. 规则与注册接口相同.
+ * @param completionHandler 结果回调. 正常返回时 resultOjbect 为 nil.
  */
 + (void)loginWithUsername:(NSString *)username
                  password:(NSString *)password
         completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
- * @abstract 退出登录
+ * @abstract 当前用户退出登录
  *
- * @param handler 结果回调。正常返回时 resultObject 也是 nil。
+ * @param completionHandler 结果回调。正常返回时 resultObject 也是 nil。
  *
- * @discussion 这个接口一般总是返回成功，即使背后与服务器端通讯失败，客户端也总是会退出登录的。
+ * @discussion 这个接口一般总是返回成功，即使背后与服务器端通讯失败，SDK 也总是会退出登录的。
+ * 建议 App 也不必确认 SDK 返回, 就实际退出登录状态.
  */
 + (void)logout:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
@@ -107,7 +107,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @param handler       用户注册回调接口函数
  */
 + (void)updateMyInfoWithParameter:(id)parameter
-                             type:(JMSGUserField)type
+                    userFieldType:(JMSGUserField)type
                 completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
