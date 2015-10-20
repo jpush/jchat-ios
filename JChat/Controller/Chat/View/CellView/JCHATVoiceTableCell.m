@@ -315,9 +315,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
               if (data != nil) {
                 self.model.mediaData = data;
                 self.model.messageStatus = kJMSGMessageStatusReceiveSucceed;
-                status =  @"下载语音成功";
-                [self playVoice];
-                [MBProgressHUD showMessage:status view:self];
+//                status =  @"下载语音成功";
+//                [self playVoice];
+//                [MBProgressHUD showMessage:status view:self];
               }
             }else {
               DDLogDebug(@"Action  voiceData");

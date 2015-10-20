@@ -39,7 +39,7 @@
 
 /*! JMessage SDK 版本号。用于展示 SDK 的版本信息 */
 #define JMESSAGE_VERSION @"1.1.0"
-#define JMESSAGE_BUILD   @"499"
+#define JMESSAGE_BUILD   @"500"
 
 /*! API Version - Int for program logic */
 extern NSInteger const JMESSAGE_API_VERSION;

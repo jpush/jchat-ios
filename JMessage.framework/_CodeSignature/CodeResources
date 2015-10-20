@@ -34,7 +34,7 @@
 		</data>
 		<key>Headers/JMSGGroupDelegate.h</key>
 		<data>
-		GtddsMDTZBHaH7/lAHG4POspn1g=
+		MexHgxiXUKNhZnaW1bJ45d4LNT0=
 		</data>
 		<key>Headers/JMSGImageContent.h</key>
 		<data>
@@ -52,10 +52,6 @@
 		<data>
 		8yavVCujj0rY6SyjGBv1LmB0tjE=
 		</data>
-		<key>Headers/JMSGMessageOperation.h</key>
-		<data>
-		9BK0Tm4ogvLelF+84kbmuyPk/U8=
-		</data>
 		<key>Headers/JMSGTextContent.h</key>
 		<data>
 		SnSEBYF+l9fk1KjQjy5UHHVFPVw=
@@ -64,17 +60,21 @@
 		<data>
 		48vHdQLzpGhfXbWX0V16NKuoddk=
 		</data>
+		<key>Headers/JMSGUserDelegate.h</key>
+		<data>
+		G/TOfhTFNKj6ZHgOxmYU72Zha0E=
+		</data>
 		<key>Headers/JMSGVoiceContent.h</key>
 		<data>
 		ZJMj4Dm4ZPoqQHITONC1fGjhhzE=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		/OGTD+cYq2O7QpgQCc67RYE1MAs=
+		38E04DAxk3Auzl/YkrtyVFkTETE=
 		</data>
 		<key>Headers/JMessageDelegate.h</key>
 		<data>
-		cJR46PBirXoBLyj1w5UL2UWH9dw=
+		FwL3sqVDoM1aAhTOO1228E8FG/o=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>
@@ -121,7 +121,7 @@
 		</data>
 		<key>Headers/JMSGGroupDelegate.h</key>
 		<data>
-		GtddsMDTZBHaH7/lAHG4POspn1g=
+		MexHgxiXUKNhZnaW1bJ45d4LNT0=
 		</data>
 		<key>Headers/JMSGImageContent.h</key>
 		<data>
@@ -139,10 +139,6 @@
 		<data>
 		8yavVCujj0rY6SyjGBv1LmB0tjE=
 		</data>
-		<key>Headers/JMSGMessageOperation.h</key>
-		<data>
-		9BK0Tm4ogvLelF+84kbmuyPk/U8=
-		</data>
 		<key>Headers/JMSGTextContent.h</key>
 		<data>
 		SnSEBYF+l9fk1KjQjy5UHHVFPVw=
@@ -151,17 +147,21 @@
 		<data>
 		48vHdQLzpGhfXbWX0V16NKuoddk=
 		</data>
+		<key>Headers/JMSGUserDelegate.h</key>
+		<data>
+		G/TOfhTFNKj6ZHgOxmYU72Zha0E=
+		</data>
 		<key>Headers/JMSGVoiceContent.h</key>
 		<data>
 		ZJMj4Dm4ZPoqQHITONC1fGjhhzE=
 		</data>
 		<key>Headers/JMessage.h</key>
 		<data>
-		/OGTD+cYq2O7QpgQCc67RYE1MAs=
+		38E04DAxk3Auzl/YkrtyVFkTETE=
 		</data>
 		<key>Headers/JMessageDelegate.h</key>
 		<data>
-		cJR46PBirXoBLyj1w5UL2UWH9dw=
+		FwL3sqVDoM1aAhTOO1228E8FG/o=
 		</data>
 		<key>Headers/JPUSHService.h</key>
 		<data>

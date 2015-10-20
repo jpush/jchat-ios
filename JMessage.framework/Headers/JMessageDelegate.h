@@ -13,6 +13,7 @@
 #import <JMessage/JMSGMessageDelegate.h>
 #import <JMessage/JMSGConversationDelegate.h>
 #import <JMessage/JMSGGroupDelegate.h>
+#import <JMessage/JMSGUserDelegate.h>
 
 /*!
  * 全局代理协议
@@ -62,6 +63,7 @@
  */
 @protocol JMessageDelegate <JMSGMessageDelegate,
                             JMSGConversationDelegate,
-                            JMSGGroupDelegate>
+                            JMSGGroupDelegate,
+                            JMSGUserDelegate>
 
 @end
