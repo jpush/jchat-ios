@@ -12,186 +12,123 @@
 #import <Foundation/Foundation.h>
 #import <JMessage/JMSGConstants.h>
 
-/*!
- * @abstract 更新用户字段
- */
-typedef NS_ENUM(NSUInteger, JMSGUserField) {
-  kJMSGUserFieldsNickname = 0,
-  kJMSGUserFieldsBirthday = 1,
-  kJMSGUserFieldsSignature = 2,
-  kJMSGUserFieldsGender = 3,
-  kJMSGUserFieldsRegion = 4,
-  kJMSGUserFieldsAvatar = 5,
+/**
+*  更新用户信息类型Enum
+*/
+typedef NS_ENUM(NSUInteger, JMSGUpdateUserInfoType) {
+  kJMSGNickname  = 0,//别名
+  kJMSGBirthday  = 1,//生日
+  kJMSGSignature = 2,//个性签名
+  kJMSGGender    = 3,//性别
+  kJMSGRegion    = 4,//地区
+  kJMSGAvatar    = 5,//个人头像
 };
 
-/*!
- * @abstract 用户性别
+/**
+ *  性别Enum
  */
-typedef NS_ENUM(NSUInteger, JMSGUserGender) {
-  kJMSGUserGenderUnknown = 0,
-  kJMSGUserGenderMale,
-  kJMSGUserGenderFemale,
+typedef NS_ENUM(NSUInteger, JMSGUserGender){
+  kJMSGUnknown = 0,
+  kJMSGMale,
+  kJMSGFemale,
 };
 
 
-@interface JMSGUser : NSObject <NSCopying>
+@interface JMSGUser : NSObject <NSCopying, NSCoding>
 
-JMSG_ASSUME_NONNULL_BEGIN
+ @property (atomic,strong, readonly) NSString *address;
+ @property (atomic,strong, readonly) NSString *avatarResourcePath;
+ @property (atomic,strong, readonly) NSString *avatarThumbPath;
+ @property (atomic,strong, readonly) NSString *birthday;
+ @property (atomic,assign, readonly) JMSGUserGender userGender;
+ @property (atomic,strong, readonly) NSString *cTime;
 
-///----------------------------------------------------
-/// @name Class Methods 类方法
-///----------------------------------------------------
+ @property (atomic,assign, readonly) NSInteger star;
+ @property (atomic,assign, readonly) NSInteger blackList;
+ @property (atomic,strong, readonly) NSString *region;
+ @property (atomic,strong, readonly) NSString *nickname;
+ @property (atomic,strong, readonly) NSString *noteName;
+ @property (atomic,strong, readonly) NSString *noteText;
+ @property (atomic,strong, readonly) NSString *signature;
+ @property (atomic,assign, readonly) SInt64    uid;
+ @property (atomic,strong, readonly) NSString *username;
+ @property (atomic,strong, readonly) NSString *password;
 
 /**
-*  用户注册接口
-*
-*  @param username      用户注册用户名
-*  @param password      用户注册密码
-*  @param handler       用户注册回调接口函数
-*/
-+ (void)registerWithUsername:(NSString *)username
-                    password:(NSString *)password
-           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
-
-/**
-*  用户登录接口
-*
-*  @param username      用户登录用户名
-*  @param password      用户登录密码
-*  @param handler       用户登录回调接口
-*/
+ *  用户登录接口
+ *
+ *  @param username      用户名。定义参照注册接口。
+ *  @param password      用户密码。定义参照注册接口。
+ *  @param handler       结果回调。resultObject值不需要关心,始终为nil
+ */
 + (void)loginWithUsername:(NSString *)username
                  password:(NSString *)password
-        completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
-
-/*!
- @abstract 退出登录
-
- @param handler 结果回调。正常返回时 resultObject 也是 nil。
-
- @discussion 这个接口一般总是返回成功，即使背后与服务器端通讯失败，客户端也总是会退出登录的。
- */
-+ (void)logout:(JMSGCompletionHandler JMSG_NULLABLE)handler;
-
-/*!
- @abstract 批量获取用户信息
-
- @param usernameArray 用户名列表。NSArray 里的数据类型为 NSString
- @param handler 结果回调。正常返回时 resultObject 的类型为 NSArray，数组里的数据类型为 JMSGUser
-
- @discussion 这是一个批量接口。
- */
-+ (void)userInfoArrayWithUsernameArray:(NSArray JMSG_GENERIC(__kindof NSString *)*)usernameArray
-                     completionHandler:(JMSGCompletionHandler)handler;
-
+        completionHandler:(JMSGCompletionHandler)handler;
 
 /**
-*  获取用户本身个人信息接口
-*
-*  @return 当前登陆账号个人信息
-*/
-+ (JMSGUser *)myInfo;
+ *  用户注册接口
+ *
+ *  @param username      用户名，或者说用户帐号。长度 4~128 位，支持的字符：字母、数字、下划线、英文减号、英文点、@符号，首字母只允许是字母或者数字。
+ *  @param password      用户密码。长度 4~128 位，字符不限。
+ *  @param handler       结果回调。resultObject值不需要关心,始终为nil
+ */
++ (void)registerWithUsername:(NSString *)username
+                    password:(NSString *)password
+           completionHandler:(JMSGCompletionHandler)handler;
 
 /**
-*  更新用户信息接口
-*
-*  @param parameter     新的属性值
-          Birthday&&Gender 是NSNumber类型, Avatar NSData类型 其他 NSString
-*  @param type          更新属性类型
-*  @param handler       用户注册回调接口函数
-*/
+ *  用户登出接口
+ *
+ *  @param handler       结果回调。resultObject值不需要关心,始终为nil
+ */
++ (void)logoutWithCompletionHandler:(JMSGCompletionHandler)handler;
+
+/**
+ *  获取用户信息接口
+ *
+ *  @param username      用户名
+ *  @param handler       结果回调。resultObject对象类型为JMSGUser。
+ */
++ (void)getUserInfoWithUsername:(NSString *)username
+              completionHandler:(JMSGCompletionHandler)handler;
+
+/**
+ *  获取用户本身个人信息接口
+ *
+ *  @return 当前登陆账号个人信息
+ */
+ + (JMSGUser *)getMyInfo;
+
+/**
+ *  获取头像原始图片
+ *
+ *  @param  userInfo      需要获取头像的用户信息(可以通过getUserInfo接口获取)
+ *  @param  handler       结果回调。resultObject对象为JMSGUser类型,通过avatarResourcePath属性获取下载图片绝对路径
+ *
+ */
++ (void)getOriginAvatarImage:(JMSGUser *)userInfo
+           completionHandler:(JMSGCompletionHandler)handler;
+
+/**
+ *  更新用户信息接口
+ *
+ *  @param parameter     更新的值。kJMSGGender性别类型，需要传入JMSGUserGender包装成NSNumber的对象，更新头像需要传入NSData类型的parameter,其他类型传NSString类型的对象。
+ *  @param type          更新属性类型,这是一个 enum 类型
+ *  @param handler       结果回调。resultObject值不需要关心,始终为nil
+ */
 + (void)updateMyInfoWithParameter:(id)parameter
-                             type:(JMSGUserField)type
-                completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+                         withType:(JMSGUpdateUserInfoType)type
+                completionHandler:(JMSGCompletionHandler)handler;
 
 /**
-*  更新密码接口
-*
-*  @param newPassword   用户新的密码
-*  @param oldPassword   用户旧的密码
-*  @param handler       用户注册回调接口函数
-*/
-+ (void)updateMyPasswordWithNewPassword:(NSString *)newPassword
-                            oldPassword:(NSString *)oldPassword
-                      completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
-
-
-
-
-///----------------------------------------------------
-/// @name Basic Fields 基本属性
-///----------------------------------------------------
-
-
-/*!
- @abstract 用户名
-
- @discussion 这是用户帐号，注册后不可变更。App 级别唯一。这是所有用户相关 API 的用户标识。
+ *  更新密码接口
+ *
+ *  @param newPassword   用户新的密码,长度 4~128 位，字符不限。
+ *  @param oldPassword   用户旧的密码,长度 4~128 位，字符不限。
+ *  @param handler       结果回调。resultObject值不需要关心,始终为nil
  */
-@property(nonatomic, copy, readonly) NSString *username;
-
-/*!
- @abstract 用户昵称
-
- @discussion 用户自定义的昵称，可任意定义。
- */
-@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE nickname;
-
-/*!
- @abstract 用户头像（媒体文件ID）
-
- @discussion 此文件ID仅用于内部更新，不支持外部URL。
- */
-@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE avatar;
-
-/*!
- @abstract 性别
-
- @discussion 这是一个 enum 类型，支持 3 个选项：未知，男，女
- */
-@property(nonatomic, assign, readonly) JMSGUserGender gender;
-
-/*!
- * @abstract 生日
- */
-@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE birthday;
-
-@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE region;
-
-@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE signature;
-
-
-/*!
- @abstract 获取头像缩略图文件数据
-
- @param handler 结果回调。resultObject 是缩略图文件数据，类型是 NSData.
- resultObject 返回 nil, 并且 error 也为 nil (没有出错) 时, 表示用户没有头像.
-
- @discussion 需要展示缩略图时使用。
- 如果本地已经有文件，则会返回本地，否则会从服务器上下载。
- */
-- (void)thumbAvatarData:(JMSGAsyncDataHandler)handler;
-
-/*!
- @abstract 获取头像大图文件数据
-
- @param handler 结果回调。resultObject 是缩略图文件数据，类型是 NSData
- resultObject 返回 nil, 并且 error 也为 nil (没有出错) 时, 表示用户没有头像.
-
- @discussion 需要展示大图图时使用
- 如果本地已经有文件，则会返回本地，否则会从服务器上下载。
- */
-- (void)largeAvatarData:(JMSGAsyncDataHandler)handler;
-
-/*!
- @abstract 用户展示名
-
- @discussion 如果 nickname 存在则返回 nickname，否则返回 username
- */
-- (NSString *)displayName;
-
-- (BOOL)isEqualToUser:(JMSGUser * JMSG_NULLABLE)user;
-
-JMSG_ASSUME_NONNULL_END
++ (void)updatePasswordWithNewPassword:(NSString *)newPassword
+                          oldPassword:(NSString *)oldPassword
+                    completionHandler:(JMSGCompletionHandler)handler;
 
 @end
