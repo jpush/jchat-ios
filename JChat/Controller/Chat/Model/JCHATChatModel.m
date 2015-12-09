@@ -10,70 +10,187 @@
 #import "JChatConstants.h"
 #define headHeight 46
 
+static NSInteger const voiceBubbleHeight = 50;
+
 @implementation JCHATChatModel
 - (instancetype)init
 {
   self = [super init];
   if (self) {
-    self.readState=NO;
-    self.sendFlag =YES;
-    self.isSending = NO;
+    _isTime = NO;
   }
   return self;
 }
 
--(float )getTextHeight {
-  if (self.type == kJMSGTextMessage || self.type == kJMSGEventMessage || self.type == kJMSGTimeMessage) {
-    UIFont *font =[UIFont systemFontOfSize:18];
-    CGSize maxSize = CGSizeMake(200, 2000);
-    
-    NSMutableParagraphStyle *paragraphStyle= [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    CGSize realSize = [self.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
-    //        CGSize realSize =[self.chatContent sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize imgSize =realSize;
-    imgSize.height=realSize.height+20;
-    imgSize.width=realSize.width+2*15;
-    return imgSize.height;
-  }else{
-    return CGSizeZero.height;
+- (void)setChatModelWith:(JMSGMessage *)message conversationType:(JMSGConversation *)conversation {
+  _message = message;
+  _messageTime = message.timestamp;
+  
+  switch (message.contentType) {
+    case kJMSGContentTypeUnknown:
+    {
+      if (message.content == nil) {
+        [self getTextHeight];
+      }
+    }
+      break;
+    case kJMSGContentTypeText:
+    {
+      [self getTextHeight];
+    }
+      break;
+    case kJMSGContentTypeImage:
+    {
+      
+      [((JMSGImageContent *)message.content) thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
+        if (error == nil) {
+          [self setupImageSize];
+        } else {
+          DDLogDebug(@"get thumbImageData fail,with error %@",error);
+        }
+      }];
+    }
+      break;
+    case kJMSGContentTypeVoice:
+    {
+      [self setupVoiceSize:((JMSGVoiceContent *)message.content).duration];
+      [((JMSGVoiceContent *)message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
+        if (error == nil) {
+        } else {
+          DDLogDebug(@"get message voiceData fail with error %@",error);
+        }
+      }];
+    }
+      break;
+    case kJMSGContentTypeEventNotification:
+    {
+    }
+      break;
+    default:
+      break;
   }
+  
+  [self getTextHeight];
 }
 
+- (void)setErrorMessageChatModelWithError:(NSError *)error{
+  _isErrorMessage = YES;
+  _messageError = error;
+  [self getTextSizeWithString:st_receiveErrorMessageDes];
+}
 
-
--(CGSize)getImageSize {
-
-  UIImage *img;
-  if ([[NSFileManager defaultManager] fileExistsAtPath:self.pictureThumbImgPath]) {
-    img = [UIImage imageWithContentsOfFile:self.pictureThumbImgPath];
-  }else if (self.mediaData) {
-    img = [UIImage imageWithData:self.mediaData];
-  }else {
-    img = [UIImage imageNamed:@"receiveFail.png"];
-    return img.size;
+- (float)getTextHeight {
+  switch (self.message.contentType) {
+    case kJMSGContentTypeUnknown:
+    {
+      [self getTextSizeWithString:st_receiveUnknowMessageDes];
+    }
+      break;
+    case kJMSGContentTypeText:
+    {
+      [self getTextSizeWithString:((JMSGTextContent *)self.message.content).text];
+    }
+      break;
+    case kJMSGContentTypeImage:
+    {
+    }
+      break;
+    case kJMSGContentTypeVoice:
+    {
+    }
+      break;
+    case kJMSGContentTypeEventNotification:
+    {
+      [self getTextSizeWithString:[((JMSGEventContent *)self.message.content) showEventNotification]];
+    }
+      break;
+    default:
+      break;
   }
-  float imgHeight;
-  float imgWidth;
-//  if (IS_IPHONE_6P) {
-//    imgHeight = img.size.height / 3;
-//    imgWidth = img.size.width /3;
-//  } else {
-//    imgHeight = img.size.height / 2 ;
-//    imgWidth = img.size.width /2;
-//  }
+  
+  return self.contentHeight;
+}
 
-  if (img.size.height >= img.size.width) {
-    imgHeight = 135;
-    imgWidth = (img.size.width/img.size.height) *imgHeight;
-  }else {
-    imgWidth = 135;
-    imgHeight = (img.size.height/img.size.width) *imgWidth;
-  }
-  if ((imgWidth > imgHeight?imgHeight/imgWidth:imgWidth/imgHeight)<0.47) {
-    return imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);//CGSizeMake(55, 135);
-  }
-  return  CGSizeMake(imgWidth, imgHeight);
+- (CGSize)getTextSizeWithString:(NSString *)string {
+  CGSize maxSize = CGSizeMake(200, 2000);
+  UIFont *font =[UIFont systemFontOfSize:18];
+  NSMutableParagraphStyle *paragraphStyle= [[NSMutableParagraphStyle alloc] init];
+  CGSize realSize = [string boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
+  CGSize imgSize =realSize;
+  imgSize.height=realSize.height+20;
+  imgSize.width=realSize.width+2*15;
+  _contentSize = imgSize;
+  _contentHeight = _contentSize.height;
+  return imgSize;
+}
 
+- (void)setupImageSize {
+  if (self.message.status == kJMSGMessageStatusReceiveDownloadFailed) {
+    _contentSize = CGSizeMake(77, 57);
+    return;
+  }
+  
+  [((JMSGImageContent *)self.message.content) thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
+    if (error == nil) {
+      UIImage *img = [UIImage imageWithData:data];
+      float imgHeight;
+      float imgWidth;
+      
+      if (img.size.height >= img.size.width) {
+        imgHeight = 135;
+        imgWidth = (img.size.width/img.size.height) *imgHeight;
+      } else {
+        imgWidth = 135;
+        imgHeight = (img.size.height/img.size.width) *imgWidth;
+      }
+      
+      if ((imgWidth > imgHeight?imgHeight/imgWidth:imgWidth/imgHeight)<0.47) {
+        self.imageSize = imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);//
+        _contentSize = imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);
+        return;
+      }
+      self.imageSize = CGSizeMake(imgWidth, imgHeight);
+      _contentSize = CGSizeMake(imgWidth, imgHeight);
+    } else {
+      NSLog(@"get thumbImageData fail with error %@",error);
+    }
+  }];
+}
+
+- (float)getLengthWithDuration:(NSInteger)duration {
+  NSInteger voiceBubbleWidth = 0;
+  
+  if (duration <= 2) {
+    voiceBubbleWidth = 60;
+  } else if (duration >2 && duration <=20) {
+    voiceBubbleWidth = 60 + 2.5 * duration;
+  } else if (duration > 20 && duration < 30){
+    voiceBubbleWidth = 110 + 2 * (duration - 20);
+  } else if (duration >30  && duration < 60) {
+    voiceBubbleWidth = 130 + 1 * (duration - 30);
+  } else {
+    voiceBubbleWidth = 160;
+  }
+  
+  _contentSize = CGSizeMake(voiceBubbleWidth, voiceBubbleHeight);
+  return voiceBubbleWidth;
+}
+
+- (void)setupVoiceSize:(NSNumber *)timeduration {
+  NSInteger voiceBubbleWidth = 0;
+  NSInteger duration = [timeduration integerValue];
+  
+  if (duration <= 2) {
+    voiceBubbleWidth = 60;
+  } else if (duration >2 && duration <=20) {
+    voiceBubbleWidth = 60 + 2.5 * duration;
+  } else if (duration > 20 && duration < 30){
+    voiceBubbleWidth = 110 + 2 * (duration - 20);
+  } else if (duration >30  && duration < 60) {
+    voiceBubbleWidth = 130 + 1 * (duration - 30);
+  } else {
+    voiceBubbleWidth = 160;
+  }
+  _contentSize = CGSizeMake(voiceBubbleWidth, voiceBubbleHeight);
 }
 @end

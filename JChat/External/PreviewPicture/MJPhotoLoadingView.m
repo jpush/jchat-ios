@@ -64,5 +64,6 @@
     if (progress >= 1.0) {
         [_progressView removeFromSuperview];
     }
+  [self setNeedsDisplay];
 }
 @end

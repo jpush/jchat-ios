@@ -21,6 +21,14 @@
     }
 }
 
+- (void)managerAudioWithData:(NSData *)data toplay:(BOOL)toPlay {
+  if (toPlay) {
+    [self playAudioWithData:data];
+  } else {
+    [self pausePlayingAudio];
+  }
+}
+
 //暂停
 - (void)pausePlayingAudio {
     if (_player) {
@@ -70,16 +78,44 @@
              NSString *wavName = [amrName stringByReplacingOccurrencesOfString:@"wavToAmr" withString:@"amrToWav"];
              AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[XHVoiceCommonHelper getPathByFileName:fileName ofType:@"wav"]] error:nil];
              */
-            AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName] error:nil];
+          
+          NSError *error = [[NSError alloc] init];
+          if(fileName.length){
+            AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName] error:&error];
             pl.delegate = self;
             [pl play];
             self.player = pl;
+          }
             [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
             if ([self.delegate respondsToSelector:@selector(didAudioPlayerBeginPlay:)]) {
                 [self.delegate didAudioPlayerBeginPlay:_player];
             }
         }
         self.playingFileName = fileName;
+    }
+}
+
+- (void)playAudioWithData:(NSData *)voiceData {
+  if (voiceData != nil) {
+    
+    //不随着静音键和屏幕关闭而静音。code by Aevit
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    
+      if (_player) {
+        [_player stop];
+        self.player = nil;
+      }
+    
+      NSError *error = [[NSError alloc] init];
+      AVAudioPlayer *pl = [[AVAudioPlayer alloc] initWithData:voiceData error:&error];
+        pl.delegate = self;
+        [pl play];
+        self.player = pl;
+
+      [[UIDevice currentDevice] setProximityMonitoringEnabled:YES];
+      if ([self.delegate respondsToSelector:@selector(didAudioPlayerBeginPlay:)]) {
+        [self.delegate didAudioPlayerBeginPlay:_player];
+      }
     }
 }
 

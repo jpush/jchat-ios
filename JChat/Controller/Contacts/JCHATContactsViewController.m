@@ -9,7 +9,6 @@
 #import "JCHATContactsViewController.h"
 #import "JCHATAddViewController.h"
 #import "JChatConstants.h"
-#import <JMessage/JMessage.h>
 
 
 @interface JCHATContactsViewController ()
@@ -44,25 +43,16 @@
     searchDisplayController.searchResultsDataSource = self;
     // searchResultsDelegate 就是 UITableViewDelegate
     searchDisplayController.searchResultsDelegate = self;
-    self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-    self.navigationController.navigationBar.alpha=1;
+
     self.title=@"通讯录";
-    NSShadow *shadow = [[NSShadow alloc]init];
-    shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-    shadow.shadowOffset = CGSizeMake(0,0);
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                                     shadow, NSShadowAttributeName,
-                                                                     [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
-                                                                     nil]];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 0;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 0;
 }
@@ -115,17 +105,17 @@
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
 }
 
 
 
--(void)perFormAdd :(UIButton *)btn
+- (void)perFormAdd :(UIButton *)btn
 {
-    JCHATAddViewController *addFriends =[[JCHATAddViewController alloc] init];
-    [self.navigationController pushViewController:addFriends animated:YES];
+  JCHATAddViewController *addFriends = [[JCHATAddViewController alloc] init];
+  [self.navigationController pushViewController:addFriends animated:YES];
 }
 
 

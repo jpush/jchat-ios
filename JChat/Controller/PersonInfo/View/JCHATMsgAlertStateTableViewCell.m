@@ -12,7 +12,7 @@
 @implementation JCHATMsgAlertStateTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+  // Initialization code
   [self.titleMain setTextColor:UIColorFromRGB(0x000000)];
   [self.title1 setTextColor:UIColorFromRGB(0xa4a4a4)];
   [self.stateLable setTextColor:UIColorFromRGB(0xa4a2a3)];
@@ -23,9 +23,9 @@
   
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+  [super setSelected:selected animated:animated];
+  
+  // Configure the view for the selected state
 }
 
 @end

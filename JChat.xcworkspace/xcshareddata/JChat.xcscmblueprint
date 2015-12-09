@@ -7,14 +7,12 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "396435B0827D44B283A1A15290817D95EFFC201D" : 0,
-    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : 0,
-    "A83EBE245521919BB8D9678E5D9DF376C73A7F30" : 0
+    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : 0
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "63FABCA1-2E17-49C5-8CAC-B5BCDFD70566",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7CC404CF-6B62-4A74-BD7F-13A07CFA183E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "396435B0827D44B283A1A15290817D95EFFC201D" : "jchat-ios",
-    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : "jchat-iosJChat\/External\/MBProgressHUD",
-    "A83EBE245521919BB8D9678E5D9DF376C73A7F30" : "JMessageFramework"
+    "396435B0827D44B283A1A15290817D95EFFC201D" : "jchat-ios\/",
+    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : "jchat-ios\/JChat\/External\/MBProgressHUD\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "JChat",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -24,11 +22,6 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jpush\/jchat-ios.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "396435B0827D44B283A1A15290817D95EFFC201D"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/ssh-gitlab.jpushoa.com\/sdk\/ios-im.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A83EBE245521919BB8D9678E5D9DF376C73A7F30"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/168.168.1.183\/svn\/iOS",

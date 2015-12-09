@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface JCHATPersonInfoCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UITextField *personInfoConten;
+@property (weak, nonatomic) IBOutlet UILabel *personInfoConten;
 @property (weak, nonatomic) IBOutlet UILabel *infoTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *titleImgView;
-
+@property (weak, nonatomic) IBOutlet UIView *baseLine;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "JCHATAboutViewController.h"
-#import <JMessage/JMessage.h>
 
 @interface JCHATAboutViewController ()
 
@@ -16,26 +15,27 @@
 @implementation JCHATAboutViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
   _JChatVersion.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
   _JMessageVersion.text = JMESSAGE_VERSION;
-  _JMessageBuild.text   = JMESSAGE_BUILD;
+  _JMessageBuild.text   = [NSString stringWithFormat:@"%d", JMESSAGE_BUILD];
+  
   _JChatBuild.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

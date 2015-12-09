@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="JCHATGroupDetailFooterReusableView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群聊名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZH-yI-AwQ">
+                    <rect key="frame" x="9" y="17" width="150" height="15"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="TAm-TS-xnF"/>
+                        <constraint firstAttribute="height" constant="15" id="XP8-Xd-ON1"/>
+                        <constraint firstAttribute="height" constant="21" id="vpp-IY-nz9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="vpp-IY-nz9"/>
+                        </mask>
+                    </variation>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jiantou.png" translatesAutoresizingMaskIntoConstraints="NO" id="wQh-hC-oHM">
+                    <rect key="frame" x="304" y="18" width="8" height="13"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="8" id="cO3-PH-514"/>
+                        <constraint firstAttribute="height" constant="13" id="oeN-hI-af8"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZSM-yF-CnV">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="r0g-Zo-5k8"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YB8-dk-x4H">
+                    <rect key="frame" x="179" y="17" width="117" height="15"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="6GR-cB-yAg"/>
+                        <constraint firstAttribute="width" constant="42" id="J1E-sr-Lhs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="J1E-sr-Lhs"/>
+                        </mask>
+                    </variation>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2J-MC-JvV">
+                    <rect key="frame" x="20" y="5" width="280" height="40"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.96081479057591623" green="0.0" blue="0.0098653245311797148" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="ib1-Wo-Ny2"/>
+                    </constraints>
+                    <state key="normal" title="删除并退出">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" title="删除并退出">
+                        <color key="titleColor" red="1" green="0.95615263355864255" blue="0.95928410172498235" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="clickToQuitGroup:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="NAf-Ie-a6P"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <constraints>
+                <constraint firstItem="YB8-dk-x4H" firstAttribute="leading" secondItem="2ZH-yI-AwQ" secondAttribute="trailing" constant="20" id="D4x-CA-x5l"/>
+                <constraint firstAttribute="trailing" secondItem="ZSM-yF-CnV" secondAttribute="trailing" id="DxT-MX-1RW"/>
+                <constraint firstItem="b2J-MC-JvV" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="FmQ-w2-1pd"/>
+                <constraint firstAttribute="trailing" secondItem="b2J-MC-JvV" secondAttribute="trailing" constant="20" id="IJO-TL-xql"/>
+                <constraint firstItem="wQh-hC-oHM" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="INH-oD-abt"/>
+                <constraint firstItem="2ZH-yI-AwQ" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="IrR-LO-tfr"/>
+                <constraint firstItem="2ZH-yI-AwQ" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="9" id="K9P-SM-zcP"/>
+                <constraint firstItem="ZSM-yF-CnV" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="MdL-BK-0UP"/>
+                <constraint firstItem="wQh-hC-oHM" firstAttribute="leading" secondItem="YB8-dk-x4H" secondAttribute="trailing" constant="8" id="SSW-M5-QML"/>
+                <constraint firstItem="wQh-hC-oHM" firstAttribute="leading" secondItem="b2J-MC-JvV" secondAttribute="trailing" constant="20" id="ZZy-Ts-gAS"/>
+                <constraint firstItem="ZSM-yF-CnV" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="hfQ-cf-tLk"/>
+                <constraint firstItem="b2J-MC-JvV" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="20" id="hwo-93-Har"/>
+                <constraint firstItem="YB8-dk-x4H" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="u4v-I7-diN"/>
+                <constraint firstAttribute="trailing" secondItem="wQh-hC-oHM" secondAttribute="trailing" constant="8" id="xZD-HU-i6S"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="ZZy-Ts-gAS"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="arrow" destination="wQh-hC-oHM" id="lYA-7k-hLp"/>
+                <outlet property="footerTittle" destination="2ZH-yI-AwQ" id="GW0-zu-f1h"/>
+                <outlet property="quitGroupBtn" destination="b2J-MC-JvV" id="2cC-Xg-c6u"/>
+                <outlet property="userName" destination="YB8-dk-x4H" id="6LP-tO-ZEp"/>
+            </connections>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="jiantou.png" width="8" height="13"/>
+    </resources>
+</document>

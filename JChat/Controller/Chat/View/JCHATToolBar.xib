@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATSendMessageViewController"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATChatViewController"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JCHATToolBar">
             <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
@@ -13,6 +13,7 @@
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rpU-3b-2dD" customClass="JCHATMessageTextView">
                     <rect key="frame" x="47" y="8" width="235" height="31"/>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="KNP-M4-PJ8"/>
@@ -22,6 +23,7 @@
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VuO-mV-udy">
                     <rect key="frame" x="290" y="10" width="22" height="22"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="22" id="2Wr-HL-v6u"/>
                         <constraint firstAttribute="height" constant="22" id="V4b-qe-SqG"/>
@@ -36,6 +38,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCs-zm-hKL">
                     <rect key="frame" x="8" y="10" width="31" height="27"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="hqn-mr-WwU"/>
                         <constraint firstAttribute="width" constant="31" id="pq5-AN-2Np"/>
@@ -48,6 +51,7 @@
                     </connections>
                 </button>
             </subviews>
+            <animations/>
             <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="VuO-mV-udy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="FB0-LK-lnP"/>
@@ -75,9 +79,4 @@
         <image name="add01.png" width="27" height="27"/>
         <image name="add01_pre" width="22" height="22"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

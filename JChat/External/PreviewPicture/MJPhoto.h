@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "JCHATChatModel.h"
-#import <JMessage/JMessage.h>
+
 @interface MJPhoto : NSObject
 @property (nonatomic, strong) NSURL *url;
 @property (nonatomic, strong) UIImage *image; // 完整的图片

@@ -10,7 +10,6 @@
 #import "SDWebImageManager+MJ.h"
 #import "MJPhotoView.h"
 #import "MJPhotoToolbar.h"
-#import <JMessage/JMessage.h>
 #import "JChatConstants.h"
 //#define kPadding 10
 #define kPadding 0
@@ -73,8 +72,6 @@
 - (void)createToolbar
 {
     CGFloat barHeight = 44;
-    
-//    CGFloat barHeight = 0;
     CGFloat barY = self.view.frame.size.height - barHeight;
     _toolbar = [[MJPhotoToolbar alloc] init];
     _toolbar.Delegate = self;
@@ -118,14 +115,14 @@
   DDLogDebug(@"_progress=  %f", _progress.fractionCompleted);
 }
 
--(void)DeleteThisImage:(NSInteger)ThisImageIndex {
+- (void)DeleteThisImage:(NSInteger)ThisImageIndex {
     NSLog(@"ThisImageIndex---%ld", (long)ThisImageIndex );
     NSLog(@"_currentPhotoIndex---%lu", (unsigned long)_currentPhotoIndex );
     if ( ThisImageIndex == 0 ) {
         _currentPhotoIndex = 1;
-    }else if ( ThisImageIndex == _currentPhotoIndex ) {
+    } else if ( ThisImageIndex == _currentPhotoIndex ) {
         _currentPhotoIndex = _currentPhotoIndex - 1;
-    }else{
+    } else{
         _currentPhotoIndex = _currentPhotoIndex - 1;
     }
     [_photos removeObjectAtIndex: ThisImageIndex];
@@ -150,20 +147,19 @@
     _photoScrollView.contentOffset = CGPointMake(_currentPhotoIndex * frame.size.width, 0);
 }
 
-- (void)setPhotos:(NSMutableArray *)photos
-{
-    _photos = photos;
-    
-    if (photos.count > 1) {
-        _visiblePhotoViews = [NSMutableSet set];
-        _reusablePhotoViews = [NSMutableSet set];
-    }
-    
-    for (int i = 0; i<_photos.count; i++) {
-        MJPhoto *photo = _photos[i];
-        photo.index = i;
-        photo.firstShow = i == _currentPhotoIndex;
-    }
+- (void)setPhotos:(NSMutableArray *)photos {
+  _photos = photos;
+  
+  if (photos.count > 1) {
+    _visiblePhotoViews = [NSMutableSet set];
+    _reusablePhotoViews = [NSMutableSet set];
+  }
+  
+  for (int i = 0; i<_photos.count; i++) {
+    MJPhoto *photo = _photos[i];
+    photo.index = i;
+    photo.firstShow = i == _currentPhotoIndex;
+  }
 }
 
 #pragma mark 设置选中的图片
@@ -237,6 +233,7 @@
         photoViewIndex = kPhotoViewIndex(photoView);
 		if (photoViewIndex < firstIndex || photoViewIndex > lastIndex) {
 			[_reusablePhotoViews addObject:photoView];
+      photoView.photo.image = nil;
 			[photoView removeFromSuperview];
 		}
 	}
@@ -256,6 +253,9 @@
 #pragma mark 显示一个图片view
 - (void)showPhotoViewAtIndex:(int)index
 {
+  if (index < 0 || [_photos count] < index + 1) {
+    return;
+  }
     MJPhotoView *photoView = [self dequeueReusablePhotoView];
     if (!photoView) { // 添加新的图片view
         photoView = [[MJPhotoView alloc] init];
@@ -324,5 +324,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	[self showPhotos];
     [self updateTollbarState];
+
 }
+
 @end

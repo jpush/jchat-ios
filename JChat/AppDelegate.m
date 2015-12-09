@@ -1,81 +1,112 @@
 #import "AppDelegate.h"
 #import "JCHATLoginViewController.h"
-#import "JCHATChatViewController.h"
+#import "JCHATConversationListViewController.h"
 #import "JCHATContactsViewController.h"
 #import "JCHATUserInfoViewController.h"
 #import "JCHATFileManager.h"
-#import "MobClick.h"
+
 #import "JCHATCustomFormatter.h"
 #import "JCHATStringUtils.h"
 #import "JCHATAlreadyLoginViewController.h"
-#import <JMessage/JMessage.h>
+
 
 @implementation AppDelegate
 
 
-- (BOOL)          application:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [self initLogger];
-  TICK;
-
-  DDLogInfo(@"Action - didFinishLaunchingWithOptions");
 
   // init third-party SDK
+  [JMessage addDelegate:self withConversation:nil];
+  
   [JMessage setupJMessage:launchOptions
                    appKey:JMSSAGE_APPKEY
                   channel:CHANNEL apsForProduction:NO
                  category:nil];
-
+  
   [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                     UIUserNotificationTypeSound |
                                                     UIUserNotificationTypeAlert)
                                         categories:nil];
-
   [self registerJPushStatusNotification];
-
-  [self umengTrack];
-
-
+  
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
   [self.window makeKeyAndVisible];
-
-  [self initTheMainGTablebar];
-  [self initRootView];
+  [self setupMainTabBar];
+  [self setupRootView];
+  
   [JCHATFileManager initWithFilePath];//demo 初始化存储路径
-  TOCK(@"App init");
+  
   return YES;
 }
 
-- (void)initRootView {
+- (void)setupRootView {
   if ([[NSUserDefaults standardUserDefaults] objectForKey:kuserName]) {
-    self.tabBarCtl.loginIdentify = kHaveLogin;
-    self.window.rootViewController = self.tabBarCtl;
+    _tabBarCtl.loginIdentify = kHaveLogin;
+    self.window.rootViewController = _tabBarCtl;
   } else {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]) {
-      JCHATAlreadyLoginViewController *rLoginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+      JCHATAlreadyLoginViewController *rLoginCtl = [[JCHATAlreadyLoginViewController alloc] init];//TODO:
       UINavigationController *nvrLoginCtl = [[UINavigationController alloc] initWithRootViewController:rLoginCtl];
       nvrLoginCtl.navigationBar.tintColor = kNavigationBarColor;
-      
-      
       self.window.rootViewController = nvrLoginCtl;
-    }else {
+    } else {
       JCHATLoginViewController *rootCtl = [[JCHATLoginViewController alloc] initWithNibName:@"JCHATLoginViewController" bundle:nil];
-      UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:rootCtl];
-      navLogin.navigationBar.tintColor = kNavigationBarColor;
-      self.window.rootViewController = navLogin;
-      
+      UINavigationController *navLoginVC = [[UINavigationController alloc] initWithRootViewController:rootCtl];
+      navLoginVC.navigationBar.tintColor = kNavigationBarColor;
+      self.window.rootViewController = navLoginVC;
     }
   }
+      
   [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x3f80de)];
-  if([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) {
-
-  }else {
+  if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
     [[UINavigationBar appearance] setTranslucent:NO];
   }
-
+  
+  NSShadow* shadow = [NSShadow new];
+  shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
+  [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                          NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                          NSFontAttributeName: [UIFont boldSystemFontOfSize:20],
+                                                          NSShadowAttributeName: shadow
+                                                          }];
   [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-  [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];
+}
+
+#pragma - mark JMessageDelegate
+- (void)onLoginUserKicked {
+  UIAlertView *alertView =[[UIAlertView alloc] initWithTitle:@"登录状态出错"
+                                                     message:@"你已在别的设备上登录!"
+                                                    delegate:self
+                                           cancelButtonTitle:nil
+                                           otherButtonTitles:@"确定", nil];
+  alertView.tag = 1200;
+  [alertView show];
+}
+
+- (void)onDBMigrateStart {
+  NSLog(@"onDBmigrateStart in appdelegate");
+  _isDBMigrating = YES;
+}
+
+- (void)onDBMigrateFinishedWithError:(NSError *)error {
+  NSLog(@"onDBmigrateFinish in appdelegate");
+  _isDBMigrating = NO;
+  [[NSNotificationCenter defaultCenter] postNotificationName:kDBMigrateFinishNotification object:nil];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+  [JMSGUser logout:^(id resultObject, NSError *error) {
+    NSLog(@"Logout callback with - %@", error);
+  }];
+  JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+  loginCtl.hidesBottomBarWhenPushed = YES;
+  UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+  self.window.rootViewController = navLogin;
+  return;
 }
 
 - (void)registerJPushStatusNotification {
@@ -118,7 +149,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Apple System
   [[DDASLLogger sharedInstance] setLogFormatter:formatter];
   [DDLog addLogger:[DDASLLogger sharedInstance]];
-
   DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
   fileLogger.rollingFrequency = 60 * 60 * 24; // 一个LogFile的有效期长，有效期内Log都会写入该LogFile
   fileLogger.logFileManager.maximumNumberOfLogFiles = 7;//最多LogFile的数量
@@ -225,12 +255,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   DDLogInfo(@"Action - didRegisterForRemoteNotificationsWithDeviceToken");
-
-  [NSString stringWithFormat:@"%@", deviceToken];
-  [UIColor colorWithRed:0.0 / 255
-                  green:122.0 / 255
-                   blue:255.0 / 255
-                  alpha:1];
   DDLogVerbose(@"Got Device Token - %@", deviceToken);
 
   [JPUSHService registerDeviceToken:deviceToken];
@@ -287,18 +311,14 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
 didReceiveRemoteNotification:(NSDictionary *)userInfo
       fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
   DDLogDebug(@"Action - didReceiveRemoteNotification:fetchCompletionHandler");
-
   [JPUSHService handleRemoteNotification:userInfo];
-
   DDLogVerbose(@"收到通知 - %@", [JCHATStringUtils dictionary2String:userInfo]);
-
   completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
   DDLogDebug(@"Action - didReceiveLocalNotification");
-
   [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 
@@ -306,68 +326,43 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 // ---------- end of JPUSH
 
 
-
-- (void)sendApnsNotificationSkipPage:(NSDictionary *)notificaton {
-  [[NSNotificationCenter defaultCenter] postNotificationName:KApnsNotification object:notificaton];
-}
-
 #pragma mark --初始化各个功能模块
--(void)initTheMainGTablebar {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
+- (void)setupMainTabBar {
   self.tabBarCtl =[[JCHATTabBarViewController alloc] init];
   self.tabBarCtl.loginIdentify = kFirstLogin;
-  NSArray *normalImageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"menu_25.png"],
-                               [UIImage imageNamed:@"menu_18.png"], [UIImage imageNamed:@"menu_13.png"], nil];
   
-  JCHATChatViewController *chatViewController = [[JCHATChatViewController alloc] initWithNibName:@"JCHATChatViewController"
-                                                                                          bundle:nil];
+  JCHATConversationListViewController *chatViewController = [[JCHATConversationListViewController alloc] initWithNibName:@"JCHATConversationListViewController" bundle:nil];
   UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewController];
 
   
-  /**
-   *  聊天
-   */
-  chatViewController.navigationItem.title = @"会话";
-  UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:@"会话"
-                                                        image:[normalImageArray objectAtIndex:0]
-                                                          tag:10];
-  [chatTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_25.png"]
-        withFinishedUnselectedImage:[UIImage imageNamed:@"menu_23.jpg"]];
+  //聊天
+  chatViewController.navigationItem.title = st_chatViewControllerTittle;
+  UITabBarItem *chatTab = [[UITabBarItem alloc] initWithTitle:st_chatViewControllerTittle image:[UIImage imageNamed:@"menu_25"] selectedImage:[UIImage imageNamed:@"menu_23"]];
+  chatTab.tag = st_chatTabTag;
   chatNav.tabBarItem = chatTab;
   
-  /**
-   * 联系人
-   */
+  //联系人
   JCHATContactsViewController *contactsViewController = [[JCHATContactsViewController alloc]
                                                          initWithNibName:@"JCHATContactsViewController" bundle:nil];
   UINavigationController *contactsNav = [[UINavigationController alloc]
                                          initWithRootViewController:contactsViewController];
   
-  contactsViewController.navigationItem.title=@"通讯录";
-  UITabBarItem *contractsTab = [[UITabBarItem alloc] initWithTitle:@"通讯录"
-                                                             image:[normalImageArray objectAtIndex:1]
-                                                               tag:11];
-  [contractsTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_18.png"]
-             withFinishedUnselectedImage:[UIImage imageNamed:@"menu_16.jpg"]];
-  contactsNav.tabBarItem = contractsTab;
+  contactsViewController.navigationItem.title=st_contactsTabTitle;
+  UITabBarItem *contactsTab = [[UITabBarItem alloc] initWithTitle:st_contactsTabTitle image:[UIImage imageNamed:@"menu_16"] selectedImage:[UIImage imageNamed:@"menu_16"]];
+  contactsTab.tag = st_contactsTabTag;
+  contactsNav.tabBarItem = contactsTab;
   
-  /**
-   * 设置
-   */
+  //设置
   JCHATUserInfoViewController *settingViewController = [[JCHATUserInfoViewController alloc]
                                                         initWithNibName:@"JCHATUserInfoViewController" bundle:nil];
   UINavigationController *settingNav = [[UINavigationController alloc]
                                         initWithRootViewController:settingViewController];
   
-  settingViewController.navigationItem.title=@"我";
-  UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:@"我"
-                                                           image:[normalImageArray objectAtIndex:2]
-                                                             tag:12];
-  [settingTab setFinishedSelectedImage:[UIImage imageNamed:@"menu_13.png"]
-           withFinishedUnselectedImage:[UIImage imageNamed:@"menu_12.jpg"]];
+  settingViewController.navigationItem.title = st_settingTabTitle;
+  UITabBarItem *settingTab = [[UITabBarItem alloc] initWithTitle:st_settingTabTitle image:[UIImage imageNamed:@"menu_13"] selectedImage:[UIImage imageNamed:@"menu_12"]];
+  settingTab.tag = st_contactsTabTag;
   settingNav.tabBarItem = settingTab;
-  
+  //TODO:uicolor define
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                      [UIColor colorWithRed:152/255.0 green:152/255.0 blue:152/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                      nil] forState:UIControlStateNormal];
@@ -375,9 +370,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                      titleHighlightedColor, NSForegroundColorAttributeName,
                                                      nil] forState:UIControlStateSelected];
-  UIImage* tabBarBackground = [UIImage imageNamed:@"bar"];
+  UIImage *tabBarBackground = [UIImage imageNamed:@"bar"];
+  
   [[UITabBar appearance] setBackgroundImage:[tabBarBackground resizableImageWithCapInsets:UIEdgeInsetsZero]];
-  //    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"selectItem"]];
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                      [UIColor grayColor], NSForegroundColorAttributeName,
                                                      nil] forState:UIControlStateNormal];
@@ -386,16 +381,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                                                      nil] forState:UIControlStateHighlighted];
   self.tabBarCtl.viewControllers = [NSArray arrayWithObjects:chatNav,contactsNav,settingNav,nil];
   self.tabBarCtl.navigationController.navigationItem.hidesBackButton = YES;
-#pragma clang diagnostic pop
-}
 
-- (void)umengTrack {
-    // [MobClick setCrashReportEnabled:NO]; // 如果不需要捕捉异常，注释掉此行
-    // [MobClick setLogEnabled:YES];  // 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
-    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy)REALTIME channelId:nil];
-    //   reportPolicy为枚举类型,可以为 REALTIME, BATCH, SENDDAILY, SENDWIFIONLY 几种
-    //   channelId 为NSString * 类型，channelId 为nil或@""时,默认会被被当作@"App Store"渠道
 }
 
 - (void)resetApplicationBadge {
@@ -406,7 +392,5 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
   [JPUSHService setBadge:badge];
 }
-
-
 
 @end

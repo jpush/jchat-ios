@@ -7,19 +7,18 @@
 //
 
 #import "JCHATAvatarView.h"
-#import <JMessage/JMessage.h>
 #import "JChatConstants.h"
 #import <Accelerate/Accelerate.h>
 #import "Masonry.h"
 @implementation JCHATAvatarView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+#define centerAvatarFrame CGRectMake(0, 0, 70, 70)
+#define avaterCenter CGPointMake(self.center.x, self.center.y-15)
+#define nameLabelFrame CGRectMake(0, 0, 100, 18)
+#define nameLableCenter CGPointMake(self.center.x, self.center.y+40)
+#define nameLableFont [UIFont fontWithName:@"helvetica" size:16]
+
+static CGFloat const blurLevel = 22.0f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
@@ -30,97 +29,124 @@
   return self;
 }
 
-
 - (void)awakeFromNib {
   [super awakeFromNib];
-  
-  
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-
-//    imageView = [[GPUImageView alloc] initWithFrame:frame];
-    imageView = [GPUImageView new];
-    imageView.contentMode = UIViewContentModeScaleAspectFill;
-    imageView.fillMode = UIViewContentModeScaleAspectFill;
-    imageView.clipsToBounds = YES;
-    [self addSubview:imageView];
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.right.mas_equalTo(self);
-      make.left.mas_equalTo(self);
-      make.top.mas_equalTo(self);
-      make.bottom.mas_equalTo(self);
-    }];
-
- 
-    self.centeraverter = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-    self.centeraverter.layer.cornerRadius = 35;
+    self.centeraverter = [[UIImageView alloc] initWithFrame:centerAvatarFrame];
+    self.centeraverter.layer.cornerRadius = self.centeraverter.frame.size.height/2;
     self.centeraverter.layer.masksToBounds = YES;
-    self.centeraverter.center = CGPointMake(self.center.x, self.center.y-15);
+    self.centeraverter.center = avaterCenter;
     self.centeraverter.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:self.centeraverter];
     
-    _nameLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 18)];
-    _nameLable.center = CGPointMake(self.center.x, self.center.y+40);
+    _nameLable = [[UILabel alloc] initWithFrame:nameLabelFrame];
+    _nameLable.center = nameLableCenter;
     _nameLable.backgroundColor = [UIColor clearColor];
-    _nameLable.font = [UIFont fontWithName:@"helvetica" size:16];
-//    _nameLable.text = @"小歪";
+    _nameLable.font = nameLableFont;
     _nameLable.textColor = [UIColor whiteColor];
     _nameLable.shadowColor = [UIColor grayColor];
     _nameLable.textAlignment = NSTextAlignmentCenter;
     _nameLable.shadowOffset = CGSizeMake(-1.0, 1.0);
-    JMSGUser *userinfo =  [JMSGUser getMyInfo];
+    JMSGUser *userinfo =  [JMSGUser myInfo];
     _nameLable.text = (userinfo.nickname ?userinfo.nickname:(userinfo.username?userinfo.username:@""));
-    
     [self addSubview:_nameLable];
   }
   return self;
 }
 
 - (void)updataNameLable {
-  JMSGUser *userinfo =  [JMSGUser getMyInfo];
+  JMSGUser *userinfo =  [JMSGUser myInfo];
   JPIMMAINTHEAD(^{
     _nameLable.text = (userinfo.nickname ?userinfo.nickname:(userinfo.username?userinfo.username:@""));
   });
 }
 
-
 - (void)setOriginImage:(UIImage *)originImage{
-  if(!originImage){
-    self.image = originImage;
-    return;
-  }
   self.centeraverter.image = originImage;
-
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    UIImage *inputImage = originImage; // The WID.jpg example is greater than 2048 pixels tall, so it fails on older devices
-    self.centeraverter.image = originImage;
-
-      sepiaFilter = [[GPUImageiOSBlurFilter alloc] init];
-      sepiaFilter.blurRadiusInPixels = 3.0f;
-
-      
-      GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:inputImage];
-      [picture addTarget:sepiaFilter];
-      [sepiaFilter addTarget:imageView];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-          // switch back to the main thread to update your UI
-     [picture processImage];
-     [imageView setNeedsDisplay];
-    });
-
-  });
-  
-
-  
+  [self performSelector:@selector(setBlurImage:) withObject:originImage afterDelay:0.01];
 }
 
+- (void)setBlurImage:(UIImage *) originImage{
+  self.image = [self blurryImage:originImage withBlurLevel:blurLevel];
+}
 
-
-
+- (UIImage *)blurryImage:(UIImage *)image withBlurLevel:(CGFloat)blur {
+  if (blur < 0.f || blur > 1.f) {
+    blur = 0.5f;
+  }
+  int boxSize = (int)(blur * 100);
+  boxSize = boxSize - (boxSize % 2) + 1;
+  
+  CGImageRef img = image.CGImage;
+  
+  vImage_Buffer inBuffer, outBuffer;
+  vImage_Error error;
+  
+  void *pixelBuffer;
+  
+  CGDataProviderRef inProvider = CGImageGetDataProvider(img);
+  CFDataRef inBitmapData = CGDataProviderCopyData(inProvider);
+  
+  inBuffer.width = CGImageGetWidth(img);
+  inBuffer.height = CGImageGetHeight(img);
+  inBuffer.rowBytes = CGImageGetBytesPerRow(img);
+  
+  inBuffer.data = (void*)CFDataGetBytePtr(inBitmapData);
+  
+  pixelBuffer = malloc(CGImageGetBytesPerRow(img) *
+                       CGImageGetHeight(img));
+  
+  if(pixelBuffer == NULL)
+    NSLog(@"No pixelbuffer");
+  
+  outBuffer.data = pixelBuffer;
+  outBuffer.width = CGImageGetWidth(img);
+  outBuffer.height = CGImageGetHeight(img);
+  outBuffer.rowBytes = CGImageGetBytesPerRow(img);
+  
+  error = vImageBoxConvolve_ARGB8888(&inBuffer,
+                                     &outBuffer,
+                                     NULL,
+                                     0,
+                                     0,
+                                     boxSize,
+                                     boxSize,
+                                     NULL,
+                                     kvImageEdgeExtend);
+  
+  
+  if (error) {
+    NSLog(@"error from convolution %ld", error);
+  }
+  
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  CGContextRef ctx = CGBitmapContextCreate(
+                                           outBuffer.data,
+                                           outBuffer.width,
+                                           outBuffer.height,
+                                           8,
+                                           outBuffer.rowBytes,
+                                           colorSpace,
+                                           kCGImageAlphaNoneSkipLast);
+  CGImageRef imageRef = CGBitmapContextCreateImage (ctx);
+  UIImage *returnImage = [UIImage imageWithCGImage:imageRef];
+  
+  //clean up
+  CGContextRelease(ctx);
+  CGColorSpaceRelease(colorSpace);
+  
+  free(pixelBuffer);
+  CFRelease(inBitmapData);
+  
+  CGColorSpaceRelease(colorSpace);
+  CGImageRelease(imageRef);
+  
+  return returnImage;
+}
 
 
 @end

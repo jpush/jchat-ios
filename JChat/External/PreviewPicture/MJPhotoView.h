@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <JMessage/JMessage.h>
+
 @class MJPhotoBrowser, MJPhoto, MJPhotoView;
 
 @protocol MJPhotoViewDelegate <NSObject>

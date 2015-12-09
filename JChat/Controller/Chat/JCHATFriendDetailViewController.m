@@ -10,183 +10,200 @@
 #import "JCHATPersonInfoCell.h"
 #import "JChatConstants.h"
 #import "JCHATFrIendDetailMessgeCell.h"
-#import "MBProgressHUD+Add.h"
-#import "MBProgressHUD.h"
-#import "JCHATSendMessageViewController.h"
-#import <JMessage/JMessage.h>
+#import "JCHATChatViewController.h"
+
+#define kSeparateline
 
 @interface JCHATFriendDetailViewController () {
-    NSArray *_titleArr;
-    NSArray *_imgArr;
-    NSMutableArray *_infoArr;
-    UILabel *_nameLabel;
-    UIImageView *_headView;
+  NSArray *_titleArr;
+  NSArray *_imgArr;
+  NSMutableArray *_infoArr;
+  UILabel *_nameLabel;
+  UIImageView *_headView;
 }
 @end
 
 @implementation JCHATFriendDetailViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    DDLogDebug(@"Action - viewDidLoad");
-    self.title = @"详细资料";
-    UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-    [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-    
-    self.detailTableView.dataSource = self;
-    self.detailTableView.delegate = self;
-    [self.detailTableView setBackgroundColor:[UIColor clearColor]];
-    self.detailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UIView *tableHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.detailTableView.frame.size.width, 150)];
-    [tableHeadView setBackgroundColor:[UIColor whiteColor]];
-    self.detailTableView.tableHeaderView = tableHeadView;
-    UILabel *line =[[UILabel alloc] initWithFrame:CGRectMake(0, 150-0.5,kApplicationWidth, 0.5)];
-    [line setBackgroundColor:UIColorFromRGB(0xd0d0cf)];
-    [tableHeadView addSubview:line];
-    
-    _headView =[[UIImageView alloc] initWithFrame:CGRectMake((kApplicationWidth - 70)/2, (150-70)/2, 70, 70)];
-    _headView.layer.cornerRadius = 35;
-    [_headView.layer setMasksToBounds:YES];
-
-    [_headView setBackgroundColor:[UIColor clearColor]];
-    [_headView setContentMode:UIViewContentModeScaleAspectFit];
-    [_headView.layer setMasksToBounds:YES];
-    [tableHeadView addSubview:_headView];
-    
-    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake((kApplicationWidth - 60)/2, 150-40, 60, 40)];
-    _nameLabel.textColor = [UIColor grayColor];
-    _nameLabel.font = [UIFont boldSystemFontOfSize:18];
-    _nameLabel.textAlignment =NSTextAlignmentCenter;
-    [tableHeadView addSubview:_nameLabel];
-    // Do any additional setup after loading the view from its nib.
-    [self loadUserInfoData];
-
+  [super viewDidLoad];
+  DDLogDebug(@"Action - viewDidLoad");
+  self.title = @"详细资料";
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:kNavigationLeftButtonRect];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
+  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  
+  _detailTableView.dataSource = self;
+  _detailTableView.delegate = self;
+  [_detailTableView setBackgroundColor:[UIColor clearColor]];
+  _detailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  UIView *tableHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.detailTableView.frame.size.width, 150)];
+  [tableHeadView setBackgroundColor:[UIColor whiteColor]];
+  _detailTableView.tableHeaderView = tableHeadView;
+  UILabel *separateline =[[UILabel alloc] initWithFrame:CGRectMake(0, 150-0.5,kApplicationWidth, 0.5)];
+  [separateline setBackgroundColor:UIColorFromRGB(0xd0d0cf)];
+  [tableHeadView addSubview:separateline];
+  
+  _headView =[[UIImageView alloc] initWithFrame:CGRectMake((kApplicationWidth - 70)/2, (150-70)/2, 70, 70)];
+  _headView.layer.cornerRadius = 35;
+  [_headView.layer setMasksToBounds:YES];
+  [_headView setBackgroundColor:[UIColor clearColor]];
+  [_headView setContentMode:UIViewContentModeScaleAspectFit];
+  [_headView.layer setMasksToBounds:YES];
+  [tableHeadView addSubview:_headView];
+  
+  _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake((kApplicationWidth - 60)/2, 150-40, 60, 40)];
+  _nameLabel.textColor = [UIColor grayColor];
+  _nameLabel.font = [UIFont boldSystemFontOfSize:18];
+  _nameLabel.textAlignment =NSTextAlignmentCenter;
+  [tableHeadView addSubview:_nameLabel];
+  [self loadUserInfoData];
 }
 
 - (void)loadUserInfoData {
-    _titleArr = @[@"性别",@"地区",@"个性签名"];
-    _imgArr = @[@"gender",@"location_21",@"signature"];
-    _infoArr = [[NSMutableArray alloc]init];
-    [MBProgressHUD showMessage:@"正在加载！" toView:self.view];
-    __weak __typeof(self)weakSelf = self;
-    [JMSGUser getUserInfoWithUsername:self.userInfo.username completionHandler:^(id resultObject, NSError *error) {
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (error) {
-            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
-            [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
-            return;
-        }
-        JMSGUser *user = resultObject;
-        if ([[NSFileManager defaultManager] fileExistsAtPath:user.avatarThumbPath]) {
-            [_headView setImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath]];
+  _titleArr = @[@"性别",@"地区",@"个性签名"];
+  _imgArr = @[@"gender",@"location_21",@"signature"];
+  _infoArr = [[NSMutableArray alloc]init];
+  [MBProgressHUD showMessage:@"正在加载！" toView:self.view];
+  __weak __typeof(self)weakSelf = self;
+  
+  [JMSGUser userInfoArrayWithUsernameArray:@[self.userInfo.username] completionHandler:^(id resultObject, NSError *error) {
+    __strong __typeof(weakSelf) strongSelf = weakSelf;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
+    if (error) {
+      [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
+      [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
+      return;
+    }
+    JMSGUser *user = resultObject[0];
+    [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+      if (error == nil) {
+        
+        if (data != nil) {
+          [_headView setImage:[UIImage imageWithData:data]];
         } else {
-            [_headView setImage:[UIImage imageNamed:@"headDefalt_34"]];
+          [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
         }
-        if (user.nickname) {
-            _nameLabel.text = user.nickname;
-        } else {
-            _nameLabel.text = user.username;
-        }
-        if (user.userGender == kJMSGUnknown) {
-            [_infoArr addObject:@"未知"];
-        } else if (user.userGender == kJMSGMale) {
-            [_infoArr addObject:@"男"];
-        } else {
-            [_infoArr addObject:@"女"];
-        }
-        if (user.region) {
-            [_infoArr addObject:user.region];
-        } else {
-            [_infoArr addObject:@""];
-        }
-        if (user.signature) {
-            [_infoArr addObject:user.signature];
-        } else {
-            [_infoArr addObject:@""];
-        }
-        [strongSelf.detailTableView reloadData];
+        
+      } else {
+        DDLogDebug(@"JCHATFriendDetailVC  thumbAvatarData fail");
+      }
     }];
-   }
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
+    
+    if (user.nickname) {
+      _nameLabel.text = user.nickname;
+    } else {
+      _nameLabel.text = user.username;
+    }
+    
+    if (user.gender == kJMSGUserGenderUnknown) {
+      [_infoArr addObject:@"未知"];
+    } else if (user.gender == kJMSGUserGenderMale) {
+      [_infoArr addObject:@"男"];
+    } else {
+      [_infoArr addObject:@"女"];
+    }
+    
+    if (user.region) {
+      [_infoArr addObject:user.region];
+    } else {
+      [_infoArr addObject:@""];
+    }
+    
+    if (user.signature) {
+      [_infoArr addObject:user.signature];
+    } else {
+      [_infoArr addObject:@""];
+    }
+    
+    [strongSelf.detailTableView reloadData];
+  }];
+  
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [_titleArr count] + 1;
+  return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+  return [_titleArr count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (indexPath.row == 3) {
-        static NSString *cellIdentifier = @"JCHATFrIendDetailMessgeCell";
-        JCHATFrIendDetailMessgeCell *cell = (JCHATFrIendDetailMessgeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATFrIendDetailMessgeCell" owner:self options:nil] lastObject];
-        }
-        cell.skipToSendMessage = self;
-        return cell;
-    }else {
-        static NSString *cellIdentifier = @"JCHATPersonInfoCell";
-        JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATPersonInfoCell" owner:self options:nil] lastObject];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.infoTitleLabel.text=[_titleArr objectAtIndex:indexPath.row];
-        if ([_infoArr count] >0) {
-            cell.personInfoConten.text=[_infoArr objectAtIndex:indexPath.row];
-        }
-        cell.titleImgView.image=[UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
-        return cell;
+  if (indexPath.row == 3) {
+    static NSString *cellIdentifier = @"JCHATFrIendDetailMessgeCell";
+    JCHATFrIendDetailMessgeCell *cell = (JCHATFrIendDetailMessgeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+      cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATFrIendDetailMessgeCell" owner:self options:nil] lastObject];
     }
+    
+    cell.skipToSendMessage = self;
+    return cell;
+  } else {
+    static NSString *cellIdentifier = @"JCHATPersonInfoCell";
+    JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+      cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATPersonInfoCell" owner:self options:nil] lastObject];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.infoTitleLabel.text=[_titleArr objectAtIndex:indexPath.row];
+    if ([_infoArr count] >0) {
+      cell.personInfoConten.text=[_infoArr objectAtIndex:indexPath.row];
+    }
+    
+    cell.titleImgView.image=[UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
+    return cell;
+  }
 }
 
 - (void)skipToSendMessage {
-    for (UIViewController *ctl in self.navigationController.childViewControllers) {
-        if ([ctl isKindOfClass:[JCHATSendMessageViewController class]]) {
-          if (self.isGroupFlag) {
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSkipToSingleChatViewState object:_userInfo];
-          }else {
-            [self.navigationController popToViewController:ctl animated:YES];
-          }
-        }
+  for (UIViewController *ctl in self.navigationController.childViewControllers) {
+    if ([ctl isKindOfClass:[JCHATChatViewController class]]) {
+      
+      if (self.isGroupFlag) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSkipToSingleChatViewState object:_userInfo];
+      } else {
+        [self.navigationController popToViewController:ctl animated:YES];
+      }
     }
+  }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 3) {
-        return 80;
-    }
-    return 57;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  if (indexPath.row == 3) {
+    return 80;
+  }
+  return 57;
 }
 
 - (void)backClick {
   [self.navigationController popViewControllerAnimated:YES];
-
+  
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

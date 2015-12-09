@@ -14,5 +14,5 @@
 @property (strong, nonatomic)  JCHATChatModel *model;
 
 - (void)setCellData :(JCHATChatModel *)model;
-
+- (void)layoutErrorMessage;
 @end

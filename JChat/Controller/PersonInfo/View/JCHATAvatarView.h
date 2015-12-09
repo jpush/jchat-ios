@@ -9,15 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "JChatConstants.h"
 #import "UIImageView+LBBlurredImage.h"
-#import "GPUImage/GPUImage.h"
+//#import "GPUImage/GPUImage.h"
 @interface JCHATAvatarView : UIImageView {
-  GPUImageView * imageView;
-  GPUImagePicture *sourcePicture;
-  GPUImageiOSBlurFilter *sepiaFilter;
+//  GPUImageView * imageView;
+//  GPUImagePicture *sourcePicture;
+//  GPUImageiOSBlurFilter *sepiaFilter;
+//  GPUImagePicture *picture;
 }
-@property(strong,nonatomic)UIImage *originImage;
-@property(strong,nonatomic)UIImageView *centeraverter;
-@property(strong,nonatomic)UILabel *nameLable;
+
+@property(strong, nonatomic)UIImage *originImage;
+@property(strong, nonatomic)UIImageView *centeraverter;
+@property(strong, nonatomic)UILabel *nameLable;
 - (void)updataNameLable;
-//- (UIImage *)blurryImage:(UIImage *)image withBlurLevel:(CGFloat)blur;
+
 @end

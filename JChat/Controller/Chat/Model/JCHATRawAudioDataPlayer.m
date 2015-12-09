@@ -25,169 +25,166 @@
 @synthesize isDataInputOver;
 
 - (id)init {
-    self = [super init];
-    if (self) {
-        mPcmData = [NSMutableData data];
-        readedBytes = 0;
-        pcmDataBuffer = malloc(EVERY_READ_LENGTH);
-        synlock = [[NSLock alloc] init];
-        emptyAudioQueueBufferIndexs = [NSMutableArray arrayWithCapacity:QUEUE_BUFFER_SIZE];
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    mPcmData = [NSMutableData data];
+    readedBytes = 0;
+    pcmDataBuffer = malloc(EVERY_READ_LENGTH);
+    synlock = [[NSLock alloc] init];
+    emptyAudioQueueBufferIndexs = [NSMutableArray arrayWithCapacity:QUEUE_BUFFER_SIZE];
+  }
+  return self;
 }
 
 - (void)prepare {
-    isDataInputOver = NO;
-    readedBytes = 0;
-    [emptyAudioQueueBufferIndexs removeAllObjects];
+  isDataInputOver = NO;
+  readedBytes = 0;
+  [emptyAudioQueueBufferIndexs removeAllObjects];
 }
 
--(void)startPlay {
-    [self initAudio];
-    [self prepare];
-    OSStatus status = AudioQueueStart(audioQueue, NULL);
-    if (status) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
-        return;
-    }
-    for(int i=0;i<QUEUE_BUFFER_SIZE;i++) {
-        [self readPCMAndPlay:audioQueue buffer:audioQueueBuffers[i]];
-    }
-    /*
-     audioQueue使用的是驱动回调方式，即通过AudioQueueEnqueueBuffer(outQ, outQB, 0, NULL);传入一个buff去播放，播放完buffer区后通过回调通知用户,
-     用户得到通知后再重新初始化buff去播放，周而复始,当然，可以使用多个buff提高效率(测试发现使用单个buff会小卡)
-     */
+- (void)startPlay {
+  [self initAudio];
+  [self prepare];
+  OSStatus status = AudioQueueStart(audioQueue, NULL);
+  if (status) {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
+    return;
+  }
+  for(int i=0;i<QUEUE_BUFFER_SIZE;i++) {
+    [self readPCMAndPlay:audioQueue buffer:audioQueueBuffers[i]];
+  }
+  /*
+   audioQueue使用的是驱动回调方式，即通过AudioQueueEnqueueBuffer(outQ, outQB, 0, NULL);传入一个buff去播放，播放完buffer区后通过回调通知用户,
+   用户得到通知后再重新初始化buff去播放，周而复始,当然，可以使用多个buff提高效率(测试发现使用单个buff会小卡)
+   */
 }
 
--(void)stopPlay {
-    AudioQueueStop(audioQueue, YES);
-    AudioQueueDispose(audioQueue, YES);
+- (void)stopPlay {
+  AudioQueueStop(audioQueue, YES);
+  AudioQueueDispose(audioQueue, YES);
 }
 
-
--(void)initAudio {
-    ///设置音频参数
-    audioDescription.mSampleRate = 8000;//采样率
-    audioDescription.mFormatID = kAudioFormatLinearPCM;
-    audioDescription.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
-    audioDescription.mChannelsPerFrame = 1;///单声道
-    audioDescription.mFramesPerPacket = 1;//每一个packet一侦数据
-    audioDescription.mBitsPerChannel = 16;//每个采样点16bit量化
-    audioDescription.mBytesPerFrame = (audioDescription.mBitsPerChannel/8) * audioDescription.mChannelsPerFrame;
-    audioDescription.mBytesPerPacket = audioDescription.mBytesPerFrame ;
-    ///创建一个新的从audioqueue到硬件层的通道
-    //  AudioQueueNewOutput(&audioDescription, AudioPlayerAQInputCallback, self, CFRunLoopGetCurrent(), kCFRunLoopCommonModes, 0, &audioQueue);///使用当前线程播
-    AudioQueueNewOutput(&audioDescription, AudioPlayerAQInputCallback, (__bridge void *)(self), nil, nil, 0, &audioQueue);//使用player的内部线程播
-    
-    ////添加buffer区
-    for(int i=0;i<QUEUE_BUFFER_SIZE;i++) {
-        int result =  AudioQueueAllocateBuffer(audioQueue, MIN_SIZE_PER_FRAME, &audioQueueBuffers[i]);///创建buffer区，MIN_SIZE_PER_FRAME为每一侦所需要的最小的大小，该大小应该比每次往buffer里写的最大的一次还大
-        JPIMLog(@"AudioQueueAllocateBuffer i = %d,result = %d",i,result);
-    }
+- (void)initAudio {
+  ///设置音频参数
+  audioDescription.mSampleRate = 8000;//采样率
+  audioDescription.mFormatID = kAudioFormatLinearPCM;
+  audioDescription.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+  audioDescription.mChannelsPerFrame = 1;///单声道
+  audioDescription.mFramesPerPacket = 1;//每一个packet一侦数据
+  audioDescription.mBitsPerChannel = 16;//每个采样点16bit量化
+  audioDescription.mBytesPerFrame = (audioDescription.mBitsPerChannel/8) * audioDescription.mChannelsPerFrame;
+  audioDescription.mBytesPerPacket = audioDescription.mBytesPerFrame ;
+  ///创建一个新的从audioqueue到硬件层的通道
+  //  AudioQueueNewOutput(&audioDescription, AudioPlayerAQInputCallback, self, CFRunLoopGetCurrent(), kCFRunLoopCommonModes, 0, &audioQueue);///使用当前线程播
+  AudioQueueNewOutput(&audioDescription, AudioPlayerAQInputCallback, (__bridge void *)(self), nil, nil, 0, &audioQueue);//使用player的内部线程播
+  
+  ////添加buffer区
+  for(int i=0;i<QUEUE_BUFFER_SIZE;i++) {
+    int result =  AudioQueueAllocateBuffer(audioQueue, MIN_SIZE_PER_FRAME, &audioQueueBuffers[i]);///创建buffer区，MIN_SIZE_PER_FRAME为每一侦所需要的最小的大小，该大小应该比每次往buffer里写的最大的一次还大
+    JPIMLog(@"AudioQueueAllocateBuffer i = %d,result = %d",i,result);
+  }
 }
 
 - (void)inputNewDataFromBuffer:(Byte *)buffer size:(int)bufferSize {
-    [synlock lock];
-    [mPcmData appendBytes:buffer length:bufferSize];
-    [synlock unlock];
-    
-    if ([emptyAudioQueueBufferIndexs count] > 0) {      //如果有空闲的audio queue buffer就尝试填入
-        [self readPCMAndPlay:audioQueue buffer:audioQueueBuffers[[[emptyAudioQueueBufferIndexs objectAtIndex:0] intValue]]];
-    }
-    
+  [synlock lock];
+  [mPcmData appendBytes:buffer length:bufferSize];
+  [synlock unlock];
+  
+  if ([emptyAudioQueueBufferIndexs count] > 0) {      //如果有空闲的audio queue buffer就尝试填入
+    [self readPCMAndPlay:audioQueue buffer:audioQueueBuffers[[[emptyAudioQueueBufferIndexs objectAtIndex:0] intValue]]];
+  }
+  
 }
 
 - (void)setIsDataInputOver:(BOOL)dataInputOver {
-    isDataInputOver = dataInputOver;
-    if (dataInputOver) {
-        if ([emptyAudioQueueBufferIndexs count] == QUEUE_BUFFER_SIZE) {
-            JPIMLog(@"audio queue play over");
-            [self stopPlay];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
-        }
+  isDataInputOver = dataInputOver;
+  if (dataInputOver) {
+    if ([emptyAudioQueueBufferIndexs count] == QUEUE_BUFFER_SIZE) {
+      JPIMLog(@"audio queue play over");
+      [self stopPlay];
+      [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
     }
+  }
 }
 
--(void)readPCMAndPlay:(AudioQueueRef)outQ buffer:(AudioQueueBufferRef)outQB
+- (void)readPCMAndPlay:(AudioQueueRef)outQ buffer:(AudioQueueBufferRef)outQB
 {
-    [synlock lock];
-    
-    NSUInteger lengthLeft = [mPcmData length] - readedBytes;   //能够读取的数据长度
-    if ((lengthLeft < EVERY_READ_LENGTH) && ( ! isDataInputOver)) {     //数据不足以填充queue buffer
-        [self putEmptyBuffer:outQB];
-    }
-    else {
-        if ([emptyAudioQueueBufferIndexs count] > 0) {
-            if (lengthLeft == 0 && isDataInputOver) {
-                //所有数据都输入并且读取完了
-                if ([emptyAudioQueueBufferIndexs count] == QUEUE_BUFFER_SIZE) {
-                    NSLog(@"audio queue play over");
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
-                }
-            }
-            else {
-                [self removeEmptyBuffer:outQB];
-                
-                NSUInteger readLength = (lengthLeft > EVERY_READ_LENGTH) ? EVERY_READ_LENGTH : lengthLeft;
-                outQB->mAudioDataByteSize = (int)readLength;
-                Byte *audioData = (Byte *)outQB->mAudioData;
-                memcpy(audioData, [mPcmData bytes] + readedBytes, readLength);
-                readedBytes += readLength;
-                /*
-                 将创建的buffer区添加到audioqueue里播放
-                 AudioQueueBufferRef用来缓存待播放的数据区，AudioQueueBufferRef有两个比较重要的参数，AudioQueueBufferRef->mAudioDataByteSize用来指示数据区大小，AudioQueueBufferRef->mAudioData用来保存数据区
-                 */
-                AudioQueueEnqueueBuffer(outQ, outQB, 0, NULL);
-            }
-            
+  [synlock lock];
+  
+  NSUInteger lengthLeft = [mPcmData length] - readedBytes;   //能够读取的数据长度
+  if ((lengthLeft < EVERY_READ_LENGTH) && ( ! isDataInputOver)) {     //数据不足以填充queue buffer
+    [self putEmptyBuffer:outQB];
+  }
+  else {
+    if ([emptyAudioQueueBufferIndexs count] > 0) {
+      if (lengthLeft == 0 && isDataInputOver) {
+        //所有数据都输入并且读取完了
+        if ([emptyAudioQueueBufferIndexs count] == QUEUE_BUFFER_SIZE) {
+          NSLog(@"audio queue play over");
+          [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PLAY_OVER object:nil];
         }
+      } else {
+        [self removeEmptyBuffer:outQB];
+        NSUInteger readLength = (lengthLeft > EVERY_READ_LENGTH) ? EVERY_READ_LENGTH : lengthLeft;
+        outQB->mAudioDataByteSize = (int)readLength;
+        Byte *audioData = (Byte *)outQB->mAudioData;
+        memcpy(audioData, [mPcmData bytes] + readedBytes, readLength);
+        readedBytes += readLength;
+        /*
+         将创建的buffer区添加到audioqueue里播放
+         AudioQueueBufferRef用来缓存待播放的数据区，AudioQueueBufferRef有两个比较重要的参数，AudioQueueBufferRef->mAudioDataByteSize用来指示数据区大小，AudioQueueBufferRef->mAudioData用来保存数据区
+         */
+        AudioQueueEnqueueBuffer(outQ, outQB, 0, NULL);
+      }
+      
     }
-    [synlock unlock];
+  }
+  [synlock unlock];
 }
 
 - (void)putEmptyBuffer:(AudioQueueBufferRef)buffer {
-    BOOL isInArray = NO;
-    int indexValue = [self checkUsedQueueBuffer:buffer];
-    for (NSNumber *index in emptyAudioQueueBufferIndexs) {
-        if ([index intValue] == indexValue) {
-            isInArray = YES;
-        }
+  BOOL isInArray = NO;
+  int indexValue = [self checkUsedQueueBuffer:buffer];
+  for (NSNumber *index in emptyAudioQueueBufferIndexs) {
+    if ([index intValue] == indexValue) {
+      isInArray = YES;
     }
-    if ( ! isInArray) {
-        [emptyAudioQueueBufferIndexs addObject:[NSNumber numberWithInt:indexValue]];
-    }
+  }
+  if ( ! isInArray) {
+    [emptyAudioQueueBufferIndexs addObject:[NSNumber numberWithInt:indexValue]];
+  }
 }
 
 - (void)removeEmptyBuffer:(AudioQueueBufferRef)buffer {
-    int indexValue = [self checkUsedQueueBuffer:buffer];
-    for (NSNumber *index in emptyAudioQueueBufferIndexs) {
-        if ([index intValue] == indexValue) {
-            [emptyAudioQueueBufferIndexs removeObject:index];
-            return;
-        }
+  int indexValue = [self checkUsedQueueBuffer:buffer];
+  for (NSNumber *index in emptyAudioQueueBufferIndexs) {
+    if ([index intValue] == indexValue) {
+      [emptyAudioQueueBufferIndexs removeObject:index];
+      return;
     }
+  }
 }
 
--(int)checkUsedQueueBuffer:(AudioQueueBufferRef) qbuf {
-    int bufferIndex = 0;
-    if(qbuf == audioQueueBuffers[0]) {
-        bufferIndex = 0;
-    }
-    if(qbuf == audioQueueBuffers[1]) {
-        bufferIndex = 1;
-    }
-    if(qbuf == audioQueueBuffers[2]) {
-        bufferIndex = 2;
-    }
-    if(qbuf == audioQueueBuffers[3]) {
-        bufferIndex = 3;
-    }
-    return bufferIndex;
+- (int)checkUsedQueueBuffer:(AudioQueueBufferRef) qbuf {
+  int bufferIndex = 0;
+  if(qbuf == audioQueueBuffers[0]) {
+    bufferIndex = 0;
+  }
+  if(qbuf == audioQueueBuffers[1]) {
+    bufferIndex = 1;
+  }
+  if(qbuf == audioQueueBuffers[2]) {
+    bufferIndex = 2;
+  }
+  if(qbuf == audioQueueBuffers[3]) {
+    bufferIndex = 3;
+  }
+  return bufferIndex;
 }
 
 
 - (void)dealloc {
-    free(pcmDataBuffer);
+  free(pcmDataBuffer);
 }
 
 #pragma mark -
@@ -198,9 +195,9 @@
  调用者，这样可以重新再使用回调传回的AudioQueueBufferRef
  */
 static void AudioPlayerAQInputCallback(void *input, AudioQueueRef outQ, AudioQueueBufferRef outQB) {
-    JCHATRawAudioDataPlayer *player = (__bridge JCHATRawAudioDataPlayer *)input;
-    [player putEmptyBuffer:outQB];
-    [player readPCMAndPlay:outQ buffer:outQB];
+  JCHATRawAudioDataPlayer *player = (__bridge JCHATRawAudioDataPlayer *)input;
+  [player putEmptyBuffer:outQB];
+  [player readPCMAndPlay:outQ buffer:outQB];
 }
 
 @end

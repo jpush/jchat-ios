@@ -7,7 +7,6 @@
 //
 
 #import "NSObject+TimeConvert.h"
-#import <JMessage/JMessage.h>
 
 @implementation NSObject (TimeConvert)
 

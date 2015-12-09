@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,12 +12,16 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfd-B2-TVe">
-                        <rect key="frame" x="31" y="22" width="259" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfd-B2-TVe">
+                        <rect key="frame" x="11" y="18" width="298" height="43"/>
+                        <animations/>
                         <color key="backgroundColor" red="0.097309121114636438" green="0.68357402146464641" blue="0.38303620270738981" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="43" id="lXD-nW-rqo"/>
+                        </constraints>
                         <state key="normal" title="发送消息">
                             <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -27,22 +31,20 @@
                         </connections>
                     </button>
                 </subviews>
+                <animations/>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="rfd-B2-TVe" secondAttribute="bottom" constant="15" id="0IT-kC-i7s"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="rfd-B2-TVe" secondAttribute="trailing" constant="22" id="Bmr-6A-23M"/>
-                    <constraint firstItem="rfd-B2-TVe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="14" id="Gy8-YR-Oz9"/>
-                    <constraint firstItem="rfd-B2-TVe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="23" id="xzs-ka-jDl"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="rfd-B2-TVe" secondAttribute="trailing" constant="3" id="Bmr-6A-23M"/>
+                    <constraint firstItem="rfd-B2-TVe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="xzs-ka-jDl"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
+            <constraints>
+                <constraint firstItem="rfd-B2-TVe" firstAttribute="centerY" secondItem="KGk-i7-Jjw" secondAttribute="centerY" id="YVf-8S-TFD"/>
+            </constraints>
             <connections>
                 <outlet property="skipBtn" destination="rfd-B2-TVe" id="MDL-g9-mEu"/>
             </connections>
             <point key="canvasLocation" x="510" y="435"/>
         </tableViewCell>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

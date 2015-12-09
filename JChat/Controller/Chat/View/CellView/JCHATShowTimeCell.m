@@ -7,12 +7,13 @@
 //
 
 #import "JCHATShowTimeCell.h"
-#import "Masonry.h"
+#import "JCHATStringUtils.h"
+
 
 @implementation JCHATShowTimeCell
 
 - (void)awakeFromNib {
-    // Initialization code
+  // Initialization code
   [self setBackgroundColor:[UIColor clearColor]];
   self.messageTimeLabel.font = [UIFont systemFontOfSize:14];
   self.messageTimeLabel.textColor = [UIColor grayColor];
@@ -22,18 +23,18 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+  [super setSelected:selected animated:animated];
+  
+  // Configure the view for the selected state
 }
 
--(void)setCellData:(id)model {
+- (void)setCellData:(id)model {
   self.model = model;
   [self setContentFram];
 }
 
--(void)layoutSubviews {
-//  [self setContentFram];
+- (void)layoutSubviews {
+  //  [self setContentFram];
 }
 
 
@@ -43,10 +44,9 @@
   
   NSMutableParagraphStyle *paragraphStyle= [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-  CGSize realSize = [self.model.chatContent boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
+  CGSize realSize = [[JCHATStringUtils getFriendlyDateString:[self.model.messageTime doubleValue]] boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
   [self.messageTimeLabel setFrame:CGRectMake(self.messageTimeLabel.frame.origin.x, self.messageTimeLabel.frame.origin.y, realSize.width,realSize.height)];
-
-  self.messageTimeLabel.text= self.model.chatContent;
+  self.messageTimeLabel.text= [NSString stringWithFormat:@"%@",self.model.messageTime];
 }
 
 @end

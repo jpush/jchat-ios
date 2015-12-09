@@ -10,10 +10,7 @@
 #import "MJPhotoLoadingView.h"
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
-#import <JMessage/JMessage.h>
 #import "JCHATChatModel.h"
-#import "MBProgressHUD+Add.h"
-#import "MBProgressHUD.h"
 #import "JChatConstants.h"
 
 @interface MJPhotoView ()
@@ -41,7 +38,7 @@
 		// 属性
 		self.backgroundColor = [UIColor clearColor];
 		self.delegate = self;
-        
+
 		self.showsHorizontalScrollIndicator = NO;
 		self.showsVerticalScrollIndicator = NO;
 		self.decelerationRate = UIScrollViewDecelerationRateFast;
@@ -71,127 +68,85 @@
 #pragma mark 显示图片
 - (void)showImage
 {
-    if (_photo.firstShow) { // 首次显示
-        _imageView.image = _photo.placeholder; // 占位图片
-        _photo.srcImageView.image = nil;
-        // 不是gif，就马上开始下载
-        if (![_photo.url.absoluteString hasSuffix:@"gif"]) {
-            if ([[NSFileManager defaultManager] fileExistsAtPath:_photo.message.pictureImgPath]) {
-                __weak MJPhotoView *photoView = self;
-                __weak MJPhoto *photo = _photo;
-                [_imageView setImageWithURL:_photo.url placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                    photo.image = image;
-                    // 调整frame参数
-                    [photoView adjustFrame];
-                }];
-            }else {
-                NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-                __weak MJPhoto *photo = _photo;
-                __weak MJPhotoView *photoView = self;
-                _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
-                if (_photo.message.messageId) {
-                    [_conversation getMessage:_photo.message.messageId completionHandler:^(id resultObject, NSError *error) {
-                        if (error ==nil) {
-                            [JMSGMessage downloadOriginImage:resultObject
-                                                withProgress:progress
-                                           completionHandler:^(id resultObject, NSError *error) {
-                                if (error == nil) {
-                                    JPIMLog(@"下载大图 success");
-                                    _photo.url = resultObject;
-                                    _photo.message.pictureImgPath = [(NSURL *)resultObject absoluteString];
-                                    [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                      photo.image = image;
-                                        // 调整frame参数
-                                        [photoView adjustFrame];
-                                    }];                                    // 调整frame参数
-                                }else {
-                                    JPIMLog(@"下载大图 error");
-                                    _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
-                                    [MBProgressHUD showMessage:@"下载大图失败！" view:self];
-                                }
-                            }];
-                        }else {
-                            JPIMLog(@"获取messsage fail");
-                        }
-                    }];
-                }else {
-                    JPIMLog(@"messageid is nil");
-                }
-            }
+  if (_photo.firstShow) { // 首次显示
+    _imageView.image = _photo.placeholder; // 占位图片
+    _photo.srcImageView.image = nil;
+    // 不是gif，就马上开始下载
+    if (![_photo.url.absoluteString hasSuffix:@"gif"]) {
+      __weak MJPhoto *photo = _photo;
+      __weak MJPhotoView *photoView = self;
+//      _imageView.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
+      if (_photo.message.message.msgId) {
+        JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.message.msgId];
+        [((JMSGImageContent *)message.content) largeImageDataWithProgress:^(float percent,NSString *msgId){
+          _photoLoadingView.progress = percent;
+        } completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
+          if (error == nil) {
+            JPIMLog(@"下载大图 success");
+            photo.image = [UIImage imageWithData:data];
+            _imageView.image = [UIImage imageWithData:data];
+            [photoView adjustFrame];
+          } else {
+            JPIMLog(@"下载大图 error");
+//            _imageView.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
+            [MBProgressHUD showMessage:@"下载大图失败！" view:self];
+            [photoView adjustFrame];
+          }
+        }];
+        
+      } else {
+        JPIMLog(@"messageid is nil");
+      }
     }
-    }else {
-        [self photoStartLoad];
-    }
-    // 调整frame参数
-    [self adjustFrame];
+  } else {
+    [self photoStartLoad];
+  }
+  // 调整frame参数
+  [self adjustFrame];
 }
 
 #pragma mark 开始加载图片
 - (void)photoStartLoad
 {
-    NSString *imgPath = nil;
-    imgPath = _photo.message.pictureImgPath;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:imgPath]) {
-        self.scrollEnabled = YES;
-        _imageView.image = _photo.image = [UIImage imageWithContentsOfFile:imgPath];
-    } else {
-        self.scrollEnabled = NO;
+//    imgPath = ((JMSGImageContent *)_photo.message.message.content).largeImagePath;
+    self.scrollEnabled = NO;
         // 直接显示进度条
-        [_photoLoadingView showLoading];
-        [self addSubview:_photoLoadingView];
-        __weak MJPhotoView *photoView = self;
-        _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
-//        __weak MJPhotoLoadingView *loading = _photoLoadingView;
-        NSProgress *progress = [NSProgress progressWithTotalUnitCount:1000];
-        __weak MJPhoto *photo = _photo;
-            if (_photo.message.messageId) {
-                [_conversation getMessage:_photo.message.messageId completionHandler:^(id resultObject, NSError *error) {
-                    if (error ==nil) {
-                        [JMSGMessage downloadOriginImage:resultObject
-                                            withProgress:progress
-                                       completionHandler:^(id resultObject, NSError *error) {
-                            if (error == nil) {
-                                JPIMLog(@"下载大图 success");
-                                _photo.url = resultObject;
-                                _photo.message.pictureImgPath = [(NSURL *)resultObject path];
-//                                UIImage *img = [UIImage imageWithContentsOfFile:_photo.message.pictureImgPath];
-                                
-                                [_imageView setImageWithURL:resultObject placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                    photo.image = image;
-                                    // 调整frame参数
-                                    [photoView photoDidFinishLoadWithImage:image];
+//    _photo.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
+    [_photoLoadingView showLoading];
+    [self addSubview:_photoLoadingView];
+    __weak MJPhotoView *photoView = self;
 
-                                }];                                    // 调整frame参数
-                            }else {
-                                JPIMLog(@"下载大图 error");
-                                _imageView.image = [UIImage imageWithContentsOfFile:_photo.message.pictureThumbImgPath];
-                                [MBProgressHUD showMessage:@"下载大图失败！" view:self];
-                            }
-                        }];
-                    }else {
-                        JPIMLog(@"获取messsage fail");
-                    }
-                }];
-            }else {
-                JPIMLog(@"messageid is nil");
-            }
-//        [_imageView setImageWithURL:_photo.url placeholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSUInteger receivedSize, long long expectedSize) {
-//            if (receivedSize > kMinProgress) {
-//                loading.progress = (float)receivedSize/expectedSize;
-//            }
-//        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-//            [photoView photoDidFinishLoadWithImage:image];
-//        }];
-    }
+    __weak MJPhoto *photo = _photo;
+      if (_photo.message.message) {
+        JMSGMessage *message = _photo.message.message;
+        [((JMSGImageContent *)message.content) largeImageDataWithProgress:^(float percent,NSString *msgId){
+            _photoLoadingView.progress = percent;
+                        } completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
+          __strong __typeof(photo)strongPhoto = photo;
+          if (error == nil) {
+            JPIMLog(@"下载大图 success");
+            strongPhoto.image = [UIImage imageWithData:data];
+            [photoView photoDidFinishLoadWithImage:strongPhoto.image];
+            _imageView.image = strongPhoto.image;
+            [photoView adjustFrame];
+          } else {
+            JPIMLog(@"下载大图 error");
+//            _imageView.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
+            [MBProgressHUD showMessage:@"下载大图失败!！" view:self];
+          }
+        }];
+      } else {
+          JPIMLog(@"messageid is nil");
+      }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+//    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     if ([keyPath isEqualToString:@"fractionCompleted"] && [object isKindOfClass:[NSProgress class]]) {
         NSProgress *progress = (NSProgress *)object;
         NSLog(@"Progress is %f", progress.fractionCompleted);
-        _photoLoadingView.progress = progress.fractionCompleted;
+      _photoLoadingView.progress = progress.fractionCompleted;
     }
 }
 
@@ -254,7 +209,7 @@
     if ( imageWidth <= imageHeight &&  imageHeight <  boundsHeight ) {
         imageFrame.origin.x = floorf( (boundsWidth - imageFrame.size.width ) / 2.0) * minScale;
         imageFrame.origin.y = floorf( (boundsHeight - imageFrame.size.height ) / 2.0) * minScale;
-    }else{
+    } else{
         imageFrame.origin.x = floorf( (boundsWidth - imageFrame.size.width ) / 2.0);
         imageFrame.origin.y = floorf( (boundsHeight - imageFrame.size.height ) / 2.0);
     }
@@ -288,6 +243,9 @@
     } else {
         _imageView.frame = imageFrame;
     }
+  
+
+        
 }
 
 #pragma mark - UIScrollViewDelegate

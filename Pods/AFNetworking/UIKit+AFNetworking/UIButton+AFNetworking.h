@@ -27,8 +27,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @protocol AFURLResponseSerialization, AFImageCache;
 
 /**
@@ -43,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///----------------------------
 
 /**
- The image cache used to improve image loading performance on scroll views. By default, `UIButton` will use the `sharedImageCache` of `UIImageView`.
+ The image cache used to improve image loadiing performance on scroll views. By default, `UIButton` will use the `sharedImageCache` of `UIImageView`.
  */
 + (id <AFImageCache>)sharedImageCache;
 
@@ -91,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setImageForState:(UIControlState)state
                  withURL:(NSURL *)url
-        placeholderImage:(nullable UIImage *)placeholderImage;
+        placeholderImage:(UIImage *)placeholderImage;
 
 /**
  Asynchronously downloads an image from the specified URL request, and sets it as the image for the specified state once the request is finished. Any previous image request for the receiver will be cancelled.
@@ -108,9 +106,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setImageForState:(UIControlState)state
           withURLRequest:(NSURLRequest *)urlRequest
-        placeholderImage:(nullable UIImage *)placeholderImage
-                 success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
-                 failure:(nullable void (^)(NSError *error))failure;
+        placeholderImage:(UIImage *)placeholderImage
+                 success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
+                 failure:(void (^)(NSError *error))failure;
 
 
 ///-------------------------------
@@ -139,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setBackgroundImageForState:(UIControlState)state
                            withURL:(NSURL *)url
-                  placeholderImage:(nullable UIImage *)placeholderImage;
+                  placeholderImage:(UIImage *)placeholderImage;
 
 /**
  Asynchronously downloads an image from the specified URL request, and sets it as the image for the specified state once the request is finished. Any previous image request for the receiver will be cancelled.
@@ -154,9 +152,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setBackgroundImageForState:(UIControlState)state
                     withURLRequest:(NSURLRequest *)urlRequest
-                  placeholderImage:(nullable UIImage *)placeholderImage
-                           success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
-                           failure:(nullable void (^)(NSError *error))failure;
+                  placeholderImage:(UIImage *)placeholderImage
+                           success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
+                           failure:(void (^)(NSError *error))failure;
 
 
 ///------------------------------
@@ -178,7 +176,5 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cancelBackgroundImageRequestOperationForState:(UIControlState)state;
 
 @end
-
-NS_ASSUME_NONNULL_END
 
 #endif

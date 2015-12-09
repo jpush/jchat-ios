@@ -9,14 +9,19 @@
 #import "JCHATSelectFriendsCtl.h"
 #import "JChatConstants.h"
 #import "JCHATSelectFriendCell.h"
-#import "JCHATSendMessageViewController.h"
-#import "MBProgressHUD+Add.h"
-#import "MBProgressHUD.h"
-#import <JMessage/JMessage.h>
+#import "JCHATChatViewController.h"
+
+#define kheadViewFrame CGRectMake(0, 0, kApplicationWidth, 60)
+#define kgroupNameLabelFrame CGRectMake(0, 5, 60, 50)
+#define kgroupTextFieldFrame CGRectMake(60, 5, 150, 50)
+#define kbaseLineFrame CGRectMake(0, 59, kApplicationWidth, 1)
+#define kselectFriendTabFrame CGRectMake(0, 0, kApplicationWidth, kScreenHeight)
+
+static const NSInteger tablecellHeight = 64;
 
 @interface JCHATSelectFriendsCtl ()
 {
-    UITextField *_groupTextField;
+  UITextField *_groupTextField;
 }
 @end
 
@@ -26,23 +31,23 @@
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
   [self sectionIndexTitles];
-  UIView *headView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth, 60)];
+  UIView *headView =[[UIView alloc]initWithFrame:kheadViewFrame];
   [headView setBackgroundColor:[UIColor whiteColor]];
-  
-  UILabel *groupNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, 60, 50)];
+  self.title = @"创建群聊";
+  UILabel *groupNameLabel = [[UILabel alloc]initWithFrame:kgroupNameLabelFrame];
   groupNameLabel.text = @"群名称:";
   groupNameLabel.textAlignment = NSTextAlignmentCenter;
   [headView addSubview:groupNameLabel];
   
-  _groupTextField =[[UITextField alloc] initWithFrame:CGRectMake(60, 5, 150, 50)];
+  _groupTextField =[[UITextField alloc] initWithFrame:kgroupTextFieldFrame];
   [headView addSubview:_groupTextField];
   _groupTextField.placeholder = @"请输入群名称";
   
-  UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 59, kApplicationWidth, 1)];
+  UIView *line = [[UIView alloc]initWithFrame:kbaseLineFrame];
   [line setBackgroundColor:[UIColor grayColor]];
   [headView addSubview:line];
-
-  self.selectFriendTab =[[JCHATChatTable alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight) style:UITableViewStylePlain];
+  
+  self.selectFriendTab =[[JCHATChatTable alloc] initWithFrame:kselectFriendTabFrame style:UITableViewStylePlain];
   [self.selectFriendTab setBackgroundColor:[UIColor clearColor]];
   self.selectFriendTab.dataSource=self;
   self.selectFriendTab.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -52,23 +57,16 @@
   self.selectFriendTab.delegate = self;
   [self.view addSubview:self.selectFriendTab];
   
-  NSShadow *shadow = [[NSShadow alloc]init];
-  shadow.shadowColor = [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1];
-  shadow.shadowOffset = CGSizeMake(0,0);
-  
-  self.navigationController.navigationBar.barTintColor =UIColorFromRGB(0x3f80dd);
-  self.navigationController.navigationBar.alpha=1;
-  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                                   shadow,NSShadowAttributeName,
-                                                                   [UIFont boldSystemFontOfSize:18], NSFontAttributeName,
-                                                                   nil]];
-  
-  UIButton *leftbtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [leftbtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftbtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-  [leftbtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftbtn];//为导航栏添加右侧按钮
+  [self setupNavigationBar];
+}
+
+- (void)setupNavigationBar {
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:kNavigationLeftButtonRect];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
+  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加右侧按钮
   
   UIButton *rightbtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [rightbtn setFrame:CGRectMake(0, 0, 50, 50)];
@@ -80,7 +78,7 @@
 - (void)tableView:(UITableView *)tableView touchesBegan:(NSSet *)touches
         withEvent:(UIEvent *)event
 {
-    [_groupTextField resignFirstResponder];
+  [_groupTextField resignFirstResponder];
 }
 
 - (void)rightBtnClick {
@@ -90,90 +88,81 @@
   }
   [_groupTextField resignFirstResponder];
   [MBProgressHUD showMessage:@"正在创建群组！" toView:self.view];
-  JMSGGroup *group = [[JMSGGroup alloc]init];
-  group.groupName = _groupTextField.text;
-  [JMSGGroup createGroup:group completionHandler:^(id resultObject, NSError *error) {
+  
+  [JMSGGroup createGroupWithName:_groupTextField.text desc:@"" memberArray:nil completionHandler:^(id resultObject, NSError *error) {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     if (error ==nil) {
       [self.navigationController dismissViewControllerAnimated:YES completion:nil];
       [[NSNotificationCenter defaultCenter] postNotificationName:kCreatGroupState object:resultObject];
-    }else if (error.code == 808003) {
+    } else if (error.code == 808003) {
       [MBProgressHUD showMessage:@"创建群组数量达到上限！" view:self.view];
-    }else {
+    } else {
       [MBProgressHUD showMessage:@"创建群组失败！" view:self.view];
     }
   }];
 }
 
 - (void)backClick {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-
 - (void)sectionIndexTitles {
-    self.arrayOfCharacters =[[NSMutableArray alloc] init];
-    for(char c = 'A';c<='Z';c++)
+  self.arrayOfCharacters =[[NSMutableArray alloc] init];
+  for(char c = 'A';c<='Z';c++)
     [self.arrayOfCharacters addObject:[NSString stringWithFormat:@"%c",c]];
 }
 
-//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-//    return self.arrayOfCharacters;
-//}
-
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    NSInteger count = 0;
-    for(NSString *character in self.arrayOfCharacters)
+  NSInteger count = 0;
+  for(NSString *character in self.arrayOfCharacters)
+  {
+    if([character isEqualToString:title])
     {
-        if([character isEqualToString:title])
-        {
-            return count;
-        }
-        count ++;
+      return count;
     }
-    return 0;
-    
+    count ++;
+  }
+  return 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 0;
-//    return [self.arrayOfCharacters count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+  return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier =@"selectFriendIdentify";
-    JCHATSelectFriendCell *cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATSelectFriendCell" owner:self options:nil] lastObject];
-    }
-    return cell;
+  static NSString *cellIdentifier =@"selectFriendIdentify";
+  JCHATSelectFriendCell *cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  if (!cell) {
+    cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATSelectFriendCell" owner:self options:nil] lastObject];
+  }
+  return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 64;
+  return tablecellHeight;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-    [self.navigationController setNavigationBarHidden:NO];
+  [super viewWillAppear:YES];
+  [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

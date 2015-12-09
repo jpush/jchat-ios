@@ -29,7 +29,7 @@
 }
 
 - (void)showInView {
-  NSLog(@"kaishi   show in view");
+
   self.alertView = [UIView new];
   self.alertView.backgroundColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:0.5];
   AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;

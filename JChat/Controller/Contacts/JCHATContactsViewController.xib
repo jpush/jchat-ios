@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATContactsViewController">
@@ -18,22 +18,37 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tic-R2-EMD">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNk-jO-SJq">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="敬请期待" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIx-pu-O5Z">
+                            <rect key="frame" x="97" y="199" width="127" height="50"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="dNk-jO-SJq" secondAttribute="trailing" id="6A8-sY-wme"/>
                 <constraint firstAttribute="trailing" secondItem="tic-R2-EMD" secondAttribute="trailing" id="6JO-Uf-fJv"/>
+                <constraint firstItem="dNk-jO-SJq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CMR-V8-Rwa"/>
+                <constraint firstAttribute="bottom" secondItem="dNk-jO-SJq" secondAttribute="bottom" id="Cq7-vY-r4z"/>
                 <constraint firstItem="tic-R2-EMD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VR3-X8-MGA"/>
                 <constraint firstItem="tic-R2-EMD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="XEq-o3-XdY"/>
                 <constraint firstAttribute="bottom" secondItem="tic-R2-EMD" secondAttribute="bottom" id="cZY-Nq-PEd"/>
+                <constraint firstItem="dNk-jO-SJq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qda-Tg-GtJ"/>
             </constraints>
             <point key="canvasLocation" x="266" y="424"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

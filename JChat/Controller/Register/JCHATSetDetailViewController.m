@@ -7,15 +7,15 @@
 //
 
 #import "JCHATSetDetailViewController.h"
-#import <JMessage/JMessage.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "MBProgressHUD+Add.h"
 #import "JChatConstants.h"
 #import "AppDelegate.h"
 @interface JCHATSetDetailViewController ()<UIActionSheetDelegate,
-    UIImagePickerControllerDelegate
->{
-    UILabel *titleLabel;
+UIImagePickerControllerDelegate,
+UINavigationControllerDelegate>
+{
+  UILabel *titleLabel;
 }
 
 @end
@@ -32,26 +32,31 @@
   _nameTextF.textColor = UIColorFromRGB(0x555555);
   _setAvatarBtn.layer.cornerRadius = 28;
   _setAvatarBtn.layer.masksToBounds = YES;
-    
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = @"输入昵称";
-    self.navigationItem.titleView = titleLabel;
+  
+  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+  titleLabel.backgroundColor = [UIColor clearColor];
+  titleLabel.font = [UIFont boldSystemFontOfSize:20];
+  titleLabel.textColor = [UIColor whiteColor];
+  titleLabel.textAlignment = NSTextAlignmentCenter;
+  titleLabel.text = @"输入昵称";
+  self.navigationItem.titleView = titleLabel;
 }
 
 - (IBAction)clickToFinish:(id)sender {
-  [JMSGUser updateMyInfoWithParameter:_nameTextF.text withType:kJMSGNickname completionHandler:^(id resultObject, NSError *error) {
-    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-    appDelegate.window.rootViewController = appDelegate.tabBarCtl;
-    
-  }];
+  if ([_nameTextF.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"请输入昵称" view:self.view];
+    return;
+  }
   
+  [JMSGUser updateMyInfoWithParameter:_nameTextF.text userFieldType:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
+    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+    [appDelegate setupMainTabBar];
+    appDelegate.window.rootViewController = appDelegate.tabBarCtl;
+  }];
 }
 
 - (IBAction)clickToSetAvatar:(id)sender {
+  [_nameTextF resignFirstResponder];
   UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"更换头像"
                                                            delegate:self
                                                   cancelButtonTitle:@"取消"
@@ -59,7 +64,7 @@
                                                   otherButtonTitles:@"拍照", @"相册", nil];
   actionSheet.tag = 201;
   [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
-
+  
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -71,7 +76,7 @@
 }
 
 #pragma mark -调用相册
--(void)photoClick {
+- (void)photoClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
   picker.delegate = self;
   picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -82,7 +87,7 @@
 }
 
 #pragma mark --调用相机
--(void)cameraClick {
+- (void)cameraClick {
   UIImagePickerController *picker = [[UIImagePickerController alloc] init];
   if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -104,33 +109,21 @@
   DDLogDebug(@"Action - imagePickerController");
   
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
-  UIImage *image;
+  __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
-  JMSGUser *user = [JMSGUser getMyInfo];
-//  image = [image resizedImageByWidth:upLoadImgWidth];
-  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1)
-                             withType:kJMSGAvatar
-                    completionHandler:^(id resultObject, NSError *error) {
-                      JPIMMAINTHEAD(^{
-                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                        if (error == nil) {
-                          [MBProgressHUD showMessage:@"上传成功" view:self.view];
-                          if (user.avatarResourcePath) {
-                            DDLogDebug(@"update headView success %@", user);
-                            [_setAvatarBtn setBackgroundImage:[UIImage imageWithContentsOfFile:user.avatarThumbPath] forState:UIControlStateNormal];
-                            
-                            //                            UIImage *headImg = [UIImage imageWithContentsOfFile:user.avatarResourcePath];
-//                            UIImage *img = [headImg resizedImageByHeight:headImg.size.height];
-//                            [_bgView setImage:img];
-                          } else {
-//                            [_bgView setImage:[UIImage imageNamed:@"wo.png"]];
-                          }
-                        } else {
-                          DDLogDebug(@"update headView fail");
-                          [MBProgressHUD showMessage:@"上传失败!" view:self.view];
-                        }
-                      });
-                    }];
+  
+  [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) userFieldType:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
+    JPIMMAINTHEAD(^{
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      if (error == nil) {
+        [MBProgressHUD showMessage:@"上传成功" view:self.view];
+        [_setAvatarBtn setBackgroundImage:image forState:UIControlStateNormal];
+      } else {
+        DDLogDebug(@"update headView fail");
+        [MBProgressHUD showMessage:@"上传失败!" view:self.view];
+      }
+    });
+  }];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -141,13 +134,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

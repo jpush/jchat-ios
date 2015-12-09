@@ -22,8 +22,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  The `AFURLResponseSerialization` protocol is adopted by an object that decodes data into a more useful object representation, according to details in the server response. Response serializers may additionally perform validation on the incoming response and data.
 
@@ -40,9 +38,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return The object decoded from the specified response data.
  */
-- (nullable id)responseObjectForResponse:(nullable NSURLResponse *)response
-                           data:(nullable NSData *)data
-                          error:(NSError * __nullable __autoreleasing *)error;
+- (id)responseObjectForResponse:(NSURLResponse *)response
+                           data:(NSData *)data
+                          error:(NSError *__autoreleasing *)error;
 
 @end
 
@@ -55,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AFHTTPResponseSerializer : NSObject <AFURLResponseSerialization>
 
-- (instancetype)init;
+- (instancetype) init;
 
 /**
  The string encoding used to serialize data received from the server, when no string encoding is specified by the response. `NSUTF8StringEncoding` by default.
@@ -76,12 +74,12 @@ NS_ASSUME_NONNULL_BEGIN
 
  See http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
  */
-@property (nonatomic, copy, nullable) NSIndexSet *acceptableStatusCodes;
+@property (nonatomic, copy) NSIndexSet *acceptableStatusCodes;
 
 /**
  The acceptable MIME types for responses. When non-`nil`, responses with a `Content-Type` with MIME types that do not intersect with the set will result in an error during validation.
  */
-@property (nonatomic, copy, nullable) NSSet *acceptableContentTypes;
+@property (nonatomic, copy) NSSet *acceptableContentTypes;
 
 /**
  Validates the specified response and data.
@@ -94,9 +92,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return `YES` if the response is valid, otherwise `NO`.
  */
-- (BOOL)validateResponse:(nullable NSHTTPURLResponse *)response
-                    data:(nullable NSData *)data
-                   error:(NSError * __nullable __autoreleasing *)error;
+- (BOOL)validateResponse:(NSHTTPURLResponse *)response
+                    data:(NSData *)data
+                   error:(NSError *__autoreleasing *)error;
 
 @end
 
@@ -114,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AFJSONResponseSerializer : AFHTTPResponseSerializer
 
-- (instancetype)init;
+- (instancetype) init;
 
 /**
  Options for reading the response JSON data and creating the Foundation objects. For possible values, see the `NSJSONSerialization` documentation section "NSJSONReadingOptions". `0` by default.
@@ -163,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AFXMLDocumentResponseSerializer : AFHTTPResponseSerializer
 
-- (instancetype)init;
+- (instancetype) init;
 
 /**
  Input and output options specifically intended for `NSXMLDocument` objects. For possible values, see the `NSJSONSerialization` documentation section "NSJSONReadingOptions". `0` by default.
@@ -192,7 +190,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface AFPropertyListResponseSerializer : AFHTTPResponseSerializer
 
-- (instancetype)init;
+- (instancetype) init;
 
 /**
  The property list format. Possible values are described in "NSPropertyListFormat".
@@ -308,4 +306,4 @@ extern NSString * const AFNetworkingOperationFailingURLResponseErrorKey;
 
 extern NSString * const AFNetworkingOperationFailingURLResponseDataErrorKey;
 
-NS_ASSUME_NONNULL_END
+

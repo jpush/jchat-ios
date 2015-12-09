@@ -11,7 +11,7 @@
 @implementation JCHATMsgAlertSoundTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+  // Initialization code
   
 }
 - (void)setData {
@@ -19,9 +19,9 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+  [super setSelected:selected animated:animated];
+  
+  // Configure the view for the selected state
 }
 
 @end

@@ -12,4 +12,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *groupTitle;
 @property (weak, nonatomic) IBOutlet UITextField *groupName;
 
+//- (void)setDataWithConversation:(JMSGConversation *)conversation;
 @end

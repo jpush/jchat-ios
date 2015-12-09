@@ -14,13 +14,12 @@
 
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,JMessageDelegate>
 
 @property (nonatomic,strong) JCHATTabBarViewController *tabBarCtl;
 
 @property (strong, nonatomic) UIWindow *window;
+@property (assign, nonatomic)BOOL isDBMigrating;
 
-
-
+- (void)setupMainTabBar;
 @end
-

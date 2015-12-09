@@ -17,8 +17,8 @@
 @implementation JCHATChangeNameViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+  [super viewDidLoad];
+  // Do any additional setup after loading the view from its nib.
   UIBarButtonItem *rightbutton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(clickToSave)];
   [rightbutton setTintColor:[UIColor whiteColor]];
   self.navigationItem.rightBarButtonItem = rightbutton;
@@ -26,7 +26,6 @@
   self.baseLine.backgroundColor = UIColorFromRGB(0x3f80de);
   [self.nameTextField setTextColor:UIColorFromRGB(0x2d2d2d)];
   [self.suggestLabel setTextColor:UIColorFromRGB(0xbbbbbb)];
-//  [self.nameTextField setValue:UIColorFromRGB(0x000000) forKeyPath:@"_placeholderLabel.textColor"];
   [self.nameTextField setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
   UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
   titleLabel.backgroundColor = [UIColor clearColor];
@@ -34,13 +33,13 @@
   titleLabel.textColor = [UIColor whiteColor];
   titleLabel.textAlignment = NSTextAlignmentCenter;
 
-  JMSGUser *user = [JMSGUser getMyInfo];
+  [self.nameTextField becomeFirstResponder];
+  JMSGUser *user = [JMSGUser myInfo];
   if (self.updateType == 0) {
     self.deleteButton.hidden = YES;
     self.charNumber.hidden = YES;
     self.suggestLabel.text = @"好名字可以让你的朋友更加容易记住你";
     self.nameTextField.placeholder = user.nickname?:@"请输入你的姓名";
-//    self.baselineTop.constant = 58;
     titleLabel.text = @"修改姓名";
   }
   if (self.updateType == 4) {
@@ -48,29 +47,26 @@
     self.charNumber.hidden = YES;
     self.suggestLabel.hidden = YES;
     titleLabel.text = @"修改地区";
-//    self.baselineTop.constant = 58;
+    //    self.baselineTop.constant = 58;
     self.nameTextField.placeholder = user.region?:@"请输入你所在的地区";
   }
   if (self.updateType == 2) {
     self.suggestLabel.hidden = YES;
-//    self.nameTextField.delegate = self;
     [self.nameTextField addTarget:self action:@selector(textFieldChange) forControlEvents:UIControlEventEditingChanged];
-
+    
     self.nameTextField.placeholder = user.signature?:@"请输入你的签名";
     titleLabel.text = @"修改签名";
   }
-
+  
   self.navigationItem.titleView = titleLabel;
   
-  
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"login_15"] forState:UIControlStateNormal];
+  [leftBtn setFrame:kNavigationLeftButtonRect];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
+  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-//  self.navigationController.interactivePopGestureRecognizer.delegate = self;
-  
-  
+  //  self.navigationController.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)textFieldChange {
@@ -80,17 +76,17 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)clickToSave {
-  [JMSGUser updateMyInfoWithParameter:self.nameTextField.text withType:self.updateType completionHandler:^(id resultObject, NSError *error) {
+  kWEAKSELF
+  [JMSGUser updateMyInfoWithParameter:self.nameTextField.text userFieldType:self.updateType completionHandler:^(id resultObject, NSError *error) {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     if (error == nil) {
       [MBProgressHUD showMessage:@"修改成功" view:self.view];
-
-      [self.navigationController popViewControllerAnimated:YES];
+      
+      [weakSelf.navigationController popViewControllerAnimated:YES];
     } else {
       [MBProgressHUD showMessage:@"修改失败" view:self.view];
     }
   }];
-  
 }
 - (IBAction)deleteText:(id)sender {
   self.nameTextField.text = @"";
@@ -98,18 +94,18 @@
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

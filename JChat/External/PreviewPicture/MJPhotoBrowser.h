@@ -5,7 +5,7 @@
 //  Copyright (c) 2013年 itcast. All rights reserved.
 
 #import <UIKit/UIKit.h>
-#import <JMessage/JMessage.h>
+
 @protocol MJPhotoBrowserDelegate;
 
 @interface MJPhotoBrowser : UIViewController <UIScrollViewDelegate>
@@ -24,9 +24,9 @@
 
 @protocol MJPhotoBrowserDelegate <NSObject>
 
--(void)CellPhotoImageReload;
+- (void)CellPhotoImageReload;
 
--(void)NewPostImageReload:(NSInteger)ImageIndex;
+- (void)NewPostImageReload:(NSInteger)ImageIndex;
 
 @optional
 // 切换到某一页图片
