@@ -53,3 +53,15 @@ JChat 根目录下的脚本 check_jmessage_version.sh 会来检查放进来的 "
 - appKey：JPush appKey 是 JMessage SDK 运行的基本参数。请到 [JPush 官方网站](https://jpush.cn)登录控制台创建应用获取。
 - bundle_id：这是一个 iOS 应用的基本属性。你需要登录到 Apple 开发者网站去创建应用。
 
+### JMessage 文档
+
+- [JMessage iOS 集成指南](http://docs.jpush.io/guideline/jmessage_ios_guide/)
+- [JMessage iOS 说明](http://docs.jpush.io/client/im_sdk_ios/)
+- [JMessage iOS API Docs](http://docs.jpush.io/client/jmessage_ios_appledoc_html/)
+
+### JMessage 升级
+
+JMessage 当前版本为 2.0.x。与之前 1.0.x 版本有比较大的变更。
+
+因为变更太大，所以这次变更有点不够友好，大部分 API 有调整，包括对象结构。这会导致集成 JMessage SDK 1.0.x 版本的 App 切换到新版本时，会编译不通过，某些 API 调用需要调整。调整的具体思路，可参考本项目 JChat iOS 源代码，以及 JMessage iOS 相关文档。
+
