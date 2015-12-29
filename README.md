@@ -85,7 +85,7 @@ Util
 ## 主要功能索引
 ### JMessage 初始化代码
 ```
-  [JMessage addDelegate:self withConversation:nil];
+  [JMessage addDelegate:self withConversation:nil];// 这句代码放到前面目的是，应用启动是会做数据库是否升级盘点，如果需要升级，则锁定数据库，进行升级
   
   [JMessage setupJMessage:launchOptions
                    appKey:JMSSAGE_APPKEY
@@ -97,19 +97,22 @@ Util
                                         categories:nil];
 
 ```
+
 注册SDK
 注册APNS
-
 成功获得APNS token 传入JPUSHService 如下代码所示
 ```
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [JPUSHService registerDeviceToken:deviceToken];
 }
-
 ```
-
-### JMessage 账户 注册
+JMessage 还有一个很重要的方法,用于添加 conversation执行回调的对象delegate，具体的回调方法可以看详细文档代码如下：
+```
++ (void)addDelegate:(id <JMessageDelegate>)delegate
+   withConversation:(JMSGConversation *)conversation;
+```
+### 注册
 首次使用JMessage 需要有JMessage 账户，通过如下代码注册一个新用户
 ```
 + (void)registerWithUsername:(NSString *)username
@@ -121,12 +124,57 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
 ```
 
-### JMessage 登录
-登录了账户之后
+### 登录
+成功注册账户之后，需要登录该用户，才能在该用户创建会话，收发消息。
 ```
 + (void)loginWithUsername:(NSString *)username
                  password:(NSString *)password
         completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 ```
+
+### 会话 (Conversation)
+会话是一个用户与用户之间聊天的载体，要有会话用户之间才能收发消息
+获得会话有两种方式 1. 创建会话 2. 获取历史会话
+#### 1.创建会话
+如下代码分别创建了 单聊会话，和群聊会话
+```
++ (void)createSingleConversationWithUsername:(NSString *)username
+                           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+
++ (void)createGroupConversationWithGroupId:(NSString *)groupId
+                         completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+```
+
+#### 2. 获取历史会话
+如下代码分别获取 单聊会话，群聊会话，所有会话
+```
++ (JMSGConversation * JMSG_NULLABLE)singleConversationWithUsername:(NSString *)username;
+
++ (JMSGConversation * JMSG_NULLABLE)groupConversationWithGroupId:(NSString *)groupId;
+
++ (void)allConversations:(JMSGCompletionHandler)handler;
+```
+#### 3. 发送消息
+JMSGMessage 是消息的实体。需要自己创建要发送的消息，示例代码如下
+```  
+  JMSGTextContent *textContent = [[JMSGTextContent alloc] initWithText:text];
+  JCHATChatModel *model = [[JCHATChatModel alloc] init];
+  message = [_conversation createMessageWithContent:textContent];//!
+```
+
+获得JMSGMessage 后便可以调用如下接口向会话中发送消息，会话中的target(会话的对方，可以是user,可以是group 的所有成员)就会收到所有的消息
+```
+// JMSGConversation 实力方法
+- (void)sendMessage:(JMSGMessage *)message;
+```
+
+#### 4. 接收消息
+前面已经说了可以给conversation 添加回调delegate，收到消息也是通过回调函数来获取的，回调方法如下
+```
+- (void)onReceiveMessage:(JMSGMessage *)message
+                   error:(NSError *)error;
+```
+message 是收到的message，
+
 
 
