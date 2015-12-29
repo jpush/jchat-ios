@@ -65,3 +65,68 @@ JMessage 当前版本为 2.0.x。与之前 1.0.x 版本有比较大的变更。
 
 因为变更太大，所以这次变更有点不够友好，大部分 API 有调整，包括对象结构。这会导致集成 JMessage SDK 1.0.x 版本的 App 切换到新版本时，会编译不通过，某些 API 调用需要调整。调整的具体思路，可参考本项目 JChat iOS 源代码，以及 JMessage iOS 相关文档。
 
+## JChat 介绍
+
+## JChat 工程结构
+![如图](https://github.com/jpush/jchat-ios/blob/master/READMERecource/JChat流程图.png)
+
+## JChat 代码结构
+主要分为五个功能模块：用户详情 (UserInfo)，会话列表 (Conversation List)，会话 (Conversation) 登录 (Login) 和 设置 (Setting)。每个功能模块按照 MVC 模式划分，部分模块还有一些 Util 类。
+
+CustomUI
+自定义 View
+
+Category
+通用 Category
+
+Util
+通用辅助类
+
+## 主要功能索引
+### JMessage 初始化代码
+```
+  [JMessage addDelegate:self withConversation:nil];
+  
+  [JMessage setupJMessage:launchOptions
+                   appKey:JMSSAGE_APPKEY
+                  channel:CHANNEL apsForProduction:NO
+                 category:nil];
+  [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound |
+                                                    UIUserNotificationTypeAlert)
+                                        categories:nil];
+
+```
+注册SDK
+注册APNS
+
+成功获得APNS token 传入JPUSHService 如下代码所示
+```
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  [JPUSHService registerDeviceToken:deviceToken];
+}
+
+```
+
+### JMessage 账户 注册
+首次使用JMessage 需要有JMessage 账户，通过如下代码注册一个新用户
+```
++ (void)registerWithUsername:(NSString *)username
+                    password:(NSString *)password
+           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+```
+注册完成会回调 handler ，如下代码。如果出现错误会返回的error 部位nil，注意resultOvject 不同接口会返回不同类型的值或者nil，详细信息可以关注 [JMessage 官方文档](http://docs.jpush.io/client/im_sdk_ios/#summary)
+```
+typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
+```
+
+### JMessage 登录
+登录了账户之后
+```
++ (void)loginWithUsername:(NSString *)username
+                 password:(NSString *)password
+        completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+```
+
+
