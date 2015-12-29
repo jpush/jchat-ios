@@ -107,8 +107,27 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [JPUSHService registerDeviceToken:deviceToken];
 }
 ```
-JMessage 还有一个很重要的方法,用于添加 conversation执行回调的对象delegate，具体的回调方法可以看详细文档代码如下：
+JMessage 还有一个很重要的方法,用于添加执行回调的对象delegate，具体的回调方法可以看详细文档代码如下：
 ```
+/*!
+ * @abstract 增加回调(delegate protocol)监听
+ *
+ * @param delegate 需要监听的 Delegate Protocol
+ * @param conversation 允许为nil.
+ *
+ * - 为 nil, 表示接收所有的通知, 不区分会话.
+ * - 不为 nil，表示只接收指定的 conversation 相关的通知.
+ *
+ * @discussion 默认监听全局 JMessageDelegate 即可.
+ *
+ * 这个调用可以在任何地方, 任何时候调用, 可以在未进行 SDK
+ * 启动 setupJMessage:appKey:channel:apsForProduction:category: 时就被调用.
+ *
+ * 并且, 如果你有必要接收数据库升级通知 [JMSGDBMigrateDelegate](建议要做这一步),
+ * 就应该在 SDK 启动前就调用此方法, 来注册通知接收.
+ * 这样, SDK启动过程中发现需要进行数据库升级, 给 App 发送数据库升级通知时,
+ * App 才可以收到并进行处理.
+ */
 + (void)addDelegate:(id <JMessageDelegate>)delegate
    withConversation:(JMSGConversation *)conversation;
 ```
