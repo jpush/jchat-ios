@@ -84,14 +84,14 @@ Util
 
 ## 主要功能索引
 ### JMessage 初始化代码
-建议在 appdelegate didFinishLaunchingWithOptions 方式初始化，如JChat 所示
+建议在 AppDelegate didFinishLaunchingWithOptions 方式初始化，如JChat 所示
 ```
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [self initLogger];
 
   // init third-party SDK
-  **[JMessage addDelegate:self withConversation:nil];**// 这句代码放到前面目的是，应用启动是会做数据库是否升级盘点，如果需要升级，则锁定数据库，进行升级
+  [JMessage addDelegate:self withConversation:nil];// 这句代码放到前面目的是，应用启动是会做数据库是否升级盘点，如果需要升级，则锁定数据库，进行升级
   
   [JMessage setupJMessage:launchOptions
                    appKey:JMSSAGE_APPKEY
@@ -127,93 +127,206 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [JPUSHService registerDeviceToken:deviceToken];
 }
 ```
-JMessage 还有一个很重要的方法,用于添加执行回调的对象delegate，具体的回调方法可以看详细文档代码如下：
+
+### 注册 登录
+首次使用JMessage 需要有JMessage 账户，通过如下代码注册一个新用户。JChat 项目在JCHATRegisterViewController 类中执行了注册操作，并且在注册完成回调执行登录操作(登录操作也可以移动到其它地方进行，具体看程序业务)。
 ```
-/*!
- * @abstract 增加回调(delegate protocol)监听
- *
- * @param delegate 需要监听的 Delegate Protocol
- * @param conversation 允许为nil.
- *
- * - 为 nil, 表示接收所有的通知, 不区分会话.
- * - 不为 nil，表示只接收指定的 conversation 相关的通知.
- *
- * @discussion 默认监听全局 JMessageDelegate 即可.
- *
- * 这个调用可以在任何地方, 任何时候调用, 可以在未进行 SDK
- * 启动 setupJMessage:appKey:channel:apsForProduction:category: 时就被调用.
- *
- * 并且, 如果你有必要接收数据库升级通知 [JMSGDBMigrateDelegate](建议要做这一步),
- * 就应该在 SDK 启动前就调用此方法, 来注册通知接收.
- * 这样, SDK启动过程中发现需要进行数据库升级, 给 App 发送数据库升级通知时,
- * App 才可以收到并进行处理.
- */
-+ (void)addDelegate:(id <JMessageDelegate>)delegate
-   withConversation:(JMSGConversation *)conversation;
-```
-### 注册
-首次使用JMessage 需要有JMessage 账户，通过如下代码注册一个新用户
-```
-+ (void)registerWithUsername:(NSString *)username
-                    password:(NSString *)password
-           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+- (IBAction)registerBtnClick:(id)sender {
+  DDLogDebug(@"Action - registerBtnClick");
+  if ([self.usernameTextField.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"用户名不能为空" view:self.view];
+    return;
+  }
+  
+  if ([self.passwordTextField.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"密码不能为空" view:self.view];
+    return;
+  }
+  
+  [self.usernameTextField resignFirstResponder];
+  [self.passwordTextField resignFirstResponder];
+  
+  NSString *username = self.usernameTextField.text.stringByTrimingWhitespace;
+  NSString *password = self.passwordTextField.text.stringByTrimingWhitespace;
+  
+  if ([self checkValidUsername:username AndPassword:password]) {
+    [MBProgressHUD showMessage:@"正在注册" view:self.view];
+    [[JCHATTimeOutManager ins] startTimerWithVC:self];
+    [JMSGUser registerWithUsername:username
+                          password:password
+                 completionHandler:^(id resultObject, NSError *error) {
+                   [[JCHATTimeOutManager ins] stopTimer];
+                   if (error == nil) {
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                     [MBProgressHUD showMessage:@"注册成功" view:self.view];
+                     [[JCHATTimeOutManager ins] startTimerWithVC:self];
+                     [JMSGUser loginWithUsername:username
+                                        password:password
+                               completionHandler:^(id resultObject, NSError *error) {
+                                 [[JCHATTimeOutManager ins] stopTimer];
+                                 if (error == nil) {
+                                   [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
+                                   [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                                   
+                                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                   JCHATSetDetailViewController *detailVC = [[JCHATSetDetailViewController alloc] init];
+                                   [self.navigationController pushViewController:detailVC animated:YES];
+                                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                 } else {
+                                   DDLogDebug(@"login fail error  %@",error);
+                                   NSString *alert = [JCHATStringUtils errorAlert:error];
+                                   alert = [JCHATStringUtils errorAlert:error];
+                                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                   [MBProgressHUD showMessage:alert view:self.view];
+                                   DDLogError(alert);
+                                 }
+                               }];
+                   } else {
+                     NSString *alert = @"注册失败";
+                     alert = [JCHATStringUtils errorAlert:error];
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                     [MBProgressHUD showMessage:alert view:self.view];
+                   }
+                 }];
+  }
+}
 ```
 注册完成会回调 handler ，如下代码。如果出现错误会返回的error 部位nil，注意resultOvject 不同接口会返回不同类型的值或者nil，详细信息可以关注 [JMessage 官方文档](http://docs.jpush.io/client/im_sdk_ios/#summary)
 ```
 typedef void (^JMSGCompletionHandler)(id resultObject, NSError *error);
 ```
 
-### 登录
-成功注册账户之后，需要登录该用户，才能在该用户创建会话，收发消息。
-```
-+ (void)loginWithUsername:(NSString *)username
-                 password:(NSString *)password
-        completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
-```
-
 ### 会话 (Conversation)
 会话是一个用户与用户之间聊天的载体，要有会话用户之间才能收发消息
 获得会话有两种方式 1. 创建会话 2. 获取历史会话
 #### 1.创建会话
-如下代码分别创建了 单聊会话，和群聊会话
+如下代码分别创建了 单聊会话，和群聊会话, JChat 在JCHATConversationListViewController类 实现创建会话操作
 ```
-+ (void)createSingleConversationWithUsername:(NSString *)username
-                           completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
-+ (void)createGroupConversationWithGroupId:(NSString *)groupId
-                         completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
+- (void)skipToSingleChatView :(NSNotification *)notification {
+  JMSGUser *user = [[notification object] copy];
+  __block JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];
+  __weak typeof(self)weakSelf = self;
+  sendMessageCtl.superViewController = self;
+  [JMSGConversation createSingleConversationWithUsername:user.username completionHandler:^(id resultObject, NSError *error) {
+    __strong __typeof(weakSelf)strongSelf = weakSelf;
+    if (error == nil) {
+      sendMessageCtl.conversation = resultObject;
+      JPIMMAINTHEAD(^{
+        sendMessageCtl.hidesBottomBarWhenPushed = YES;
+        [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
+      });
+    } else {
+      DDLogDebug(@"createSingleConversationWithUsername");
+    }
+  }];
+}
 ```
 
 #### 2. 获取历史会话
-如下代码分别获取 单聊会话，群聊会话，所有会话
+JCHat在JCHATConversationListViewController类中获取所有历史会话的具体代码如下
 ```
-+ (JMSGConversation * JMSG_NULLABLE)singleConversationWithUsername:(NSString *)username;
-
-+ (JMSGConversation * JMSG_NULLABLE)groupConversationWithGroupId:(NSString *)groupId;
-
-+ (void)allConversations:(JMSGCompletionHandler)handler;
+- (void)getConversationList {
+  [self.addBgView setHidden:YES];
+  [JMSGConversation allConversations:^(id resultObject, NSError *error) {
+    NSLog(@"the result");
+    JPIMMAINTHEAD(^{
+      if (error == nil) {
+        _conversationArr = [self sortConversation:resultObject];
+        _unreadCount = 0;
+        for (NSInteger i=0; i < [_conversationArr count]; i++) {
+          JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
+          _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
+        }
+        [self saveBadge:_unreadCount];
+      } else {
+        _conversationArr = nil;
+      }
+      [self.chatTableView reloadData];
+    });
+  }];
+}
 ```
-#### 3. 发送消息
-JMSGMessage 是消息的实体。需要自己创建要发送的消息，示例代码如下
+#### 3. 添加代理
+若想监听conversation 的消息需要把某个对象设为conversation的delegate（可以是任何对象），比如JChat JCHATConversationViewController类需要监听发送回调，受消息回调则必须先设置代理，具体代码如下
+```
+- (void)addDelegate {
+  [JMessage addDelegate:self withConversation:self.conversation];
+}
+```
+
+#### 4. 发送消息
+JMSGMessage 是消息的实体。需要自己创建要发送的消息，JChat JCHATConversationViewController类中发送消息的代码如下
 ```  
+  - (void)prepareTextMessage:(NSString *)text {
+  DDLogDebug(@"Action - prepareTextMessage");
+  if ([text isEqualToString:@""] || text == nil) {
+    return;
+  }
+  [[JCHATSendMsgManager ins] updateConversation:_conversation withDraft:@""];
+  JMSGMessage *message = nil;
   JMSGTextContent *textContent = [[JMSGTextContent alloc] initWithText:text];
   JCHATChatModel *model = [[JCHATChatModel alloc] init];
-  message = [_conversation createMessageWithContent:textContent];//!
-```
-
-获得JMSGMessage 后便可以调用如下接口向会话中发送消息，会话中的target(会话的对方，可以是user,可以是group 的所有成员)就会收到所有的消息
-```
-// JMSGConversation 实力方法
-- (void)sendMessage:(JMSGMessage *)message;
+  
+  message = [_conversation createMessageWithContent:textContent];
+  [_conversation sendMessage:message];// 发送该条消息
+  [self addmessageShowTimeData:message.timestamp];
+  [model setChatModelWith:message conversationType:_conversation];
+  [self addMessage:model];
+}
 ```
 
 #### 4. 接收消息
-前面已经说了可以给conversation 添加回调delegate，收到消息也是通过回调函数来获取的，回调方法如下
+前面已经说了可以给conversation 添加回调delegate，收到消息也是通过回调函数来获取的，JChat JCHATConversationViewController类 收到消息回调方法如下
 ```
 - (void)onReceiveMessage:(JMSGMessage *)message
-                   error:(NSError *)error;
+                   error:(NSError *)error {
+  if (error != nil) {
+    JCHATChatModel *model = [[JCHATChatModel alloc] init];
+    [model setErrorMessageChatModelWithError:error];
+    [self addMessage:model];
+    return;
+  }
+  
+  if (![self.conversation isMessageForThisConversation:message]) {
+    return;
+  }
+  
+  if (message.contentType == kJMSGContentTypeCustom) {
+    return;
+  }
+  DDLogDebug(@"Event - receiveMessageNotification");
+  JPIMMAINTHEAD((^{
+    if (!message) {
+      DDLogWarn(@"get the nil message .");
+      return;
+    }
+    
+    if (_allMessageDic[message.msgId] != nil) {
+      DDLogDebug(@"该条消息已加载");
+      return;
+    }
+    
+    if (message.contentType == kJMSGContentTypeEventNotification) {
+      if (((JMSGEventContent *)message.content).eventType == kJMSGEventNotificationRemoveGroupMembers
+          && ![((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
+        [self setupNavigation];
+      }
+    }
+    
+    if (_conversation.conversationType == kJMSGConversationTypeSingle) {
+    } else if (![((JMSGGroup *)_conversation.target).gid isEqualToString:((JMSGGroup *)message.target).gid]){
+      return;
+    }
+    
+    JCHATChatModel *model = [[JCHATChatModel alloc] init];
+    [model setChatModelWith:message conversationType:_conversation];
+    if (message.contentType == kJMSGContentTypeImage) {
+      [_imgDataArr addObject:model];
+    }
+    model.photoIndex = [_imgDataArr count] -1;
+    [self addmessageShowTimeData:message.timestamp];
+    [self addMessage:model];
+  }));
+}
 ```
-message 是收到的message，
-
-
-
