@@ -276,7 +276,7 @@ JMSGMessage 是消息的实体。需要自己创建要发送的消息，JChat JC
 }
 ```
 
-#### 4. 接收消息
+#### 5. 接收消息
 前面已经说了可以给conversation 添加回调delegate，收到消息也是通过回调函数来获取的，JChat JCHATConversationViewController类 收到消息回调方法如下
 ```
 - (void)onReceiveMessage:(JMSGMessage *)message
