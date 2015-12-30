@@ -84,17 +84,37 @@ Util
 
 ## 主要功能索引
 ### JMessage 初始化代码
+建议在 appdelegate didFinishLaunchingWithOptions 方式初始化，如JChat 所示
 ```
-  [JMessage addDelegate:self withConversation:nil];// 这句代码放到前面目的是，应用启动是会做数据库是否升级盘点，如果需要升级，则锁定数据库，进行升级
+- (BOOL)application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [self initLogger];
+
+  // init third-party SDK
+  **[JMessage addDelegate:self withConversation:nil];**// 这句代码放到前面目的是，应用启动是会做数据库是否升级盘点，如果需要升级，则锁定数据库，进行升级
   
   [JMessage setupJMessage:launchOptions
                    appKey:JMSSAGE_APPKEY
                   channel:CHANNEL apsForProduction:NO
                  category:nil];
+  
   [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                     UIUserNotificationTypeSound |
                                                     UIUserNotificationTypeAlert)
                                         categories:nil];
+  
+  [self registerJPushStatusNotification];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = [UIViewController new];
+  [self.window makeKeyAndVisible];
+  [self setupMainTabBar];
+  [self setupRootView];
+  
+  [JCHATFileManager initWithFilePath];//demo 初始化存储路径
+  
+  return YES;
+}
 
 ```
 
