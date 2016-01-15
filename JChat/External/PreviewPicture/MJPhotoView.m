@@ -124,14 +124,14 @@
                         } completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
           __strong __typeof(photo)strongPhoto = photo;
           if (error == nil) {
-            JPIMLog(@"下载大图 success");
+//            JPIMLog(@"下载大图 success");
             strongPhoto.image = [UIImage imageWithData:data];
             [photoView photoDidFinishLoadWithImage:strongPhoto.image];
             _imageView.image = strongPhoto.image;
             [photoView adjustFrame];
           } else {
-            JPIMLog(@"下载大图 error");
-//            _imageView.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
+//            JPIMLog(@"下载大图 error");
+
             [MBProgressHUD showMessage:@"下载大图失败!！" view:self];
           }
         }];

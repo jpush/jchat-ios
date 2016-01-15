@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
-#import "HMPhotoSelectViewController.h"
-#import "HMPhotoModel.h"
+#import "JCHATPhotoSelectViewController.h"
+#import "JCHATPhotoModel.h"
 @interface ThumbImageCollectionViewCell : UICollectionViewCell
-- (void)setDataWithModel:(HMPhotoModel *)model;
+
+- (void)setDataWithModel:(HMPhotoModel *)model withDelegate:(id)delegate;
 @end

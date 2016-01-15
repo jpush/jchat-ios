@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATSetDetailViewController">
@@ -21,7 +21,6 @@
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入您的昵称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1L4-hi-Pk0">
                     <rect key="frame" x="30" y="50" width="476" height="17"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="eiR-6d-Ltt"/>
                     </constraints>
@@ -30,7 +29,6 @@
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GdB-rs-16T">
                     <rect key="frame" x="30" y="78" width="480" height="1"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.96862751250000001" blue="0.50196081400000003" alpha="1" colorSpace="deviceRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="kuN-Sc-7TK"/>
@@ -38,7 +36,6 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3K-s9-zyb">
                     <rect key="frame" x="514" y="15" width="56" height="56"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="56" id="LW4-G6-Jro"/>
                         <constraint firstAttribute="height" constant="56" id="TFF-n9-BQg"/>
@@ -54,7 +51,6 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6aK-bF-rOV">
                     <rect key="frame" x="30" y="99" width="540" height="33"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Alo-GF-dyn"/>
                         <constraint firstAttribute="width" constant="46" id="OvC-xJ-iTC"/>
@@ -64,6 +60,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="highlighted" title="完成"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="Alo-GF-dyn"/>
@@ -75,7 +72,6 @@
                     </connections>
                 </button>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="6aK-bF-rOV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="213" id="1kr-dZ-ORS"/>

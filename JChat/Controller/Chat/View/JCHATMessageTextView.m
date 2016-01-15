@@ -27,6 +27,25 @@
   [self setNeedsDisplay];
 }
 
+//"反馈"关心的功能
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+  return (action == @selector(paste:));
+}
+
+- (void)paste:(id)sender {
+  UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+  NSTextAttachment *textAttachment = [NSTextAttachment new];
+  if (pasteboard.string != nil) {
+    [super paste:sender];
+    return;
+  }
+  if (pasteboard.image != nil) {
+    textAttachment.image = pasteboard.image;
+    NSAttributedString *attString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    [[JCHATAlertToSendImage shareInstance] showInViewWith:pasteboard.image];
+  }
+}
+
 - (void)setPlaceHolderTextColor:(UIColor *)placeHolderTextColor {
   if([placeHolderTextColor isEqual:_placeHolderTextColor]) {
     return;
@@ -68,7 +87,7 @@
 }
 
 - (void)setFont:(UIFont *)font {
-  JPIMMAINTHEAD(^{
+  JCHATMAINTHREAD(^{
     [super setFont:font];
     [self setNeedsDisplay];
   });
@@ -157,10 +176,6 @@
       paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
       paragraphStyle.alignment = self.textAlignment;
       [self.placeHolder drawInRect:placeHolderRect withAttributes:@{NSFontAttributeName:self.font,NSParagraphStyleAttributeName:paragraphStyle}];
-      //            [self.placeHolder drawInRect:placeHolderRect
-      //                                withFont:self.font
-      //                           lineBreakMode:NSLineBreakByTruncatingTail
-      //                               alignment:self.textAlignment];
     }
   }
 }

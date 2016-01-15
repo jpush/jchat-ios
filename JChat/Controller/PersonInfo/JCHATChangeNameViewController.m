@@ -10,6 +10,14 @@
 #import "JChatConstants.h"
 #import "MBProgressHUD+Add.h"
 
+#define kCharNumberColor UIColorFromRGB(0xbbbbbb)
+#define kBaseLineColor UIColorFromRGB(0x3f80de)
+#define kNameTextFieldColor UIColorFromRGB(0x2d2d2d)
+#define kSuggestTextColor UIColorFromRGB(0xbbbbbb)
+#define kNavigationTittleFrame CGRectMake(0, 0, 150, 44)
+
+static NSInteger const st_nameLengthLime = 30;
+
 @interface JCHATChangeNameViewController ()<UITextFieldDelegate>
 
 @end
@@ -19,15 +27,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view from its nib.
-  UIBarButtonItem *rightbutton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(clickToSave)];
-  [rightbutton setTintColor:[UIColor whiteColor]];
-  self.navigationItem.rightBarButtonItem = rightbutton;
-  [self.charNumber setTextColor:UIColorFromRGB(0xbbbbbb)];
-  self.baseLine.backgroundColor = UIColorFromRGB(0x3f80de);
-  [self.nameTextField setTextColor:UIColorFromRGB(0x2d2d2d)];
-  [self.suggestLabel setTextColor:UIColorFromRGB(0xbbbbbb)];
+
+  [self.charNumber setTextColor:kCharNumberColor];
+  self.baseLine.backgroundColor = kBaseLineColor;
+  [self.nameTextField setTextColor:kNameTextFieldColor];
+  [self.suggestLabel setTextColor:kSuggestTextColor];
+  
   [self.nameTextField setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
-  UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 44)];
+  UILabel *titleLabel = [[UILabel alloc] initWithFrame:kNavigationTittleFrame];
   titleLabel.backgroundColor = [UIColor clearColor];
   titleLabel.font = [UIFont boldSystemFontOfSize:20];
   titleLabel.textColor = [UIColor whiteColor];
@@ -35,30 +42,52 @@
 
   [self.nameTextField becomeFirstResponder];
   JMSGUser *user = [JMSGUser myInfo];
-  if (self.updateType == 0) {
-    self.deleteButton.hidden = YES;
-    self.charNumber.hidden = YES;
-    self.suggestLabel.text = @"好名字可以让你的朋友更加容易记住你";
-    self.nameTextField.placeholder = user.nickname?:@"请输入你的姓名";
-    titleLabel.text = @"修改姓名";
+
+  switch (_updateType) {
+    case kJMSGUserFieldsNickname:
+      self.deleteButton.hidden = NO;
+      self.charNumber.hidden = NO;
+      self.suggestLabel.text = @"好名字可以让你的朋友更加容易记住你";
+      self.nameTextField.placeholder = user.nickname?:@"请输入你的姓名";
+      [self.nameTextField addTarget:self action:@selector(textFieldDidChangeName) forControlEvents:UIControlEventEditingChanged];
+      titleLabel.text = @"修改昵称";
+      break;
+    case kJMSGUserFieldsBirthday:
+      
+      break;
+    case kJMSGUserFieldsSignature:
+      self.suggestLabel.hidden = YES;
+//      [self.nameTextField addTarget:self action:@selector(textFieldChange) forControlEvents:UIControlEventEditingChanged];
+      [self.nameTextField addTarget:self action:@selector(textFieldDidChangeName) forControlEvents:UIControlEventEditingChanged];
+      
+      self.nameTextField.placeholder = user.signature?:@"请输入你的签名";
+      titleLabel.text = @"修改签名";
+      break;
+    case kJMSGUserFieldsGender:
+      
+      break;
+    case kJMSGUserFieldsRegion:
+      self.deleteButton.hidden = YES;
+      self.charNumber.hidden = YES;
+      self.suggestLabel.hidden = YES;
+      titleLabel.text = @"修改地区";
+      self.nameTextField.placeholder = user.region?:@"请输入你所在的地区";
+      break;
+    case kJMSGUserFieldsAvatar:
+      
+      break;
+    default:
+      break;
   }
-  if (self.updateType == 4) {
-    self.deleteButton.hidden = YES;
-    self.charNumber.hidden = YES;
-    self.suggestLabel.hidden = YES;
-    titleLabel.text = @"修改地区";
-    //    self.baselineTop.constant = 58;
-    self.nameTextField.placeholder = user.region?:@"请输入你所在的地区";
-  }
-  if (self.updateType == 2) {
-    self.suggestLabel.hidden = YES;
-    [self.nameTextField addTarget:self action:@selector(textFieldChange) forControlEvents:UIControlEventEditingChanged];
-    
-    self.nameTextField.placeholder = user.signature?:@"请输入你的签名";
-    titleLabel.text = @"修改签名";
-  }
-  
   self.navigationItem.titleView = titleLabel;
+  [self setupNavigationBar];
+}
+
+- (void)setupNavigationBar {
+  self.navigationController.navigationBar.translucent = NO;
+  UIBarButtonItem *rightbutton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(clickToSave)];
+  [rightbutton setTintColor:[UIColor whiteColor]];
+  self.navigationItem.rightBarButtonItem = rightbutton;
   
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:kNavigationLeftButtonRect];
@@ -66,15 +95,25 @@
   [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-  //  self.navigationController.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)textFieldChange {
-  self.charNumber.text = [NSString stringWithFormat:@"%ld",self.nameTextField.text.length];
+  self.charNumber.text = [NSString stringWithFormat:@"%d",self.nameTextField.text.length];
 }
+
+- (void)textFieldDidChangeName {
+  if (self.nameTextField.text.length > 30) {
+    self.nameTextField.text = [self.nameTextField.text substringWithRange:NSMakeRange(0, st_nameLengthLime)];
+    [MBProgressHUD showMessage:[NSString stringWithFormat:@"最多输入 %d 个字符",st_nameLengthLime] view:self.view];
+    return;
+  }
+  self.charNumber.text = [NSString stringWithFormat:@"%d",st_nameLengthLime - self.nameTextField.text.length];
+}
+
 - (void)backClick {
   [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (void)clickToSave {
   kWEAKSELF
   [JMSGUser updateMyInfoWithParameter:self.nameTextField.text userFieldType:self.updateType completionHandler:^(id resultObject, NSError *error) {
@@ -88,9 +127,15 @@
     }
   }];
 }
+
 - (IBAction)deleteText:(id)sender {
-  self.nameTextField.text = @"";
-  self.charNumber.text = @"0";
+  if (_updateType == kJMSGUserFieldsSignature) {
+    self.nameTextField.text = @"";
+    self.charNumber.text = @"0";
+  } else {
+    self.nameTextField.text = @"";
+    self.charNumber.text = [NSString stringWithFormat:@"%ld",st_nameLengthLime];
+  }
 }
 
 - (void)didReceiveMemoryWarning {

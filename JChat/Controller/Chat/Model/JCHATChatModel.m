@@ -101,7 +101,8 @@ static NSInteger const voiceBubbleHeight = 50;
       break;
     case kJMSGContentTypeEventNotification:
     {
-      [self getTextSizeWithString:[((JMSGEventContent *)self.message.content) showEventNotification]];
+//      [self getTextSizeWithString:[((JMSGEventContent *)self.message.content) showEventNotification]];
+      [self getNotificationWithString:[((JMSGEventContent *)self.message.content) showEventNotification]];
     }
       break;
     default:
@@ -120,8 +121,15 @@ static NSInteger const voiceBubbleHeight = 50;
   imgSize.height=realSize.height+20;
   imgSize.width=realSize.width+2*15;
   _contentSize = imgSize;
-  _contentHeight = _contentSize.height;
+  _contentHeight = imgSize.height;
   return imgSize;
+}
+
+- (CGSize)getNotificationWithString:(NSString *)string {
+  CGSize notiSize= [JCHATStringUtils stringSizeWithWidthString:string withWidthLimit:280 withFont:[UIFont systemFontOfSize:14]];
+  _contentHeight = notiSize.height;
+  _contentSize = notiSize;
+  return notiSize;
 }
 
 - (void)setupImageSize {

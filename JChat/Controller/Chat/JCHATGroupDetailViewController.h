@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCHATChatViewController.h"
+#import "JCHATConversationViewController.h"
 
 typedef NS_ENUM(NSInteger, AlertViewTag) {
 //清除聊天记录
@@ -21,8 +21,8 @@ typedef NS_ENUM(NSInteger, AlertViewTag) {
 };
 
 @interface JCHATGroupDetailViewController : UIViewController
-@property (nonatomic,strong) JMSGConversation *conversation;
-@property (nonatomic,strong) JCHATChatViewController *sendMessageCtl;
+@property (nonatomic,weak) JMSGConversation *conversation;
+@property (nonatomic,weak) JCHATConversationViewController *sendMessageCtl;
 @property (nonatomic,strong) NSMutableArray *memberArr;
 
 - (void)quitGroup;

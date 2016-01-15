@@ -27,6 +27,7 @@
 
 - (void)inputTextViewDidEndEditing:(JCHATMessageTextView *)messageInputTextView;
 
+- (void)inputTextViewDidChange:(JCHATMessageTextView *)messageInputTextView;
 /**
  *  输入框将要开始编辑
  *
@@ -45,6 +46,8 @@
 - (void)playVoice :(NSString *)voicePath time:(NSString * )time;
 
 - (void)pressVoiceBtnToHideKeyBoard;
+
+- (void)switchToTextInputMode;
 /**
  *  按下录音按钮开始录音
  */
@@ -87,15 +90,25 @@
 @property (weak, nonatomic) IBOutlet JCHATMessageTextView *textView;
 
 /**
+ *  Height of textView
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewHeight;
+
+/**
  *  开始录音button
  */
 @property (strong, nonatomic) UIButton *startRecordButton;
+
+/**
+ *  录音button 的高度
+ */
+//@property (strong, nonatomic) UIButton *startRecordButton;
 /**
  *  是否正在录音
  */
 @property (nonatomic) BOOL isRecording;
 @property (assign, nonatomic) id<SendMessageDelegate> delegate;
-@property (strong, nonatomic)  JCHATRecordAnimationView *recordAnimationView;
+@property (strong, nonatomic) JCHATRecordAnimationView *recordAnimationView;
 @property (nonatomic) BOOL isPlaying;
 
 
@@ -125,11 +138,21 @@
 - (void)holdDownDragInside;
 
 /**
+ *  切换为文本输入模式，并且当前处于输入状态
+ */
+- (void)switchToTextInputMode;
+
+/**
+ *  转换toolbar 为文本输入样式
+ */
+- (void)switchToolbarToTextMode;
+/**
  *  动态改变高度
  *
  *  @param changeInHeight 目标变化的高度
  */
 - (void)adjustTextViewHeightBy:(CGFloat)changeInHeight;
+
 /**
  *  获取输入框内容字体行高
  *

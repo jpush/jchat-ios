@@ -42,6 +42,7 @@ UIPickerViewDelegate> {
   
   [self.view setBackgroundColor:[UIColor whiteColor]];
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
+  self.navigationController.navigationBar.translucent = NO;
   self.title = @"个人信息";
   [self loadUserInfoData];
   
@@ -80,13 +81,12 @@ UIPickerViewDelegate> {
   _genderPicker.tag = 200;
   [self.view addSubview:_genderPicker];
   
-  _titleArr = @[@"用户名", @"性别", @"地区", @"个性签名"];
+  _titleArr = @[@"昵称", @"性别", @"地区", @"个性签名"];
   _imgArr = @[@"wo_20", @"gender", @"location_21", @"signature"];
   _pickerDataArr = @[@"男", @"女"];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-  
   return 1;
 }
 
@@ -301,13 +301,11 @@ UIPickerViewDelegate> {
   }
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 3) {
-    CGSize size = [JCHATStringUtils stringSizeWithWidthString:_infoArr[3] withWidthLimit:180 withFont:[UIFont systemFontOfSize:14]];
-    return size.height + 70;
+    CGSize size = [JCHATStringUtils stringSizeWithWidthString:_infoArr[3] withWidthLimit:180 withFont:[UIFont systemFontOfSize:17]];
+    return size.height + 36;
   }
-  
   return 57;
 }
 

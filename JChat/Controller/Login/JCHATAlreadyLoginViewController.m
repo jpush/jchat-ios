@@ -39,9 +39,13 @@
 }
 
 - (void)layoutAllView {
+  self.navigationController.navigationBar.translucent = NO;
+  
   _loginBtn.layer.cornerRadius=4;
   [_loginBtn.layer setMasksToBounds:YES];
   [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  _loginBtn.reversesTitleShadowWhenHighlighted = NO;
   _loginBtn.backgroundColor = UIColorFromRGB(0x6fd66b);
   [_loginBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x498d47) frame:_loginBtn.frame] forState:UIControlStateHighlighted];
   
@@ -51,11 +55,10 @@
   self.title=@"极光IM";
   [_passwordField setSecureTextEntry:YES];
   [_passwordField becomeFirstResponder];
-  
 }
 
 - (void)dBMigrateFinish {
-  JPIMMAINTHEAD(^{
+  JCHATMAINTHREAD(^{
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
   });
 }
@@ -96,7 +99,7 @@
                   [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
                   [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
                   
-                  JPIMMAINTHEAD(^{
+                  JCHATMAINTHREAD(^{
                     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
                     [appDelegate setupMainTabBar];
                     appDelegate.window.rootViewController = appDelegate.tabBarCtl;
@@ -111,7 +114,7 @@
               }];
   } else{
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [MBProgressHUD showMessage:@"密码不能为空!" view:self.view];
+    [MBProgressHUD showMessage:@"密码不能为空" view:self.view];
   }
   
 }

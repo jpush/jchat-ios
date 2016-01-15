@@ -45,12 +45,13 @@
 }
 
 - (void)dBMigrateFinish {
-  JPIMMAINTHEAD(^{
+  JCHATMAINTHREAD(^{
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
   });
 }
 
 - (void)layoutAllView {
+  self.navigationController.navigationBar.translucent = NO;
   if ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName] == nil) {
     self.navigationItem.hidesBackButton = YES;
   } else {
@@ -132,7 +133,7 @@
                   [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
                   [self userLoginSave];
                 } else {
-                  JPIMMAINTHEAD(^{
+                  JCHATMAINTHREAD(^{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                   });
                   [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
@@ -148,10 +149,10 @@
   }
   
   NSString *alert = @"用户名或者密码不合法.";
-  if ([password isEqualToString:@""]) {
-    alert = @"密码不能为空";
-  } else if ([username isEqualToString:@""]) {
+  if ([username isEqualToString:@""]) {
     alert =  @"用户名不能为空";
+  } else if ([password isEqualToString:@""]) {
+    alert = @"密码不能为空";
   }
   
   [MBProgressHUD hideHUDForView:self.view animated:YES];

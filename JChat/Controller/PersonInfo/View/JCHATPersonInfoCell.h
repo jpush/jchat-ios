@@ -12,6 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *personInfoConten;
 @property (weak, nonatomic) IBOutlet UILabel *infoTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *titleImgView;
-@property (weak, nonatomic) IBOutlet UIView *baseLine;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImg;
 
 @end

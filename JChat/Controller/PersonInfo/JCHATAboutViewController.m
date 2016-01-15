@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.navigationController.navigationBar.translucent = NO;
   _JChatVersion.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
   _JMessageVersion.text = JMESSAGE_VERSION;
   _JMessageBuild.text   = [NSString stringWithFormat:@"%d", JMESSAGE_BUILD];

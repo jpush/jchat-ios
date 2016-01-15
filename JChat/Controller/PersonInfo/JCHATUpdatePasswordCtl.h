@@ -13,6 +13,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *oldpassword;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordFieldAgain;
+@property (weak, nonatomic) IBOutlet UILabel *separateLine1;
 
+@property (weak, nonatomic) IBOutlet UILabel *separateLine2;
+@property (weak, nonatomic) IBOutlet UILabel *separateLine3;
 
 @end

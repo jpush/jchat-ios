@@ -1,27 +1,27 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "396435B0827D44B283A1A15290817D95EFFC201D",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "92EA2C4B34B798E9CDB9C82DDA8DE56F1A7EB254",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
     "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "396435B0827D44B283A1A15290817D95EFFC201D" : 0,
-    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : 0
+    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : 0,
+    "92EA2C4B34B798E9CDB9C82DDA8DE56F1A7EB254" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7CC404CF-6B62-4A74-BD7F-13A07CFA183E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "396435B0827D44B283A1A15290817D95EFFC201D" : "jchat-ios\/",
-    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : "jchat-ios\/JChat\/External\/MBProgressHUD\/"
+    "edda36ef-85a5-004d-9115-9a14e77ad9fc++5282" : "client-team\/ios-chat-app\/JChat\/External\/MBProgressHUD\/",
+    "92EA2C4B34B798E9CDB9C82DDA8DE56F1A7EB254" : "client-team\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "JChat",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "JChat.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios-chat-app\/JChat.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jpush\/jchat-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh-gitlab.jpushoa.com:sdk\/client-team.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "396435B0827D44B283A1A15290817D95EFFC201D"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "92EA2C4B34B798E9CDB9C82DDA8DE56F1A7EB254"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/168.168.1.183\/svn\/iOS",

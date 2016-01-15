@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,25 +15,22 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-01-19 12:33:2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sZ-xC-Dn1">
-                        <rect key="frame" x="21" y="8" width="278" height="27"/>
-                        <animations/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-01-19 12:33:2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sZ-xC-Dn1">
+                        <rect key="frame" x="20" y="8" width="280" height="27.5"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="27" id="LZx-YC-Nkf"/>
+                            <constraint firstAttribute="width" constant="280" id="RpV-h2-GJd"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <animations/>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="2sZ-xC-Dn1" secondAttribute="trailing" constant="13" id="7ji-i0-N85"/>
-                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="MuQ-ma-dcI"/>
-                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="13" id="W9v-4y-cyL"/>
+                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Nv1-9h-5OJ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="2sZ-xC-Dn1" secondAttribute="bottom" id="koc-k1-Yui"/>
+                    <constraint firstItem="2sZ-xC-Dn1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="pQs-ih-Lkg"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="messageTimeLabel" destination="2sZ-xC-Dn1" id="tOi-TW-N2j"/>
             </connections>

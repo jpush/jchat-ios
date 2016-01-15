@@ -10,9 +10,10 @@
 #import "JChatConstants.h"
 #import "ChatBubbleLayer.h"
 #import "AppDelegate.h"
+#import "JCHATSendMsgManager.h"
 
-#define ReceivedBubbleColor UIColorFromRGB(0xd3fab4)
-#define sendedBubbleColor [UIColor whiteColor]
+//#define ReceivedBubbleColor UIColorFromRGB(0xd3fab4)
+//#define sendedBubbleColor [UIColor whiteColor]
 #define messageStatusBtnFrame [_model.message isReceived]?CGRectMake(_voiceTimeLabel.frame.origin.x + 5, _messageContent.frame.size.height/2 - 8, 17, 15):CGRectMake(_voiceTimeLabel.frame.origin.x - 20, _messageContent.frame.size.height/2 - 8, 17, 15)
 #define messagePercentLabelFrame [_model.message isReceived]?CGPointMake(_messageContent.frame.size.width/2 + crossgrap/2, _messageContent.frame.size.height/2):CGPointMake(_messageContent.frame.size.width/2 - crossgrap/2, _messageContent.frame.size.height/2)
 #define kVoiceTimeLabelFrame [_model.message isReceived]?CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, _messageContent.frame.size.height/2 - 8, 35, 17):CGRectMake(_messageContent.frame.origin.x - 45, _messageContent.frame.size.height/2 - 8, 35, 17)
@@ -146,8 +147,12 @@ static NSInteger const readViewRadius = 4;
              || _model.message.status == kJMSGMessageStatusSendUploadFailed
              || _model.message.status == kJMSGMessageStatusReceiveDownloadFailed) {
     [_circleView stopAnimating];
-    [self.sendFailView setHidden:NO];
-    [self.percentLabel setHidden:YES];
+    if ([_model.message isReceived]) {
+      [self.sendFailView setHidden:YES];
+    } else {
+      [self.sendFailView setHidden:NO];
+    }
+    
     _messageContent.alpha = 1;
   } else {
     _messageContent.alpha = 1;
@@ -205,7 +210,6 @@ static NSInteger const readViewRadius = 4;
       if ([strongSelfUpload.model.message.msgId isEqualToString:msgId]) {
         NSString *percentString = [NSString stringWithFormat:@"%d%%", (int)(percent * 100)];
         strongSelfUpload.percentLabel.text = percentString;
-        NSLog(@"huangmin the percentlabel %@ cell %@", strongSelfUpload.percentLabel , strongSelfUpload);
       }
     });
   };
@@ -215,19 +219,16 @@ static NSInteger const readViewRadius = 4;
   BOOL isRecive = [_model.message isReceived];
   if (isRecive) {
     [_headView setFrame:CGRectMake(gapWidth, 0, headHeight, headHeight)];
-    [_messageContent setBubbleSide:isRecive];
-    _messageContent.backgroundColor = ReceivedBubbleColor;
+//    [_messageContent setBubbleSide:isRecive];
     [_messageContent setFrame:CGRectMake(headHeight + 5, 0, contentSize.width, contentSize.height)];
     [_readView setFrame:CGRectMake(_messageContent.frame.origin.x + _messageContent.frame.size.width + 10, 5, 2 * readViewRadius, 2 * readViewRadius)];
     
   } else {
     [_headView setFrame:CGRectMake(kApplicationWidth - headHeight - gapWidth, 0, headHeight, headHeight)];//头像位置
-    [_messageContent setBubbleSide:isRecive];
-    _messageContent.backgroundColor = sendedBubbleColor;
+//    [_messageContent setBubbleSide:isRecive];
     [_messageContent setFrame:CGRectMake(kApplicationWidth - headHeight - 5 - contentSize.width, 0, contentSize.width, contentSize.height)];
     [_readView setFrame:CGRectMake(_messageContent.frame.origin.x - 10, 5, 8, 8)];
   }
-  
   [_messageContent setMessageContentWith:_model.message];
   [_voiceTimeLabel setFrame:kVoiceTimeLabelFrame];
   if (_model.message.contentType != kJMSGContentTypeVoice) {
@@ -290,9 +291,11 @@ static NSInteger const readViewRadius = 4;
           });
         }
       };
+      [[JCHATSendMsgManager ins] addMessage:weakSelf.model.message withConversation:_conversation];
+    } else {
+      [weakSelf.conversation sendMessage:weakSelf.model.message];
+      [weakSelf layoutAllView];
     }
-    [weakSelf.conversation sendMessage:weakSelf.model.message];
-    [weakSelf layoutAllView];
   }
 }
 

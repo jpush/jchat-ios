@@ -8,6 +8,9 @@
 
 #import "JCHATGroupDetailFooterReusableView.h"
 
+#define kQuitBtnColor UIColorFromRGB(0xc6403b)
+#define kQuitBtnHighlighedColor UIColorFromRGB(0xc0303b)
+
 @implementation JCHATGroupDetailFooterReusableView
 
 - (void)awakeFromNib {
@@ -15,6 +18,7 @@
   _quitGroupBtn.layer.cornerRadius = 4;
   _quitGroupBtn.layer.masksToBounds = YES;
   _quitGroupBtn.backgroundColor = [UIColor redColor];
+  [_quitGroupBtn setBackgroundImage:[ViewUtil colorImage:[UIColor blackColor] frame:_quitGroupBtn.frame] forState:UIControlStateHighlighted];
 }
 
 - (void)setDataWithGroupName:(NSString *)groupName {

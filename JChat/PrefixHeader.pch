@@ -17,6 +17,9 @@
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
 #import "ViewUtil.h"
+#import "JCHATAlertToSendImage.h"
+#import "JCHATStringUtils.h"
+#import "Masonry.h"
 //#import "JChatConstants.h"
 
 //#import "JChatConstants.h"

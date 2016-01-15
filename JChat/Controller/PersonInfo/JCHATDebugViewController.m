@@ -30,14 +30,11 @@
 @implementation JCHATDebugViewController
 
 - (void)clickToSave {
-  if ([_sisAddress.text isEqualToString:@""] || [_sisport.text isEqualToString:@""] || [_connectAddress.text isEqualToString:@""] || [_connectPort.text isEqualToString:@""] ||[_reportAddress.text isEqualToString:@""] ||[_userAddress.text isEqualToString:@""]) {
-    [MBProgressHUD showMessage:@"输入信息不合法" view:self.view];
-    return;
-  }
+
   if (![_sisAddress.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:_sisAddress.text forKey:_sisAddress.placeholder];
-  if (![_sisport.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:_sisport.text forKey:_sisport.placeholder];
+  if (![_sisport.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:[self converToNumberWithString:_sisport.text] forKey:_sisport.placeholder];
   if (![_connectAddress.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:_connectAddress.text forKey:_connectAddress.placeholder];
-  if (![_connectPort.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:_connectPort.text forKey:_connectPort.placeholder];
+  if (![_connectPort.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:[self converToNumberWithString:_connectPort.text] forKey:_connectPort.placeholder];
   if (![_reportAddress.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:_reportAddress.text forKey:_reportAddress.placeholder];
   if (![_userAddress.text isEqualToString:@""])[[NSUserDefaults standardUserDefaults] setObject:_userAddress.text forKey:_userAddress.placeholder];
   
@@ -57,6 +54,13 @@
   }
 }
 
+- (NSNumber *)converToNumberWithString:(NSString *)theString {
+  NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+  [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+  NSNumber *numTemp = [numberFormatter numberFromString:theString];
+  return numTemp;
+}
+
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [_sisAddress resignFirstResponder];
   [_sisport resignFirstResponder];
@@ -69,6 +73,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.navigationController.navigationBar.translucent = NO;
   
   _rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [_rightBarButton setFrame:CGRectMake(0, 0, 50, 30)];

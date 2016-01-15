@@ -35,13 +35,6 @@
   [self.view setBackgroundColor:[UIColor clearColor]];
   
   DDLogDebug(@"Action - viewDidLoad");
-  self.title=@"聊天详情";
-  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
-  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
-  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
-  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
   _groupTitleData =@[@"群聊名称",@"清空聊天记录",@"删除并退出"];
   
   self.groupTab = [[JCHATChatTable alloc]initWithFrame:CGRectMake(0, 0, kApplicationWidth,self.view.frame.size.height - 64)];
@@ -61,8 +54,19 @@
   
   _headView.showsHorizontalScrollIndicator = NO;
   _headView.showsVerticalScrollIndicator = NO;
-  
+  [self setupNavigationBar];
   [self getGroupMemberList];
+}
+
+- (void)setupNavigationBar {
+  self.title=@"聊天详情";
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:CGRectMake(0, 0, 30, 30)];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
+  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)dealloc {
@@ -409,7 +413,7 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         if (error == nil) {
-          JPIMMAINTHEAD(^{
+          JCHATMAINTHREAD(^{
             JCHATGroupSettingCell * cell = (JCHATGroupSettingCell *)[_groupTab cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             cell.groupName.text = [alertView textFieldAtIndex:0].text;
             strongSelf.sendMessageCtl.title = [alertView textFieldAtIndex:0].text;

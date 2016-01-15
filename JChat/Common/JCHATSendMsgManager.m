@@ -12,10 +12,20 @@
 @implementation JCHATSendMsgManager
 + (JCHATSendMsgManager *)ins {
   static JCHATSendMsgManager *sendMsgManage = nil;
-  if (sendMsgManage == nil) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     sendMsgManage = [[JCHATSendMsgManager alloc] init];
-  }
+  });
   return sendMsgManage;
+}
+
+- (id)init {
+  self = [super init];
+  if (self) {
+    _sendMsgListDic  = @{}.mutableCopy;
+    _textDraftDic = @{}.mutableCopy;
+  }
+  return self;
 }
 
 - (void)addMessage:(JMSGMessage *)imgMsg withConversation:(JMSGConversation *)conversation {
@@ -38,13 +48,15 @@
   }
 }
 
-- (id)init {
-  self = [super init];
-  if (self) {
-    _sendMsgListDic  = @{}.mutableCopy;
-  }
-  return self;
+- (void)updateConversation:(JMSGConversation *)conversation withDraft:(NSString *)draftString {
+  NSString *key = nil;
+  key = [JCHATStringUtils conversationIdWithConversation:conversation];
+  _textDraftDic[key] = draftString;
 }
 
-
+- (NSString *)draftStringWithConversation:(JMSGConversation *)conversation {
+  NSString *key = nil;
+  key = [JCHATStringUtils conversationIdWithConversation:conversation];
+  return _textDraftDic[key] ? _textDraftDic[key] : @"";
+}
 @end

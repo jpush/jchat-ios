@@ -21,5 +21,6 @@
 @property(strong, nonatomic)UIImageView *centeraverter;
 @property(strong, nonatomic)UILabel *nameLable;
 - (void)updataNameLable;
+- (void)setDefoultAvatar;
 
 @end

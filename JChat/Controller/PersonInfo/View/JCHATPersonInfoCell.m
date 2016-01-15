@@ -12,11 +12,20 @@
 
 - (void)awakeFromNib {
   // Initialization code
-  [_baseLine setBackgroundColor:UIColorFromRGB(0xd0d0cf)];
   [_personInfoConten setTextColor:UIColorFromRGB(0x808080)];
   _personInfoConten.textAlignment = NSTextAlignmentRight;
   [_personInfoConten setEnabled:NO];
   [_personInfoConten setNumberOfLines:0];
+  
+  UIView *subLine = [UIView new];
+  [self  addSubview:subLine];
+  [subLine mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.left.mas_equalTo(self);
+    make.right.mas_equalTo(self);
+    make.height.mas_equalTo(0.5);
+    make.bottom.mas_equalTo(self);
+  }];
+  subLine.backgroundColor = kSeparationLineColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

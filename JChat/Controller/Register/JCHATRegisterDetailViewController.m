@@ -20,12 +20,17 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+  [self setupNavigationBar];
+}
+
+- (void)setupNavigationBar {
   UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:kNavigationLeftButtonRect];
   [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.navigationController.navigationBar.translucent = NO;
 }
 
 - (IBAction)laterBtnClick:(id)sender {

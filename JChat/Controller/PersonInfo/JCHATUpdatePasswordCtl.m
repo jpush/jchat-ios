@@ -11,41 +11,58 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+  [self setupNavigationBar];
+  [self layoutAllView];
+}
+
+- (void)setupNavigationBar {
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:kNavigationLeftButtonRect];
   [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
   [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.navigationController.navigationBar.translucent = NO;
   self.title=@"修改密码";
+}
+
+- (void)layoutAllView {
   [self.pressBtn setBackgroundColor:[UIColor colorWithRed:96/255.0 green:209/255.0 blue:88/255.0 alpha:1]];
   self.pressBtn.layer.cornerRadius=4;
   self.pressBtn.layer.masksToBounds=YES;
+  [self.oldpassword becomeFirstResponder];
+  
+  _separateLine1.backgroundColor = kSeparationLineColor;
+  _separateLine2.backgroundColor = kSeparationLineColor;
+  _separateLine3.backgroundColor = kSeparationLineColor;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   [self.passwordField resignFirstResponder];
   [self.passwordFieldAgain resignFirstResponder];
 }
 
 - (IBAction)updatePasswordClick:(id)sender {
+  if ([self.oldpassword.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"请输入原密码" view:self.view];
+    return;
+  }
+  
   if ([self.passwordField.text isEqualToString:@""]) {
-    [MBProgressHUD showMessage:@"请输入密码!" view:self.view];
+    [MBProgressHUD showMessage:@"请输入密码" view:self.view];
     return;
   } else if ([self.passwordFieldAgain.text isEqualToString:@""]){
-    [MBProgressHUD showMessage:@"请确认密码!" view:self.view];
+    [MBProgressHUD showMessage:@"请确认密码" view:self.view];
   } else if ([self.passwordField.text isEqualToString:@""] && [self.passwordFieldAgain.text isEqualToString:@""]) {
-    [MBProgressHUD showMessage:@"请输入密码!" view:self.view];
+    [MBProgressHUD showMessage:@"新密码与确认密码不相同，请重新输入" view:self.view];
   } else if ([self.passwordField.text isEqualToString:self.passwordFieldAgain.text]){
     [MBProgressHUD showMessage:@"正在修改" toView:self.view];
-    
     
     [JMSGUser updateMyPasswordWithNewPassword:self.passwordField.text
                                   oldPassword:self.oldpassword.text
                             completionHandler:^(id resultObject, NSError *error) {
                               
-                              JPIMMAINTHEAD(^{
+                              JCHATMAINTHREAD(^{
                                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                 
                               });

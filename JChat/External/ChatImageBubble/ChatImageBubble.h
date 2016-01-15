@@ -11,6 +11,6 @@
 
 @interface ChatImageBubble : UIImageView
 @property (strong, nonatomic)ChatBubbleLayer *maskBubbleLayer;
-
+@property (assign, nonatomic)BOOL isReceivedBubble;
 - (void)setBubbleSide:(BOOL)isReci;
 @end

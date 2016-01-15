@@ -9,7 +9,7 @@
 #import "JCHATSelectFriendsCtl.h"
 #import "JChatConstants.h"
 #import "JCHATSelectFriendCell.h"
-#import "JCHATChatViewController.h"
+#import "JCHATConversationViewController.h"
 
 #define kheadViewFrame CGRectMake(0, 0, kApplicationWidth, 60)
 #define kgroupNameLabelFrame CGRectMake(0, 5, 60, 50)
@@ -73,6 +73,7 @@ static const NSInteger tablecellHeight = 64;
   [rightbtn setTitle:@"确定" forState:UIControlStateNormal];
   [rightbtn addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightbtn];//为导航栏添加右侧按钮
+  self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)tableView:(UITableView *)tableView touchesBegan:(NSSet *)touches

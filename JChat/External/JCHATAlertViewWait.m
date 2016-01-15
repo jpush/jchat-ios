@@ -13,10 +13,10 @@
 @implementation JCHATAlertViewWait
 + (JCHATAlertViewWait *)ins {
   static JCHATAlertViewWait *alertwait = nil;
-  if (alertwait == nil) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     alertwait = [[JCHATAlertViewWait alloc] init];
-
-  }
+  });
   return alertwait;
 }
 

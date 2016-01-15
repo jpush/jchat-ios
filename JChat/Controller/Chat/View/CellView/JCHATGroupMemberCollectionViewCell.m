@@ -11,7 +11,6 @@
 @interface JCHATGroupMemberCollectionViewCell()
 {
   __weak IBOutlet UIImageView *_AvatarImgView;
-  
   __weak IBOutlet UILabel *_userNameLabel;
   __weak IBOutlet UIButton *_deleteMemberBtn;
 }
@@ -23,7 +22,7 @@
 - (void)awakeFromNib {
   _AvatarImgView.layer.masksToBounds = YES;
   _deleteMemberBtn.layer.masksToBounds = YES;
-  _AvatarImgView.layer.cornerRadius = 23;
+  _AvatarImgView.layer.cornerRadius = _AvatarImgView.bounds.size.height/2;
   _AvatarImgView.contentMode = UIViewContentModeScaleAspectFill;
   _deleteMemberBtn.layer.cornerRadius = 10;
   
@@ -32,7 +31,7 @@
 - (void)setDataWithUser:(JMSGUser *)user withEditStatus:(BOOL)isInEdit {
   _userNameLabel.text = user.displayName;
   _deleteMemberBtn.hidden = !isInEdit;//rename isDeleting
-  
+
   [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
     if (error == nil) {
       if (data != nil) {
@@ -40,7 +39,6 @@
       } else {
         _AvatarImgView.image = [UIImage imageNamed:@"headDefalt"];
       }
-      
     } else {
       _AvatarImgView.image = [UIImage imageNamed:@"headDefalt"];
     }

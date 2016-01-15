@@ -22,6 +22,7 @@
   [super viewDidLoad];
   [self.view setBackgroundColor:[UIColor whiteColor]];
   self.title=@"新消息提醒";
+  self.navigationController.navigationBar.translucent = NO;
   
   titleArr = @[@"接受新消息通知",@"声音",@"震动"];
   

@@ -29,9 +29,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                                                     UIUserNotificationTypeSound |
                                                     UIUserNotificationTypeAlert)
                                         categories:nil];
+  
   [self registerJPushStatusNotification];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = [UIViewController new];
   [self.window makeKeyAndVisible];
   [self setupMainTabBar];
   [self setupRootView];
@@ -61,7 +63,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
       
   [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x3f80de)];
   if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setTranslucent:NO];//!
   }
   
   NSShadow* shadow = [NSShadow new];

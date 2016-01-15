@@ -119,9 +119,6 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
     case kJMSGErrorSDKParamGroupGroupInfoInvalid:
       errorAlert = @"group 相关字段无效";
       break;
-//    case kJMSGErrorMediaCrcInvalid:
-//      errorAlert = @"CRC32 错误";
-//      break;
     case kJMSGErrorSDKMessageNotInGroup:
       errorAlert = @"你已不在该群，无法发送消息";
       break;
@@ -146,9 +143,6 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
     case kJMSGErrorHttpUidInvalid:
       errorAlert = @"内部UID 无效";
       break;
-//    case kJMSGErrorHttpGidInvalid:
-//      errorAlert = @"内部Gid 无效";
-//      break;
     case kJMSGErrorHttpMissingAuthenInfo:
       errorAlert = @"Http 请求没有验证信息";
       break;
@@ -171,7 +165,7 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
       errorAlert = @"密码错误";
       break;
     default:
-      errorAlert = @"未知错误";
+      errorAlert = nil;
       break;
   }
   return errorAlert;
@@ -346,8 +340,19 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
   return NO;
 }
 
++ (NSString *)conversationIdWithConversation:(JMSGConversation *)conversation {
+  NSString *conversationId = nil;
+  if (conversation.conversationType == kJMSGConversationTypeSingle) {
+    JMSGUser *user = conversation.target;
+    conversationId = [NSString stringWithFormat:@"%@_%ld",user.username, kJMSGConversationTypeSingle];
+  } else {
+    JMSGGroup *group = conversation.target;
+    conversationId = [NSString stringWithFormat:@"%@_%ld",group.gid,kJMSGConversationTypeGroup];
+  }
+  return conversationId;
+}
+
 + (CGSize)stringSizeWithWidthString:(NSString *)string withWidthLimit:(CGFloat)width withFont:(UIFont *)font {
-  NSLog(@"huangmin  the string %@",string);
   CGSize maxSize = CGSizeMake(width, 2000);
 //  UIFont *font =[UIFont systemFontOfSize:18];
   NSMutableParagraphStyle *paragraphStyle= [[NSMutableParagraphStyle alloc] init];

@@ -21,6 +21,13 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+  [self setupNavigationBar];
+  [self layoutAllView];
+}
+
+- (void)setupNavigationBar {
+  self.title = @"极光IM";
+  
   UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
   [backBtn setFrame:kNavigationLeftButtonRect];
   
@@ -30,24 +37,24 @@
   
   UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
   self.navigationItem.leftBarButtonItem = backItem;
-  
+  self.navigationController.navigationBar.translucent = NO;
+}
+
+- (void)layoutAllView {
   self.registerBtn.layer.cornerRadius = 4;
   [self.registerBtn.layer setMasksToBounds:YES];
-  //  self.registerBtn.backgroundColor = UIColorFromRGB(0x3f80de);
   [self.registerBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x3f80de) frame:self.registerBtn.frame] forState:UIControlStateNormal];
   [self.registerBtn setBackgroundImage:[ViewUtil colorImage:UIColorFromRGB(0x2840b0) frame:self.registerBtn.frame] forState:UIControlStateHighlighted];
   [self.usernameTextField becomeFirstResponder];
-  self.title = @"极光IM";
   self.passwordTextField.secureTextEntry = YES;
   self.passwordTextField.keyboardType = UIKeyboardTypeDefault;
-}
 
+}
 
 - (void)doBack:(id)sender
 {
   [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
@@ -61,16 +68,24 @@
 
 - (IBAction)registerBtnClick:(id)sender {
   DDLogDebug(@"Action - registerBtnClick");
+  if ([self.usernameTextField.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"用户名不能为空" view:self.view];
+    return;
+  }
+  
+  if ([self.passwordTextField.text isEqualToString:@""]) {
+    [MBProgressHUD showMessage:@"密码不能为空" view:self.view];
+    return;
+  }
   
   [self.usernameTextField resignFirstResponder];
   [self.passwordTextField resignFirstResponder];
-  [MBProgressHUD showMessage:@"正在注册" view:self.view];
   
-  // 要去掉空格
   NSString *username = self.usernameTextField.text.stringByTrimingWhitespace;
   NSString *password = self.passwordTextField.text.stringByTrimingWhitespace;
   
   if ([self checkValidUsername:username AndPassword:password]) {
+    [MBProgressHUD showMessage:@"正在注册" view:self.view];
     [[JCHATTimeOutManager ins] startTimerWithVC:self];
     [JMSGUser registerWithUsername:username
                           password:password
@@ -78,8 +93,7 @@
                    [[JCHATTimeOutManager ins] stopTimer];
                    if (error == nil) {
                      [MBProgressHUD hideHUDForView:self.view animated:YES];
-                     [MBProgressHUD showSuccess:@"注册成功！" toView:self.view];
-                     
+                     [MBProgressHUD showMessage:@"注册成功" view:self.view];
                      [[JCHATTimeOutManager ins] startTimerWithVC:self];
                      [JMSGUser loginWithUsername:username
                                         password:password
@@ -106,7 +120,7 @@
                      NSString *alert = @"注册失败";
                      alert = [JCHATStringUtils errorAlert:error];
                      [MBProgressHUD hideHUDForView:self.view animated:YES];
-                     [MBProgressHUD showSuccess:alert toView:self.view];
+                     [MBProgressHUD showMessage:alert view:self.view];
                    }
                  }];
   }

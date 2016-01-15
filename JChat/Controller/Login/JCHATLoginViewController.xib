@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATLoginViewController">
@@ -23,16 +23,14 @@
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请填写密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IJb-aa-uJH">
                     <rect key="frame" x="55" y="108" width="256" height="30"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="0SF-hz-KCn"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kse-3Z-g37">
                     <rect key="frame" x="245" y="263" width="75" height="30"/>
-                    <animations/>
                     <state key="normal" title="忘记密码？">
                         <color key="titleColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -40,7 +38,6 @@
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8CT-AI-8VL">
                     <rect key="frame" x="55" y="40" width="256" height="40"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="grZ-2L-iyu"/>
                     </constraints>
@@ -49,7 +46,6 @@
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="QaU-Y5-yIh">
                     <rect key="frame" x="15" y="112" width="22" height="22"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="1mN-Mv-R6c"/>
                         <constraint firstAttribute="width" constant="22" id="hEW-aW-akU"/>
@@ -57,7 +53,6 @@
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_02.png" translatesAutoresizingMaskIntoConstraints="NO" id="EoH-4N-4Tc">
                     <rect key="frame" x="15" y="49" width="22" height="22"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="22" id="aBs-RF-Ffp"/>
                         <constraint firstAttribute="height" constant="22" id="hDD-n2-A5i"/>
@@ -65,7 +60,6 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCi-FD-Lhl">
                     <rect key="frame" x="11" y="87" width="298" height="1"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.23695269660000001" green="0.43671051020000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="yRb-7g-Pxm"/>
@@ -76,7 +70,6 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEe-sx-9gh">
                     <rect key="frame" x="11" y="155" width="298" height="1"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.23695269660000001" green="0.43671051020000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="Kkn-qS-i23"/>
@@ -87,7 +80,6 @@
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4D-e8-53R">
                     <rect key="frame" x="11" y="212" width="298" height="43"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.32804255062202858" green="0.68854561237373735" blue="0.32908512565472914" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="43" id="lfW-nd-Y8Z"/>
@@ -97,13 +89,15 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <state key="highlighted" title="登录">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="qpe-aT-15R"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekc-px-7IA">
                     <rect key="frame" x="42" y="485" width="236" height="75"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="LOl-H4-hGu"/>
                         <constraint firstAttribute="width" constant="236" id="fCm-il-XFL"/>
@@ -120,7 +114,6 @@
                     </connections>
                 </button>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="kse-3Z-g37" firstAttribute="top" secondItem="r4D-e8-53R" secondAttribute="bottom" constant="8" id="1lh-Ug-ddK"/>

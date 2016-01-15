@@ -28,7 +28,13 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+  [self setupNavigationBar];
+  [self layoutAllView];
+}
+
+- (void)setupNavigationBar {
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
+  self.navigationController.navigationBar.translucent = NO;
   self.title = @"设置";
   
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -37,6 +43,9 @@
   [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+}
+
+- (void)layoutAllView {
   titleArr = @[@"密码修改", @"关于", @"Debug"];
   settingTabl =[[UITableView alloc] initWithFrame:CGRectMake(0, 0, kApplicationWidth, kScreenHeight-kNavigationBarHeight-kStatusBarHeight)];
   [settingTabl setBackgroundColor:[UIColor whiteColor]];
@@ -44,12 +53,11 @@
   settingTabl.dataSource=self;
   settingTabl.delegate=self;
   settingTabl.separatorStyle=UITableViewCellSeparatorStyleNone;
+  [settingTabl registerNib:[UINib nibWithNibName:@"JCHATSetting_Cell" bundle:nil] forCellReuseIdentifier:@"JCHATSetting_Cell"];
   [self.view addSubview:settingTabl];
   settingTabl.backgroundColor = [UIColor whiteColor];
   self.view.backgroundColor = [UIColor whiteColor];
 }
-
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -63,12 +71,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-  static NSString *cellIdentifier = @"setCell";
+  static NSString *cellIdentifier = @"JCHATSetting_Cell";
   JCHATSetting_Cell *cell = (JCHATSetting_Cell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-  if (cell == nil) {
-    cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATSetting_Cell" owner:self options:nil] lastObject];
-  }
-  cell.textLabel.text=[titleArr objectAtIndex:indexPath.row];
+  cell.tittleLabel.text = [titleArr objectAtIndex:indexPath.row];
   return cell;
 }
 
@@ -110,7 +115,6 @@
 - (void)backClick
 {
   [self.navigationController popViewControllerAnimated:YES];
-  
 }
 
 - (void)didReceiveMemoryWarning {

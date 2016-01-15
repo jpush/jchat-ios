@@ -23,10 +23,11 @@
 
 #define settingTableFrame CGRectMake(0, 0, kApplicationWidth, kApplicationHeight - 45 + kStatusBarHeight)
 #define settingTableBackgroupColor [UIColor colorWithRed:235 / 255.0 green:235 / 255.0 blue:243 / 255.0 alpha:1]
-#define avatarFrame CGRectMake(0, 0, kApplicationWidth, 176)
+#define avatarFrame CGRectMake(0, 0, kApplicationWidth, 0.546 * kApplicationWidth)
 #define navicationTitleShadowColor [UIColor colorWithRed:0 green:0.7 blue:0.8 alpha:1]
 #define separateLineFrame CGRectMake(0, 56, kApplicationWidth, 0.5)
 #define separateLineColor UIColorFromRGB(0xd0d0cf)
+
 @interface JCHATUserInfoViewController ()
 
 @property(strong, nonatomic) UITableView *settingTableView;
@@ -49,13 +50,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+  self.navigationController.navigationBar.translucent = NO;
+  
   [self.view setBackgroundColor:[UIColor clearColor]];
   self.settingTableView = [[UITableView alloc] initWithFrame:settingTableFrame style:UITableViewStylePlain];
   [self.view addSubview:self.settingTableView];
   [self.settingTableView setBackgroundColor:settingTableBackgroupColor];
   self.settingTableView.dataSource = self;
   self.settingTableView.delegate = self;
-  self.settingTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+  self.settingTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.settingTableView.tableFooterView = [[UIView alloc] init];
   
   [self setAvatar];
@@ -85,6 +88,7 @@
   [_bgView addGestureRecognizer:gesture];
   _header = [CExpandHeader expandWithScrollView:_settingTableView expandView:_bgView];
 }
+
 - (void)updateAvatar {
   DDLogDebug((@"Action - updateAvatar"));
   JMSGUser *user = [JMSGUser myInfo];
@@ -95,11 +99,11 @@
       if (data != nil) {
         _bgView.originImage = [UIImage imageWithData:data];
       } else {
-        _bgView.originImage = [UIImage imageNamed:@"wo@2x.png"];
+        [_bgView setDefoultAvatar];
       }
     } else {
       DDLogDebug(@"Action -- largeAvatarData");
-      _bgView.originImage = [UIImage imageNamed:@"wo@2x.png"];
+      [_bgView setDefoultAvatar];
     }
   }];
 }
@@ -216,9 +220,7 @@
   DDLogDebug(@"Action - updateUserInfo");
   JMSGUser *user = [JMSGUser myInfo];
   [self updateAvatar];
-  if (user.nickname) {
-    self.titleArr = @[user.nickname, @"设置", @"退出登录"];
-  } else if (user.username) {
+  if (user.username) {
     self.titleArr = @[user.username, @"设置", @"退出登录"];
   } else {
     self.titleArr = @[@"", @"设置", @"退出登录"];

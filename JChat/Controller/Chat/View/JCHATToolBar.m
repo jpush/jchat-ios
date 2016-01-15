@@ -48,23 +48,45 @@
 }
 
 - (IBAction)voiceBtnClick:(id)sender {
+  [self switchInputMode];
+}
+
+- (void)switchInputMode {
   if (self.voiceButton.selected == NO) {
-    self.voiceButton.selected = YES;
-    [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar"] forState:UIControlStateNormal];
-    [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar_pre"] forState:UIControlStateHighlighted];
-    [self.textView setHidden:YES];
-    [self.startRecordButton setHidden:NO];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pressVoiceBtnToHideKeyBoard)]) {
-      [self.delegate pressVoiceBtnToHideKeyBoard];
-    }
+  _textViewHeight.constant = 36;
+    [self switchToVoiceInputMode];
   } else {
-    self.voiceButton.selected=NO;
-    [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar"] forState:UIControlStateNormal];
-    [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar_pre"] forState:UIControlStateHighlighted];
-    [self.startRecordButton setHidden:YES];
-    JPIMLog(@"startRecordButton is :%@",self.startRecordButton);
-    [self.textView setHidden:NO];
+    [self switchToTextInputMode];
   }
+}
+
+- (void)switchToVoiceInputMode {
+  self.voiceButton.selected = YES;
+  [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar"] forState:UIControlStateNormal];
+  [self.voiceButton setImage:[UIImage imageNamed:@"keyboard_toolbar_pre"] forState:UIControlStateHighlighted];
+
+  [self.textView setHidden:YES];
+  [self.startRecordButton setHidden:NO];
+  if (self.delegate && [self.delegate respondsToSelector:@selector(pressVoiceBtnToHideKeyBoard)]) {
+    [self.delegate pressVoiceBtnToHideKeyBoard];
+  }
+}
+
+- (void)switchToTextInputMode {
+  [self switchToolbarToTextMode];
+  JPIMLog(@"startRecordButton is :%@",self.startRecordButton);
+  if (self.delegate && [self.delegate respondsToSelector:@selector(switchToTextInputMode)]) {
+    [self.delegate switchToTextInputMode];
+  }
+}
+
+- (void)switchToolbarToTextMode {
+  self.voiceButton.selected=NO;
+  self.voiceButton.contentMode = UIViewContentModeCenter;
+  [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar"] forState:UIControlStateNormal];
+  [self.voiceButton setImage:[UIImage imageNamed:@"voice_toolbar_pre"] forState:UIControlStateHighlighted];
+  [self.startRecordButton setHidden:YES];
+  [self.textView setHidden:NO];
 }
 
 - (void)layoutSubviews {
@@ -85,9 +107,11 @@
     [self.startRecordButton mas_remakeConstraints:^(MASConstraintMaker *make) {
       
     }];
+    
     [self.startRecordButton mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.height.mas_equalTo(30);
-      make.top.mas_equalTo(self).with.offset(7.5);
+      make.top.mas_equalTo(self).with.offset(5);
+      make.bottom.mas_equalTo(self).with.offset(-4);
+      make.height.mas_equalTo(36);
       make.left.mas_equalTo(self.voiceButton.mas_right).with.offset(5);
       make.right.mas_equalTo(self.addButton.mas_left).with.offset(-5);
     }];
@@ -100,7 +124,7 @@
   self.textView.returnKeyType = UIReturnKeySend;
   UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
   [self addGestureRecognizer:gesture];
-  [self setFrame:CGRectMake(0, kApplicationHeight+kStatusBarHeight-45, self.bounds.size.width, 45)];
+  [self setFrame:CGRectMake(0, kApplicationHeight + kStatusBarHeight - 45, self.bounds.size.width, 45)];
   
   //    self.startRecordButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   self.startRecordButton = [UIButton new];
@@ -168,10 +192,14 @@
   
   NSUInteger numLines = MAX([self.textView numberOfLinesOfText],
                             [self.textView.text numberOfLines]);
-  self.textView.frame = CGRectMake(prevFrame.origin.x,
-                                   prevFrame.origin.y,
-                                   prevFrame.size.width,
-                                   prevFrame.size.height + changeInHeight);
+  
+  if ([_textView.text isEqualToString: @""]) {
+    return;
+  }
+  
+  CGSize textSize = [JCHATStringUtils stringSizeWithWidthString:_textView.text withWidthLimit:_textView.frame.size.width withFont:[UIFont systemFontOfSize:st_toolBarTextSize]];
+  CGFloat textViewHeight = textSize.height + 30;
+  _textViewHeight.constant = textViewHeight>36?textViewHeight:36;
   self.textView.contentInset = UIEdgeInsetsMake((numLines >= 6 ? 4.0f : 0.0f),
                                                 0.0f,
                                                 (numLines >= 6 ? 4.0f : 0.0f),
@@ -285,8 +313,14 @@
   }
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+  if ([self.delegate respondsToSelector:@selector(inputTextViewDidChange:)]) {
+    [self.delegate inputTextViewDidChange:self.textView];
+  }
+}
+
 + (CGFloat)textViewLineHeight {
-  return 31.0f; // for fontSize 16.0f
+  return st_toolBarTextSize * [UIScreen mainScreen].scale; // for fontSize 16.0f
 }
 
 + (CGFloat)maxLines {

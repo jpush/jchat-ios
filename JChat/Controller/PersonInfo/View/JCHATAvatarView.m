@@ -36,15 +36,27 @@ static CGFloat const blurLevel = 22.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    self.centeraverter = [[UIImageView alloc] initWithFrame:centerAvatarFrame];
-    self.centeraverter.layer.cornerRadius = self.centeraverter.frame.size.height/2;
+    self.centeraverter = [UIImageView new];
+    self.centeraverter.layer.cornerRadius = 35;
+    [self addSubview:self.centeraverter];
+    [self.centeraverter mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.centerX.mas_equalTo(self);
+      make.size.mas_equalTo(CGSizeMake(70, 70));
+      make.bottom.mas_equalTo(self.mas_bottom).with.offset(-70);
+    }];
+    
     self.centeraverter.layer.masksToBounds = YES;
     self.centeraverter.center = avaterCenter;
     self.centeraverter.contentMode = UIViewContentModeScaleAspectFill;
-    [self addSubview:self.centeraverter];
     
-    _nameLable = [[UILabel alloc] initWithFrame:nameLabelFrame];
-    _nameLable.center = nameLableCenter;
+    _nameLable = [UILabel new];
+    [self addSubview:_nameLable];
+    [_nameLable mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.centerX.mas_equalTo(self);
+      make.left.mas_equalTo(self.mas_left);
+      make.right.mas_equalTo(self.mas_right);
+      make.bottom.mas_equalTo(self.mas_bottom).with.offset(-40);
+    }];
     _nameLable.backgroundColor = [UIColor clearColor];
     _nameLable.font = nameLableFont;
     _nameLable.textColor = [UIColor whiteColor];
@@ -53,14 +65,19 @@ static CGFloat const blurLevel = 22.0f;
     _nameLable.shadowOffset = CGSizeMake(-1.0, 1.0);
     JMSGUser *userinfo =  [JMSGUser myInfo];
     _nameLable.text = (userinfo.nickname ?userinfo.nickname:(userinfo.username?userinfo.username:@""));
-    [self addSubview:_nameLable];
+
   }
   return self;
 }
 
+- (void)setDefoultAvatar {
+  _centeraverter.image = [UIImage imageNamed:@"wo_05"];
+  self.backgroundColor = UIColorFromRGB(0xe1e1e1);
+  
+}
 - (void)updataNameLable {
   JMSGUser *userinfo =  [JMSGUser myInfo];
-  JPIMMAINTHEAD(^{
+  JCHATMAINTHREAD(^{
     _nameLable.text = (userinfo.nickname ?userinfo.nickname:(userinfo.username?userinfo.username:@""));
   });
 }

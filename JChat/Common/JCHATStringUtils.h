@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <JMessage/JMessage.h>
 
 @interface JCHATStringUtils : NSObject
 
@@ -19,6 +20,7 @@
 
 + (BOOL)isValidatIP:(NSString *)ipAddress;
 
++ (NSString *)conversationIdWithConversation:(JMSGConversation *)conversation;
 
 + (CGSize)stringSizeWithWidthString:(NSString *)string withWidthLimit:(CGFloat)width withFont:(UIFont *)font;
 @end

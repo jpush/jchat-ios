@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "JCHATChatTable.h"
 #import "JCHATGroupPersonView.h"
-#import "JCHATChatViewController.h"
+#import "JCHATConversationViewController.h"
 
 @class JMSGConversation;
 
 @interface JCHATGroupSettingCtl : UIViewController<UITableViewDataSource,UITableViewDelegate,TouchTableViewDelegate,GroupPersonDelegate,UITextFieldDelegate>
 @property (nonatomic,strong) JCHATChatTable *groupTab;
 @property (nonatomic,strong) JMSGConversation *conversation;
-@property (nonatomic,strong) JCHATChatViewController *sendMessageCtl;
+@property (nonatomic,strong) JCHATConversationViewController *sendMessageCtl;
 @property (nonatomic,strong) NSMutableArray *groupData;
 @end

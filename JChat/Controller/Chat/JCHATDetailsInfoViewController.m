@@ -23,6 +23,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+  [self.view setBackgroundColor:[UIColor orangeColor]];
+  
+  self.detailArr =@[@{@"section0" :@[@"清空聊天记录"]}];
+  [self setupNavigation];
+  [self setupTableView];
+}
+
+- (void)setupNavigation {
   self.title=@"聊天详情";
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:kNavigationLeftButtonRect];
@@ -30,46 +38,51 @@
   [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
   [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
-  
-  [self.view setBackgroundColor:[UIColor orangeColor]];
+  self.navigationController.navigationBar.translucent = NO;
+}
+
+- (void)setupTableView {
   [self.detailTableView setBackgroundColor:[UIColor whiteColor]];
+  self.detailTableView.dataSource=self;
+  self.detailTableView.delegate=self;
+  self.detailTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+  [self setupTableHeadView];
+}
+
+- (void)setupTableHeadView {
   UIView *tableHeadView =[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
   [tableHeadView setBackgroundColor:[UIColor whiteColor]];
   
-  _headView =[[UIImageView alloc] initWithFrame:CGRectMake(20, (80-46)/2, 46, 46)];
+  _headView =[[UIImageView alloc] initWithFrame:CGRectMake(23, (80-46)/2, 52, 52)];
   [_headView setBackgroundColor:[UIColor clearColor]];
   [_headView setUserInteractionEnabled:YES];
   UITapGestureRecognizer *gesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeadClick)];
   [_headView addGestureRecognizer:gesture];
   
   [_headView.layer setMasksToBounds:YES];
-  [_headView.layer setCornerRadius:23];
+  [_headView.layer setCornerRadius:_headView.frame.size.height/2];
   [tableHeadView addSubview:_headView];
   
-  UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 99,kApplicationWidth, 1)];
-  [lineView setBackgroundColor:[UIColor grayColor]];
+  UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 99,kApplicationWidth, 0.5)];
+  [lineView setBackgroundColor:kTableviewSeperateLineColor];
   [tableHeadView addSubview:lineView];
   
-  UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 100 - 40, 66, 40)];
+  UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(23, 80, 52, 13)];
   nameLabel.textColor = [UIColor grayColor];
-  nameLabel.font = [UIFont boldSystemFontOfSize:18];
+  nameLabel.font = [UIFont boldSystemFontOfSize:12];
   nameLabel.textAlignment = NSTextAlignmentCenter;
   
   nameLabel.text = [((JMSGUser *)self.conversation.target) displayName];
   [tableHeadView addSubview:nameLabel];
-  UIButton *addView =[[UIButton alloc] initWithFrame:CGRectMake(75, (80-46)/2, 46, 46)];
+  UIButton *addView =[[UIButton alloc] initWithFrame:CGRectMake(85, (80-46)/2, 52, 52)];
   [addView setBackgroundColor:[UIColor clearColor]];
   [addView addTarget:self action:@selector(addFriend) forControlEvents:UIControlEventTouchUpInside];
   [addView setBackgroundImage:[UIImage imageNamed:@"addMan"] forState:UIControlStateNormal];
   [addView setBackgroundImage:[UIImage imageNamed:@"addMan_pre"] forState:UIControlStateHighlighted];
-
+  
   [tableHeadView addSubview:addView];
   
   self.detailTableView.tableHeaderView = tableHeadView;
-  self.detailArr =@[@{@"section0" :@[@"清空聊天记录"]}];
-  self.detailTableView.dataSource=self;
-  self.detailTableView.delegate=self;
-  self.detailTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
 }
 
 #pragma mark -- 加入好友到群
@@ -80,45 +93,8 @@
                                           cancelButtonTitle:@"取消"
                                           otherButtonTitles:@"确定", nil];
   alerView.alertViewStyle =UIAlertViewStylePlainTextInput;
+  alerView.tag = kAlertViewTagCreateGroup;
   [alerView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-  if (buttonIndex == 0) {
-    
-  } else {
-    [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
-    __block JMSGGroup *tmpgroup =nil;
-    typeof(self) __weak weakSelf = self;
-    [JMSGGroup createGroupWithName:@"" desc:@"" memberArray:@[((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
-      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      typeof(weakSelf) __strong strongSelf = weakSelf;
-      tmpgroup = (JMSGGroup *)resultObject;
-      
-      if (error == nil) {
-        [JMSGConversation createGroupConversationWithGroupId:tmpgroup.gid completionHandler:^(id resultObject, NSError *error) {
-          if (error == nil) {
-            [MBProgressHUD showMessage:@"创建群成功" view:self.view];
-            JMSGConversation *groupConversation = (JMSGConversation *)resultObject;
-            strongSelf.sendMessageCtl.conversation = groupConversation;
-            strongSelf.sendMessageCtl.isConversationChange = YES;
-            [JMessage removeDelegate:strongSelf.sendMessageCtl withConversation:_conversation];
-            [JMessage addDelegate:strongSelf.sendMessageCtl withConversation:groupConversation];
-            strongSelf.sendMessageCtl.targetName = tmpgroup.name;
-            strongSelf.sendMessageCtl.title = tmpgroup.name;
-            [strongSelf.sendMessageCtl setupView];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kConversationChange object:resultObject];
-            [strongSelf.navigationController popViewControllerAnimated:YES];
-          } else {
-            DDLogDebug(@"creategroupconversation error with error : %@",error);
-          }
-        }];
-      } else {
-        [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
-      }
-      
-    }];
-  }
 }
 
 - (void)tapHeadClick {
@@ -134,12 +110,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-  return 0;
+  return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-  return 20;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//  return 20;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -214,7 +190,66 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [_conversation deleteAllMessages];
+//  [_conversation deleteAllMessages];
+  [self tapToClearChatRecord];
+}
+
+- (void)tapToClearChatRecord {
+  UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"清空聊天记录"
+                                                     message:@""
+                                                    delegate:self
+                                           cancelButtonTitle:@"取消"
+                                           otherButtonTitles:@"确定", nil];
+  alerView.tag = kAlertViewTagClearSingleChatRecord;
+  [alerView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  if (buttonIndex == 0) return;
+  
+  switch (alertView.tag) {
+    case kAlertViewTagClearSingleChatRecord:
+      [self.conversation deleteAllMessages];
+      [[NSNotificationCenter defaultCenter] postNotificationName:kDeleteAllMessage object:nil];
+      break;
+    case kAlertViewTagCreateGroup:
+    {
+      [MBProgressHUD showMessage:@"加好友进群组" toView:self.view];
+      __block JMSGGroup *tmpgroup =nil;
+      typeof(self) __weak weakSelf = self;
+      [JMSGGroup createGroupWithName:@"" desc:@"" memberArray:@[((JMSGUser *)self.conversation.target).username,[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        typeof(weakSelf) __strong strongSelf = weakSelf;
+        tmpgroup = (JMSGGroup *)resultObject;
+        
+        if (error == nil) {
+          [JMSGConversation createGroupConversationWithGroupId:tmpgroup.gid completionHandler:^(id resultObject, NSError *error) {
+            if (error == nil) {
+              [MBProgressHUD showMessage:@"创建群成功" view:self.view];
+              JMSGConversation *groupConversation = (JMSGConversation *)resultObject;
+              strongSelf.sendMessageCtl.conversation = groupConversation;
+              strongSelf.sendMessageCtl.isConversationChange = YES;
+              [JMessage removeDelegate:strongSelf.sendMessageCtl withConversation:_conversation];
+              [JMessage addDelegate:strongSelf.sendMessageCtl withConversation:groupConversation];
+              strongSelf.sendMessageCtl.targetName = tmpgroup.name;
+              strongSelf.sendMessageCtl.title = tmpgroup.name;
+              [strongSelf.sendMessageCtl setupView];
+              [[NSNotificationCenter defaultCenter] postNotificationName:kConversationChange object:resultObject];
+              [strongSelf.navigationController popViewControllerAnimated:YES];
+            } else {
+              DDLogDebug(@"creategroupconversation error with error : %@",error);
+            }
+          }];
+        } else {
+          [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
+        }
+      }];
+    }
+      break;
+    default:
+      break;
+  }
+  return;
 }
 
 - (void)didReceiveMemoryWarning {

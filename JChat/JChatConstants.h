@@ -16,6 +16,7 @@
 #define TOCK(action) DDLogDebug(@"%@ - TimeInSeconds - %f", action, -[startTime timeIntervalSinceNow])
 
 
+
 /*========================================屏幕适配============================================*/
 
 #define kIOSVersions [[[UIDevice currentDevice] systemVersion] floatValue] //获得iOS版本
@@ -109,7 +110,7 @@
 
 #define kDBMigrateStartNotification @"DBMigrateStartNotification"
 #define kDBMigrateFinishNotification @"DBMigrateFinishNotification"
-#define JPIMMAINTHEAD(block) dispatch_async(dispatch_get_main_queue(), block)
+#define JCHATMAINTHREAD(block) dispatch_async(dispatch_get_main_queue(), block)
 #endif
 
 
@@ -143,12 +144,20 @@ typedef NS_ENUM(NSInteger, JCHATErrorCode) {
 
 };
 
+//ToolBar
+static NSInteger const st_toolBarTextSize = 17.0f;
+
+//Notification
+#define kAlertToSendImage @"AlertToSendImage"
+#define kDeleteMessage @"DeleteMessage"
+
 //Color
 #define kNavigationBarColor UIColorFromRGB(0x3f80de)
 #define kTabbarColor UIColorFromRGB(0x3e3e3e)
 #define kTextfieldPlaceholderColor UIColorFromRGB(0x555555)
 #define kTableviewCellClickColor UIColorFromRGB(0xdddddd)
-
+#define kTableviewSeperateLineColor UIColorFromRGB(0xcfcfcf)
+#define kSeparationLineColor UIColorFromRGB(0xd0d0d0)
 //NavigationBar
 #define kGoBackBtnImageOffset UIEdgeInsetsMake(0, 0, 0, 15)
 #define kNavigationLeftButtonRect CGRectMake(0, 0, 30, 30)

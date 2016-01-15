@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface JCHATSetting_Cell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *tittleLabel;
 
 @end

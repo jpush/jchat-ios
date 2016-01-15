@@ -1,7 +1,7 @@
 
 #import "JCHATConversationListViewController.h"
-#import "JCHATChatTableViewCell.h"
-#import "JCHATChatViewController.h"
+#import "JCHATConversationListCell.h"
+#import "JCHATConversationViewController.h"
 #import "JCHATSelectFriendsCtl.h"
 #import "MBProgressHUD+Add.h"
 #import "JCHATAlertViewWait.h"
@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #define kBackBtnFrame CGRectMake(0, 0, 50, 30)
+#define kBubbleBtnColor UIColorFromRGB(0x4880d7)
 @interface JCHATConversationListViewController ()
 {
   __block NSMutableArray *_conversationArr;
@@ -23,8 +24,36 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
+
+  [self setupNavigation];
+  [self addNotifications];
+  [self.view setBackgroundColor:[UIColor whiteColor]];
+  [self setupBubbleView];
+  [self setupChatTable];
+  AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+  if (!appDelegate.isDBMigrating) {
+    [self addDelegate];
+//    [self getConversationList];
+  } else {
+    NSLog(@"is DBMigrating don't get allconversations");
+    [MBProgressHUD showMessage:@"正在升级数据库" toView:self.view];
+  }
+}
+
+- (void)setupNavigation {
+  self.navigationController.navigationBar.translucent = NO;
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
-  
+  self.title = @"会话";
+  _rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [_rightBarButton setFrame:kBackBtnFrame];
+  [_rightBarButton addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+  [_rightBarButton setImage:[UIImage imageNamed:@"createConversation"] forState:UIControlStateNormal];
+  [_rightBarButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -15*[UIScreen mainScreen].scale)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarButton];//为导航栏添加右侧按钮
+
+}
+
+- (void)addNotifications {
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(netWorkConnectClose)
                                                name:kJPFNetworkDidCloseNotification
@@ -44,9 +73,6 @@
                                            selector:@selector(isConnecting)
                                                name:kJPFNetworkIsConnectingNotification
                                              object:nil];
-  //  [[NSNotificationCenter defaultCenter] addObserver:self
-  //                                           selector:@selector(reveiveMessageNotifi:)
-  //                                               name:JMSGNotification_ReceiveMessage object:nil];
   
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(dBMigrateFinish)
@@ -66,41 +92,19 @@
                                            selector:@selector(skipToSingleChatView:)
                                                name:kSkipToSingleChatViewState
                                              object:nil];
-  //  [[NSNotificationCenter defaultCenter] addObserver:self
-  //                                           selector:@selector(getConversationList)
-  //                                               name:JMSGNotification_ConversationInfoChanged
-  //                                             object:nil];
-  
-  [self.view setBackgroundColor:[UIColor whiteColor]];
-  
-  self.title = @"会话";
-  _rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [_rightBarButton setFrame:kBackBtnFrame];
-  [_rightBarButton addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-  [_rightBarButton setImage:[UIImage imageNamed:@"createConversation"] forState:UIControlStateNormal];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarButton];//为导航栏添加右侧按钮
-  
-  _addBgView =[[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth-100, 1, 100, 100)];
+}
+
+- (void)setupBubbleView {
+  _addBgView = [[UIImageView alloc] initWithFrame:CGRectMake(kApplicationWidth - 100, 1, 100, 100)];
   [_addBgView setBackgroundColor:[UIColor clearColor]];
   [_addBgView setUserInteractionEnabled:YES];
-  UIImage *frameImg =[UIImage imageNamed:@"frame"];
-  frameImg =[frameImg resizableImageWithCapInsets:UIEdgeInsetsMake(30, 10, 30, 10) resizingMode:UIImageResizingModeTile];
+  UIImage *frameImg = [UIImage imageNamed:@"frame"];
+  frameImg = [frameImg resizableImageWithCapInsets:UIEdgeInsetsMake(30, 10, 30, 64) resizingMode:UIImageResizingModeTile];
   [_addBgView setImage:frameImg];
   [_addBgView setHidden:YES];
   [self.view addSubview:self.addBgView];
   [self.view bringSubviewToFront:self.addBgView];
-  
-  [self setupChatTable];
-  
   [self addBtn];
-  AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-  if (!appDelegate.isDBMigrating) {
-    [self addDelegate];
-    [self getConversationList];
-  } else {
-    NSLog(@"is DBMigrating don't get allconversations");
-    [MBProgressHUD showMessage:@"正在升级数据库" toView:self.view];
-  }
 }
 
 - (void)setupChatTable {
@@ -110,7 +114,7 @@
   _chatTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
   _chatTableView.touchDelegate = self;
 
-  [_chatTableView registerNib:[UINib nibWithNibName:@"JCHATChatTableViewCell" bundle:nil] forCellReuseIdentifier:@"JCHATChatTableViewCell"];
+  [_chatTableView registerNib:[UINib nibWithNibName:@"JCHATConversationListCell" bundle:nil] forCellReuseIdentifier:@"JCHATConversationListCell"];
 }
 
 - (void)addDelegate {
@@ -119,14 +123,14 @@
 
 - (void)skipToSingleChatView :(NSNotification *)notification {
   JMSGUser *user = [[notification object] copy];
-  __block JCHATChatViewController *sendMessageCtl =[[JCHATChatViewController alloc] init];//!!
+  __block JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];//!!
   __weak typeof(self)weakSelf = self;
   sendMessageCtl.superViewController = self;
   [JMSGConversation createSingleConversationWithUsername:user.username completionHandler:^(id resultObject, NSError *error) {
     __strong __typeof(weakSelf)strongSelf = weakSelf;
     if (error == nil) {
       sendMessageCtl.conversation = resultObject;
-      JPIMMAINTHEAD(^{
+      JCHATMAINTHREAD(^{
         sendMessageCtl.hidesBottomBarWhenPushed = YES;
         [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
       });
@@ -138,7 +142,7 @@
 
 - (void)dBMigrateFinish {
   NSLog(@"Migrate is finish  and get allconversation");
-  JPIMMAINTHEAD(^{
+  JCHATMAINTHREAD(^{
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
   });
   
@@ -180,7 +184,7 @@
 #pragma mark --创建群成功Push group viewctl
 - (void)creatGroupSuccessToPushView:(NSNotification *)object{//group
   DDLogDebug(@"Action - creatGroupSuccessToPushView - %@", object);
-  __block JCHATChatViewController *sendMessageCtl =[[JCHATChatViewController alloc] init];
+  __block JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];
   __weak __typeof(self)weakSelf = self;
   sendMessageCtl.superViewController = self;
   sendMessageCtl.hidesBottomBarWhenPushed=YES;
@@ -188,7 +192,7 @@
     __strong __typeof(weakSelf)strongSelf = weakSelf;
     if (error == nil) {
       sendMessageCtl.conversation = (JMSGConversation *)resultObject;
-      JPIMMAINTHEAD(^{
+      JCHATMAINTHREAD(^{
         [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
       });
     } else {
@@ -258,7 +262,7 @@
   [self.addBgView setHidden:YES];
   [JMSGConversation allConversations:^(id resultObject, NSError *error) {
     NSLog(@"the result");
-    JPIMMAINTHEAD(^{
+    JCHATMAINTHREAD(^{
       if (error == nil) {
         _conversationArr = [self sortConversation:resultObject];
         _unreadCount = 0;
@@ -308,6 +312,8 @@ NSInteger sortType(id object1,id object2,void *cha) {
     [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag=i + 100;
     [btn setFrame:CGRectMake(10, i*30+30, 80, 30)];
+    [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [btn setBackgroundImage:[ViewUtil colorImage:kBubbleBtnColor frame:btn.frame] forState:UIControlStateHighlighted];
     [self.addBgView addSubview:btn];
   }
 }
@@ -341,7 +347,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     }
     
     [[JCHATAlertViewWait ins] showInView];
-    __block JCHATChatViewController *sendMessageCtl = [[JCHATChatViewController alloc] init];
+    __block JCHATConversationViewController *sendMessageCtl = [[JCHATConversationViewController alloc] init];
     sendMessageCtl.superViewController = self;
     sendMessageCtl.hidesBottomBarWhenPushed = YES;
     [[alertView textFieldAtIndex:0] resignFirstResponder];
@@ -350,10 +356,6 @@ NSInteger sortType(id object1,id object2,void *cha) {
       [[JCHATAlertViewWait ins] hidenAll];
       
       if (error == nil) {
-        if ([[alertView textFieldAtIndex:0].text isEqualToString:[JMSGUser myInfo].username]) {
-          [MBProgressHUD showMessage:@"不能加自己为好友!" view:self.view];
-          return;
-        }
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         sendMessageCtl.conversation = resultObject;
@@ -426,8 +428,8 @@ NSInteger sortType(id object1,id object2,void *cha) {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  static NSString *cellIdentifier = @"JCHATChatTableViewCell";
-  JCHATChatTableViewCell *cell = (JCHATChatTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  static NSString *cellIdentifier = @"JCHATConversationListCell";
+  JCHATConversationListCell *cell = (JCHATConversationListCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
   JMSGConversation *conversation =[_conversationArr objectAtIndex:indexPath.row];
   [cell setCellDataWithConversation:conversation];
@@ -451,7 +453,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
   cell.selected = NO;
-  JCHATChatViewController *sendMessageCtl =[[JCHATChatViewController alloc] init];
+  JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];
   sendMessageCtl.hidesBottomBarWhenPushed = YES;
   sendMessageCtl.superViewController = self;
   JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];

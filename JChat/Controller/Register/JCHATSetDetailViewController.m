@@ -24,12 +24,14 @@ UINavigationControllerDelegate>
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // Do any additional setup after loading the view from its nib.
+
+  self.navigationController.navigationBar.translucent = NO;
   self.navigationItem.hidesBackButton = YES;
   _doneBtn.backgroundColor = UIColorFromRGB(0x6fd66b);
   _doneBtn.layer.cornerRadius = 5;
   _baseLine.backgroundColor = UIColorFromRGB(0xc1d2ec);
   _nameTextF.textColor = UIColorFromRGB(0x555555);
+  [_nameTextF becomeFirstResponder];
   _setAvatarBtn.layer.cornerRadius = 28;
   _setAvatarBtn.layer.masksToBounds = YES;
   
@@ -43,12 +45,14 @@ UINavigationControllerDelegate>
 }
 
 - (IBAction)clickToFinish:(id)sender {
-  if ([_nameTextF.text isEqualToString:@""]) {
+  NSString *nickName = _nameTextF.text;
+  nickName = [nickName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+  if (nickName.length == 0) {
     [MBProgressHUD showMessage:@"请输入昵称" view:self.view];
     return;
   }
   
-  [JMSGUser updateMyInfoWithParameter:_nameTextF.text userFieldType:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
+  [JMSGUser updateMyInfoWithParameter:nickName userFieldType:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
     AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
     [appDelegate setupMainTabBar];
     appDelegate.window.rootViewController = appDelegate.tabBarCtl;
@@ -113,7 +117,7 @@ UINavigationControllerDelegate>
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
   
   [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) userFieldType:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
-    JPIMMAINTHEAD(^{
+    JCHATMAINTHREAD(^{
       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
       if (error == nil) {
         [MBProgressHUD showMessage:@"上传成功" view:self.view];

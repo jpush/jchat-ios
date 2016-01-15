@@ -10,10 +10,12 @@
 #import "JCHATPersonInfoCell.h"
 #import "JChatConstants.h"
 #import "JCHATFrIendDetailMessgeCell.h"
-#import "JCHATChatViewController.h"
+#import "JCHATConversationViewController.h"
 
-#define kSeparateline
-
+#define kSeparateLineFrame CGRectMake(0, 150-0.5,kApplicationWidth, 0.5)
+#define kSeparateLineColor UIColorFromRGB(0xd0d0cf)
+#define kHeadViewFrame CGRectMake((kApplicationWidth - 70)/2, (150-70)/2, 70, 70)
+#define kNameLabelFrame CGRectMake(0, 150-40, kApplicationWidth, 40)
 @interface JCHATFriendDetailViewController () {
   NSArray *_titleArr;
   NSArray *_imgArr;
@@ -28,13 +30,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-  self.title = @"详细资料";
-  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-  [leftBtn setFrame:kNavigationLeftButtonRect];
-  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
-  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
-  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
   
   _detailTableView.dataSource = self;
   _detailTableView.delegate = self;
@@ -43,24 +38,36 @@
   UIView *tableHeadView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.detailTableView.frame.size.width, 150)];
   [tableHeadView setBackgroundColor:[UIColor whiteColor]];
   _detailTableView.tableHeaderView = tableHeadView;
-  UILabel *separateline =[[UILabel alloc] initWithFrame:CGRectMake(0, 150-0.5,kApplicationWidth, 0.5)];
-  [separateline setBackgroundColor:UIColorFromRGB(0xd0d0cf)];
+  UILabel *separateline =[[UILabel alloc] initWithFrame:kSeparateLineFrame];
+  [separateline setBackgroundColor:kSeparateLineColor];
   [tableHeadView addSubview:separateline];
   
-  _headView =[[UIImageView alloc] initWithFrame:CGRectMake((kApplicationWidth - 70)/2, (150-70)/2, 70, 70)];
-  _headView.layer.cornerRadius = 35;
+  _headView =[[UIImageView alloc] initWithFrame:kHeadViewFrame];
+  _headView.layer.cornerRadius = _headView.frame.size.height/2;
   [_headView.layer setMasksToBounds:YES];
   [_headView setBackgroundColor:[UIColor clearColor]];
   [_headView setContentMode:UIViewContentModeScaleAspectFit];
   [_headView.layer setMasksToBounds:YES];
   [tableHeadView addSubview:_headView];
   
-  _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake((kApplicationWidth - 60)/2, 150-40, 60, 40)];
-  _nameLabel.textColor = [UIColor grayColor];
+  _nameLabel = [[UILabel alloc]initWithFrame:kNameLabelFrame];
+  _nameLabel.textColor = [UIColor blackColor];
   _nameLabel.font = [UIFont boldSystemFontOfSize:18];
   _nameLabel.textAlignment =NSTextAlignmentCenter;
   [tableHeadView addSubview:_nameLabel];
+  [self setupNavigation];
   [self loadUserInfoData];
+}
+
+- (void)setupNavigation {
+  self.title = @"详细资料";
+  UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+  [leftBtn setFrame:kNavigationLeftButtonRect];
+  [leftBtn setImage:[UIImage imageNamed:@"goBack"] forState:UIControlStateNormal];
+  [leftBtn setImageEdgeInsets:kGoBackBtnImageOffset];
+  [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];//为导航栏添加左侧按钮
+  self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)loadUserInfoData {
@@ -159,7 +166,7 @@
     if ([_infoArr count] >0) {
       cell.personInfoConten.text=[_infoArr objectAtIndex:indexPath.row];
     }
-    
+    cell.arrowImg.hidden = YES;
     cell.titleImgView.image=[UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
     return cell;
   }
@@ -167,7 +174,7 @@
 
 - (void)skipToSendMessage {
   for (UIViewController *ctl in self.navigationController.childViewControllers) {
-    if ([ctl isKindOfClass:[JCHATChatViewController class]]) {
+    if ([ctl isKindOfClass:[JCHATConversationViewController class]]) {
       
       if (self.isGroupFlag) {
         [self.navigationController popToRootViewControllerAnimated:YES];
