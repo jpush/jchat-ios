@@ -166,6 +166,7 @@
 
 - (void)pushToSelectPhotoVCWithIndex:(NSInteger)index {
   JCHATPhotoSelectViewController *selectPhotoVC = [[JCHATPhotoSelectViewController alloc] init];
+  if(_albumArr.count == 0) return;
   JCHATAlbumModel *model = _albumArr[index];
   
   if ([[[UIDevice currentDevice]systemVersion] floatValue] >= 8) {

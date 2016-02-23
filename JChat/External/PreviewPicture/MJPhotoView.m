@@ -29,7 +29,6 @@
         self.clipsToBounds = YES;
 		// 图片
 		_imageView = [[UIImageView alloc] init];
-//		_imageView.contentMode = UIViewContentModeScaleAspectFit;
 		[self addSubview:_imageView];
         
         // 进度条
@@ -75,20 +74,18 @@
     if (![_photo.url.absoluteString hasSuffix:@"gif"]) {
       __weak MJPhoto *photo = _photo;
       __weak MJPhotoView *photoView = self;
-//      _imageView.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
       if (_photo.message.message.msgId) {
         JMSGMessage *message = [_conversation messageWithMessageId:_photo.message.message.msgId];
         [((JMSGImageContent *)message.content) largeImageDataWithProgress:^(float percent,NSString *msgId){
           _photoLoadingView.progress = percent;
         } completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
           if (error == nil) {
-            JPIMLog(@"下载大图 success");
+            NSLog(@"下载大图 success the image message id is %@",objectId);
             photo.image = [UIImage imageWithData:data];
             _imageView.image = [UIImage imageWithData:data];
             [photoView adjustFrame];
           } else {
             JPIMLog(@"下载大图 error");
-//            _imageView.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
             [MBProgressHUD showMessage:@"下载大图失败！" view:self];
             [photoView adjustFrame];
           }
@@ -108,10 +105,10 @@
 #pragma mark 开始加载图片
 - (void)photoStartLoad
 {
-//    imgPath = ((JMSGImageContent *)_photo.message.message.content).largeImagePath;
     self.scrollEnabled = NO;
         // 直接显示进度条
-//    _photo.image = [UIImage imageWithContentsOfFile:((JMSGImageContent *)_photo.message.message.content).thumbImagePath];
+    _imageView.image = _photo.placeholder; // 占位图片
+
     [_photoLoadingView showLoading];
     [self addSubview:_photoLoadingView];
     __weak MJPhotoView *photoView = self;
@@ -119,19 +116,23 @@
     __weak MJPhoto *photo = _photo;
       if (_photo.message.message) {
         JMSGMessage *message = _photo.message.message;
+        [((JMSGImageContent *)message.content) thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
+          if (error == nil) {
+            _imageView.image = [UIImage imageWithData:data];
+          }
+        }];
+        
         [((JMSGImageContent *)message.content) largeImageDataWithProgress:^(float percent,NSString *msgId){
             _photoLoadingView.progress = percent;
                         } completionHandler:^(NSData *data,NSString *objectId, NSError *error) {
           __strong __typeof(photo)strongPhoto = photo;
           if (error == nil) {
-//            JPIMLog(@"下载大图 success");
+            NSLog(@"下载大图 success the image message id is %@",objectId);
             strongPhoto.image = [UIImage imageWithData:data];
             [photoView photoDidFinishLoadWithImage:strongPhoto.image];
             _imageView.image = strongPhoto.image;
             [photoView adjustFrame];
           } else {
-//            JPIMLog(@"下载大图 error");
-
             [MBProgressHUD showMessage:@"下载大图失败!！" view:self];
           }
         }];
@@ -142,7 +143,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-//    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+
     if ([keyPath isEqualToString:@"fractionCompleted"] && [object isKindOfClass:[NSProgress class]]) {
         NSProgress *progress = (NSProgress *)object;
         NSLog(@"Progress is %f", progress.fractionCompleted);
@@ -193,10 +194,6 @@
     
 	CGFloat maxScale = 4.0;
     
-//	if ([UIScreen instancesRespondToSelector:@selector(scale)]) {
-//		maxScale = maxScale / [[UIScreen mainScreen] scale];
-//	}
-    
 	self.maximumZoomScale = maxScale;
 	self.minimumZoomScale = minScale;
 	self.zoomScale = minScale;
@@ -243,9 +240,6 @@
     } else {
         _imageView.frame = imageFrame;
     }
-  
-
-        
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -275,6 +269,7 @@
     _doubleTap = NO;
     [self performSelector:@selector(hide) withObject:nil afterDelay:0.2];
 }
+
 - (void)hide
 {
     if (_doubleTap) return;

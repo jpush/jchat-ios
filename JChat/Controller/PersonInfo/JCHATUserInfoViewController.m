@@ -62,7 +62,7 @@
   self.settingTableView.tableFooterView = [[UIView alloc] init];
   
   [self setAvatar];
-  
+  NSLog(@"huangmin  user %@",[JMSGUser myInfo]);
   if ([JMSGUser myInfo].nickname) {
     self.titleArr = @[[JMSGUser myInfo].nickname, @"设置", @"退出登录"];
   } else if ([JMSGUser myInfo].username) {

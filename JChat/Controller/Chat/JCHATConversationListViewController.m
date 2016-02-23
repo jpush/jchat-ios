@@ -33,7 +33,6 @@
   AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
   if (!appDelegate.isDBMigrating) {
     [self addDelegate];
-//    [self getConversationList];
   } else {
     NSLog(@"is DBMigrating don't get allconversations");
     [MBProgressHUD showMessage:@"正在升级数据库" toView:self.view];
@@ -250,7 +249,7 @@
 - (void)viewDidAppear:(BOOL)animated {
   DDLogDebug(@"Action - viewDidAppear");
   [super viewDidAppear:YES];
-  //  [self getConversationList];
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -261,7 +260,6 @@
 - (void)getConversationList {
   [self.addBgView setHidden:YES];
   [JMSGConversation allConversations:^(id resultObject, NSError *error) {
-    NSLog(@"the result");
     JCHATMAINTHREAD(^{
       if (error == nil) {
         _conversationArr = [self sortConversation:resultObject];
@@ -362,7 +360,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
         [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
       } else {
         DDLogDebug(@"createSingleConversationWithUsername fail");
-        [MBProgressHUD showMessage:@"获取信息失败" view:self.view];
+        [MBProgressHUD showMessage:@"添加的用户不存在" view:self.view];
       }
     }];
   }

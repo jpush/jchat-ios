@@ -158,9 +158,9 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
     case kJMSGErrorHttpServerResponseTimeout:
       errorAlert = @"服务器端响应超时";
       break;
-//    case kJMSGErrorNetworkUserNotRegistered:
-//      errorAlert = @"用户名还没有被注册过";
-//      break;
+    case kJMSGErrorTcpUserNotRegistered:
+      errorAlert = @"用户名还没有被注册过";
+      break;
     case kJMSGErrorTcpUserPasswordError:
       errorAlert = @"密码错误";
       break;

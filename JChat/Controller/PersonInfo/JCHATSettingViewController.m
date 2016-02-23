@@ -66,7 +66,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [titleArr count];
+  return [titleArr count] - 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -94,6 +94,7 @@
   }
   
   if (indexPath.row == 2) {
+    return;
     JCHATDebugViewController *debugVC = [[JCHATDebugViewController alloc] init];
     [self.navigationController pushViewController:debugVC animated:YES];
   }

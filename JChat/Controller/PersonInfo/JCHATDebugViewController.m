@@ -96,9 +96,9 @@
   
   
   _sisAddress.text = [[NSUserDefaults standardUserDefaults] objectForKey:_sisAddress.placeholder];
-  _sisport.text = [[NSUserDefaults standardUserDefaults] objectForKey:_sisport.placeholder];
+  _sisport.text = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:_sisport.placeholder]];
   _connectAddress.text = [[NSUserDefaults standardUserDefaults] objectForKey:_connectAddress.placeholder];
-  _connectPort.text = [[NSUserDefaults standardUserDefaults] objectForKey:_connectPort.placeholder];
+  _connectPort.text = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:_connectPort.placeholder]];
   
   _reportAddress.text = [[NSUserDefaults standardUserDefaults] objectForKey:_reportAddress.placeholder];
   _userAddress.text = [[NSUserDefaults standardUserDefaults] objectForKey:_userAddress.placeholder];

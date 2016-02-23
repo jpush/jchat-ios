@@ -14,9 +14,6 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rpU-3b-2dD" customClass="JCHATMessageTextView">
                     <rect key="frame" x="47" y="5" width="230" height="36"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="36" id="Pfw-7D-pvd"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                 </textView>
@@ -67,7 +64,6 @@
             <connections>
                 <outlet property="addButton" destination="VuO-mV-udy" id="3e8-Gt-fIU"/>
                 <outlet property="textView" destination="rpU-3b-2dD" id="VMC-2X-lFu"/>
-                <outlet property="textViewHeight" destination="Pfw-7D-pvd" id="QuP-qL-p6J"/>
                 <outlet property="voiceButton" destination="YCs-zm-hKL" id="Q4z-sK-tmo"/>
             </connections>
             <point key="canvasLocation" x="907" y="799.5"/>

@@ -166,9 +166,7 @@ UIPickerViewDelegate> {
      touchesBegan:(NSSet *)touches
         withEvent:(UIEvent *)event {
   if (_selectFlagGender) {
-    //    [JMSGUser updateMyInfoWithParameter:_genderNumber withType:kJMSGGender completionHandler:^(id resultObject, NSError *error) {
-    //      [self showResultInfo:resultObject error:error];
-    //    }];
+     
     [JMSGUser updateMyInfoWithParameter:_genderNumber userFieldType:kJMSGUserFieldsGender completionHandler:^(id resultObject, NSError *error) {
       if (error == nil) {
         DDLogDebug(@"Action updateMyInfoWithPareter success");

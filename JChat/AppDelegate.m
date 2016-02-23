@@ -157,19 +157,19 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [fileLogger setLogFormatter:formatter];
   [DDLog addLogger:fileLogger];
 
-  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(255, 0, 0)
-                                      backgroundColor:nil
-                                              forFlag:LOG_FLAG_ERROR];
-  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(255, 215, 0)
-                                      backgroundColor:nil
-                                              forFlag:LOG_FLAG_WARN];
-  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(0, 255, 0)
-                                      backgroundColor:nil
-                                              forFlag:LOG_FLAG_DEBUG];
-  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(0, 0, 255)
-                                      backgroundColor:nil
-                                              forFlag:LOG_FLAG_INFO];
-  [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+//  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(255, 0, 0)
+//                                      backgroundColor:nil
+//                                              forFlag:LOG_FLAG_ERROR];
+//  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(255, 215, 0)
+//                                      backgroundColor:nil
+//                                              forFlag:LOG_FLAG_WARN];
+//  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(0, 255, 0)
+//                                      backgroundColor:nil
+//                                              forFlag:LOG_FLAG_DEBUG];
+//  [[DDTTYLogger sharedInstance] setForegroundColor:DDMakeColor(0, 0, 255)
+//                                      backgroundColor:nil
+//                                              forFlag:LOG_FLAG_INFO];
+//  [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
 }
 
 // notification from JPush
@@ -314,7 +314,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
       fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
   DDLogDebug(@"Action - didReceiveRemoteNotification:fetchCompletionHandler");
   [JPUSHService handleRemoteNotification:userInfo];
-  DDLogVerbose(@"收到通知 - %@", [JCHATStringUtils dictionary2String:userInfo]);
+  NSLog(@"收到通知 - %@", userInfo);
   completionHandler(UIBackgroundFetchResultNewData);
 }
 

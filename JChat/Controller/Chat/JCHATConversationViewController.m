@@ -214,8 +214,12 @@
 - (void)onSendMessageResponse:(JMSGMessage *)message
                         error:(NSError *)error {
   DDLogDebug(@"Event - sendMessageResponse");
-  NSLog(@"huangmin  the message %@",[message description]);
   [self relayoutTableCellWithMsgId:message.msgId];
+  
+  if (message != nil) {
+    NSLog(@"发送的消息为 msgId 为 %@",message.msgId);
+  }
+  
   if (error != nil) {
     DDLogDebug(@"Send response error - %@", error);
     [_conversation clearUnreadCount];
@@ -236,6 +240,9 @@
 #pragma mark --收到消息
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
+  if (message != nil) {
+    NSLog(@"收到的message msgId 为 %@",message.msgId);
+  }
   if (error != nil) {
     JCHATChatModel *model = [[JCHATChatModel alloc] init];
     [model setErrorMessageChatModelWithError:error];

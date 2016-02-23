@@ -103,7 +103,6 @@
 
 - (void)drawRect:(CGRect)rect {
   if (self.startRecordButton){
-    //        self.startRecordButton.frame = CGRectMake(self.voiceButton.frame.origin.x+self.voiceButton.frame.size.width+5, 7.5, self.textView.bounds.size.width+5, 30);
     [self.startRecordButton mas_remakeConstraints:^(MASConstraintMaker *make) {
       
     }];
@@ -111,7 +110,6 @@
     [self.startRecordButton mas_makeConstraints:^(MASConstraintMaker *make) {
       make.top.mas_equalTo(self).with.offset(5);
       make.bottom.mas_equalTo(self).with.offset(-4);
-      make.height.mas_equalTo(36);
       make.left.mas_equalTo(self.voiceButton.mas_right).with.offset(5);
       make.right.mas_equalTo(self.addButton.mas_left).with.offset(-5);
     }];
@@ -140,7 +138,6 @@
   [self.startRecordButton addTarget:self action:@selector(holdDownButtonTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
   [self.startRecordButton addTarget:self action:@selector(holdDownDragOutside) forControlEvents:UIControlEventTouchDragExit];
   [self.startRecordButton addTarget:self action:@selector(holdDownDragInside) forControlEvents:UIControlEventTouchDragEnter];
-  self.startRecordButton.frame =CGRectMake(self.voiceButton.frame.origin.x + self.voiceButton.frame.size.width + 5, 7.5, self.textView.bounds.size.width + 5, 30);
   [self.startRecordButton setHidden:YES];
   [self addSubview:self.startRecordButton];
   
