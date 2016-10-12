@@ -8,7 +8,7 @@
 #define UMENG_APPKEY @"55487cee67e58e5431003b06"
 
 // 需要填写为您自己的 JPush Appkey
-#define JMESSAGE_APPKEY @"4f7aef34fb361292c566a1cd"
+#define JMESSAGE_APPKEY @"需要填写您自己的 JPush Appkey"
 
 #define CHANNEL @"Publish channel"
 
