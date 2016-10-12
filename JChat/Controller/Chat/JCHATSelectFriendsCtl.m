@@ -88,10 +88,10 @@ static const NSInteger tablecellHeight = 64;
     return;
   }
   [_groupTextField resignFirstResponder];
-  [MBProgressHUD showMessage:@"正在创建群组！" toView:self.view];
+  [MBProgressHUD showMessage:@"正在创建群组！" toView:[UIApplication sharedApplication].keyWindow];
   
   [JMSGGroup createGroupWithName:_groupTextField.text desc:@"" memberArray:nil completionHandler:^(id resultObject, NSError *error) {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:YES];
     if (error ==nil) {
       [self.navigationController dismissViewControllerAnimated:YES completion:nil];
       [[NSNotificationCenter defaultCenter] postNotificationName:kCreatGroupState object:resultObject];

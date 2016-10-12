@@ -353,6 +353,8 @@
 		625940051C4F53F2004E7C59 /* login_19_pre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 625940041C4F53F2004E7C59 /* login_19_pre@2x.png */; };
 		626863A61C3A61DC00D5B1F9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 626863A51C3A61DC00D5B1F9 /* AssetsLibrary.framework */; };
 		627302341C294EBA00D80CC3 /* JCHATSelectImgCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 627302331C294EBA00D80CC3 /* JCHATSelectImgCollectionView.m */; };
+		6280E4181D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6280E4161D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.m */; };
+		6280E4191D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6280E4171D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.xib */; };
 		6280EFB81BE0ABB500EBE345 /* ChatBubbleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6280EFB51BE0ABB500EBE345 /* ChatBubbleLayer.m */; };
 		6280EFB91BE0ABB500EBE345 /* ChatImageBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 6280EFB71BE0ABB500EBE345 /* ChatImageBubble.m */; };
 		629EE6BB1BE21EB8002196AA /* JCHATDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 629EE6B91BE21EB8002196AA /* JCHATDebugViewController.m */; };
@@ -382,7 +384,7 @@
 		62DC25811C0D77780054BA74 /* JCHATAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62DC25801C0D77780054BA74 /* JCHATAlbumModel.m */; };
 		62EF28611BE6F18E0036699E /* JCHATTimeOutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62EF28601BE6F18E0036699E /* JCHATTimeOutManager.m */; };
 		62F4F4BC1BDA351400CD3AB7 /* JCHATLoadMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F4F4BB1BDA351400CD3AB7 /* JCHATLoadMessageTableViewCell.m */; };
-		833BC88D94A9C251216EB422 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F56935E972E8DA4EBADF6032 /* libPods.a */; };
+		80572BCB4B9B749AC71797F2 /* libPods-JChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9161D1AAF401D98AC41FADAE /* libPods-JChat.a */; };
 		8FF149FB1AFBA11800D13F2E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */; };
 		8FF149FC1AFBA11800D13F2E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */; };
 		AA4D05A91B43917B007D7B78 /* JCHATAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */; };
@@ -676,7 +678,6 @@
 		18AB9C8C1A43BCB7007B2A04 /* JChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B8FDA81B3D23DB00538C00 /* receiveFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "receiveFail@2x.png"; sourceTree = "<group>"; };
 		18B8FDAA1B3D240500538C00 /* receiveFail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "receiveFail@3x.png"; sourceTree = "<group>"; };
-		37640D8E13D3DF1A66B344C0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		443304A81B5F37A500430840 /* CExpandHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CExpandHeader.h; sourceTree = "<group>"; };
 		443304A91B5F37A500430840 /* CExpandHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CExpandHeader.m; sourceTree = "<group>"; };
 		443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageTableViewCell.h; sourceTree = "<group>"; };
@@ -853,6 +854,7 @@
 		62181B341C1FF44900B4528E /* JCHATFootTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATFootTableViewCell.m; sourceTree = "<group>"; };
 		62181B351C1FF44900B4528E /* JCHATFootTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATFootTableViewCell.xib; sourceTree = "<group>"; };
 		621925F51BCE5C8300C43099 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		6228B07F1DAB5E4200862BA3 /* JChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JChat.entitlements; sourceTree = "<group>"; };
 		623691BB1BE39CCB0015A616 /* JCHATSendMsgController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSendMsgController.h; sourceTree = "<group>"; };
 		623691BC1BE39CCB0015A616 /* JCHATSendMsgController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSendMsgController.m; sourceTree = "<group>"; };
 		623691BE1BE39CE20015A616 /* JCHATSendMsgManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSendMsgManager.h; sourceTree = "<group>"; };
@@ -869,6 +871,9 @@
 		626863A51C3A61DC00D5B1F9 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		627302321C294EBA00D80CC3 /* JCHATSelectImgCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSelectImgCollectionView.h; sourceTree = "<group>"; };
 		627302331C294EBA00D80CC3 /* JCHATSelectImgCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSelectImgCollectionView.m; sourceTree = "<group>"; };
+		6280E4151D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSetDisturbTableViewCell.h; sourceTree = "<group>"; };
+		6280E4161D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSetDisturbTableViewCell.m; sourceTree = "<group>"; };
+		6280E4171D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATSetDisturbTableViewCell.xib; sourceTree = "<group>"; };
 		6280EFB41BE0ABB500EBE345 /* ChatBubbleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatBubbleLayer.h; sourceTree = "<group>"; };
 		6280EFB51BE0ABB500EBE345 /* ChatBubbleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatBubbleLayer.m; sourceTree = "<group>"; };
 		6280EFB61BE0ABB500EBE345 /* ChatImageBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatImageBubble.h; sourceTree = "<group>"; };
@@ -913,15 +918,16 @@
 		62EF28601BE6F18E0036699E /* JCHATTimeOutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATTimeOutManager.m; sourceTree = "<group>"; };
 		62F4F4BA1BDA351400CD3AB7 /* JCHATLoadMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATLoadMessageTableViewCell.h; sourceTree = "<group>"; };
 		62F4F4BB1BDA351400CD3AB7 /* JCHATLoadMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATLoadMessageTableViewCell.m; sourceTree = "<group>"; };
-		874850B7D556DA69C1D98C6B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8F8840A71B159E7500BDC126 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FF149F81AFBA11800D13F2E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		8FF149F91AFBA11800D13F2E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8FF149FA1AFBA11800D13F2E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		9161D1AAF401D98AC41FADAE /* libPods-JChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4D05A61B43917B007D7B78 /* JCHATAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAboutViewController.h; sourceTree = "<group>"; };
 		AA4D05A71B43917B007D7B78 /* JCHATAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAboutViewController.m; sourceTree = "<group>"; };
 		AA4D05A81B43917B007D7B78 /* JCHATAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATAboutViewController.xib; sourceTree = "<group>"; };
-		F56935E972E8DA4EBADF6032 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5B2E5CBF962CCD83AAE19DF /* Pods-JChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-JChat/Pods-JChat.release.xcconfig"; sourceTree = "<group>"; };
+		E364153167B98976E69EADB6 /* Pods-JChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JChat/Pods-JChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -947,7 +953,7 @@
 				183983371AFC914900AC8280 /* Security.framework in Frameworks */,
 				183983351AFC914100AC8280 /* libz.dylib in Frameworks */,
 				62408B4E1C08506000EB873B /* JMessage.framework in Frameworks */,
-				833BC88D94A9C251216EB422 /* libPods.a in Frameworks */,
+				80572BCB4B9B749AC71797F2 /* libPods-JChat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -957,6 +963,7 @@
 		1871818F1AFB80BF00FB3168 /* JChat */ = {
 			isa = PBXGroup;
 			children = (
+				6228B07F1DAB5E4200862BA3 /* JChat.entitlements */,
 				187181901AFB80BF00FB3168 /* AppDelegate.h */,
 				187181911AFB80BF00FB3168 /* AppDelegate.m */,
 				187182271AFB80BF00FB3168 /* Info.plist */,
@@ -1087,6 +1094,9 @@
 				62F4F4BB1BDA351400CD3AB7 /* JCHATLoadMessageTableViewCell.m */,
 				443E40F51B53BD6C00F46651 /* JCHATMessageTableViewCell.h */,
 				443E40F61B53BD6C00F46651 /* JCHATMessageTableViewCell.m */,
+				6280E4151D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.h */,
+				6280E4161D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.m */,
+				6280E4171D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.xib */,
 			);
 			path = CellView;
 			sourceTree = "<group>";
@@ -1441,7 +1451,7 @@
 				8F8840A51B159E7500BDC126 /* JChat Tests */,
 				18AB9C8D1A43BCB7007B2A04 /* Products */,
 				18AB9CF41A43BD28007B2A04 /* Frameworks */,
-				8626A8EE5026E526D715D8E6 /* Pods */,
+				C2629F81C0A43FB05187ADF7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1477,7 +1487,7 @@
 				183983381AFC915C00AC8280 /* CoreAudio.framework */,
 				183983361AFC914900AC8280 /* Security.framework */,
 				183983341AFC914100AC8280 /* libz.dylib */,
-				F56935E972E8DA4EBADF6032 /* libPods.a */,
+				9161D1AAF401D98AC41FADAE /* libPods-JChat.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1781,15 +1791,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		8626A8EE5026E526D715D8E6 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				37640D8E13D3DF1A66B344C0 /* Pods.debug.xcconfig */,
-				874850B7D556DA69C1D98C6B /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		8F8840A51B159E7500BDC126 /* JChat Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1807,6 +1808,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C2629F81C0A43FB05187ADF7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E364153167B98976E69EADB6 /* Pods-JChat.debug.xcconfig */,
+				B5B2E5CBF962CCD83AAE19DF /* Pods-JChat.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1814,14 +1824,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 18AB9CAF1A43BCB7007B2A04 /* Build configuration list for PBXNativeTarget "JChat" */;
 			buildPhases = (
-				B507677551EC3B8916ECCC8E /* Check Pods Manifest.lock */,
+				DD187E6C9ADF9788A0A3D659 /* [CP] Check Pods Manifest.lock */,
 				18AB9C881A43BCB7007B2A04 /* Sources */,
 				18AB9C891A43BCB7007B2A04 /* Frameworks */,
 				18AB9C8A1A43BCB7007B2A04 /* Resources */,
 				AAC65A4A1AF76DA000BBFCF9 /* Embed Frameworks */,
-				88C5AB6D7EBDFD8C083FAB3F /* Copy Pods Resources */,
 				8F7E5CAD1C06A12F005E9788 /* ShellScript */,
-				814143BBBCAE1F1C3FE484C7 /* Embed Pods Frameworks */,
+				375F196617EAF7C97C8184A0 /* [CP] Embed Pods Frameworks */,
+				257D0DA3CEAFA5AB80199265 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1844,9 +1854,13 @@
 				TargetAttributes = {
 					18AB9C8B1A43BCB7007B2A04 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 8X2A38Q9VD;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
 							};
 						};
 					};
@@ -1976,6 +1990,7 @@
 				187183311AFB80C000FB3168 /* JCHATShowTimeCell.xib in Resources */,
 				44C3E9611B70496700D3D825 /* talking_icon_group@3x.png in Resources */,
 				1871839A1AFB80C000FB3168 /* select@2x.png in Resources */,
+				6280E4191D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.xib in Resources */,
 				187183EA1AFB80C000FB3168 /* paizhao@2x.png in Resources */,
 				187183A51AFB80C000FB3168 /* 切图_43.png in Resources */,
 				187183891AFB80C000FB3168 /* group_33@3x.png in Resources */,
@@ -2123,34 +2138,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		814143BBBCAE1F1C3FE484C7 /* Embed Pods Frameworks */ = {
+		257D0DA3CEAFA5AB80199265 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JChat/Pods-JChat-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		88C5AB6D7EBDFD8C083FAB3F /* Copy Pods Resources */ = {
+		375F196617EAF7C97C8184A0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JChat/Pods-JChat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8F7E5CAD1C06A12F005E9788 /* ShellScript */ = {
@@ -2166,14 +2181,14 @@
 			shellPath = /bin/sh;
 			shellScript = "echo \"Execute a script to check jmessage version\"\n\n\"${PROJECT_DIR}\"/check_jmessage_version.sh\n\n";
 		};
-		B507677551EC3B8916ECCC8E /* Check Pods Manifest.lock */ = {
+		DD187E6C9ADF9788A0A3D659 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2195,6 +2210,7 @@
 				187183241AFB80C000FB3168 /* JCHATRawAudioDataPlayer.m in Sources */,
 				187183211AFB80C000FB3168 /* JCHATConversationViewController.m in Sources */,
 				187183601AFB80C000FB3168 /* JCHATRegisterViewController.m in Sources */,
+				6280E4181D13DE3900B7B84A /* JCHATSetDisturbTableViewCell.m in Sources */,
 				1871831F1AFB80C000FB3168 /* JCHATSelectFriendsCtl.m in Sources */,
 				187183351AFB80C000FB3168 /* JCHATGroupPersonView.m in Sources */,
 				44C3E91C1B6B7A1E00D3D825 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
@@ -2419,11 +2435,13 @@
 		};
 		18AB9CB01A43BCB7007B2A04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37640D8E13D3DF1A66B344C0 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = E364153167B98976E69EADB6 /* Pods-JChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JChat/JChat.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 8X2A38Q9VD;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2452,6 +2470,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = io.jchat.JChat;
 				PRODUCT_NAME = JChat;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
@@ -2463,11 +2482,13 @@
 		};
 		18AB9CB11A43BCB7007B2A04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 874850B7D556DA69C1D98C6B /* Pods.release.xcconfig */;
+			baseConfigurationReference = B5B2E5CBF962CCD83AAE19DF /* Pods-JChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JChat/JChat.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 8X2A38Q9VD;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2495,6 +2516,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = io.jchat.JChat;
 				PRODUCT_NAME = JChat;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";

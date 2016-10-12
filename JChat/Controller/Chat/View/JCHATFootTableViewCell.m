@@ -36,6 +36,18 @@
   }];
   _baseLine.backgroundColor = kSeparationLineColor;
   _baseLine.hidden = YES;
+  self.switchBtn = [UISwitch new];
+  [self.contentView addSubview: self.switchBtn];
+  [self.switchBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.centerY.mas_equalTo(self.contentView);
+    make.size.mas_equalTo(CGSizeMake(49, 31));
+    make.right.mas_equalTo(self.contentView).with.offset(-12);
+  }];
+  
+  self.switchBtn.hidden = YES;
+  
+  [_switchBtn addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+  
   
 }
 
@@ -45,6 +57,7 @@
   _arrow.hidden = NO;
   _quitGroupBtn.hidden = YES;
   _baseLine.hidden = YES;
+  _switchBtn.hidden = YES;
   _footerTittle.text = @"群聊名称";
   _userName.text = groupName;
   
@@ -56,6 +69,7 @@
   _arrow.hidden = NO;
   _quitGroupBtn.hidden = YES;
   _baseLine.hidden = NO;
+  _switchBtn.hidden = YES;
   _footerTittle.text = @"清空聊天记录";
   _userName.text = @"";
 }
@@ -64,13 +78,33 @@
   _footerTittle.hidden = YES;
   _userName.hidden = YES;
   _arrow.hidden = YES;
+  _switchBtn.hidden = YES;
   _quitGroupBtn.hidden = NO;
   _baseLine.hidden = YES;
+}
+
+- (void)layoutToSetNotifMode:(BOOL)isDisturd {
+  _footerTittle.hidden = NO;
+  _userName.hidden = NO;
+  _arrow.hidden = YES;
+  _quitGroupBtn.hidden = YES;
+  _baseLine.hidden = NO;
+  _switchBtn.hidden = NO;
+  _footerTittle.text = @"消息免打扰";
+  _userName.text = @"";
+  [_switchBtn setOn:isDisturd];
 }
 
 - (IBAction)clickToQuitGroup:(id)sender {// rename
   [_delegate quitGroup];
 }
+
+- (void)switchAction:(id)sender {
+    UISwitch *switchButton = (UISwitch*)sender;
+    BOOL isButtonOn = [switchButton isOn];
+    [_delegate switchDisturb];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   [super setSelected:selected animated:animated];
   self.backgroundColor = [UIColor whiteColor];

@@ -191,7 +191,35 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
 //设置格式 年yyyy 月 MM 日dd 小时hh(HH) 分钟 mm 秒 ss MMM单月 eee周几 eeee星期几 a上午下午
 + (NSString *)getFriendlyDateString:(NSTimeInterval)timeInterval
                     forConversation:(BOOL)isShort {
-  NSDate *theDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    NSLog(@"=++=:%@",@(timeInterval));
+    
+    
+    
+    NSDate *anyDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    
+    // 时间为毫秒时，转换成秒
+    if (timeInterval > 1999999999) {
+        timeInterval = floor(timeInterval / 1000);
+        anyDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+     }
+    
+    //设置源日期时区
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];//或GMT
+    //设置转换后的目标日期时区
+    NSTimeZone* destinationTimeZone = [NSTimeZone localTimeZone];
+    //得到源日期与世界标准时间的偏移量
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:anyDate];
+    //目标日期与本地时区的偏移量
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:anyDate];
+    //得到时间偏移量的差值
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    
+    //转为现在时间
+    NSDate* theDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:anyDate];
+    
+
+  
+    
   NSString *output = nil;
 
   NSTimeInterval theDiff = -theDate.timeIntervalSinceNow;

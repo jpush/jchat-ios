@@ -15,6 +15,7 @@
 #import "JCHATDetailsInfoViewController.h"
 #import "Masonry.h"
 #define kheadViewHeight 100
+#import "AppDelegate.h"
 
 @interface JCHATGroupSettingCtl ()
 {
@@ -236,19 +237,20 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
   
   [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
   JMSGUser *user = [_groupData objectAtIndex:personView.headViewBtn.tag - 1000];
-  [((JMSGGroup *)(self.conversation.target)) removeMembersWithUsernameArray:@[user.username] completionHandler:^(id resultObject, NSError *error) {
-    if (error == nil) {
-      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      [MBProgressHUD showMessage:@"删除成员成功！" view:self.view];
-      [self reloadHeadViewData];
-      [self getGroupMemberList];
-      [self.groupTab reloadData];
-    } else {
-      DDLogDebug(@"JCHATGroupSettingCtl   fail to removeMembersFromUsernameArrary");
-      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      [MBProgressHUD showMessage:@"删除成员错误！" view:self.view];
-    }
-  }];
+  [((JMSGGroup *)(self.conversation.target)) removeMembersWithUsernameArray:@[user.username] appKey:JMESSAGE_APPKEY
+                                                          completionHandler:^(id resultObject, NSError *error) {
+                                                            if (error == nil) {
+                                                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                              [MBProgressHUD showMessage:@"删除成员成功！" view:self.view];
+                                                              [self reloadHeadViewData];
+                                                              [self getGroupMemberList];
+                                                              [self.groupTab reloadData];
+                                                            } else {
+                                                              DDLogDebug(@"JCHATGroupSettingCtl   fail to removeMembersFromUsernameArrary");
+                                                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                              [MBProgressHUD showMessage:@"删除成员错误！" view:self.view];
+                                                            }
+                                                          }];
 }
 
 - (void)reloadGroupPersonViewFrame {
@@ -367,16 +369,17 @@ NSInteger userNameSortGroup(id user1, id user2, void *context) {
     }
     __weak __typeof(self)weakSelf = self;
     [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
-    [((JMSGGroup *)(self.conversation.target)) addMembersWithUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
-      [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
-      if (error == nil) {
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf getGroupMemberList];
-      } else {
-        DDLogDebug(@"addMembersFromUsernameArray fail with error %@",error);
-        [MBProgressHUD showMessage:@"添加成员失败" view:weakSelf.view];
-      }
-    }];
+    [((JMSGGroup *)(self.conversation.target)) addMembersWithUsernameArray:@[[alertView textFieldAtIndex:0].text] appKey:JMESSAGE_APPKEY
+                                                         completionHandler:^(id resultObject, NSError *error) {
+                                                           [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+                                                           if (error == nil) {
+                                                             __strong __typeof(weakSelf)strongSelf = weakSelf;
+                                                             [strongSelf getGroupMemberList];
+                                                           } else {
+                                                             DDLogDebug(@"addMembersFromUsernameArray fail with error %@",error);
+                                                             [MBProgressHUD showMessage:@"添加成员失败" view:weakSelf.view];
+                                                           }
+                                                         }];
     
   } else if (alertView.tag ==400) {
     if (buttonIndex ==1) {

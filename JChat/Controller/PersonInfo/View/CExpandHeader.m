@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 Mei_L. All rights reserved.
 //
 
-#define CExpandContentOffset @"contentOffset"
+
 
 #import "CExpandHeader.h"
-
+#import "JChatConstants.h"
 @implementation CExpandHeader{
   __weak UIScrollView *_scrollView; //scrollView或者其子类
   __weak UIView *_expandView; //背景可以伸展的View
@@ -19,7 +19,6 @@
 
 - (void)dealloc{
   if (_scrollView) {
-    [_scrollView removeObserver:self forKeyPath:CExpandContentOffset];
     _scrollView = nil;
   }
   _expandView = nil;
@@ -61,15 +60,15 @@
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView
 {
-  
-  CGFloat offsetY = scrollView.contentOffset.y;
-  if(offsetY < _expandHeight * -1) {
-    CGRect currentFrame = _expandView.frame;
-    currentFrame.origin.y = offsetY;
-    currentFrame.size.height = -1*offsetY;
-    _expandView.frame = currentFrame;
-  }
-  
+  JCHATMAINTHREAD(^{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if(offsetY < _expandHeight * -1) {
+      CGRect currentFrame = _expandView.frame;
+      currentFrame.origin.y = offsetY;
+      currentFrame.size.height = -1*offsetY;
+      _expandView.frame = currentFrame;
+    }
+  });
 }
 
 - (void)reSizeView{

@@ -11,6 +11,8 @@
 #import "JChatConstants.h"
 #import "JCHATFrIendDetailMessgeCell.h"
 #import "JCHATConversationViewController.h"
+#import "JCHATSetDisturbTableViewCell.h"
+#import "AppDelegate.h"
 
 #define kSeparateLineFrame CGRectMake(0, 150-0.5,kApplicationWidth, 0.5)
 #define kSeparateLineColor UIColorFromRGB(0xd0d0cf)
@@ -77,59 +79,99 @@
   [MBProgressHUD showMessage:@"正在加载！" toView:self.view];
   __weak __typeof(self)weakSelf = self;
   
-  [JMSGUser userInfoArrayWithUsernameArray:@[self.userInfo.username] completionHandler:^(id resultObject, NSError *error) {
-    __strong __typeof(weakSelf) strongSelf = weakSelf;
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    
-    if (error) {
-      [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
-      [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
-      return;
-    }
-    JMSGUser *user = resultObject[0];
-    [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
-      if (error == nil) {
-        
-        if (data != nil) {
-          [_headView setImage:[UIImage imageWithData:data]];
-        } else {
-          [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
-        }
-        
-      } else {
-        DDLogDebug(@"JCHATFriendDetailVC  thumbAvatarData fail");
-      }
-    }];
-    
-    if (user.nickname) {
-      _nameLabel.text = user.nickname;
-    } else {
-      _nameLabel.text = user.username;
-    }
-    
-    if (user.gender == kJMSGUserGenderUnknown) {
-      [_infoArr addObject:@"未知"];
-    } else if (user.gender == kJMSGUserGenderMale) {
-      [_infoArr addObject:@"男"];
-    } else {
-      [_infoArr addObject:@"女"];
-    }
-    
-    if (user.region) {
-      [_infoArr addObject:user.region];
-    } else {
-      [_infoArr addObject:@""];
-    }
-    
-    if (user.signature) {
-      [_infoArr addObject:user.signature];
-    } else {
-      [_infoArr addObject:@""];
-    }
-    
-    [strongSelf.detailTableView reloadData];
-  }];
+  [JMSGUser userInfoArrayWithUsernameArray:@[self.userInfo.username] appKey:JMESSAGE_APPKEY
+                         completionHandler:^(id resultObject, NSError *error) {
+                           __strong __typeof(weakSelf) strongSelf = weakSelf;
+                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                           
+                           if (error) {
+                             [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
+                             [MBProgressHUD showMessage:@"获取数据失败！" view:self.view];
+                             return;
+                           }
+                           JMSGUser *user = resultObject[0];
+                           [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+                             if (error == nil) {
+                               
+                               if (data != nil) {
+                                 [_headView setImage:[UIImage imageWithData:data]];
+                               } else {
+                                 [_headView setImage:[UIImage imageNamed:@"headDefalt"]];
+                               }
+                               
+                             } else {
+                               DDLogDebug(@"JCHATFriendDetailVC  thumbAvatarData fail");
+                             }
+                           }];
+                           
+                           if (user.nickname) {
+                             _nameLabel.text = user.nickname;
+                           } else {
+                             _nameLabel.text = user.username;
+                           }
+                           
+                           if (user.gender == kJMSGUserGenderUnknown) {
+                             [_infoArr addObject:@"未知"];
+                           } else if (user.gender == kJMSGUserGenderMale) {
+                             [_infoArr addObject:@"男"];
+                           } else {
+                             [_infoArr addObject:@"女"];
+                           }
+                           
+                           if (user.region) {
+                             [_infoArr addObject:user.region];
+                           } else {
+                             [_infoArr addObject:@""];
+                           }
+                           
+                           if (user.signature) {
+                             [_infoArr addObject:user.signature];
+                           } else {
+                             [_infoArr addObject:@""];
+                           }
+                           
+                           [strongSelf.detailTableView reloadData];
+                         }];
   
+}
+
+- (void)switchDisturb {
+  
+  [MBProgressHUD showMessage:@"正在修改免打扰" toView:self.view];
+
+  [self.userInfo setIsNoDisturb:!self.userInfo.isNoDisturb handler:^(id resultObject, NSError *error) {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if (error == nil) {
+    }
+  }];
+}
+
+- (void)switchBlack {
+  [MBProgressHUD showMessage:@"正在修改黑名单" toView:self.view];
+
+  BOOL isbool = self.userInfo.isInBlacklist;
+  if (self.userInfo.isInBlacklist) {
+
+    [JMSGUser delUsersFromBlacklist:@[self.userInfo.username] appKey:JMESSAGE_APPKEY
+                  completionHandler:^(id resultObject, NSError *error) {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    if (error != nil) {
+                      [MBProgressHUD showMessage:@"取消用户黑名单状态失败" view:self.view];
+                      return;
+                    }
+                  }];
+  } else {
+    [JMSGUser addUsersToBlacklist:@[self.userInfo.username] appKey:JMESSAGE_APPKEY
+                completionHandler:^(id resultObject, NSError *error) {
+                  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                  if (error != nil) {
+                    [MBProgressHUD showMessage:@"添加该用户到黑名单失败" view:self.view];
+                    return;
+                  }
+                }];
+
+  }
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -139,12 +181,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [_titleArr count] + 1;
+  return [_titleArr count] + 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-  if (indexPath.row == 3) {
+  if (indexPath.row == 5) {
     static NSString *cellIdentifier = @"JCHATFrIendDetailMessgeCell";
     JCHATFrIendDetailMessgeCell *cell = (JCHATFrIendDetailMessgeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -154,22 +196,50 @@
     
     cell.skipToSendMessage = self;
     return cell;
-  } else {
-    static NSString *cellIdentifier = @"JCHATPersonInfoCell";
-    JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  }
+  
+  if (indexPath.row == 3) {
+    static NSString *cellIdentifier = @"JCHATSetDisturbTableViewCell";
+    JCHATSetDisturbTableViewCell *cell = (JCHATSetDisturbTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
     if (cell == nil) {
-      cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATPersonInfoCell" owner:self options:nil] lastObject];
+      cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATSetDisturbTableViewCell" owner:self options:nil] lastObject];
     }
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.infoTitleLabel.text=[_titleArr objectAtIndex:indexPath.row];
-    if ([_infoArr count] >0) {
-      cell.personInfoConten.text=[_infoArr objectAtIndex:indexPath.row];
-    }
-    cell.arrowImg.hidden = YES;
-    cell.titleImgView.image=[UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
+    cell.delegate = self;
+    [cell layoutToSetDisturb:self.userInfo.isNoDisturb];
     return cell;
   }
+  
+  if (indexPath.row == 4) {
+    static NSString *cellIdentifier = @"JCHATSetDisturbTableViewCell";
+    JCHATSetDisturbTableViewCell *cell = (JCHATSetDisturbTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+      cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATSetDisturbTableViewCell" owner:self options:nil] lastObject];
+    }
+    
+    cell.delegate = self;
+
+    [cell layoutToSetBlack:self.userInfo.isInBlacklist];
+    return cell;
+  }
+  
+  static NSString *cellIdentifier = @"JCHATPersonInfoCell";
+  JCHATPersonInfoCell *cell = (JCHATPersonInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  if (cell == nil) {
+    cell = [[[NSBundle mainBundle] loadNibNamed:@"JCHATPersonInfoCell" owner:self options:nil] lastObject];
+  }
+  
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  cell.infoTitleLabel.text=[_titleArr objectAtIndex:indexPath.row];
+  if ([_infoArr count] >0) {
+    cell.personInfoConten.text=[_infoArr objectAtIndex:indexPath.row];
+  }
+  cell.arrowImg.hidden = YES;
+  cell.titleImgView.image=[UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
+  return cell;
+  
 }
 
 - (void)skipToSendMessage {

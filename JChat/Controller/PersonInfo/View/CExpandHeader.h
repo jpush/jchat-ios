@@ -9,6 +9,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
+#define CExpandContentOffset @"contentOffset"
+
 @interface CExpandHeader : NSObject <UIScrollViewDelegate>
 
 #pragma mark - 类方法 

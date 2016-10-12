@@ -86,6 +86,7 @@
 }
 
 - (void)scrollPhotoGridToBottom {
+  if (allPhotoArr.count == 0) return;
   [photoGridView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:allPhotoArr.count - 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
 }
 

@@ -217,7 +217,7 @@
   [self relayoutTableCellWithMsgId:message.msgId];
   
   if (message != nil) {
-    NSLog(@"发送的消息为 msgId 为 %@",message.msgId);
+    NSLog(@"发送的 Message:  %@",message);
   }
   
   if (error != nil) {
@@ -241,7 +241,7 @@
 - (void)onReceiveMessage:(JMSGMessage *)message
                    error:(NSError *)error {
   if (message != nil) {
-    NSLog(@"收到的message msgId 为 %@",message.msgId);
+    NSLog(@"收到的message: %@",message);
   }
   if (error != nil) {
     JCHATChatModel *model = [[JCHATChatModel alloc] init];
@@ -790,8 +790,17 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   NSString *messageId = [_allmessageIdArr lastObject];
   JCHATChatModel *lastModel = _allMessageDic[messageId];
   NSTimeInterval timeInterVal = [timeNumber longLongValue];
+    
+    // 时间为毫秒时，转换成秒
+    if (timeInterVal > 1999999999) {
+        timeInterVal = floor(timeInterVal / 1000);
+    }
+    if ([lastModel.messageTime longLongValue] > 1999999999) {
+        lastModel.messageTime = [NSNumber numberWithLongLong:floor([lastModel.messageTime longLongValue] / 1000)];
+    }
   if ([_allmessageIdArr count] > 0 && lastModel.isTime == NO) {
-    NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
+      
+    NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime longLongValue]];
     NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
     NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
     if (fabs(timeBetween) > interval) {
@@ -809,8 +818,16 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
   NSString *messageId = [_allmessageIdArr lastObject];
   JCHATChatModel *lastModel = _allMessageDic[messageId];
   NSTimeInterval timeInterVal = [timeNumber longLongValue];
+    
+    // 时间为毫秒时，转换成秒
+    if (timeInterVal > 1999999999) {
+        timeInterVal = floor(timeInterVal / 1000);
+    }
+    if ([lastModel.messageTime longLongValue] > 1999999999) {
+        lastModel.messageTime = [NSNumber numberWithLongLong:floor([lastModel.messageTime longLongValue] / 1000)];
+    }
   if ([_allmessageIdArr count]>0 && lastModel.isTime == NO) {
-    NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
+    NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime longLongValue]];
     NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
     NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
     if (fabs(timeBetween) > interval) {
@@ -987,7 +1004,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (model.message.contentType == kJMSGContentTypeEventNotification) {
       cell.messageTimeLabel.text = [((JMSGEventContent *)model.message.content) showEventNotification];
     } else {
-      cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime doubleValue]];
+      cell.messageTimeLabel.text = [JCHATStringUtils getFriendlyDateString:[model.messageTime longLongValue]];
     }
     return cell;
     

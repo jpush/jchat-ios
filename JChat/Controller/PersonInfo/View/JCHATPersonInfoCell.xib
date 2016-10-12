@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,18 +12,11 @@
             <rect key="frame" x="0.0" y="0.0" width="350" height="57"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="350" height="56.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="350" height="57"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wo_20.png" translatesAutoresizingMaskIntoConstraints="NO" id="b1O-cE-mFL">
-                        <rect key="frame" x="8" y="18" width="22" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="22" id="Hfh-Lb-U1A"/>
-                            <constraint firstAttribute="height" constant="21" id="P93-jX-oq1"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZLf-Vl-57O">
-                        <rect key="frame" x="44" y="18" width="75" height="20.5"/>
+                        <rect key="frame" x="44" y="18" width="75" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="75" id="D8a-RQ-Pzc"/>
                         </constraints>
@@ -32,7 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EVx-T0-YtH">
-                        <rect key="frame" x="141" y="8" width="180" height="40.5"/>
+                        <rect key="frame" x="141" y="8" width="180" height="41"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="180" id="SSf-RS-HSh"/>
                         </constraints>
@@ -45,6 +38,13 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="13" id="TGT-31-i0z"/>
                             <constraint firstAttribute="width" constant="8" id="sFM-9d-yYf"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wo_20.png" translatesAutoresizingMaskIntoConstraints="NO" id="b1O-cE-mFL">
+                        <rect key="frame" x="8" y="18" width="22" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="Hfh-Lb-U1A"/>
+                            <constraint firstAttribute="height" constant="21" id="P93-jX-oq1"/>
                         </constraints>
                     </imageView>
                 </subviews>

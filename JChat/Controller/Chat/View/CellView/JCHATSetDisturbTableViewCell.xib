@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="76" id="KGk-i7-Jjw" customClass="JCHATSetDisturbTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wo_20.png" translatesAutoresizingMaskIntoConstraints="NO" id="dXE-5s-T1W">
+                        <rect key="frame" x="10" y="28" width="22" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="ISU-fo-jaT"/>
+                            <constraint firstAttribute="height" constant="21" id="vki-k4-1rP"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="消息免打扰" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OiK-lM-WkZ">
+                        <rect key="frame" x="46" y="28" width="160" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="160" id="nSn-RL-84F"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="dXE-5s-T1W" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3tA-Nt-Gto"/>
+                    <constraint firstItem="OiK-lM-WkZ" firstAttribute="leading" secondItem="dXE-5s-T1W" secondAttribute="trailing" constant="14" id="ByB-CW-cUi"/>
+                    <constraint firstItem="OiK-lM-WkZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="XAx-tN-3qb"/>
+                    <constraint firstItem="dXE-5s-T1W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="jSL-ga-bsP"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="cellTitle" destination="OiK-lM-WkZ" id="jyD-ec-p8z"/>
+            </connections>
+            <point key="canvasLocation" x="451" y="365"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="wo_20.png" width="22" height="22"/>
+    </resources>
+</document>

@@ -88,7 +88,10 @@ static CGFloat const blurLevel = 22.0f;
 }
 
 - (void)setBlurImage:(UIImage *) originImage{
-  self.image = [self blurryImage:originImage withBlurLevel:blurLevel];
+  JCHATMAINTHREAD(^{
+    self.image = [self blurryImage:originImage withBlurLevel:blurLevel];
+  });
+  
 }
 
 - (UIImage *)blurryImage:(UIImage *)image withBlurLevel:(CGFloat)blur {

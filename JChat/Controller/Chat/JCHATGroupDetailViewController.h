@@ -26,4 +26,5 @@ typedef NS_ENUM(NSInteger, AlertViewTag) {
 @property (nonatomic,strong) NSMutableArray *memberArr;
 
 - (void)quitGroup;
+- (void)switchDisturb;
 @end

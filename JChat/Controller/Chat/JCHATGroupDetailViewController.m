@@ -13,6 +13,7 @@
 #import "JCHATFriendDetailViewController.h"
 #import "JCHATFootTableCollectionReusableView.h"
 #import "JCHATFootTableViewCell.h"
+#import "AppDelegate.h"
 
 @interface JCHATGroupDetailViewController ()<
 UICollectionViewDataSource,
@@ -22,6 +23,7 @@ UIAlertViewDelegate,
 UITableViewDataSource,
 UITabBarDelegate> {
   BOOL _isInEditToDeleteMember;
+  BOOL _isNoDisturb;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *groupMemberGrip;
@@ -37,11 +39,16 @@ UITabBarDelegate> {
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
     _memberArr = @[_conversation.target];
     [self setupGroupMemberGrip];
+    _isNoDisturb = ((JMSGUser *)_conversation.target).isNoDisturb;
   }else {
     [self getAllMember];
     [self setupGroupMemberGrip];
+    _isNoDisturb = ((JMSGGroup *)_conversation.target).isNoDisturb;
   }
+  
 
+  
+  
 }
 
 - (void)refreshMemberGrid {
@@ -125,7 +132,7 @@ UITabBarDelegate> {
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-  return CGSizeMake(kApplicationWidth, 200);
+  return CGSizeMake(kApplicationWidth, 270);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,16 +237,17 @@ UITabBarDelegate> {
       } else {
         __weak __typeof(self)weakSelf = self;
         [MBProgressHUD showMessage:@"获取成员信息" toView:self.view];
-        [((JMSGGroup *)(self.conversation.target)) addMembersWithUsernameArray:@[[alertView textFieldAtIndex:0].text] completionHandler:^(id resultObject, NSError *error) {
-          [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
-          if (error == nil) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf refreshMemberGrid];
-          } else {
-            DDLogDebug(@"addMembersFromUsernameArray fail with error %@",error);
-            [MBProgressHUD showMessage:@"添加成员失败" view:weakSelf.view];
-          }
-        }];
+        [((JMSGGroup *)(self.conversation.target)) addMembersWithUsernameArray:@[[alertView textFieldAtIndex:0].text] appKey:JMESSAGE_APPKEY
+                                                             completionHandler:^(id resultObject, NSError *error) {
+                                                               [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+                                                               if (error == nil) {
+                                                                 __strong __typeof(weakSelf)strongSelf = weakSelf;
+                                                                 [strongSelf refreshMemberGrid];
+                                                               } else {
+                                                                 DDLogDebug(@"addMembersFromUsernameArray fail with error %@",error);
+                                                                 [MBProgressHUD showMessage:@"添加成员失败" view:weakSelf.view];
+                                                               }
+                                                             }];
       }
     }
       break;
@@ -373,18 +381,19 @@ UITabBarDelegate> {
   }
   
   [MBProgressHUD showMessage:@"正在删除好友！" toView:self.view];
-  [((JMSGGroup *)(self.conversation.target)) removeMembersWithUsernameArray:@[userName] completionHandler:^(id resultObject, NSError *error) {
-    
-    if (error == nil) {
-      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      [MBProgressHUD showMessage:@"删除成员成功！" view:self.view];
-      [self refreshMemberGrid];
-    } else {
-      DDLogDebug(@"JCHATGroupSettingCtl   fail to removeMembersFromUsernameArrary");
-      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-      [MBProgressHUD showMessage:@"删除成员错误！" view:self.view];
-    }
-  }];
+  [((JMSGGroup *)(self.conversation.target)) removeMembersWithUsernameArray:@[userName] appKey:JMESSAGE_APPKEY
+                                                          completionHandler:^(id resultObject, NSError *error) {
+                                                            
+                                                            if (error == nil) {
+                                                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                              [MBProgressHUD showMessage:@"删除成员成功！" view:self.view];
+                                                              [self refreshMemberGrid];
+                                                            } else {
+                                                              DDLogDebug(@"JCHATGroupSettingCtl   fail to removeMembersFromUsernameArrary");
+                                                              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                              [MBProgressHUD showMessage:@"删除成员错误！" view:self.view];
+                                                            }
+                                                          }];
 }
 
 - (void)quitGroup {
@@ -398,12 +407,40 @@ UITabBarDelegate> {
   [self removeEditStatus];
 }
 
+- (void)switchDisturb {
+  
+  [MBProgressHUD showMessage:@"正在修改免打扰" toView:self.view];
+  
+  if (_conversation.conversationType == kJMSGConversationTypeSingle) {
+    JMSGUser * user = _conversation.target;
+    [user setIsNoDisturb:!_isNoDisturb handler:^(id resultObject, NSError *error) {
+      [MBProgressHUD hideHUDForView:self.view animated:YES];
+      if (error == nil) {
+        _isNoDisturb = !_isNoDisturb;
+        if (user.isNoDisturb) {
+          NSLog(@"is no disturb");
+        } else {
+          NSLog(@"is disturb");
+        }
+      }
+    }];
+  } else {
+    JMSGGroup *group = _conversation.target;
+    [group setIsNoDisturb:!_isNoDisturb handler:^(id resultObject, NSError *error) {
+      [MBProgressHUD hideHUDForView:self.view animated:YES];
+      if (error == nil) {
+        _isNoDisturb = !_isNoDisturb;
+      }
+    }];
+  }
+}
+
 #pragma -mark FootTableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    return 1;
+    return 2;
   } else {
-    return 3;
+    return 4;
   }
 
 }
@@ -412,7 +449,18 @@ UITabBarDelegate> {
   static NSString *cellIdentifier = @"JCHATFootTableViewCell";
   JCHATFootTableViewCell *cell = (JCHATFootTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-      [cell layoutToClearChatRecord];
+    switch (indexPath.row) {
+      case 0:
+        [cell layoutToClearChatRecord];
+        break;
+      case 1:
+        cell.delegate = self;
+        [cell layoutToSetNotifMode:_isNoDisturb];
+        break;
+      default:
+        break;
+    }
+    
   } else {
     switch (indexPath.row) {
         //    case 0 为修改 group.name 的 footer suplementary
@@ -424,9 +472,12 @@ UITabBarDelegate> {
         break;
       case 2:
         cell.delegate = self;
+        [cell layoutToSetNotifMode:_isNoDisturb];
+        break;
+      case 3:
+        cell.delegate = self;
         [cell layoutToQuitGroup];
         break;
-
       default:
         break;
     }

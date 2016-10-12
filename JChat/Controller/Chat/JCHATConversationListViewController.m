@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
-
+    NSLog(@"\n\n ===:%@\n\n",NSHomeDirectory());
   [self setupNavigation];
   [self addNotifications];
   [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -125,7 +125,7 @@
   __block JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];//!!
   __weak typeof(self)weakSelf = self;
   sendMessageCtl.superViewController = self;
-  [JMSGConversation createSingleConversationWithUsername:user.username completionHandler:^(id resultObject, NSError *error) {
+  [JMSGConversation createSingleConversationWithUsername:user.username appKey:JMESSAGE_APPKEY completionHandler:^(id resultObject, NSError *error) {
     __strong __typeof(weakSelf)strongSelf = weakSelf;
     if (error == nil) {
       sendMessageCtl.conversation = resultObject;
@@ -203,7 +203,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
-  [self getConversationList];
+  
+  AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+  if (!appDelegate.isDBMigrating) {
+    [self getConversationList];
+  } else {
+    NSLog(@"is DBMigrating don't get allconversations");
+    [MBProgressHUD showMessage:@"正在升级数据库" toView:self.view];
+  }
   if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
   }
 }
@@ -350,7 +357,7 @@ NSInteger sortType(id object1,id object2,void *cha) {
     sendMessageCtl.hidesBottomBarWhenPushed = YES;
     [[alertView textFieldAtIndex:0] resignFirstResponder];
     __weak __typeof(self)weakSelf = self;
-    [JMSGConversation createSingleConversationWithUsername:[alertView textFieldAtIndex:0].text completionHandler:^(id resultObject, NSError *error) {
+    [JMSGConversation createSingleConversationWithUsername:[alertView textFieldAtIndex:0].text appKey:JMESSAGE_APPKEY completionHandler:^(id resultObject, NSError *error) {
       [[JCHATAlertViewWait ins] hidenAll];
       
       if (error == nil) {
@@ -404,7 +411,8 @@ NSInteger sortType(id object1,id object2,void *cha) {
   JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
   
   if (conversation.conversationType == kJMSGConversationTypeSingle) {
-    [JMSGConversation deleteSingleConversationWithUsername:((JMSGUser *)conversation.target).username];
+    [JMSGConversation deleteSingleConversationWithUsername:((JMSGUser *)conversation.target).username appKey:JMESSAGE_APPKEY
+];
   } else {
     [JMSGConversation deleteGroupConversationWithGroupId:((JMSGGroup *)conversation.target).gid];
   }

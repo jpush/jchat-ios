@@ -115,6 +115,13 @@ UINavigationControllerDelegate>
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
   __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
+  if (image == nil) {
+    [self dismissViewControllerAnimated:YES completion:^{
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      [MBProgressHUD showMessage:@"请选择图片类型" view:self.view];
+    }];
+    return;
+  }
   
   [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) userFieldType:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
     JCHATMAINTHREAD(^{

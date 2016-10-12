@@ -21,7 +21,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [JMessage addDelegate:self withConversation:nil];
   
   [JMessage setupJMessage:launchOptions
-                   appKey:JMSSAGE_APPKEY
+                   appKey:JMESSAGE_APPKEY
                   channel:CHANNEL apsForProduction:NO
                  category:nil];
   
@@ -195,9 +195,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 // notification from JPush
 - (void)networkDidLogin:(NSNotification *)notification {
   DDLogDebug(@"Event - networkDidLogin");
+  NSLog(@" registrationID %@",[JPUSHService registrationID]);
 }
 
-// notification from JPush
 - (void)receivePushMessage:(NSNotification *)notification {
   DDLogDebug(@"Event - receivePushMessage");
 

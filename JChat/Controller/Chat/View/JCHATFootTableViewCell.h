@@ -13,9 +13,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UIButton *quitGroupBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *arrow;
-@property (strong, nonatomic)JCHATGroupDetailViewController *delegate;
+@property (strong, nonatomic) UISwitch *switchBtn;
+@property (weak, nonatomic)JCHATGroupDetailViewController *delegate;
 @property (strong, nonatomic)UIView *baseLine;
 - (void)setDataWithGroupName:(NSString *)groupName;
 - (void)layoutToClearChatRecord;
 - (void)layoutToQuitGroup;
+- (void)layoutToSetNotifMode:(BOOL)isDisturd;
 @end

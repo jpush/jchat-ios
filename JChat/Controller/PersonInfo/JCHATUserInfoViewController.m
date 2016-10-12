@@ -20,6 +20,7 @@
 #import "CExpandHeader.h"
 #import "UIImageView+LBBlurredImage.h"
 #import "JCHATAvatarView.h"
+#import "JChatConstants.h"
 
 #define settingTableFrame CGRectMake(0, 0, kApplicationWidth, kApplicationHeight - 45 + kStatusBarHeight)
 #define settingTableBackgroupColor [UIColor colorWithRed:235 / 255.0 green:235 / 255.0 blue:243 / 255.0 alpha:1]
@@ -62,7 +63,6 @@
   self.settingTableView.tableFooterView = [[UIView alloc] init];
   
   [self setAvatar];
-  NSLog(@"huangmin  user %@",[JMSGUser myInfo]);
   if ([JMSGUser myInfo].nickname) {
     self.titleArr = @[[JMSGUser myInfo].nickname, @"设置", @"退出登录"];
   } else if ([JMSGUser myInfo].username) {
@@ -95,16 +95,18 @@
   [_bgView updataNameLable];
   
   [user thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
-    if (error == nil) {
-      if (data != nil) {
-        _bgView.originImage = [UIImage imageWithData:data];
+    JCHATMAINTHREAD(^{
+      if (error == nil) {
+        if (data != nil) {
+          _bgView.originImage = [UIImage imageWithData:data];
+        } else {
+          [_bgView setDefoultAvatar];
+        }
       } else {
+        DDLogDebug(@"Action -- largeAvatarData");
         [_bgView setDefoultAvatar];
       }
-    } else {
-      DDLogDebug(@"Action -- largeAvatarData");
-      [_bgView setDefoultAvatar];
-    }
+    });
   }];
 }
 
@@ -163,6 +165,14 @@
   [MBProgressHUD showMessage:@"正在上传！" toView:self.view];
   __block UIImage *image;
   image = [info objectForKey:UIImagePickerControllerOriginalImage];
+  if (image == nil) {
+    [self dismissViewControllerAnimated:YES completion:^{
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      [MBProgressHUD showMessage:@"请选择图片类型" view:self.view];
+    }];
+    
+    return;
+  }
   image = [image resizedImageByWidth:upLoadImgWidth];
   
   [JMSGUser updateMyInfoWithParameter:UIImageJPEGRepresentation(image, 1) userFieldType:kJMSGUserFieldsAvatar completionHandler:^(id resultObject, NSError *error) {
@@ -310,6 +320,11 @@
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc {
+  [_settingTableView removeObserver:_header forKeyPath:CExpandContentOffset];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

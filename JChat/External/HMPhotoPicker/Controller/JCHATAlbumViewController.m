@@ -39,7 +39,7 @@
   
   _albumTable.delegate = self;
   _albumTable.dataSource = self;
-
+  _albumTable.tableFooterView = [UIView new];
   if ([[[UIDevice currentDevice]systemVersion] floatValue]>= 8) {
     [self pushToSelectPhotoVCWithIndex:0];
   } else {
@@ -62,8 +62,11 @@
   allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
   PHFetchResult *allPhotos = [PHAsset fetchAssetsWithOptions:allPhotosOptions];
   JCHATAlbumModel *albumModel = [JCHATAlbumModel new];
-  [albumModel setDataWithAlbumResult:allPhotos];
-  [_albumArr addObject:albumModel];
+  if (allPhotos.count > 0) {
+    [albumModel setDataWithAlbumResult:allPhotos];
+    [_albumArr addObject:albumModel];
+  }
+
   
 //  smartAlbums
   PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];

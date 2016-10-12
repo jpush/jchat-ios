@@ -113,7 +113,7 @@
   NSString *conversationId = nil;
   if (conversation.conversationType == kJMSGConversationTypeSingle) {
     JMSGUser *user = conversation.target;
-    conversationId = [NSString stringWithFormat:@"%@_%ld",user.username, kJMSGConversationTypeSingle];
+    conversationId = [NSString stringWithFormat:@"%@_%ld_%@",user.username, kJMSGConversationTypeSingle, conversation.targetAppKey];
   } else {
     JMSGGroup *group = conversation.target;
     conversationId = [NSString stringWithFormat:@"%@_%ld",group.gid,kJMSGConversationTypeGroup];
