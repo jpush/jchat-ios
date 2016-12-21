@@ -1,5 +1,6 @@
 # JChat iOS
 
+## JChat-iOS 现在只处理 bug，不再添加新功能，新功能将会在 [jchat-swift](https://github.com/jpush/jchat-swift) 上更新。
 
 ### 介绍
 
