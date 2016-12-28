@@ -202,7 +202,7 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
         timeInterval = floor(timeInterval / 1000);
         anyDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
      }
-    
+
     //设置源日期时区
     NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];//或GMT
     //设置转换后的目标日期时区
@@ -213,25 +213,36 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
     NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:anyDate];
     //得到时间偏移量的差值
     NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
-    
+  
+  
+//  NSDate *date = [NSDate date]; // 获得时间对象
+//  NSTimeZone *zone = [NSTimeZone systemTimeZone]; // 获得系统的时区
+//  NSTimeInterval time = [zone secondsFromGMTForDate:date];// 以秒为单位返回当前时间与系统格林尼治时间的差
+//  NSDate *nowDate = [date dateByAddingTimeInterval:time];// 然后把差的时间加上,就是当前系统准确的时间
+  
     //转为现在时间
-    NSDate* theDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:anyDate];
-    
-
+  NSDate* theDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:anyDate];
+  
+  NSTimeZone *zone = [NSTimeZone systemTimeZone];
+  NSInteger zoneDiffInterval = [zone secondsFromGMTForDate: [NSDate date]];
+  theDate = [theDate dateByAddingTimeInterval: -zoneDiffInterval];
+  
   
     
   NSString *output = nil;
 
-  NSTimeInterval theDiff = -theDate.timeIntervalSinceNow;
-
+  NSTimeInterval theDiff = theDate.timeIntervalSinceNow;  
+  if (theDiff < 0) {
+    theDiff = -theDiff;
+  }
   //上述时间差输出不同信息
   if (theDiff < 60) {
     output = @"刚刚";
-
+    return output;
   } else if (theDiff < 60 * 60) {
     int minute = (int) (theDiff / 60);
     output = [NSString stringWithFormat:@"%d分钟前", minute];
-
+    return output;
   } else {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 
@@ -277,7 +288,6 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
       }
     }
   }
-
   return output;
 }
 

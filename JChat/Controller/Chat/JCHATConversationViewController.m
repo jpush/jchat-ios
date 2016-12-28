@@ -477,10 +477,10 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
       [_imgDataArr insertObject:model atIndex:0];
       model.photoIndex = [_imgDataArr count] - 1;
     }
-
+    
     [_allMessageDic setObject:model forKey:model.message.msgId];
     [_allmessageIdArr insertObject:model.message.msgId atIndex: isNoOtherMessage?0:1];
-    [self dataMessageShowTimeToTop:message.timestamp];// FIXME:
+    [self dataMessageShowTimeToTop:message.timestamp];// FIXME: timebug
   }
   
   [_messageTableView loadMoreMessage];
@@ -817,19 +817,22 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 - (void)dataMessageShowTime:(NSNumber *)timeNumber{
   NSString *messageId = [_allmessageIdArr lastObject];
   JCHATChatModel *lastModel = _allMessageDic[messageId];
-  NSTimeInterval timeInterVal = [timeNumber longLongValue];
+  NSTimeInterval timeInterVal = [timeNumber longLongValue];// 消息时间戳
     
-    // 时间为毫秒时，转换成秒
+//     时间为毫秒时，转换成秒
     if (timeInterVal > 1999999999) {
         timeInterVal = floor(timeInterVal / 1000);
     }
     if ([lastModel.messageTime longLongValue] > 1999999999) {
         lastModel.messageTime = [NSNumber numberWithLongLong:floor([lastModel.messageTime longLongValue] / 1000)];
     }
+  
+  NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime longLongValue]];
+  NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
+  NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];// 时间间隔
+  
   if ([_allmessageIdArr count]>0 && lastModel.isTime == NO) {
-    NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime longLongValue]];
-    NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
-    NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
+
     if (fabs(timeBetween) > interval) {
       JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
       timeModel.timeId = [self getTimeId];
@@ -853,13 +856,27 @@ NSInteger sortMessageType(id object1,id object2,void *cha) {
 }
 
 - (void)dataMessageShowTimeToTop:(NSNumber *)timeNumber{
-  NSString *messageId = [_allmessageIdArr lastObject];
-  JCHATChatModel *lastModel = _allMessageDic[messageId];
   NSTimeInterval timeInterVal = [timeNumber longLongValue];
-  if ([_allmessageIdArr count]>0 && lastModel.isTime == NO) {
-    NSDate* lastdate = [NSDate dateWithTimeIntervalSince1970:[lastModel.messageTime doubleValue]];
+  
+  //     时间为毫秒时，转换成秒
+  if (timeInterVal > 1999999999) {
+    timeInterVal = floor(timeInterVal / 1000);
+  }
+  
+  NSString* fristID = _allmessageIdArr[isNoOtherMessage?1:2];
+  JCHATChatModel *fristModel = _allMessageDic[fristID];
+  
+  if ([_allmessageIdArr count]>0 && fristModel.isTime == NO) {
+
+    
+    if ([fristModel.messageTime longLongValue] > 1999999999) {
+      fristModel.messageTime = [NSNumber numberWithLongLong:floor([fristModel.messageTime longLongValue] / 1000)];
+    }
+    
+    NSDate* fristDate = [NSDate dateWithTimeIntervalSince1970:[fristModel.messageTime doubleValue]];
+    
     NSDate* currentDate = [NSDate dateWithTimeIntervalSince1970:timeInterVal];
-    NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:lastdate];
+    NSTimeInterval timeBetween = [currentDate timeIntervalSinceDate:fristDate];
     if (fabs(timeBetween) > interval) {
       JCHATChatModel *timeModel =[[JCHATChatModel alloc] init];
       timeModel.timeId = [self getTimeId];

@@ -349,6 +349,7 @@
 		624B31B11BDB6B13009DA1F9 /* JCHATMessageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B31B01BDB6B13009DA1F9 /* JCHATMessageTableView.m */; };
 		624B63961C1802B30034D670 /* JCHATAlertToSendImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B63951C1802B30034D670 /* JCHATAlertToSendImage.m */; };
 		624B63981C1953E10034D670 /* AlertViewtextFieldBackgroupImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624B63971C1953E10034D670 /* AlertViewtextFieldBackgroupImage@2x.png */; };
+		624CC1CC1E12983000B3938A /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 624CC1CB1E12983000B3938A /* libresolv.tbd */; };
 		624E8E2F1BE8C1E9006E2709 /* JCHATMessageContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 624E8E2E1BE8C1E8006E2709 /* JCHATMessageContentView.m */; };
 		625940051C4F53F2004E7C59 /* login_19_pre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 625940041C4F53F2004E7C59 /* login_19_pre@2x.png */; };
 		626863A61C3A61DC00D5B1F9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 626863A51C3A61DC00D5B1F9 /* AssetsLibrary.framework */; };
@@ -865,6 +866,7 @@
 		624B63941C1802B30034D670 /* JCHATAlertToSendImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAlertToSendImage.h; sourceTree = "<group>"; };
 		624B63951C1802B30034D670 /* JCHATAlertToSendImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAlertToSendImage.m; sourceTree = "<group>"; };
 		624B63971C1953E10034D670 /* AlertViewtextFieldBackgroupImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlertViewtextFieldBackgroupImage@2x.png"; sourceTree = "<group>"; };
+		624CC1CB1E12983000B3938A /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		624E8E2D1BE8C1E8006E2709 /* JCHATMessageContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageContentView.h; sourceTree = "<group>"; };
 		624E8E2E1BE8C1E8006E2709 /* JCHATMessageContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageContentView.m; sourceTree = "<group>"; };
 		625940041C4F53F2004E7C59 /* login_19_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_19_pre@2x.png"; sourceTree = "<group>"; };
@@ -935,6 +937,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				624CC1CC1E12983000B3938A /* libresolv.tbd in Frameworks */,
 				626863A61C3A61DC00D5B1F9 /* AssetsLibrary.framework in Frameworks */,
 				62BD8A551BEC3E5200EC807E /* Photos.framework in Frameworks */,
 				44C78F1C1B7B15A6006D4192 /* Accelerate.framework in Frameworks */,
@@ -1466,6 +1469,7 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				624CC1CB1E12983000B3938A /* libresolv.tbd */,
 				62408B4D1C08506000EB873B /* JMessage.framework */,
 				626863A51C3A61DC00D5B1F9 /* AssetsLibrary.framework */,
 				62BD8A541BEC3E5200EC807E /* Photos.framework */,
@@ -1854,6 +1858,7 @@
 				TargetAttributes = {
 					18AB9C8B1A43BCB7007B2A04 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 8X2A38Q9VD;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -2440,7 +2445,7 @@
 				CODE_SIGN_ENTITLEMENTS = JChat/JChat.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8X2A38Q9VD;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2469,6 +2474,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = io.jchat.JChat;
 				PRODUCT_NAME = JChat;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";
@@ -2486,7 +2492,7 @@
 				CODE_SIGN_ENTITLEMENTS = JChat/JChat.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8X2A38Q9VD;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2514,6 +2520,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = io.jchat.JChat;
 				PRODUCT_NAME = JChat;
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/JPush IM/JPush IM.pch";

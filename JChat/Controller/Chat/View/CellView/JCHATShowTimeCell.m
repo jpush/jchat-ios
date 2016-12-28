@@ -46,6 +46,7 @@
   paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
   CGSize realSize = [[JCHATStringUtils getFriendlyDateString:[self.model.messageTime doubleValue]] boundingRectWithSize:maxSize options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
   [self.messageTimeLabel setFrame:CGRectMake(self.messageTimeLabel.frame.origin.x, self.messageTimeLabel.frame.origin.y, realSize.width,realSize.height)];
+  NSLog(@"huangmin %@",self.model.messageTime);
   self.messageTimeLabel.text= [NSString stringWithFormat:@"%@",self.model.messageTime];
 }
 
