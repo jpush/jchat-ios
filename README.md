@@ -1,5 +1,5 @@
 # JChat iOS
-
+## JChat-iOS 现在只处理 bug，不再添加新功能，新功能将会在 [jchat-swift](https://github.com/jpush/jchat-swift) 上更新。
 ### 介绍
 
 JChat 是一个聊天 App。
@@ -22,31 +22,14 @@ JChat 当前提供 Android 与 iOS 版本。稍后也将提供 Web 版本。
 ### 运行
 
 本源代码项目要编译运行跑起来，需要注意以下几个地方。
-
+- 工程使用 cocoapods 管理依赖如果没有安装 pod 需要先行安装 👉 [CocoaPods](https://cocoapods.org) 
+- 成功安装 cocoapods 后在终端执行如下命令安装依赖（在 Podfile 文件所在目录）
+```
+pod install
+```
 ##### 打开项目文件 JChat.xcworkspace
+- 因为这是一个 [CocoaPods](https://cocoapods.org) 项目。打开 .xcodeproj 项目目录将缺少依赖。
 
-因为这是一个 [CocoaPods](https://cocoapods.org) 项目。打开 .xcodeproj 项目目录将缺少依赖。
-
-##### 下载取得 JMessage.framework
-
-JChat 项目依赖 JMessage iOS SDK。
-
-JMessage iOS SDK 以 framework 的方式提供。从本项目的 [Release 页面](https://github.com/jpush/jchat-ios/releases) 可以下载到发布版本相应的 JMessage framework 压缩文件。解压缩后得到一个 JMessage.framework 目录。把这个目录 copy 至 JChat 根目录。
-
-之所以单独提供 JMessage framework 文件而不直接放在 JChat 源代码里，是因为文件太大，并且经常变更版本，会导致版本库很大。也尝试过 git lfs 的方式，但国内的情况大家也是懂的，很不方便使用。
-
-##### JMessage framework 依赖版本检查
-
-JChat 根目录有一个文件 JMESSAGE_VERSION，里边定义了当前 JChat 项目代码匹配的 JMessage framework 的版本号。文件内容类似如下：
-
-	JMESSAGE_VERSION=2.0.0
-	JMESSAGE_BUILD=1036
-
-JChat 根目录下的脚本 check_jmessage_version.sh 会来检查放进来的 "JMessage.framework" 的版本号与该文本里的定义是否匹配。如果不匹配，则报错。JChat.xcworkspace 在编译时，调用了此脚本进行这个检查。
-
-上面的定义，要求 JMessage framework 的构建ID都完全匹配。但有时候，多个构建ID 可能并未有大的变更，所以不必要求匹配得那么严格。这时，可以改为这样：
-
-	JMESSAGE_BUILD=~
 	
 ##### 配置运行的基本属性
 
