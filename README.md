@@ -1,7 +1,5 @@
 # JChat iOS
 
-## JChat-iOS 现在只处理 bug，不再添加新功能，新功能将会在 [jchat-swift](https://github.com/jpush/jchat-swift) 上更新。
-
 ### 介绍
 
 JChat 是一个聊天 App。
@@ -13,6 +11,7 @@ JChat 具有完备的即时通讯功能。主要有：
 - 用户属性，包括头像；
 - 黑名单；
 - 好友通讯录；
+- [消息同步功能](https://github.com/jpush/jchat-ios/releases/tag/v3.1.0)
 
 JChat 的功能基于 JMessage SDK 来开发。它是一个 JMessage SDK 的完备的 Demo，但不仅仅是 Demo。我们的预期与目标是，当你的业务需要一个企业级的聊天 App 时，可以基于这里提供的源代码，更换 Logo 与应用名称，就可以直接用上。
 
