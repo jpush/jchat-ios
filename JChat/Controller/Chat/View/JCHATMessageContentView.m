@@ -36,83 +36,134 @@ static NSInteger const textMessageContentRightOffset = 15;
   }
   return self;
 }
-
-- (void)setMessageContentWith:(JMSGMessage *)message {
-  BOOL isReceived = [message isReceived];
-  _message = message;
-  UIImageView *maskView = nil;
-  UIImage *maskImage = nil;
-  if (isReceived) {
+- (void)setMessageContentWith:(JMSGMessage *)message{
+    [self setMessageContentWith:message handler:nil];
+}
+- (void)setMessageContentWith:(JMSGMessage *)message handler:(void (^)(NSUInteger))block {
+    BOOL isReceived = [message isReceived];
+    _message = message;
+    UIImageView *maskView = nil;
+    UIImage *maskImage = nil;
+    if (isReceived) {
     maskImage = [UIImage imageNamed:@"otherChatBg"];
-  } else {
+    } else {
     maskImage = [UIImage imageNamed:@"mychatBg"];
-  }
-  maskImage = [maskImage resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
-  [self setImage:maskImage];
-  maskView = [UIImageView new];
-  maskView.image = maskImage;
-  [maskView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-  self.layer.mask = maskView.layer;
-  self.contentMode = UIViewContentModeScaleToFill;
-  switch (message.contentType) {
-    case kJMSGContentTypeText:
-      _voiceConent.hidden = YES;
-      _textContent.hidden = NO;
-      
-      if (isReceived) {
-        [_textContent setFrame:CGRectMake(textMessageContentRightOffset + 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
-      } else {
-        [_textContent setFrame:CGRectMake(textMessageContentRightOffset - 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
-      }
-      _textContent.text = ((JMSGTextContent *)message.content).text;
-      break;
-      
-    case kJMSGContentTypeImage:
-      _voiceConent.hidden = YES;
-      _textContent.hidden = YES;
-      self.contentMode = UIViewContentModeScaleAspectFill;
-      if (message.status == kJMSGMessageStatusReceiveDownloadFailed) {
-        [self setImage:[UIImage imageNamed:@"receiveFail"]];
-      } else {
-        [(JMSGImageContent *)message.content thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
-          if (error == nil) {
-            if (data != nil) {
-              [self setImage:[UIImage imageWithData:data]];
+    }
+    maskImage = [maskImage resizableImageWithCapInsets:UIEdgeInsetsMake(28, 20, 28, 20)];
+    [self setImage:maskImage];
+    maskView = [UIImageView new];
+    maskView.image = maskImage;
+    [maskView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    self.layer.mask = maskView.layer;
+    self.contentMode = UIViewContentModeScaleToFill;
+  
+    
+    _textContent.textAlignment = NSTextAlignmentLeft;
+    switch (message.contentType) {
+        case kJMSGContentTypeText:
+            _voiceConent.hidden = YES;
+            _textContent.hidden = NO;
+            
+            if (isReceived) {
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset + 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
             } else {
-              [self setImage:[UIImage imageNamed:@"receiveFail"]];
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset - 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
             }
-          } else {
-            [self setImage:[UIImage imageNamed:@"receiveFail"]];
-          }
-        }];
-      }
-      break;
-      
-    case kJMSGContentTypeVoice:
-      _textContent.hidden = YES;
-      _voiceConent.hidden = NO;
-      if (isReceived) {
-        [_voiceConent setFrame:CGRectMake(20, 15, 9, 16)];
-        [_voiceConent setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying"]];
-      } else {
-        [_voiceConent setFrame:CGRectMake(self.frame.size.width - 30, 15, 9, 16)];
-        [_voiceConent setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
-      }
-      break;
-    case kJMSGContentTypeUnknown:
-      _voiceConent.hidden = YES;
-      _textContent.hidden = NO;
-      
-      if (isReceived) {
-        [_textContent setFrame:CGRectMake(textMessageContentRightOffset + 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
-      } else {
-        [_textContent setFrame:CGRectMake(textMessageContentRightOffset - 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
-      }
-      _textContent.text = st_receiveUnknowMessageDes;
-      break;
-    default:
-      break;
-  }
+            _textContent.text = ((JMSGTextContent *)message.content).text;
+            break;
+            
+        case kJMSGContentTypeImage:
+        {
+            _voiceConent.hidden = YES;
+            _textContent.hidden = YES;
+            self.contentMode = UIViewContentModeScaleAspectFill;
+            [(JMSGImageContent *)message.content thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
+                if (error == nil) {
+                    if (data != nil) {
+                        [self setImage:[UIImage imageWithData:data]];
+                    } else {
+                        [self setImage:[UIImage imageNamed:@"receiveFail"]];
+                    }
+                } else {
+                    [self setImage:[UIImage imageNamed:@"receiveFail"]];
+                }
+                if (block) {
+                    NSData *imageData = UIImagePNGRepresentation(self.image);
+                    block(imageData.length);
+                }
+            }];
+        }
+            break;
+            
+        case kJMSGContentTypeVoice:
+        {
+            _textContent.hidden = YES;
+            _voiceConent.hidden = NO;
+            if (isReceived) {
+                [_voiceConent setFrame:CGRectMake(20, 15, 9, 16)];
+                [_voiceConent setImage:[UIImage imageNamed:@"ReceiverVoiceNodePlaying"]];
+            } else {
+                [_voiceConent setFrame:CGRectMake(self.frame.size.width - 30, 15, 9, 16)];
+                [_voiceConent setImage:[UIImage imageNamed:@"SenderVoiceNodePlaying"]];
+            }
+            [((JMSGVoiceContent *)message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
+                if (error == nil) {
+                    if (block) {
+                        block(data.length);
+                    }
+                } else {
+                    DDLogDebug(@"get message voiceData fail with error %@",error);
+                }
+            }];
+        }
+            break;
+        case kJMSGContentTypeFile:{
+            _voiceConent.hidden = YES;
+            _textContent.hidden = NO;
+            self.contentMode = UIViewContentModeScaleAspectFit;
+            [self setImage:[UIImage imageNamed:@"file_message_bg"]];
+            
+            JMSGFileContent *fileContent = (JMSGFileContent *)message.content;
+            _textContent.text = fileContent.fileName;
+            _textContent.textAlignment = NSTextAlignmentRight;
+            if (isReceived) {
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset + 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
+            } else {
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset - 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
+            }
+        }
+            break;
+            
+        case kJMSGContentTypeLocation:{
+            _voiceConent.hidden = YES;
+            _textContent.hidden = NO;
+            self.contentMode = UIViewContentModeScaleAspectFit;
+            [self setImage:[UIImage imageNamed:@"location_address"]];
+            
+            JMSGLocationContent *locationContent = (JMSGLocationContent *)message.content;
+            _textContent.text = locationContent.address;
+            if (isReceived) {
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset + 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, 20)];
+            } else {
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset - 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, 20)];
+            }
+        }
+            break;
+        case kJMSGContentTypeUnknown:
+            _voiceConent.hidden = YES;
+            _textContent.hidden = NO;
+            
+            if (isReceived) {
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset + 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
+            } else {
+                [_textContent setFrame:CGRectMake(textMessageContentRightOffset - 5, textMessageContentTopOffset, self.frame.size.width - 2 * textMessageContentRightOffset, self.frame.size.height- 2 * textMessageContentTopOffset)];
+            }
+            _textContent.text = st_receiveUnknowMessageDes;
+            break;
+        default:
+            break;
+    }
+  
 }
 
 - (BOOL)canBecomeFirstResponder{

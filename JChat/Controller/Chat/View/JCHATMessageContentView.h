@@ -16,4 +16,7 @@
 @property(strong, nonatomic)UIImageView *voiceConent;
 @property(strong, nonatomic)JMSGMessage *message;
 - (void)setMessageContentWith:(JMSGMessage *)message;
+
+- (void)setMessageContentWith:(JMSGMessage *)message handler:(void(^)(NSUInteger messageMediaDataLength))block;
+
 @end

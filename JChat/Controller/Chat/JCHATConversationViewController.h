@@ -39,7 +39,10 @@ UIAlertViewDelegate,
 JMessageDelegate,
 UIScrollViewDelegate,
 JCHATPhotoPickerViewControllerDelegate,
-UITextViewDelegate>
+UITextViewDelegate>{
+    
+    
+}
 
 @property (weak, nonatomic) IBOutlet JCHATMessageTableView *messageTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarHeightConstrait;

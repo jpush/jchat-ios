@@ -191,58 +191,21 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
 //设置格式 年yyyy 月 MM 日dd 小时hh(HH) 分钟 mm 秒 ss MMM单月 eee周几 eeee星期几 a上午下午
 + (NSString *)getFriendlyDateString:(NSTimeInterval)timeInterval
                     forConversation:(BOOL)isShort {
-    NSLog(@"=++=:%@",@(timeInterval));
-    
-    
-    
-    NSDate *anyDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-    
-    // 时间为毫秒时，转换成秒
-    if (timeInterval > 1999999999) {
-        timeInterval = floor(timeInterval / 1000);
-        anyDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-     }
-
-    //设置源日期时区
-    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];//或GMT
-    //设置转换后的目标日期时区
-    NSTimeZone* destinationTimeZone = [NSTimeZone localTimeZone];
-    //得到源日期与世界标准时间的偏移量
-    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:anyDate];
-    //目标日期与本地时区的偏移量
-    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:anyDate];
-    //得到时间偏移量的差值
-    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
-  
-  
-//  NSDate *date = [NSDate date]; // 获得时间对象
-//  NSTimeZone *zone = [NSTimeZone systemTimeZone]; // 获得系统的时区
-//  NSTimeInterval time = [zone secondsFromGMTForDate:date];// 以秒为单位返回当前时间与系统格林尼治时间的差
-//  NSDate *nowDate = [date dateByAddingTimeInterval:time];// 然后把差的时间加上,就是当前系统准确的时间
-  
     //转为现在时间
-  NSDate* theDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:anyDate];
-  
-  NSTimeZone *zone = [NSTimeZone systemTimeZone];
-  NSInteger zoneDiffInterval = [zone secondsFromGMTForDate: [NSDate date]];
-  theDate = [theDate dateByAddingTimeInterval: -zoneDiffInterval];
-  
-  
-    
-  NSString *output = nil;
+    NSDate* theDate = [NSDate dateWithTimeIntervalSince1970:timeInterval/1000];
 
-  NSTimeInterval theDiff = theDate.timeIntervalSinceNow;  
-  if (theDiff < 0) {
-    theDiff = -theDiff;
-  }
+    NSString *output = nil;
+
+  NSTimeInterval theDiff = -theDate.timeIntervalSinceNow;
+
   //上述时间差输出不同信息
   if (theDiff < 60) {
     output = @"刚刚";
-    return output;
+
   } else if (theDiff < 60 * 60) {
     int minute = (int) (theDiff / 60);
     output = [NSString stringWithFormat:@"%d分钟前", minute];
-    return output;
+
   } else {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 
@@ -288,6 +251,7 @@ static NSString * const FORMAT_TODAY = @"ahh:mm";
       }
     }
   }
+
   return output;
 }
 

@@ -20,6 +20,10 @@
 @property (nonatomic, strong) NSString *timeId;
 @property (nonatomic, assign) BOOL isTime;
 
+@property (nonatomic, assign) BOOL isDefaultAvatar;
+@property (nonatomic, assign) NSUInteger avatarDataLength;
+@property (nonatomic, assign) NSUInteger messageMediaDataLength;
+
 @property (nonatomic, assign) BOOL isErrorMessage;
 @property (nonatomic, strong) NSError *messageError;
 - (float)getTextHeight;

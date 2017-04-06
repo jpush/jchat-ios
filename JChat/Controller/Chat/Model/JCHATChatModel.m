@@ -41,25 +41,32 @@ static NSInteger const voiceBubbleHeight = 50;
       break;
     case kJMSGContentTypeImage:
     {
-      
-      [((JMSGImageContent *)message.content) thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
-        if (error == nil) {
-          [self setupImageSize];
-        } else {
-          DDLogDebug(@"get thumbImageData fail,with error %@",error);
+      [self setupImageSize];
+    }
+          break;
+          
+    case kJMSGContentTypeFile:{
+        if (self.message.status == kJMSGMessageStatusReceiveDownloadFailed) {
+            _contentSize = CGSizeMake(77, 57);
+            return;
         }
-      }];
+        self.imageSize = CGSizeMake(215, 67);
+        _contentSize = CGSizeMake(217, 67);
+    }
+          break;
+    case kJMSGContentTypeLocation:
+    {
+        if (self.message.status == kJMSGMessageStatusReceiveDownloadFailed) {
+            _contentSize = CGSizeMake(77, 57);
+            return;
+        }
+        self.imageSize = CGSizeMake(217, 136);
+        _contentSize = CGSizeMake(217, 136);
     }
       break;
     case kJMSGContentTypeVoice:
     {
       [self setupVoiceSize:((JMSGVoiceContent *)message.content).duration];
-      [((JMSGVoiceContent *)message.content) voiceData:^(NSData *data, NSString *objectId, NSError *error) {
-        if (error == nil) {
-        } else {
-          DDLogDebug(@"get message voiceData fail with error %@",error);
-        }
-      }];
     }
       break;
     case kJMSGContentTypeEventNotification:
@@ -138,31 +145,50 @@ static NSInteger const voiceBubbleHeight = 50;
     return;
   }
   
-  [((JMSGImageContent *)self.message.content) thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
-    if (error == nil) {
-      UIImage *img = [UIImage imageWithData:data];
-      float imgHeight;
-      float imgWidth;
-      
-      if (img.size.height >= img.size.width) {
+    JMSGImageContent *imageContent = (JMSGImageContent *)self.message.content;
+    float imgHeight;
+    float imgWidth;
+    
+    if (imageContent.imageSize.height >= imageContent.imageSize.width) {
         imgHeight = 135;
-        imgWidth = (img.size.width/img.size.height) *imgHeight;
-      } else {
+        imgWidth = (imageContent.imageSize.width/imageContent.imageSize.height) *imgHeight;
+    } else {
         imgWidth = 135;
-        imgHeight = (img.size.height/img.size.width) *imgWidth;
-      }
-      
-      if ((imgWidth > imgHeight?imgHeight/imgWidth:imgWidth/imgHeight)<0.47) {
+        imgHeight = (imageContent.imageSize.height/imageContent.imageSize.width) *imgWidth;
+    }
+    
+    if ((imgWidth > imgHeight?imgHeight/imgWidth:imgWidth/imgHeight)<0.47) {
         self.imageSize = imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);//
         _contentSize = imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);
         return;
-      }
-      self.imageSize = CGSizeMake(imgWidth, imgHeight);
-      _contentSize = CGSizeMake(imgWidth, imgHeight);
-    } else {
-      NSLog(@"get thumbImageData fail with error %@",error);
     }
-  }];
+    self.imageSize = CGSizeMake(imgWidth, imgHeight);
+    _contentSize = CGSizeMake(imgWidth, imgHeight);
+//  [((JMSGImageContent *)self.message.content) thumbImageData:^(NSData *data, NSString *objectId, NSError *error) {
+//    if (error == nil) {
+//      UIImage *img = [UIImage imageWithData:data];
+//      float imgHeight;
+//      float imgWidth;
+//      
+//      if (img.size.height >= img.size.width) {
+//        imgHeight = 135;
+//        imgWidth = (img.size.width/img.size.height) *imgHeight;
+//      } else {
+//        imgWidth = 135;
+//        imgHeight = (img.size.height/img.size.width) *imgWidth;
+//      }
+//      
+//      if ((imgWidth > imgHeight?imgHeight/imgWidth:imgWidth/imgHeight)<0.47) {
+//        self.imageSize = imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);//
+//        _contentSize = imgWidth > imgHeight?CGSizeMake(135, 55):CGSizeMake(55, 135);
+//        return;
+//      }
+//      self.imageSize = CGSizeMake(imgWidth, imgHeight);
+//      _contentSize = CGSizeMake(imgWidth, imgHeight);
+//    } else {
+//      NSLog(@"get thumbImageData fail with error %@",error);
+//    }
+//  }];
 }
 
 - (float)getLengthWithDuration:(NSInteger)duration {

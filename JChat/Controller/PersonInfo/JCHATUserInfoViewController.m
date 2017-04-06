@@ -299,22 +299,26 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (buttonIndex == 0) {
   } else if (buttonIndex == 1) {
-    [MBProgressHUD showMessage:@"正在退出登录！" view:self.view];
-    DDLogDebug(@"Logout anyway.");
-    
-    AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
-    [appDelegate.tabBarCtl setSelectedIndex:0];
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [JMSGUser logout:^(id resultObject, NSError *error) {
-      if (error == nil) {
-        DDLogDebug(@"Action logout success");
-      }
-    }];
-    
-    JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
-    UINavigationController *nvLoginCtl = [[UINavigationController alloc] initWithRootViewController:loginCtl];
-    appDelegate.window.rootViewController = nvLoginCtl;
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
+      [MBProgressHUD showMessage:@"正在退出登录！" toView:self.view];
+      DDLogDebug(@"Logout anyway.");
+      
+      [JMSGUser logout:^(id resultObject, NSError *error) {
+          dispatch_async(dispatch_get_main_queue(), ^{
+              if (error == nil) {
+                  DDLogDebug(@"Action logout success");
+              }
+          });
+      }];
+      
+      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+      
+      AppDelegate *appDelegate = (AppDelegate *) [UIApplication sharedApplication].delegate;
+      [appDelegate.tabBarCtl setSelectedIndex:0];
+      
+      JCHATAlreadyLoginViewController *loginCtl = [[JCHATAlreadyLoginViewController alloc] init];
+      UINavigationController *nvLoginCtl = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+      appDelegate.window.rootViewController = nvLoginCtl;
+      [[NSUserDefaults standardUserDefaults] removeObjectForKey:kuserName];
   }
 }
 

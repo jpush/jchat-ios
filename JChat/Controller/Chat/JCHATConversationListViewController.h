@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "JCHATChatTable.h"
-@interface JCHATConversationListViewController : UIViewController<UISearchBarDelegate,UISearchControllerDelegate,UISearchControllerDelegate,UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,TouchTableViewDelegate,UIGestureRecognizerDelegate,JMessageDelegate,JMSGConversationDelegate>
+@interface JCHATConversationListViewController : UIViewController<UISearchBarDelegate,UISearchControllerDelegate,UISearchControllerDelegate,UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,TouchTableViewDelegate,UIGestureRecognizerDelegate,JMessageDelegate,JMSGConversationDelegate>{
+    
+    NSInteger cacheCount;
+    BOOL isGetingAllConversation;
+}
 @property (nonatomic, strong) UIImageView *addBgView;
 @property (weak, nonatomic) IBOutlet JCHATChatTable *chatTableView;
 @end

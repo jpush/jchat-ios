@@ -108,8 +108,10 @@
                   
                   [[NSNotificationCenter defaultCenter] postNotificationName:kupdateUserInfo object:nil];
                 } else {
-                  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                  [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
+                    JCHATMAINTHREAD(^{
+                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                        [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
+                    });
                 }
               }];
   } else{

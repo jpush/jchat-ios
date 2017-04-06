@@ -98,41 +98,46 @@ static NSInteger const readViewRadius = 4;
            delegate:(id <playVoiceDelegate>)delegate
           indexPath:(NSIndexPath *)indexPath{// TODO:
   
-  _model = model;
-  _indexPath = indexPath;
-  _delegate = delegate;
-  
-  [model.message.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
-    if (error == nil) {
-      JMSGUser *user = ((JMSGUser *)self.model.message.fromUser);
-      if ([objectId isEqualToString:user.username]) {
-        if (data != nil) {
-          [self.headView setImage:[UIImage imageWithData:data]];
-        } else {
-          [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
-        }
-      } else {
-        DDLogDebug(@"该头像是异步乱序的头像");
-      }
-    } else {
-      DDLogDebug(@"Action -- get thumbavatar fail");
-      [self.headView setImage:[UIImage imageNamed:@"headDefalt"]];
-    }
-  }];
-  
-  if ([_model.message.flag isEqualToNumber:@1] || ![_model.message isReceived]) {
-    [self.readView setHidden:YES];
-  } else {
-    [self.readView setHidden:NO];
-  }
-  
-  [self updateFrameWithContentFrame:model.contentSize];
-  [self layoutAllView];
-}
+    _model = model;
+    _indexPath = indexPath;
+    _delegate = delegate;
 
+    [self reloadAvatarImage];
+
+    if ([_model.message.flag isEqualToNumber:@1] || ![_model.message isReceived]) {
+        [self.readView setHidden:YES];
+    } else {
+        [self.readView setHidden:NO];
+    }
+
+    [self updateFrameWithContentFrame:model.contentSize];
+    [self layoutAllView];
+}
+- (void)reloadAvatarImage {
+    kWEAKSELF
+    [_model.message.fromUser thumbAvatarData:^(NSData *data, NSString *objectId, NSError *error) {
+        kSTRONGSELF
+        if (error == nil) {
+            JMSGUser *user = ((JMSGUser *)strongSelf.model.message.fromUser);
+            if ([objectId isEqualToString:user.username]) {
+                if (data != nil) {
+                    _model.isDefaultAvatar = NO;
+                    _model.avatarDataLength = data.length;
+                    [strongSelf.headView setImage:[UIImage imageWithData:data]];
+                } else {
+                    [strongSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+                }
+            }
+        } else {
+            DDLogDebug(@"Action -- get thumbavatar fail");
+            [strongSelf.headView setImage:[UIImage imageNamed:@"headDefalt"]];
+        }
+    }];
+}
 - (void)layoutAllView {
   if (_model.message.status == kJMSGMessageStatusSending
-      || _model.message.status == kJMSGMessageStatusSendDraft) {
+      || _model.message.status == kJMSGMessageStatusSendDraft
+      || _model.message.status == kJMSGMessageStatusReceiving) {
     [_circleView startAnimating];
     [self.sendFailView setHidden:YES];
     [self.percentLabel setHidden:NO];
@@ -178,6 +183,11 @@ static NSInteger const readViewRadius = 4;
     case kJMSGContentTypeImage:
       _readView.hidden = YES;
       _voiceTimeLabel.hidden = YES;
+          break;
+    case kJMSGContentTypeLocation:
+    case kJMSGContentTypeFile:
+      _readView.hidden = YES;
+      _voiceTimeLabel.hidden = YES;
       break;
     case kJMSGContentTypeVoice:
       _percentLabel.hidden = YES;
@@ -203,7 +213,6 @@ static NSInteger const readViewRadius = 4;
     return;
   }
   __weak __typeof(self)weakSelfUpload = self;
-  NSLog(@"the weakSelf upload  %@",weakSelfUpload);
   ((JMSGImageContent *)_model.message.content).uploadHandler = ^(float percent, NSString *msgId) {
     dispatch_async(dispatch_get_main_queue(), ^{
       __strong __typeof(weakSelfUpload)strongSelfUpload = weakSelfUpload;
@@ -229,7 +238,21 @@ static NSInteger const readViewRadius = 4;
     [_messageContent setFrame:CGRectMake(kApplicationWidth - headHeight - 5 - contentSize.width, 0, contentSize.width, contentSize.height)];
     [_readView setFrame:CGRectMake(_messageContent.frame.origin.x - 10, 5, 8, 8)];
   }
-  [_messageContent setMessageContentWith:_model.message];
+    
+  __weak __typeof__(self) weakSelf = self;
+  [_messageContent setMessageContentWith:_model.message handler:^(NSUInteger messageMediaDataLength) {
+      __strong __typeof__(weakSelf) strongSelf = weakSelf;
+      BOOL isShouldRefresh = NO;
+      if (weakSelf.model.messageMediaDataLength != messageMediaDataLength) {
+          isShouldRefresh = YES;
+          weakSelf.model.messageMediaDataLength = messageMediaDataLength;
+          
+          if (strongSelf.messageTableViewCellRefreshMediaMessage) {
+              strongSelf.messageTableViewCellRefreshMediaMessage(strongSelf.model,isShouldRefresh);
+          }
+          [strongSelf layoutAllView];
+      }
+  }];
   [_voiceTimeLabel setFrame:kVoiceTimeLabelFrame];
   if (_model.message.contentType != kJMSGContentTypeVoice) {
     _voiceTimeLabel.frame = kVoiceTimeLabelHidenFrame;

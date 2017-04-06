@@ -14,7 +14,7 @@
 #import "JChatConstants.h"
 #import "JCHATTimeOutManager.h"
 
-@interface JCHATLoginViewController ()
+@interface JCHATLoginViewController ()<UIAlertViewDelegate>
 
 @property(weak, nonatomic) IBOutlet UILabel *userNameLine;
 @property(weak, nonatomic) IBOutlet UILabel *passwordLine;
@@ -32,7 +32,9 @@
   [super viewDidLoad];
   DDLogDebug(@"Action - viewDidLoad");
   [self layoutAllView];
-  
+    
+    
+    
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(dBMigrateFinish)
                                                name:kDBMigrateFinishNotification object:nil];
@@ -87,8 +89,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:YES];
-  _usernameTextField.text = @"";
-  _passwordTextField.text = @"";
+    
   [self.navigationController.navigationBar setHidden:NO];
 }
 

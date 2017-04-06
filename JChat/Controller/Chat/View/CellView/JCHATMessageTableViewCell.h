@@ -34,6 +34,7 @@
 - (void)selectHeadView:(JCHATChatModel *)model;
 @end
 
+typedef void (^JCHATMessageTableViewCellRefreshMediaMessage)(JCHATChatModel *model,BOOL isShouldRefresh);
 
 @interface JCHATMessageTableViewCell : UITableViewCell <XHAudioPlayerHelperDelegate,
 playVoiceDelegate,JMSGMessageDelegate>
@@ -57,11 +58,13 @@ playVoiceDelegate,JMSGMessageDelegate>
 @property(strong, nonatomic)NSIndexPath *indexPath;
 @property(strong, nonatomic)UIView *readView;
 @property(strong, nonatomic)UILabel *voiceTimeLabel;
-
+@property(strong, nonatomic) JCHATMessageTableViewCellRefreshMediaMessage  messageTableViewCellRefreshMediaMessage;
 - (void)playVoice;
 - (void)setCellData:(JCHATChatModel *)model
            delegate:(id <playVoiceDelegate>)delegate
           indexPath:(NSIndexPath *)indexPath
 ;
 - (void)layoutAllView;
+- (void)reloadAvatarImage;
+
 @end

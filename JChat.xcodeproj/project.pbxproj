@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0812A54B1DBF36B700872496 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0812A54A1DBF36B700872496 /* libresolv.tbd */; };
+		08AA7E491E83758C005AE5EF /* location_address.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AA7E481E83758C005AE5EF /* location_address.png */; };
+		08DCA02A1E84E3E500095C71 /* file_message_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 08DCA0291E84E3E500095C71 /* file_message_bg.png */; };
 		18324C041AFB861A006E8507 /* JCHATChatTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 18324C031AFB861A006E8507 /* JCHATChatTable.m */; };
 		183983351AFC914100AC8280 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983341AFC914100AC8280 /* libz.dylib */; };
 		183983371AFC914900AC8280 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183983361AFC914900AC8280 /* Security.framework */; };
@@ -349,7 +352,6 @@
 		624B31B11BDB6B13009DA1F9 /* JCHATMessageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B31B01BDB6B13009DA1F9 /* JCHATMessageTableView.m */; };
 		624B63961C1802B30034D670 /* JCHATAlertToSendImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 624B63951C1802B30034D670 /* JCHATAlertToSendImage.m */; };
 		624B63981C1953E10034D670 /* AlertViewtextFieldBackgroupImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624B63971C1953E10034D670 /* AlertViewtextFieldBackgroupImage@2x.png */; };
-		624CC1CC1E12983000B3938A /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 624CC1CB1E12983000B3938A /* libresolv.tbd */; };
 		624E8E2F1BE8C1E9006E2709 /* JCHATMessageContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 624E8E2E1BE8C1E8006E2709 /* JCHATMessageContentView.m */; };
 		625940051C4F53F2004E7C59 /* login_19_pre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 625940041C4F53F2004E7C59 /* login_19_pre@2x.png */; };
 		626863A61C3A61DC00D5B1F9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 626863A51C3A61DC00D5B1F9 /* AssetsLibrary.framework */; };
@@ -406,6 +408,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0812A54A1DBF36B700872496 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		0812A54E1DBF502B00872496 /* JChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JChat.entitlements; sourceTree = "<group>"; };
+		08AA7E481E83758C005AE5EF /* location_address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_address.png; sourceTree = "<group>"; };
+		08AAABE01E8DF853000A7762 /* jcore-ios-1.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "jcore-ios-1.1.1.a"; path = "JMessage.framework/jcore-ios-1.1.1.a"; sourceTree = "<group>"; };
+		08DCA0291E84E3E500095C71 /* file_message_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = file_message_bg.png; sourceTree = "<group>"; };
 		18324C021AFB861A006E8507 /* JCHATChatTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATChatTable.h; sourceTree = "<group>"; };
 		18324C031AFB861A006E8507 /* JCHATChatTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATChatTable.m; sourceTree = "<group>"; };
 		183983341AFC914100AC8280 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -855,7 +862,6 @@
 		62181B341C1FF44900B4528E /* JCHATFootTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATFootTableViewCell.m; sourceTree = "<group>"; };
 		62181B351C1FF44900B4528E /* JCHATFootTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCHATFootTableViewCell.xib; sourceTree = "<group>"; };
 		621925F51BCE5C8300C43099 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		6228B07F1DAB5E4200862BA3 /* JChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JChat.entitlements; sourceTree = "<group>"; };
 		623691BB1BE39CCB0015A616 /* JCHATSendMsgController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSendMsgController.h; sourceTree = "<group>"; };
 		623691BC1BE39CCB0015A616 /* JCHATSendMsgController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATSendMsgController.m; sourceTree = "<group>"; };
 		623691BE1BE39CE20015A616 /* JCHATSendMsgManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATSendMsgManager.h; sourceTree = "<group>"; };
@@ -866,7 +872,6 @@
 		624B63941C1802B30034D670 /* JCHATAlertToSendImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATAlertToSendImage.h; sourceTree = "<group>"; };
 		624B63951C1802B30034D670 /* JCHATAlertToSendImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATAlertToSendImage.m; sourceTree = "<group>"; };
 		624B63971C1953E10034D670 /* AlertViewtextFieldBackgroupImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlertViewtextFieldBackgroupImage@2x.png"; sourceTree = "<group>"; };
-		624CC1CB1E12983000B3938A /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		624E8E2D1BE8C1E8006E2709 /* JCHATMessageContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATMessageContentView.h; sourceTree = "<group>"; };
 		624E8E2E1BE8C1E8006E2709 /* JCHATMessageContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATMessageContentView.m; sourceTree = "<group>"; };
 		625940041C4F53F2004E7C59 /* login_19_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_19_pre@2x.png"; sourceTree = "<group>"; };
@@ -937,7 +942,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				624CC1CC1E12983000B3938A /* libresolv.tbd in Frameworks */,
+				0812A54B1DBF36B700872496 /* libresolv.tbd in Frameworks */,
 				626863A61C3A61DC00D5B1F9 /* AssetsLibrary.framework in Frameworks */,
 				62BD8A551BEC3E5200EC807E /* Photos.framework in Frameworks */,
 				44C78F1C1B7B15A6006D4192 /* Accelerate.framework in Frameworks */,
@@ -966,7 +971,7 @@
 		1871818F1AFB80BF00FB3168 /* JChat */ = {
 			isa = PBXGroup;
 			children = (
-				6228B07F1DAB5E4200862BA3 /* JChat.entitlements */,
+				0812A54E1DBF502B00872496 /* JChat.entitlements */,
 				187181901AFB80BF00FB3168 /* AppDelegate.h */,
 				187181911AFB80BF00FB3168 /* AppDelegate.m */,
 				187182271AFB80BF00FB3168 /* Info.plist */,
@@ -1288,6 +1293,8 @@
 		187182431AFB80C000FB3168 /* chat */ = {
 			isa = PBXGroup;
 			children = (
+				08DCA0291E84E3E500095C71 /* file_message_bg.png */,
+				08AA7E481E83758C005AE5EF /* location_address.png */,
 				44C3E9821B70A0EE00D3D825 /* face_16_pre@2x.png */,
 				44C3E9831B70A0EE00D3D825 /* face_16_pre@3x.png */,
 				44C3E97E1B70A06F00D3D825 /* add01_pre@2x.png */,
@@ -1469,7 +1476,8 @@
 		18AB9CF41A43BD28007B2A04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				624CC1CB1E12983000B3938A /* libresolv.tbd */,
+				0812A54A1DBF36B700872496 /* libresolv.tbd */,
+				08AAABE01E8DF853000A7762 /* jcore-ios-1.1.1.a */,
 				62408B4D1C08506000EB873B /* JMessage.framework */,
 				626863A51C3A61DC00D5B1F9 /* AssetsLibrary.framework */,
 				62BD8A541BEC3E5200EC807E /* Photos.framework */,
@@ -1833,7 +1841,6 @@
 				18AB9C891A43BCB7007B2A04 /* Frameworks */,
 				18AB9C8A1A43BCB7007B2A04 /* Resources */,
 				AAC65A4A1AF76DA000BBFCF9 /* Embed Frameworks */,
-				8F7E5CAD1C06A12F005E9788 /* ShellScript */,
 				375F196617EAF7C97C8184A0 /* [CP] Embed Pods Frameworks */,
 				257D0DA3CEAFA5AB80199265 /* [CP] Copy Pods Resources */,
 			);
@@ -1913,6 +1920,7 @@
 				62CF72311BFAC41A00748C31 /* JCHATPhotoBrowserViewController.xib in Resources */,
 				187183A71AFB80C000FB3168 /* 切图_49.png in Resources */,
 				187183B41AFB80C000FB3168 /* login_02@3x.png in Resources */,
+				08DCA02A1E84E3E500095C71 /* file_message_bg.png in Resources */,
 				1871840B1AFB80C000FB3168 /* setting_22@2x.png in Resources */,
 				1871838D1AFB80C000FB3168 /* keyboard_toolbar@3x.png in Resources */,
 				44C3E95A1B6F64F300D3D825 /* groupDetail@2x.png in Resources */,
@@ -1942,6 +1950,7 @@
 				187184141AFB80C000FB3168 /* wo_20@3x.png in Resources */,
 				187183B91AFB80C000FB3168 /* login_04@2x.png in Resources */,
 				187183751AFB80C000FB3168 /* createConversation@2x.png in Resources */,
+				08AA7E491E83758C005AE5EF /* location_address.png in Resources */,
 				44C3E9551B6F47E300D3D825 /* set_btn_del_pre_@2x.png in Resources */,
 				187183621AFB80C000FB3168 /* Images.xcassets in Resources */,
 				187183EF1AFB80C000FB3168 /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
@@ -2172,19 +2181,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JChat/Pods-JChat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8F7E5CAD1C06A12F005E9788 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Execute a script to check jmessage version\"\n\n\"${PROJECT_DIR}\"/check_jmessage_version.sh\n\n";
-		};
 		DD187E6C9ADF9788A0A3D659 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2197,7 +2193,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2470,6 +2466,7 @@
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
 					"$(PROJECT_DIR)/build/Release-iphoneos",
 					"$(PROJECT_DIR)/Pods",
+					"$(PROJECT_DIR)/JMessage.framework",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -2516,6 +2513,7 @@
 					"$(PROJECT_DIR)/JChat/UMAnalytics_Sdk",
 					"$(PROJECT_DIR)/build/Release-iphoneos",
 					"$(PROJECT_DIR)/Pods",
+					"$(PROJECT_DIR)/JMessage.framework",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";

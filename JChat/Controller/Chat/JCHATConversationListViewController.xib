@@ -1,13 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCHATConversationListViewController">
             <connections>
+                <outlet property="_titleActivity" destination="YLu-Ry-orN" id="5Kf-tI-yGW"/>
+                <outlet property="_titleLabel" destination="bHh-8q-JBK" id="AIF-9U-BYT"/>
                 <outlet property="chatTableView" destination="lPr-VO-uef" id="Pyv-Xd-nSD"/>
+                <outlet property="myTitleView" destination="fPh-Fr-Ote" id="ECH-2J-atQ"/>
                 <outlet property="searchDisplayController" destination="Knf-9U-cm7" id="7tj-Ju-C2a"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,18 +26,17 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lPr-VO-uef" customClass="JCHATChatTable">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="lPr-VO-uef" secondAttribute="trailing" id="Q0S-pc-zQs"/>
                 <constraint firstItem="lPr-VO-uef" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="S0F-uS-8q9"/>
                 <constraint firstItem="lPr-VO-uef" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="abG-U5-gfQ"/>
                 <constraint firstAttribute="bottom" secondItem="lPr-VO-uef" secondAttribute="bottom" id="pE3-nW-mW8"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="565" y="265"/>
+            <point key="canvasLocation" x="409" y="244"/>
         </view>
         <searchDisplayController id="SsN-Pg-DI0">
             <connections>
@@ -72,5 +78,35 @@
                 <outlet property="searchResultsDelegate" destination="-1" id="w2x-iP-UPn"/>
             </connections>
         </searchDisplayController>
+        <view contentMode="scaleToFill" id="fPh-Fr-Ote" userLabel="TitleView">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="会话" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHh-8q-JBK">
+                    <rect key="frame" x="81.5" y="9.5" width="37" height="21.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="YLu-Ry-orN">
+                    <rect key="frame" x="51.5" y="10" width="20" height="20"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="bHh-8q-JBK" firstAttribute="centerX" secondItem="fPh-Fr-Ote" secondAttribute="centerX" id="6ev-GF-teY"/>
+                <constraint firstItem="bHh-8q-JBK" firstAttribute="centerY" secondItem="YLu-Ry-orN" secondAttribute="centerY" id="Onq-W3-ruy"/>
+                <constraint firstItem="bHh-8q-JBK" firstAttribute="leading" secondItem="YLu-Ry-orN" secondAttribute="trailing" constant="10" id="ska-wY-lzj"/>
+                <constraint firstItem="bHh-8q-JBK" firstAttribute="centerY" secondItem="fPh-Fr-Ote" secondAttribute="centerY" id="uSu-9a-5eN"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="834" y="137"/>
+        </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>

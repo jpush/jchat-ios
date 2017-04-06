@@ -8,4 +8,5 @@ target 'JChat' do
   # Pods for JChat
 	pod 'CocoaLumberjack'
 	pod 'GPUImage', '~> 0.1.7'
+	pod 'JMessage', '~> 3.1.0'
 end
