@@ -55,9 +55,9 @@ JChat 根目录下的脚本 check_jmessage_version.sh 会来检查放进来的 "
 
 ### JMessage 文档
 
-- [JMessage iOS 集成指南](http://docs.jpush.io/guideline/jmessage_ios_guide/)
-- [JMessage iOS 说明](http://docs.jpush.io/client/im_sdk_ios/)
-- [JMessage iOS API Docs](http://docs.jpush.io/client/jmessage_ios_appledoc_html/)
+- [JMessage iOS 集成指南](https://docs.jiguang.cn/jmessage/client/jmessage_ios_guide/)
+- [JMessage iOS 说明](https://docs.jiguang.cn/jmessage/client/im_sdk_ios/)
+- [JMessage iOS API Docs](https://docs.jiguang.cn/jmessage/client/jmessage_ios_appledoc_html/)
 
 ### JMessage 升级
 
