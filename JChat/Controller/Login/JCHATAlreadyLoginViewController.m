@@ -86,7 +86,7 @@
 
 - (IBAction)loginBtnClick:(id)sender {
   if (![_passwordField.text isEqualToString:@""] && ![_passwordField.text isEqualToString:@""]) {
-    [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
+    [MBProgressHUD showMessage:@"正在登录" toView:self.view];
     NSString *username = ([[NSUserDefaults standardUserDefaults] objectForKey:klastLoginUserName]);
     NSString *password = _passwordField.text.stringByTrimingWhitespace;
     
